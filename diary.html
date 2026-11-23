@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -1019,6 +1018,10 @@ input,textarea{font-family:inherit;color:var(--text);}
       <div class="setting-row">
         <div class="info"><div class="t">我的摘抄本</div><div class="d">收藏的句子，共 <span id="quoteCount">0</span> 条</div></div>
         <button class="mini-btn" id="setQuotes">查看</button>
+      </div>
+      <div class="setting-row">
+        <div class="info"><div class="t">返回主页</div><div class="d">回到作品集主页，挑别的玩</div></div>
+        <button class="mini-btn" id="setHome">返回主页</button>
       </div>
     </div>
     <div class="panel">
@@ -2491,6 +2494,9 @@ $("quoteList").addEventListener("click", e => {
   toast("已收进摘抄本");
 });
 $("setQuotes").addEventListener("click", () => { switchTab("quotes"); renderQuotes(); });
+$("setHome").addEventListener("click", () => {
+  window.location.href = "https://jyx010320-gif.github.io/RabbitOvOTsuki/";
+});
 $("quotesBack").addEventListener("click", () => switchTab("setting"));
 $("quoteCards").addEventListener("click", e => {
   const btn = e.target.closest("[data-qdel]");
