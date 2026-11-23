@@ -1,21 +1,2637 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<title>半亩小院 · 合花</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%23E9EFD9'/%3E%3Cg fill='%23E8908B'%3E%3Cellipse cx='50' cy='30' rx='9' ry='14'/%3E%3Cellipse cx='50' cy='70' rx='9' ry='14'/%3E%3Cellipse cx='30' cy='50' rx='14' ry='9'/%3E%3Cellipse cx='70' cy='50' rx='14' ry='9'/%3E%3C/g%3E%3Ccircle cx='50' cy='50' r='10' fill='%23EDB44C'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="https://miaoda.feishu.cn/fonts/css2?family=Noto+Serif+SC:wght@600;700;900&family=Noto+Sans+SC:wght@300;400;500;700&display=swap">
 <style>
-.home-btn{flex:0 0 auto}
+/* ===== 设计变量：四时换色 ===== */
+:root{
+  --paper:#FAF6E7;
+  --paper-2:#F2EBD7;
+  --paper-3:#FFFCF0;
+  --ink:#22322B;
+  --ink-soft:#5B6A5C;
+  --ink-faint:#8A9689;
+  --line:rgba(34,50,43,.16);
+  --moss:#5E8259;
+  --leaf:#7FA96B;
+  --leaf-2:#A9C78B;
+  --clay:#C05A3E;
+  --marigold:#EDB44C;
+  --dew:#6FA79E;
+  --shadow:0 2px 0 rgba(34,50,43,.14);
+  --sky:#E2EAD6;
+  --soil:#DDC6A0;
+  --soil-2:#C9AF87;
+  --accent:#7FA96B;
+}
+body.s-1{--sky:#EEF0CE;--soil:#E6D6AC;--soil-2:#D6C193;--accent:#D8A03F;}
+body.s-2{--sky:#EEE1C9;--soil:#DCC49F;--soil-2:#CBAF86;--accent:#C06444;}
+body.s-3{--sky:#DFE7E9;--soil:#D9D3C2;--soil-2:#C6C0AE;--accent:#639099;}
+
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent;-webkit-user-select:none;-moz-user-select:none;user-select:none;-webkit-touch-callout:none}
+img,svg{-webkit-user-drag:none}
+html,body{margin:0;padding:0}
+html{touch-action:manipulation;-webkit-text-size-adjust:100%}
+body{
+  touch-action:manipulation;
+  min-height:100vh;
+  background:
+    radial-gradient(120% 80% at 50% -12%, rgba(255,255,255,.55), transparent 60%),
+    radial-gradient(90% 60% at 50% 115%, rgba(94,130,89,.16), transparent 65%),
+    var(--sky);
+  color:var(--ink);
+  font-family:"Noto Sans SC","PingFang SC","Microsoft YaHei",system-ui,sans-serif;
+  font-weight:400;
+  font-size:15px;
+  line-height:1.5;
+  transition:background-color .8s ease;
+  overflow-x:hidden;
+}
+body::before{
+  content:"";position:fixed;inset:0;pointer-events:none;z-index:0;
+  background-image:radial-gradient(rgba(34,50,43,.055) 1px, transparent 1px);
+  background-size:5px 5px;
+  opacity:.55;
+}
+
+/* ===== 版式 ===== */
+.page{position:relative;z-index:1;max-width:1160px;margin:0 auto;padding:22px 24px 40px}
+.top{display:flex;align-items:flex-end;justify-content:space-between;gap:18px;flex-wrap:wrap;margin-bottom:18px}
+.brand{display:flex;align-items:center;gap:14px}
+.stamp{
+  width:52px;height:52px;flex:0 0 auto;border-radius:50%;
+  border:1.5px solid rgba(34,50,43,.45);
+  background:var(--paper-3);
+  display:grid;place-items:center;
+  transform:rotate(-6deg);
+  box-shadow:var(--shadow);
+}
+.stamp svg{width:32px;height:32px;display:block}
+.brand h1{
+  margin:0;font-family:"Noto Serif SC","Songti SC",serif;font-weight:700;
+  font-size:clamp(26px,3.1vw,34px);letter-spacing:.06em;line-height:1.15;
+}
+.brand h1 span{color:var(--moss)}
+.brand p{margin:5px 0 0;font-size:12px;letter-spacing:.18em;color:var(--ink-soft)}
+.hud{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.chip{
+  display:inline-flex;align-items:center;gap:7px;height:36px;padding:0 13px;
+  background:var(--paper);border:1.2px solid var(--line);border-radius:999px;
+  box-shadow:var(--shadow);font-weight:500;font-variant-numeric:tabular-nums;
+  white-space:nowrap;
+}
+.chip svg{width:17px;height:17px;display:block}
+.chip.coin b{color:#A6711C;font-weight:700}
+.chip.dew b{color:#3C7570;font-weight:700}
+.chip.cal{padding-right:15px;cursor:default}
+.chip.cal .seasons{display:flex;gap:3px}
+.chip.cal .seasons i{width:6px;height:6px;border-radius:50%;background:rgba(34,50,43,.18);display:block}
+.chip.cal .seasons i.on{background:var(--accent)}
+.chip.cal span{font-size:13px;color:var(--ink-soft)}
+
+.layout{display:grid;grid-template-columns:250px minmax(0,1fr);gap:18px;align-items:start}
+.pane{display:contents}
+
+/* 底部标签栏 */
+.tabbar{display:none}
+.tab{
+  position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;
+  padding:6px 4px;border:0;background:transparent;font-family:inherit;font-size:11.5px;font-weight:500;
+  color:var(--ink-faint);border-radius:12px;cursor:pointer;touch-action:manipulation;
+  transition:background .16s ease,color .16s ease;
+}
+.tab svg{width:22px;height:22px;display:block}
+.tab[aria-selected="true"]{color:var(--ink);background:rgba(127,169,107,.18)}
+.tab[aria-selected="true"] svg{color:var(--moss)}
+.tab .badge{
+  position:absolute;top:1px;left:calc(50% + 8px);min-width:16px;height:16px;border-radius:8px;
+  background:var(--clay);color:#FFF6E6;font-style:normal;font-size:10px;line-height:16px;
+  text-align:center;padding:0 4px;font-weight:700;
+}
+.tab .badge.hide{display:none}
+
+/* ===== 面板 ===== */
+.panel{background:var(--paper);border:1.2px solid var(--line);border-radius:16px;box-shadow:var(--shadow)}
+.panel-pad{padding:16px}
+.sec-label{
+  display:flex;align-items:center;justify-content:space-between;
+  font-family:"Noto Serif SC",serif;font-weight:600;font-size:14px;letter-spacing:.08em;
+  margin:0 0 12px;color:var(--ink);
+}
+.sec-label small{font-family:"Noto Sans SC",sans-serif;font-weight:400;font-size:11px;letter-spacing:.04em;color:var(--ink-faint)}
+
+/* ===== 种子篮 ===== */
+.gen{display:flex;flex-direction:column;gap:10px}
+.gen-art{
+  position:relative;border:1.2px dashed rgba(34,50,43,.22);border-radius:14px;
+  background:linear-gradient(180deg,var(--paper-3),var(--paper-2));
+  padding:10px 10px 4px;cursor:pointer;transition:transform .15s ease, box-shadow .15s ease;
+  border:1.2px dashed rgba(34,50,43,.22);
+  touch-action:manipulation;
+}
+.gen-art:hover{transform:translateY(-1px)}
+.gen-art:active{transform:translateY(1px)}
+.gen-art svg{width:100%;height:100px;display:block}
+.gen-art .tap{
+  position:absolute;right:10px;bottom:9px;font-size:11px;letter-spacing:.06em;
+  color:var(--ink-soft);background:var(--paper);border:1px solid var(--line);border-radius:999px;padding:2px 8px;
+}
+.energy-bar{height:6px;border-radius:999px;background:rgba(34,50,43,.12);overflow:hidden}
+.energy-bar span{display:block;height:100%;background:linear-gradient(90deg,var(--dew),#9AC7B9);border-radius:999px;transition:width .3s ease}
+.dew-buy{
+  width:100%;margin-top:6px;font-family:inherit;font-size:11px;color:var(--ink-soft);
+  background:transparent;border:1px dashed rgba(34,50,43,.24);border-radius:8px;
+  padding:3px 6px;cursor:pointer;touch-action:manipulation;
+}
+.dew-buy:hover{background:rgba(255,255,255,.5);color:var(--ink)}
+.dew-buy:disabled{opacity:.42;cursor:not-allowed}
+.dew-buy.full{opacity:1;border-style:solid;border-color:var(--line);color:var(--ink-faint);cursor:default}
+.gen-btns{display:flex;flex-direction:column;gap:9px}
+.energy-row{display:flex;align-items:center;justify-content:space-between;font-size:12px;color:var(--ink-soft);font-variant-numeric:tabular-nums}
+.energy-row b{color:var(--ink);font-size:13px}
+.btn{
+  width:100%;font-family:inherit;font-size:13.5px;font-weight:500;color:var(--ink);
+  background:var(--paper-3);border:1.4px solid rgba(34,50,43,.5);border-radius:11px;
+  padding:9px 10px;cursor:pointer;box-shadow:0 3px 0 rgba(34,50,43,.18);
+  touch-action:manipulation;
+  transition:transform .1s ease, box-shadow .1s ease, background .15s ease;
+  display:flex;align-items:center;justify-content:center;gap:8px;
+}
+.btn:hover{background:#FFFDF4}
+.btn:active{transform:translateY(2px);box-shadow:0 1px 0 rgba(34,50,43,.18)}
+.btn.primary{background:linear-gradient(180deg,#F7CE71,#EDB44C);border-color:rgba(120,80,20,.55);box-shadow:0 3px 0 #B9862C}
+.btn.primary:hover{background:linear-gradient(180deg,#F9D682,#EFBB58)}
+.btn:disabled{opacity:.45;cursor:not-allowed;box-shadow:0 3px 0 rgba(34,50,43,.1);transform:none}
+.btn.mini{width:auto;padding:5px 10px;font-size:12px;border-radius:8px;box-shadow:0 2px 0 rgba(34,50,43,.16);font-weight:400}
+
+/* 收成筐 */
+.bowl{
+  margin-top:2px;border:1.4px dashed rgba(34,50,43,.28);border-radius:14px;
+  padding:12px;display:flex;align-items:center;gap:11px;background:rgba(255,255,255,.35);
+  transition:background .15s ease,border-color .15s ease,transform .15s ease;
+}
+.bowl.over{border-color:var(--clay);background:#FBEFE4;transform:scale(1.02)}
+.bowl svg{width:40px;height:34px;flex:0 0 auto}
+.bowl .txt{font-size:12.5px;color:var(--ink-soft);line-height:1.35}
+.bowl .txt b{display:block;color:var(--ink);font-size:13px;font-weight:600}
+.bowl .sub{display:inline}
+
+/* 图鉴 */
+.dex{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-top:14px}
+.dex-cell{
+  position:relative;border:1px solid var(--line);border-radius:10px;background:var(--paper-3);
+  padding:5px 4px 4px;text-align:center;overflow:hidden;
+}
+.dex-cell i{position:absolute;left:5px;top:3px;font-style:normal;font-size:8.5px;color:var(--ink-faint);font-variant-numeric:tabular-nums}
+.dex-cell svg{width:32px;height:32px;display:block;margin:2px auto 0}
+.dex-cell em{display:block;font-style:normal;font-size:10.5px;color:var(--ink);letter-spacing:.04em;white-space:nowrap}
+.dex-cell.locked{background:rgba(34,50,43,.05);border-style:dashed}
+.dex-cell.locked .qm{
+  height:34px;display:grid;place-items:center;font-size:15px;line-height:1;
+  color:var(--ink-faint);font-family:"Noto Serif SC",serif;opacity:.55;
+}
+
+/* 历法条 */
+.almanac{margin-top:16px}
+.year-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:7px}
+.yr{display:flex;flex-direction:column;gap:4px}
+.yr-days{display:flex;gap:2px}
+.yr-days i{display:block;height:18px;flex:1;border-radius:3px;background:rgba(34,50,43,.1);transition:background .3s ease}
+.yr-days i.past{background:rgba(94,130,89,.42)}
+.yr-days i.now{background:var(--accent);box-shadow:0 0 0 1.5px rgba(34,50,43,.55)}
+.yr span{font-size:10px;text-align:center;color:var(--ink-faint);letter-spacing:.04em}
+.yr.on span{color:var(--ink);font-weight:500}
+
+/* 集齐进度 */
+.dex-progress{display:none;margin-top:16px;border-top:1px dashed var(--line);padding-top:14px}
+.dp-top{display:flex;align-items:baseline;justify-content:space-between;font-size:12px;color:var(--ink-soft);letter-spacing:.04em}
+.dp-top b{color:var(--ink);font-size:13px;font-variant-numeric:tabular-nums}
+.dp-bar{height:6px;border-radius:999px;background:rgba(34,50,43,.12);overflow:hidden;margin:8px 0 9px}
+.dp-bar span{display:block;height:100%;background:linear-gradient(90deg,var(--leaf),var(--moss));border-radius:999px;transition:width .3s ease}
+.dex-progress p{margin:0;font-size:11.5px;color:var(--ink-faint);letter-spacing:.03em}
+.pane-tools{display:none;align-items:center;gap:10px;margin-top:18px;padding-top:14px;border-top:1px dashed var(--line)}
+.pane-tools .btn.mini{width:auto;padding:5px 12px;font-size:12px}
+
+/* ===== 田地 ===== */
+.boardcol{display:flex;flex-direction:column;align-items:center;gap:12px;min-width:0}
+.ord-strip{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr) minmax(0,1fr) 26px;gap:6px;width:100%;max-width:512px}
+.os{
+  display:flex;align-items:center;gap:6px;padding:5px 7px;
+  border:1px solid var(--line);border-radius:11px;background:rgba(255,255,255,.55);
+  cursor:pointer;transition:transform .12s ease,border-color .12s ease,background .12s ease;
+}
+.os:hover{transform:translateY(-1px)}
+.os.ok{border-color:rgba(127,169,107,.7);background:rgba(127,169,107,.14)}
+.os .os-art{width:20px;height:20px;flex:0 0 auto}
+.os .os-art svg{width:20px;height:20px;display:block}
+.os .os-mid{min-width:0;display:flex;flex-direction:column;gap:1px}
+.os .os-nm{font-size:10px;color:var(--ink);letter-spacing:.02em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.os .os-sub{font-size:9px;color:var(--ink-faint);white-space:nowrap;letter-spacing:.02em}
+.os.ok .os-sub{color:#4E7A45}
+.os-more{
+  display:grid;place-items:center;border:1px solid var(--line);border-radius:11px;
+  background:rgba(255,255,255,.55);color:var(--ink-soft);font-size:13px;line-height:1;cursor:pointer;padding:0;
+}
+.ord-sheet{width:min(366px,100%);max-height:80vh;display:flex;flex-direction:column}
+.ord-sheet .orders{overflow:auto;-webkit-overflow-scrolling:touch;margin:8px 0 6px;padding:1px 2px;min-height:0}
+.ord-sheet .order,.ord-sheet .visitor-bar{flex:0 0 auto}
+.ord-sheet .order{padding:9px 10px 10px}
+.ord-sheet .o-top{margin-bottom:7px}
+.ord-sheet .o-want{margin-bottom:7px}
+.ord-sheet .o-item{width:36px;height:36px}
+.ord-sheet .o-actions .btn{height:34px;font-size:13px}
+.garden{
+  width:100%;max-width:512px;background:var(--paper);border:1.2px solid var(--line);
+  border-radius:20px;padding:14px;box-shadow:var(--shadow);
+}
+.garden-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;padding:0 3px}
+.garden-head .t{font-family:"Noto Serif SC",serif;font-size:13px;letter-spacing:.12em;color:var(--ink-soft)}
+.garden-head .m{font-size:11px;color:var(--ink-faint);letter-spacing:.04em}
+.board{
+  position:relative;display:grid;grid-template-columns:repeat(6,1fr);gap:6px;
+  padding:10px;border-radius:16px;
+  background:
+    radial-gradient(90% 70% at 18% 8%, rgba(255,255,255,.5), transparent 60%),
+    var(--soil);
+  box-shadow:inset 0 2px 6px rgba(90,66,35,.18);
+}
+.cell{
+  position:relative;aspect-ratio:1;border-radius:12px;
+  background:linear-gradient(180deg,#FDF5DF,#F3E5C6);
+  border:1px solid rgba(120,95,60,.16);
+  box-shadow:inset 0 2px 0 #FFFDF5, inset 0 -3px 0 rgba(120,95,60,.14);
+  display:grid;place-items:center;
+  touch-action:manipulation;
+  transition:background .12s ease, outline-color .12s ease;
+  outline:2px solid transparent;outline-offset:-2px;
+}
+.cell.over{background:#FFF8DF;outline-color:var(--moss)}
+.cell.sel{outline-color:var(--marigold)}
+.cell .item{position:absolute;left:0;right:0;bottom:4%;margin:0 auto;
+  height:92%;width:auto;aspect-ratio:1;max-width:92%;max-height:92%;
+  display:block;cursor:grab;touch-action:none;transition:transform .12s ease;}
+.cell .item svg{width:100%;height:100%;display:block;pointer-events:none}
+.cell .item.dragging{opacity:.28;transform:scale(.9)}
+.cell .item.pop{animation:pop .38s cubic-bezier(.3,1.6,.5,1)}
+@keyframes pop{0%{transform:scale(.4);opacity:.5}60%{transform:scale(1.12)}100%{transform:scale(1)}}
+.hint-line{font-size:11.5px;color:var(--ink-faint);letter-spacing:.03em;text-align:center;margin:0}
+.hint-line kbd{font-family:inherit;border:1px solid var(--line);border-radius:5px;padding:0 5px;background:var(--paper-3);color:var(--ink-soft)}
+
+/* ===== 订单 ===== */
+.orders{display:flex;flex-direction:column;gap:10px}
+.order{
+  border:1px solid var(--line);border-radius:13px;background:var(--paper-3);
+  padding:11px 11px 10px;position:relative;overflow:hidden;
+}
+.order.done{animation:doneOut .5s ease forwards}
+@keyframes doneOut{to{opacity:.25;transform:scale(.96)}}
+.order.seasonal{border-color:rgba(192,90,62,.42);background:linear-gradient(180deg,#FFF7E8,#FFFCF2)}
+.o-top{display:flex;align-items:center;gap:8px;margin-bottom:9px}
+.avatar{
+  width:26px;height:26px;flex:0 0 auto;border-radius:50%;display:grid;place-items:center;
+  font-family:"Noto Serif SC",serif;font-size:12px;color:#FBF7E9;background:var(--moss);
+  border:1px solid rgba(34,50,43,.25);
+}
+.o-name{font-size:12.5px;font-weight:500;color:var(--ink);flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tag{
+  font-size:10px;letter-spacing:.06em;color:var(--clay);border:1px solid rgba(192,90,62,.5);
+  border-radius:999px;padding:0 6px;line-height:16px;flex:0 0 auto;background:#FFF3E4;
+}
+.o-want{display:flex;align-items:center;gap:6px;margin-bottom:10px;flex-wrap:wrap}
+.o-item{position:relative;width:38px;height:38px;border-radius:9px;background:var(--paper-2);border:1px solid rgba(34,50,43,.1);display:grid;place-items:center}
+.o-item svg{width:30px;height:30px;display:block}
+.o-item b{position:absolute;right:-3px;bottom:-4px;font-size:10px;font-weight:700;background:var(--ink);color:#FBF7E9;border-radius:999px;padding:0 4px;line-height:13px;font-variant-numeric:tabular-nums}
+.o-reward{display:flex;align-items:center;gap:5px;font-size:12px;color:var(--ink-soft);margin-bottom:9px}
+.o-reward b{color:#A6711C;font-size:14px;font-variant-numeric:tabular-nums}
+.o-actions{display:flex;gap:6px}
+.o-actions .btn{flex:1}
+.o-actions .btn.mini{flex:0 0 auto;width:38px;padding:5px 0}
+
+/* ===== 页脚 / 提示 ===== */
+.foot{margin-top:22px;display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;font-size:11.5px;color:var(--ink-soft)}
+.foot .stat{display:flex;gap:14px;font-variant-numeric:tabular-nums}
+.foot .stat b{color:var(--ink);font-weight:600}
+.foot-actions{display:flex;gap:8px;align-items:center}
+.icon-btn{
+  width:32px;height:32px;display:grid;place-items:center;border-radius:9px;
+  border:1.2px solid var(--line);background:var(--paper);cursor:pointer;box-shadow:var(--shadow);
+  touch-action:manipulation;
+}
+.icon-btn svg{width:16px;height:16px;display:block}
+.icon-btn:active{transform:translateY(1px)}
+
+.toast{
+  position:fixed;left:50%;bottom:26px;transform:translate(-50%,20px);
+  background:var(--ink);color:#FAF6E7;font-size:13px;padding:9px 16px;border-radius:999px;
+  opacity:0;pointer-events:none;transition:opacity .25s ease,transform .25s ease;z-index:60;
+  max-width:min(88vw,460px);text-align:center;
+}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+
+/* 拖拽幽灵 & 特效 */
+.drag-layer{position:fixed;inset:0;pointer-events:none;z-index:50}
+.ghost{position:absolute;width:74px;height:74px;transform:translate(-50%,-50%) scale(1.08);filter:drop-shadow(0 8px 12px rgba(34,50,43,.25))}
+.ghost svg{width:100%;height:100%;display:block}
+.spark{position:absolute;width:7px;height:7px;border-radius:50%;background:var(--marigold);pointer-events:none;animation:spark .62s ease-out forwards}
+.spark.g{background:var(--leaf-2)}
+@keyframes spark{0%{transform:translate(0,0) scale(.4);opacity:1}100%{transform:translate(var(--dx),var(--dy)) scale(1.2);opacity:0}}
+.float{position:absolute;font-size:13px;font-weight:700;color:#A6711C;pointer-events:none;animation:floatUp .9s ease-out forwards;text-shadow:0 1px 0 #fff}
+@keyframes floatUp{0%{transform:translate(-50%,0);opacity:0}20%{opacity:1}100%{transform:translate(-50%,-40px);opacity:0}}
+
+/* ===== 教学弹层 ===== */
+.modal{position:fixed;inset:0;z-index:70;display:grid;place-items:center;padding:20px;background:rgba(34,50,43,.34);backdrop-filter:blur(2px)}
+.modal.hide{display:none}
+.sheet{
+  width:min(430px,100%);background:var(--paper);border:1.4px solid rgba(34,50,43,.4);border-radius:18px;
+  padding:22px;box-shadow:0 16px 40px rgba(34,50,43,.26);position:relative;
+}
+.sheet h2{font-family:"Noto Serif SC",serif;font-size:20px;margin:0 0 3px;letter-spacing:.08em}
+.sheet .sub{font-size:12px;color:var(--ink-soft);letter-spacing:.1em;margin-bottom:16px}
+.sheet ul{list-style:none;padding:0;margin:0 0 16px;display:flex;flex-direction:column;gap:12px}
+.sheet li{display:flex;gap:11px;align-items:flex-start;font-size:13.5px;line-height:1.55}
+.sheet li .n{
+  flex:0 0 auto;width:22px;height:22px;border-radius:50%;background:var(--moss);color:#FBF7E9;
+  font-family:"Noto Serif SC",serif;font-size:12px;display:grid;place-items:center;margin-top:1px;
+}
+.sheet .note{font-size:11.5px;color:var(--ink-faint);letter-spacing:.04em;border-top:1px dashed var(--line);padding-top:10px;margin-bottom:16px}
+
+.panel-left{grid-column:1;grid-row:1}
+.panel-dex{grid-column:1;grid-row:2}
+.panel-home{grid-column:2;grid-row:3}
+.boardcol{grid-column:2;grid-row:1/span 2}
+.panel-right{grid-column:3;grid-row:1/span 2}
+
+/* ===== 小院页 ===== */
+.stands{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:3px}
+.stand{
+  position:relative;border:1.2px dashed var(--line);border-radius:9px;
+  background:rgba(255,255,255,.38);padding:5px 2px 4px;min-height:0;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;
+  cursor:pointer;transition:transform .12s ease,border-color .12s ease,background .12s ease;
+}
+.stand:hover{transform:translateY(-1px);border-color:var(--moss)}
+.stand:active{transform:translateY(1px)}
+.stand.filled{border-style:solid;border-color:rgba(127,169,107,.55);background:var(--paper-3)}
+.stand.off{opacity:.55}
+.stand.ready{border-style:solid;border-color:rgba(127,169,107,.75);background:rgba(127,169,107,.13)}
+.stand.ready::after{content:'';position:absolute;top:4px;right:4px;width:5px;height:5px;border-radius:50%;background:var(--moss)}
+.stand.off.filled{opacity:1}
+.stand .art{width:26px;height:26px;display:block}
+.stand .art svg{width:26px;height:26px;display:block}
+.stand .nm{font-size:8.5px;color:var(--ink-soft);letter-spacing:0;white-space:nowrap;line-height:1;margin-top:1px}
+.stand .bf{display:none}
+.stand .ph{display:block;width:26px;height:26px;position:relative}
+.stand .ph i{position:absolute;inset:0;margin:auto;width:7px;height:7px;border-radius:50%;opacity:.5;display:block}
+.stand .ph small{display:none}
+.stand-tip{margin:8px 0 0;font-size:11px;color:var(--ink-faint);text-align:center;letter-spacing:.03em}
+.stand-legend{margin:4px 0 0;font-size:10px;color:rgba(34,50,43,.42);text-align:center;letter-spacing:.02em}
+.dexsum{border:1px solid rgba(127,169,107,.45);border-radius:12px;background:rgba(127,169,107,.10);padding:9px 11px;margin-bottom:10px}
+.ds-top{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--ink);letter-spacing:.03em}
+.ds-top b{margin-left:auto;font-variant-numeric:tabular-nums;font-size:12.5px}
+.ds-got{font-size:10px;color:#8A6416;white-space:nowrap}
+.ds-bar{height:4px;border-radius:2px;background:rgba(34,50,43,.10);margin-top:7px;overflow:hidden}
+.ds-bar i{display:block;height:100%;background:var(--moss);border-radius:2px;transition:width .25s}
+.ds-foot{margin-top:6px;font-size:10px;color:var(--ink-faint);letter-spacing:.02em}
+.varsdex{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px}
+.dv{position:relative;border:1px solid var(--line);border-radius:10px;background:var(--paper-3);padding:6px 3px 5px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;min-height:92px}
+.dv.on{border-color:rgba(127,169,107,.6);background:rgba(127,169,107,.10)}
+.dv.lock{border-style:dashed;background:rgba(34,50,43,.045)}
+.dv .art svg{width:38px;height:38px;display:block}
+.dv.lock .art{filter:grayscale(1);opacity:.34}
+.dv .nm{font-size:10px;color:var(--ink);white-space:nowrap;letter-spacing:.02em}
+.dv.lock .nm{color:var(--ink-faint)}
+.dv .tg{font-size:8.5px;color:var(--ink-faint);line-height:1;white-space:nowrap}
+.dv .rw{font-size:8.5px;color:#8A6416;font-variant-numeric:tabular-nums;line-height:1;white-space:nowrap}
+.dv.on .rw{color:var(--moss)}
+.dv .ck{position:absolute;right:4px;top:3px;width:12px;height:12px;border-radius:50%;background:var(--moss);color:#FBF7E9;font-size:8.5px;display:grid;place-items:center;line-height:1}
+.lv-sheet{width:min(360px,100%)}
+.lv-close{width:30px;height:30px;border-radius:50%;border:1px solid var(--line);background:rgba(255,255,255,.6);color:var(--ink-soft);font-size:16px;line-height:1;cursor:pointer}
+.lv-head{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.lv-head h3{margin:0;font-size:16px;color:var(--ink);letter-spacing:.04em}
+.lv-sub{margin:3px 0 0;font-size:11px;color:var(--ink-faint);letter-spacing:.04em}
+.lv-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:5px;margin:12px 0 6px}
+.lv-cell{border:1px solid var(--line);border-radius:10px;background:var(--paper-3);padding:6px 2px 5px;text-align:center}
+.lv-cell.lock{border-style:dashed;background:rgba(34,50,43,.045)}
+.lv-cell .art svg{width:38px;height:38px;display:block;margin:0 auto}
+.lv-cell.lock .art{filter:grayscale(1);opacity:.32}
+.lv-no{font-size:9px;color:var(--ink-faint);font-variant-numeric:tabular-nums;margin-top:2px}
+.lv-nm{font-size:10px;color:var(--ink);white-space:nowrap;line-height:1.2}
+.lv-cell.lock .lv-nm{color:var(--ink-faint)}
+.lv-st{font-size:8.5px;color:var(--moss);line-height:1.2}
+.lv-cell.lock .lv-st{color:rgba(34,50,43,.35)}
+.lv-note{margin:4px 0 0;font-size:10.5px;color:var(--ink-faint);text-align:center;line-height:1.5}
+.season-note{
+  margin-top:12px;padding:10px 12px;border-radius:13px;
+  border:1px solid rgba(127,169,107,.35);background:rgba(127,169,107,.10);
+  display:flex;align-items:center;gap:10px;
+}
+.season-note .sn-ic{width:28px;height:28px;flex:0 0 auto}
+.season-note .sn-t{font-size:12.5px;color:var(--ink);letter-spacing:.03em}
+.season-note .sn-d{font-size:10.5px;color:var(--ink-soft);margin-top:2px;letter-spacing:.02em}
+.buff-row{display:flex;flex-wrap:wrap;gap:6px;margin-top:9px}
+.buff-pill{
+  font-size:10.5px;color:var(--ink-soft);letter-spacing:.02em;
+  border:1px solid var(--line);border-radius:999px;padding:3px 9px;background:var(--paper-3);
+  font-variant-numeric:tabular-nums;
+}
+.buff-pill.hot{color:var(--moss);border-color:rgba(127,169,107,.5);background:rgba(127,169,107,.10)}
+.vars{display:flex;flex-wrap:wrap;align-items:center;gap:5px 5px;margin:0}
+.vars-cap{font-size:10.5px;color:var(--ink-faint);letter-spacing:.06em;margin-right:2px}
+.vchip{display:inline-flex;align-items:center;gap:4px;font-size:10.5px;color:var(--ink-soft);
+  border:1px solid var(--line);border-radius:999px;padding:2px 7px;background:var(--paper-3);letter-spacing:.02em}
+.vchip i{width:8px;height:8px;border-radius:50%;display:block;flex:0 0 auto}
+.vchip{flex:0 0 auto}
+.goal{border:1px solid rgba(127,169,107,.45);border-radius:12px;background:rgba(127,169,107,.10);padding:9px 11px;margin-bottom:10px}
+.goal.done{border-color:rgba(127,169,107,.72);background:rgba(127,169,107,.17)}
+.goal-top{display:flex;align-items:center;gap:8px}
+.goal-t{font-size:12px;color:var(--ink);letter-spacing:.03em}
+.goal-c{font-size:11px;color:var(--ink-soft);font-variant-numeric:tabular-nums;margin-left:auto}
+.goal-r{font-size:10.5px;color:#8A6416;font-weight:700;white-space:nowrap}
+.goal-bar{height:4px;border-radius:2px;background:rgba(34,50,43,.10);margin-top:7px;overflow:hidden}
+.goal-bar i{display:block;height:100%;background:var(--moss);border-radius:2px;transition:width .25s}
+.vchip.off{opacity:.5}
+.vchip.off i{background:#C9C3B6 !important}
+.vars-hint{flex-basis:100%;font-size:10px;color:rgba(34,50,43,.42);letter-spacing:.02em}
+.miles{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+.mile{border:1px solid var(--line);border-radius:11px;background:var(--paper-3);padding:9px 7px;text-align:center}
+.mile.get{border-color:rgba(127,169,107,.6);background:rgba(127,169,107,.12)}
+.tip-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:7px}
+.tip-list li{display:flex;align-items:center;gap:8px;font-size:11.5px;color:var(--ink-soft);letter-spacing:.02em}
+.tip-list li i{width:5px;height:5px;border-radius:50%;background:rgba(127,169,107,.6);flex:0 0 auto}
+.mile .mt{font-size:11px;color:var(--ink);letter-spacing:.04em}
+.mile .ms{font-size:10px;color:var(--ink-faint);margin-top:3px;line-height:1.35}
+.mile .mk{font-size:10px;color:var(--moss);margin-top:3px;font-weight:600}
+.mile .mk.off{color:var(--ink-faint)}
+.visitor-bar{
+  border:1.2px solid rgba(202,152,58,.78);border-radius:13px;background:rgba(243,206,125,.20);
+  padding:9px 10px;
+}
+.vb-top{display:flex;align-items:center;gap:7px}
+.vb-top .avatar{width:24px;height:24px;font-size:12px;background:#DFB25F;color:#FFF8E4;border-width:1px}
+.vb-name{font-size:12.5px;color:var(--ink);letter-spacing:.03em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.vb-shoo{margin-left:2px;flex:0 0 auto;width:22px;height:22px;border-radius:50%;border:1px solid rgba(154,107,24,.4);
+  background:rgba(255,255,255,.5);color:#8A6416;font-size:10.5px;line-height:1;cursor:pointer;padding:0}
+.v-tag{margin-left:auto;font-size:10px;color:#8A6416;border:1px solid rgba(154,107,24,.45);border-radius:999px;padding:1px 7px;white-space:nowrap;letter-spacing:.02em}
+.vb-mid{display:flex;align-items:center;gap:8px;margin-top:8px}
+.vb-item{width:32px;height:32px;flex:0 0 auto;border-radius:9px}
+.vb-want{font-size:11.5px;color:var(--ink-soft);white-space:nowrap}
+.vb-price{font-size:12px;color:#8A6416;font-weight:700;font-variant-numeric:tabular-nums;margin-left:auto;white-space:nowrap}
+.vb-btn{height:32px;width:auto !important;padding:0 12px;font-size:12px;border-radius:10px;flex:0 0 auto;box-shadow:0 2px 0 rgba(34,50,43,.14)}
+
+/* ===== 响应式 ===== */
+@media (max-width:1020px){
+  .layout{display:block}
+  .pane{display:none}
+  .pane.on{display:block}
+  .pane-garden > .panel-left{margin-bottom:14px}
+  .page{padding-bottom:calc(82px + env(safe-area-inset-bottom))}
+  .tabbar{
+    display:grid;grid-template-columns:repeat(4,1fr);gap:3px;
+    position:fixed;left:0;right:0;bottom:0;z-index:45;
+    background:rgba(250,246,231,.97);
+    border-top:1.2px solid var(--line);
+    box-shadow:0 -8px 22px rgba(34,50,43,.12);
+    padding:6px 12px calc(6px + env(safe-area-inset-bottom));
+  }
+  .garden{max-width:520px}
+  .dex-progress{display:block}
+  .dex{grid-template-columns:repeat(8,1fr)}
+}
 @media (max-width:620px){
+  /* 一屏铺满：高度自适应，任何屏都不出现整页滚动 */
+  html,body{height:100%;overflow:hidden}
+  .page{
+    height:100vh;height:100dvh;box-sizing:border-box;
+    display:flex;flex-direction:column;
+    padding:8px 10px calc(70px + env(safe-area-inset-bottom));
+  }
+  .layout{flex:1;min-height:0;display:flex;flex-direction:column;align-items:stretch}
+  .pane.on{flex:1;min-height:0;display:flex;flex-direction:column;align-items:stretch;overflow-y:auto;-webkit-overflow-scrolling:touch}
+  .pane.on > .panel{width:100%;min-width:0}
+  .pane-garden.on{overflow:hidden}
+  .boardcol{flex:1;min-height:0}
+  .boardcol > .garden{flex:1;min-height:0;display:flex;flex-direction:column;justify-content:center;padding:10px}
+  .board{flex:0 0 auto;width:100%;grid-template-columns:repeat(6,minmax(0,1fr));grid-auto-rows:auto;overflow:visible}
+  .cell{aspect-ratio:1;min-height:0}
+  .hint-line{flex:0 0 auto;margin:6px 0 10px;font-size:10.5px}
+  .page{padding:8px 10px calc(70px + env(safe-area-inset-bottom))}
+  .top{align-items:center;gap:8px;margin-bottom:8px}
+  .brand{gap:10px}
+  .stamp{width:34px;height:34px}
+  .stamp svg{width:21px;height:21px}
+  .brand h1{font-size:20px;letter-spacing:.04em}
+  .brand p{font-size:9.5px;letter-spacing:.1em;margin-top:3px}
+  .hud{width:100%;gap:6px}
   .home-btn{position:absolute;top:8px;right:10px;padding:4px 9px;font-size:11.5px;border-radius:8px}
+  .chip{height:28px;padding:0 9px;font-size:12px;gap:5px}
+  .chip svg{width:14px;height:14px}
+  .chip.cal{padding:0 9px}
+  .chip.cal span{font-size:11.5px}
+  .garden{padding:10px;border-radius:16px}
+  .board{gap:6px;padding:7px}
+  .cell{border-radius:9px}
+  .dex{grid-template-columns:repeat(4,1fr);gap:6px}
+  .dex-cell svg{width:30px;height:30px}
+  /* 图鉴页：两列大卡 */
+  .pane-dex .dex{grid-template-columns:repeat(2,1fr);grid-auto-rows:1fr;gap:6px;margin-top:10px}
+  .pane-dex .vars{margin-bottom:8px}
+  .pane-home .stand{min-height:clamp(52px,7.6vh,72px);padding:5px 3px 4px;gap:1px}
+  .pane-home .stand .art{width:28px;height:28px}
+  .pane-home .stand .art svg{width:28px;height:28px}
+  .pane-home .stand .nm{font-size:8.5px}
+  .pane-orders .order{padding:9px 10px 8px}
+  .pane-orders .o-top{margin-bottom:7px}
+  .pane-orders .o-want{margin-bottom:7px}
+  .pane-orders .o-reward{margin-bottom:7px}
+  .pane-orders .o-item{width:34px;height:34px}
+  .pane-orders .o-actions .btn{height:34px;font-size:13px}
+  .pane-orders .orders{gap:8px}
+  .pane-home .miles{gap:6px}
+  .pane-home .mile{padding:7px 5px}
+  .pane-dex .dex-cell{padding:8px 8px 6px}
+  .pane-dex .dex-cell i{left:8px;top:5px;font-size:9.5px}
+  .pane-dex .dex-cell svg{width:42px;height:42px;margin-top:3px}
+  .pane-dex .dex-cell .qm{height:43px;font-size:20px}
+  .pane-dex .dex-cell em{font-size:12.5px}
+  .pane-tools{display:flex}
+  .foot{display:none}
+  /* 种子篮压成一条操作栏 */
+  .panel-left{padding:8px}
+  .panel-left > .sec-label{display:none}
+  .gen{display:grid;grid-template-columns:48px minmax(0,1fr) auto;grid-template-rows:auto auto;gap:6px;align-items:center}
+  .gen-art{grid-area:1/1/2/2;height:48px;padding:2px;display:flex;align-items:center;justify-content:center}
+  .gen-art svg{height:44px}
+  .gen-art .tap{right:2px;bottom:1px;font-size:8px;padding:0 3px;white-space:nowrap}
+  .gen-meter{grid-area:1/2/2/3}
+  #takeBtn{grid-area:1/3/2/4;height:40px;padding:0 11px;font-size:12.5px;align-self:center;white-space:nowrap}
+  #takeBtn .cost{display:none}
+  .gen-btns{grid-area:2/1/3/3;flex-direction:row;gap:6px}
+  .gen-btns .btn{flex:1;padding:6px 3px;font-size:11px;box-shadow:0 2px 0 rgba(34,50,43,.16)}
+  .bowl{grid-area:2/3/3/4;margin:0;padding:5px 7px;gap:4px;align-self:stretch;display:flex;align-items:center}
+  .bowl svg{width:20px;height:17px}
+  .bowl .txt{font-size:10px;line-height:1.2}
+  .bowl .txt b{font-size:12px;line-height:1.1}
+  .bowl .sub{display:none}
+  .foot{font-size:11px}
+  .ghost{width:62px;height:62px}
+}
+@media (max-width:620px) and (max-height:800px){
+  .stand-legend{font-size:9px;line-height:1.25;white-space:nowrap}
+  .stand-tip{margin-top:5px;font-size:10px}
+  .season-note{padding:8px 10px}
+  .pane-home .sec-label{margin:8px 0 4px !important}
+  .goal{padding:7px 10px;margin-bottom:8px}
+  .goal-bar{margin-top:5px}
+  .stand-tip{margin-top:6px}
+  .season-note{margin-top:7px}
+  .panel-home .sec-label{margin:8px 0 4px !important}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation-duration:.01ms !important;transition-duration:.01ms !important}
+}
+/* 矮屏（如 iPhone SE / 小尺寸 iOS）：再压一档，田地优先 */
+@media (max-width:620px) and (max-height:800px){
+  .page{padding:6px 10px calc(60px + env(safe-area-inset-bottom))}
+  .top{margin-bottom:6px;gap:6px}
+  .stamp{width:28px;height:28px}
+  .stamp svg{width:18px;height:18px}
+  .brand h1{font-size:17px}
+  .brand p{display:none}
+  .chip{height:25px;font-size:11px;padding:0 8px;gap:4px}
+  .chip svg{width:13px;height:13px}
+  .chip.cal span{font-size:11px}
+  .panel-left{padding:6px}
+  .gen{grid-template-columns:44px minmax(0,1fr) auto;gap:5px}
+  .gen-art{height:44px}
+  .gen-art svg{height:40px}
+  .gen-art .tap{display:none}
+  #takeBtn{height:34px;font-size:12px;padding:0 10px;border-radius:11px}
+  .gen-btns .btn{padding:5px 3px;font-size:10.5px;border-radius:9px}
+  .bowl{padding:4px 6px}
+  .bowl svg{width:17px;height:15px}
+  .bowl .txt b{font-size:11px}
+  .garden{padding:8px;border-radius:14px}
+  .board{gap:5px;padding:6px}
+  .cell{border-radius:9px}
+  .garden-head{margin-bottom:6px}
+  .board{padding:6px;gap:5px}
+  .hint-line{display:none}
+  .tabbar{padding:4px 12px calc(4px + env(safe-area-inset-bottom))}
+  .tab svg{width:19px;height:19px}
+  .tab span{font-size:10.5px}
+  .pane-dex .dex-cell svg{width:36px;height:36px}
+  .pane-dex .dex-cell .qm{height:37px;font-size:18px}
+  .pane-dex .dex-cell em{font-size:11.5px}
+  .pane-home .stand{min-height:94px;padding:10px 4px 9px;gap:3px}
+  .pane-home .stand .art{width:40px;height:40px}
+  .pane-home .stand .art svg{width:40px;height:40px}
+  .pane-home .stand .nm{font-size:9.5px}
+  .pane-home .stand-tip{margin-top:12px;font-size:11.5px}
+  .pane-home .season-note{margin-top:14px;padding:12px 12px}
+  .pane-home .buff-row{margin-top:9px;gap:5px}
+  .pane-home .buff-pill{font-size:10.5px;padding:3px 8px}
+  .pane-home .mile{padding:10px 6px}
+  .pane-home .mile .ms{font-size:9.5px}
+  .pane-home .tip-list li{font-size:11px}
+}
+@media (max-width:620px) and (max-height:700px){
+  .varsdex{gap:5px}
+  .dv{min-height:78px;padding:4px 3px 4px}
+  .dv .art svg{width:32px;height:32px}
+  .dv .nm{font-size:9.5px}
+  .ds-foot{display:none}
+  .pane-home .stand{min-height:72px;padding:7px 3px 6px;gap:2px}
+  .pane-home .stand .art,.pane-home .stand .art svg{width:33px;height:33px}
+  .pane-home .stand .nm{font-size:9px}
+  .pane-home .stand-tip{margin-top:8px;font-size:10.5px}
+  .pane-home .season-note{padding:9px 10px;margin-top:10px}
+  .pane-home .miles{gap:7px}
+}
+/* 卖花价目 */
+.price-row{display:flex;flex-wrap:wrap;gap:3px 5px;justify-content:center;margin:7px 0 0;padding:0 2px}
+.price-row span{display:inline-flex;align-items:center;gap:2px;font-size:9.5px;color:var(--ink-soft);background:rgba(255,255,255,.5);border:1px solid rgba(34,50,43,.12);border-radius:999px;padding:2px 6px;letter-spacing:.02em}
+.price-row b{font-variant-numeric:tabular-nums;color:#A6711C;font-weight:700}
+.price-row em{font-style:normal;color:var(--ink-faint);font-size:9px}
+/* ===== 小屋 ===== */
+.panel-room{grid-column:1;grid-row:3}
+.room{
+  position:relative;width:100%;border-radius:14px;overflow:hidden;margin-top:6px;
+  background:linear-gradient(180deg,#FBF4E4,#F1E3C6);border:1px solid rgba(34,50,43,.10);
+}
+.room svg{display:block;width:100%;height:auto}
+.room-warmth{display:flex;align-items:center;justify-content:space-between;font-size:11px;color:var(--ink-soft);margin:8px 2px 0;letter-spacing:.03em}
+.room-warmth b{color:#A6711C;font-variant-numeric:tabular-nums}
+.room-tabs{display:flex;flex-wrap:wrap;gap:5px;margin-top:6px}
+.rt{
+  padding:5px 10px;border-radius:999px;border:1.2px solid var(--line);
+  background:rgba(255,255,255,.55);font-family:inherit;font-size:11px;color:var(--ink-soft);
+  cursor:pointer;transition:background .14s ease,border-color .14s ease,color .14s ease;
+}
+.rt:hover{border-color:var(--moss)}
+.rt.on{background:rgba(127,169,107,.18);border-color:rgba(127,169,107,.65);color:var(--ink);font-weight:600}
+.room-shop{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;margin-top:10px}
+.rf{
+  position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;
+  min-height:56px;padding:6px 3px 5px;border-radius:11px;border:1.2px dashed var(--line);
+  background:rgba(255,255,255,.55);cursor:pointer;font-family:inherit;color:var(--ink);
+  transition:transform .12s ease,border-color .12s ease,background .12s ease;
+}
+.rf:hover{transform:translateY(-1px)}
+.rf:active{transform:translateY(1px)}
+.rf .nm{font-size:11px;letter-spacing:.04em;line-height:1}
+.rf .pr{font-size:9.5px;color:var(--ink-faint);display:flex;align-items:center;gap:3px;line-height:1}
+.rf .pr i{width:7px;height:7px;border-radius:50%;background:#F3CE7D;border:1px solid #9A6B18;display:inline-block}
+.rf.on{border-style:solid;border-color:rgba(127,169,107,.7);background:rgba(127,169,107,.16)}
+.rf.on .pr{color:var(--moss)}
+.rf.off{opacity:.62}
+.rf.poor{opacity:.72}
+.room-tip{margin:9px 0 0;font-size:10.5px;color:var(--ink-faint);text-align:center;letter-spacing:.02em}
+@media (max-width:620px){
+  .room-shop{grid-template-columns:repeat(5,minmax(0,1fr));gap:5px}
+  .rf{min-height:50px}
+  .rf .nm{font-size:10px}
+  .rf .pr{font-size:9px}
 }
 </style>
+</head>
+<body class="s-0">
+<!-- ===== 页面 ===== -->
+<div class="page">
+  <header class="top">
+    <div class="brand">
+      <div class="stamp" aria-hidden="true">
+        <svg viewBox="0 0 100 100"><g fill="#E8908B"><ellipse cx="50" cy="30" rx="9" ry="14"/><ellipse cx="50" cy="70" rx="9" ry="14"/><ellipse cx="30" cy="50" rx="14" ry="9"/><ellipse cx="70" cy="50" rx="14" ry="9"/></g><circle cx="50" cy="50" r="10" fill="#EDB44C"/><circle cx="47" cy="47" r="3" fill="#FFF8E4"/></svg>
+      </div>
+      <div>
+        <h1>半亩小院<span>·合花</span></h1>
+        <p>一季五日 · 一日三分钟</p>
+      </div>
+    </div>
+    <div class="hud">
+      <div class="chip cal" title="小院历法">
+        <span class="seasons"><i class="on"></i><i></i><i></i><i></i></span>
+        <span id="calText">第一年 · 春 · 第1天</span>
+      </div>
+      <div class="chip coin">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="#F3CE7D" stroke="#9A6B18" stroke-width="1.4"/><circle cx="12" cy="12" r="5.4" fill="none" stroke="#9A6B18" stroke-width="1.1"/></svg>
+        <b id="coinText">0</b>
+      </div>
+      <div class="chip dew">
+        <svg viewBox="0 0 24 24"><path d="M12 3.4c3.6 4.2 6 7 6 9.8a6 6 0 1 1-12 0c0-2.8 2.4-5.6 6-9.8z" fill="#9CCFC4" stroke="#3C7570" stroke-width="1.2"/></svg>
+        <b id="dewText">0</b><span style="color:var(--ink-faint)" id="dewMaxText">/12</span>
+      </div>
+      <button class="btn mini home-btn" id="homeBtn" type="button">返回主页</button>
+    </div>
+  </header>
+
+  <main class="layout">
+    <!-- 标签页一：田地（种子篮 + 半亩田） -->
+    <div class="pane pane-garden on" data-pane="garden">
+      <section class="panel panel-left panel-pad" aria-label="种子篮与收成筐">
+        <p class="sec-label">种子篮 <small>点一下补满空地</small></p>
+        <div class="gen">
+          <div class="gen-art" id="basketArt" role="button" tabindex="0" aria-label="从种子篮一键补满空地" title="一键把空地补满">
+            <span class="tap" id="tapHint">取种子</span>
+            <!-- 篮子插画由脚本绘制 -->
+          </div>
+          <div class="gen-meter">
+            <div class="energy-row"><span>花露 <b id="energyText">12</b></span><span id="energyRegen">回满约 0 分</span></div>
+            <div class="energy-bar"><span id="energyFill" style="width:100%"></span></div>
+          </div>
+          <button class="btn primary" id="takeBtn" title="一键把空地补满">取种子<span class="cost"> · 一键补满</span></button>
+          <div class="gen-btns">
+            <button class="btn" id="upBtn">升级 · 120 金币</button>
+            <button class="btn" id="buyDew">换花露 · 6 金币</button>
+          </div>
+          <div class="bowl" id="bowl">
+            <svg viewBox="0 0 48 40" aria-hidden="true"><path d="M6 15h36l-5 20a4 4 0 0 1-4 3H15a4 4 0 0 1-4-3z" fill="#D8B27A" stroke="#8E6A3C" stroke-width="1.4"/><path d="M9 20h30M10 26h28" stroke="#B98A5C" stroke-width="1.2"/><path d="M14 15c2-7 12-9 16-4" fill="none" stroke="#8E6A3C" stroke-width="1.4"/></svg>
+            <div class="txt"><b>收成筐</b><span class="sub">花拖过来就卖，等级越高越值钱</span></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="boardcol">
+        <div class="garden">
+          <div class="garden-head">
+            <span class="t">半 亩 田</span>
+            <span class="m" id="boardMeta">空地 30 / 36</span>
+          </div>
+          <div class="board" id="board"></div>
+          <div class="price-row" id="priceRow" aria-label="卖花价目"></div>
+        </div>
+        <p class="hint-line">同级相合长一级（花苞以上需同色）；花拖进收成筐就卖，08 值 960 金币</p>
+      </section>
+    </div>
+
+    <!-- 标签页三：花阶 / 历法 -->
+    <div class="pane pane-dex" data-pane="dex">
+      <section class="panel panel-dex panel-pad" aria-label="花阶与历法">
+        <p class="sec-label">花阶 <small id="dexCount">1/8</small></p>
+        <div class="dex" id="dex"></div>
+        <div class="almanac">
+          <p class="sec-label" style="margin:14px 0 9px">一年 <small id="yearNote">还剩 19 天</small></p>
+          <div class="year-strip" id="yearStrip"></div>
+        </div>
+        <div class="dex-progress">
+          <div class="dp-top"><span>集齐进度</span><b id="dexProg">1 / 8</b></div>
+          <div class="dp-bar"><span id="dexFill" style="width:12.5%"></span></div>
+          <p>八个阶段都认识，半亩小院就立起来了。</p>
+        </div>
+        <div class="pane-tools">
+          <button class="icon-btn" id="muteBtnB" aria-label="开关声音">
+            <svg viewBox="0 0 24 24" id="muteIconB"><path d="M4 9v6h3l4 3.5V5.5L7 9z" fill="#22322B"/><path d="M15 9.2a4 4 0 0 1 0 5.6M17.6 6.6a8 8 0 0 1 0 10.8" fill="none" stroke="#22322B" stroke-width="1.6"/></svg>
+          </button>
+          <button class="btn mini" id="resetBtnB" style="box-shadow:none">重开一块田</button>
+        </div>
+      </section>
+    </div>
+
+    <!-- 标签页二：十二种花图鉴 -->
+    <div class="pane pane-home" data-pane="home">
+      <section class="panel panel-home panel-pad" aria-label="十二种花图鉴">
+        <p class="sec-label">图鉴 <small id="dexSub">花苞到小院 · 五阶图鉴</small></p>
+        <div class="dexsum" id="dexSum"></div>
+        <div class="varsdex" id="varsDex"></div>
+        <div class="goal" id="goalCard"></div>
+        <div class="season-note" id="seasonNote"></div>
+        <div class="buff-row" id="buffRow"></div>
+      </section>
+    </div>
+
+    <!-- 标签页四：小屋 -->
+    <div class="pane pane-room" data-pane="room">
+      <section class="panel panel-room panel-pad" aria-label="小屋装饰">
+        <p class="sec-label">小屋 <small id="roomSub">卖花赚金币，一间间布置</small></p>
+        <div class="room-tabs" id="roomTabs" role="tablist" aria-label="房间"></div>
+        <div class="room" id="room" aria-label="小屋场景"></div>
+        <div class="room-warmth"><span>小屋温馨度</span><b id="roomWarmth">0 / 10</b></div>
+        <div class="room-shop" id="roomShop"></div>
+        <p class="room-tip">点没买的买下，点已摆上的收起或再摆出来</p>
+      </section>
+    </div>
+
+  </main>
+
+  <nav class="tabbar" id="tabbar" aria-label="页面切换">
+    <button class="tab" data-tab="garden" aria-selected="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3.5" y="3.5" width="7" height="7" rx="1.6"/><rect x="13.5" y="3.5" width="7" height="7" rx="1.6"/><rect x="3.5" y="13.5" width="7" height="7" rx="1.6"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.6"/></svg>
+      <span>田地</span>
+    </button>
+    <button class="tab" data-tab="home" aria-selected="false">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="4.5" y="4" width="15" height="16" rx="2"/><path d="M8.5 4v16"/><path d="M11 8.5h5M11 12h5M11 15.5h3"/></svg>
+      <span>图鉴</span>
+    </button>
+    <button class="tab" data-tab="dex" aria-selected="false">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="7" r="3.1"/><circle cx="12" cy="17" r="3.1"/><circle cx="7" cy="12" r="3.1"/><circle cx="17" cy="12" r="3.1"/></svg>
+      <span>花阶</span>
+    </button>
+    <button class="tab" data-tab="room" aria-selected="false">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5.4 12.4V9.8c0-1.3 1-2.3 2.3-2.3h8.6c1.3 0 2.3 1 2.3 2.3v2.6"/><path d="M6.6 12.4h10.8c.9 0 1.6.7 1.6 1.6v2.8H5V14c0-.9.7-1.6 1.6-1.6z"/><path d="M4.4 16.8v1.8M19.6 16.8v1.8"/></svg>
+      <span>小屋</span>
+    </button>
+  </nav>
+
+  <footer class="foot">
+    <div class="stat">
+      <span>合成 <b id="statMerge">0</b> 次</span>
+      <span>卖花 <b id="statOrder">0</b> 株</span>
+      <span>在第 <b id="statYear">1</b> 年</span>
+    </div>
+    <div class="foot-actions">
+      <button class="icon-btn" id="muteBtn" aria-label="开关声音" title="声音">
+        <svg viewBox="0 0 24 24" id="muteIcon"><path d="M4 9v6h3l4 3.5V5.5L7 9z" fill="#22322B"/><path d="M15 9.2a4 4 0 0 1 0 5.6M17.6 6.6a8 8 0 0 1 0 10.8" fill="none" stroke="#22322B" stroke-width="1.6"/></svg>
+      </button>
+      <button class="btn mini" id="resetBtn" style="box-shadow:none">重开</button>
+    </div>
+  </footer>
+</div>
+
+<div class="drag-layer" id="dragLayer"></div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<div class="modal" id="modal">
+  <div class="sheet">
+    <h2>小院怎么走</h2>
+    <div class="sub">半亩小院 · 合花</div>
+    <ul>
+      <li><span class="n">一</span><span>点 <b>种子篮</b> 一键补满空地，每颗耗一点 <b>花露</b>；种子会出十二种花，花型花色都不一样。</span></li>
+      <li><span class="n">二</span><span>把两个同级小物拖到一起长一级；<b>花苞往上要同色</b>才能合，不同色会挡住。</span></li>
+      <li><span class="n">三</span><span>把花拖进 <b>收成筐</b> 卖掉换金币；等级越高越值钱，金币拿来升级种子篮、换花露。</span></li>
+      <li><span class="n">四</span><span><b>图鉴</b> 收十二种花：从 04 花苞到 08 小院五阶都记；养到花苞点亮一种 +6 金币，集满再 +60。</span></li>
+      <li><span class="n">五</span><span>赚了金币去 <b>小屋</b> 添家具，屋子越摆越暖，纯好看不花力气。</span></li>
+    </ul>
+    <div class="note">一天三分钟，一季五天，四季走完六十分钟，就是一年。</div>
+    <button class="btn primary" id="startBtn">开始合花</button>
+  </div>
+</div>
+
+<div class="modal hide" id="lvModal">
+  <div class="sheet lv-sheet">
+    <div class="lv-head"><h3 id="lvTitle">五阶图鉴</h3><button class="lv-close" id="lvClose" aria-label="关闭">×</button></div>
+    <p class="lv-sub" id="lvNote">从 04 花苞到 08 小院</p>
+    <div class="lv-grid" id="lvGrid"></div>
+    <p class="lv-note">同一株花一路合上去，每个阶段第一次出现就记进图鉴。</p>
+  </div>
+</div>
+
+<div class="modal hide" id="resetModal">
+  <div class="sheet" style="width:min(360px,100%)">
+    <h2>重新翻一块田</h2>
+    <div class="sub">田里的小物、金币和图鉴都会清空，历法也从第一年春天重来</div>
+    <div style="display:flex;gap:10px;margin-top:4px">
+      <button class="btn" id="resetCancel">再想想</button>
+      <button class="btn primary" id="resetOk">重新开始</button>
+    </div>
+  </div>
+</div>
 <script>
 (function(){
-  var hud = document.querySelector('.hud');
-  if (!hud) return;
-  var b = document.createElement('button');
-  b.type = 'button';
-  b.id = 'homeBtn';
-  b.className = 'btn mini home-btn';
-  b.textContent = '返回主页';
-  b.addEventListener('click', function(){
-    window.location.href = 'https://jyx010320-gif.github.io/RabbitOvOTsuki/';
-  });
-  hud.appendChild(b);
+"use strict";
+
+/* ================= 配置（全部数值集中在这里） ================= */
+var CFG = {
+  cols: 6, rows: 6,
+  dayMs: 3*60*1000,          // 一天 = 3 分钟
+  daysPerSeason: 5,          // 一季 = 5 天
+  energyRegenMs: 12000,      // 一点花露 12 秒
+  startEnergy: 24,
+  buyDew: {cost:6, amount:6},
+  startCoins: 30,
+  maxLvl: 8,
+  sell: {1:0, 2:6, 3:18, 4:42, 5:96, 6:216, 7:468, 8:960},   // 卖花价，6 的倍数
+  orderValue: {2:12, 3:24, 4:48, 5:102, 6:210},
+  orderSlots: 0,
+  freeSeedMs: 42000,         // 每 42 秒风送一颗种子
+  gen: [
+    {lv:1, max:24, p2:0,    cost:0},
+    {lv:2, max:30, p2:0.15, cost:120},
+    {lv:3, max:36, p2:0.30, cost:324}
+  ],
+  seasons: [
+    {name:'春', fav:[2,3], cls:'s-0'},
+    {name:'夏', fav:[3,4], cls:'s-1'},
+    {name:'秋', fav:[4,5], cls:'s-2'},
+    {name:'冬', fav:[5,6], cls:'s-3'}
+  ],
+  names: ['种子','嫩芽','幼苗','花苞','单花','花束','花篮','小院']
+};
+var KEY = 'banmu-hehua-v1';
+
+/* ================= 插画（全部程序绘制，无外部图片） ================= */
+var C = {stem:'#5E8259', stemD:'#47663F', leaf:'#7FA96B', leafL:'#A9C78B', leafD:'#5A7C52',
+         soil:'#D8C39C', soilD:'#B59B6F', petal:'#E8908B', petalL:'#F3B3AE', petalD:'#CE6F69',
+         gold:'#EDB44C', goldD:'#C99433', wrap:'#C08457', wrapD:'#9A6740', wood:'#B98A5C',
+         cream:'#FFF8E4'};
+
+function shadow(y, rx){
+  return '<ellipse cx="50" cy="'+(y||86)+'" rx="'+(rx||24)+'" ry="7" fill="rgba(90,70,40,.16)"/>';
+}
+function flower(cx, cy, r, petal, core, rot, shape){
+  shape = shape || 'six';
+  var out = '', n, step, i, a;
+  if (shape === 'double'){
+    n = 12; step = 30;
+    for (i=0;i<n;i++){
+      a = rot + i*step;
+      out += '<ellipse cx="'+cx+'" cy="'+(cy - r*0.52).toFixed(1)+'" rx="'+(r*0.30).toFixed(1)+
+             '" ry="'+(r*0.52).toFixed(1)+'" fill="'+petal+'" opacity="'+(i%2?1:.9)+
+             '" transform="rotate('+a+' '+cx+' '+cy+')"/>';
+    }
+    for (i=0;i<5;i++){
+      a = rot + 18 + i*72;
+      out += '<ellipse cx="'+cx+'" cy="'+(cy - r*0.26).toFixed(1)+'" rx="'+(r*0.20).toFixed(1)+
+             '" ry="'+(r*0.32).toFixed(1)+'" fill="'+lighten(petal)+'" transform="rotate('+a+' '+cx+' '+cy+')"/>';
+    }
+  } else if (shape === 'star'){
+    n = 8; step = 45;
+    for (i=0;i<n;i++){
+      a = rot + i*step;
+      out += '<ellipse cx="'+cx+'" cy="'+(cy - r*0.58).toFixed(1)+'" rx="'+(r*0.20).toFixed(1)+
+             '" ry="'+(r*0.66).toFixed(1)+'" fill="'+petal+'" stroke="'+shade(petal,-14)+'" stroke-width=".8" transform="rotate('+a+' '+cx+' '+cy+')"/>';
+    }
+  } else {
+    n = (shape === 'five') ? 5 : 6;
+    step = 360/n;
+    for (i=0;i<n;i++){
+      a = rot + i*step;
+      out += '<ellipse cx="'+cx+'" cy="'+(cy - r*0.55).toFixed(1)+'" rx="'+(r*0.42).toFixed(1)+
+             '" ry="'+(r*0.62).toFixed(1)+'" fill="'+petal+'" transform="rotate('+a+' '+cx+' '+cy+')"/>';
+    }
+  }
+  return out + '<circle cx="'+cx+'" cy="'+cy+'" r="'+(r*0.3).toFixed(1)+'" fill="'+core+'"/>'+
+         '<circle cx="'+(cx - r*0.1).toFixed(1)+'" cy="'+(cy - r*0.12).toFixed(1)+'" r="'+(r*0.09).toFixed(1)+'" fill="#FFFDF4"/>';
+}
+function shade(hex, amt){
+  var h = hex.replace('#','');
+  if (h.length !== 6) return hex;
+  var r = parseInt(h.substr(0,2),16), g = parseInt(h.substr(2,2),16), b = parseInt(h.substr(4,2),16);
+  r = Math.max(0, Math.min(255, r + amt)); g = Math.max(0, Math.min(255, g + amt)); b = Math.max(0, Math.min(255, b + amt));
+  return '#' + ((1<<24) + (r<<16) + (g<<8) + b).toString(16).slice(1);
+}
+function lighten(hex){ return shade(hex, 18); }
+
+/* 十二个品种：同一条等级链，花色/花型/叶色不同（8 常开 + 4 节气） */
+var VARS = [
+  {n:'半亩玫', shape:'six',    w:22, petal:'#E26776', petalL:'#F29AA6', petalD:'#C24557', core:'#EDB44C',
+   leaf:'#7FA96B', leafL:'#A9C78B', leafD:'#5A7C52', stem:'#5E8259', stemD:'#47663F'},
+  {n:'青杏',   shape:'five',   w:17, petal:'#F7CE4E', petalL:'#FCE79A', petalD:'#D9A21C', core:'#E7A03C',
+   leaf:'#8FB165', leafL:'#B9D08A', leafD:'#6C8C4C', stem:'#5F8259', stemD:'#48683F'},
+  {n:'白露',   shape:'star',   w:12, petal:'#F3E6C8', petalL:'#FFF8E8', petalD:'#DCC79A', core:'#E9C65C',
+   leaf:'#7BA06A', leafL:'#A8C48F', leafD:'#57764F', stem:'#5C7C58', stemD:'#45603F'},
+  {n:'蓝楹',   shape:'five',   w:9, petal:'#7C8FE0', petalL:'#AEBDF2', petalD:'#5A6CBD', core:'#F3E2A6',
+   leaf:'#6F9A72', leafL:'#9CC49A', leafD:'#4F7554', stem:'#567B5B', stemD:'#40603F'},
+  {n:'朱砂',   shape:'double', w:8,  petal:'#CB4B3C', petalL:'#E68274', petalD:'#A03024', core:'#F0C75E',
+   leaf:'#6F9464', leafL:'#9CBE8A', leafD:'#51744A', stem:'#587A55', stemD:'#41603E'},
+  {n:'紫菀',   shape:'five',   w:9,  petal:'#A279CE', petalL:'#C6A9E6', petalD:'#7E55A8', core:'#F0CE63',
+   leaf:'#79996F', leafL:'#A7C39A', leafD:'#57774F', stem:'#5C7C58', stemD:'#45603F'},
+  {n:'蜜橘',   shape:'six',    w:9,  petal:'#F08A3C', petalL:'#FAB47C', petalD:'#C96518', core:'#E8A63A',
+   leaf:'#85A862', leafL:'#B2CB88', leafD:'#628249', stem:'#5E8259', stemD:'#47663F'},
+  {n:'薄荷',   shape:'star',   w:8,  petal:'#7FD1BB', petalL:'#B4E8D9', petalD:'#55A891', core:'#EFC65C',
+   leaf:'#7BA06C', leafL:'#A8C58D', leafD:'#57764E', stem:'#5C7C58', stemD:'#45603F'},
+  {n:'樱吹雪', shape:'five',   w:12, season:0, petal:'#F78FB3', petalL:'#FFC2D6', petalD:'#D9678F', core:'#F2CE63',
+   leaf:'#8CB37A', leafL:'#BCD69E', leafD:'#65895C', stem:'#5E8259', stemD:'#47663F'},
+  {n:'荷风',   shape:'double', w:12, season:1, petal:'#C58BA8', petalL:'#E2B7CB', petalD:'#9E6482', core:'#EFC65C',
+   leaf:'#6E9A78', leafL:'#9EC4A2', leafD:'#4C7256', stem:'#547B5C', stemD:'#3E6146'},
+  {n:'金桂',   shape:'star',   w:12, season:2, petal:'#DDA01F', petalL:'#F3C65E', petalD:'#A8740F', core:'#B97C1E',
+   leaf:'#7E9E5E', leafL:'#AFCB84', leafD:'#5A7A46', stem:'#587A4B', stemD:'#43603A'},
+  {n:'雪梅',   shape:'five',   w:12, season:3, petal:'#FFFFFF', petalL:'#FFFFFF', petalD:'#E0C2C9', core:'#C9585C',
+   leaf:'#6E8F72', leafL:'#9CBB9C', leafD:'#4F6B54', stem:'#577356', stemD:'#415A42'}
+];
+/* 每种花的识别彩带色（花苞期靠这条带子分辨花色） */
+var MARKS = ['#C24557','#D9A21C','#C9B26A','#5A6CBD','#A03024','#7E55A8',
+             '#C96518','#2E9C82','#D9678F','#9E6482','#A8740F','#8C3A4A'];
+VARS.forEach(function(V, i){ V.mark = MARKS[i]; });
+function pickVar(){
+  var si = S ? seasonInfo().si : 0;
+  var tot = 0, i, pool = [];
+  for (i=0;i<VARS.length;i++){
+    var V = VARS[i];
+    if (V.season != null && V.season !== si) continue;
+    pool.push(i); tot += V.w;
+  }
+  var r = Math.random()*tot;
+  for (i=0;i<pool.length;i++){ r -= VARS[pool[i]].w; if (r <= 0) return pool[i]; }
+  return 0;
+}
+function varName(v){ return (VARS[v] || VARS[0]).n; }
+
+function itemSVG(lv, v){
+  var P = VARS[v || 0] || VARS[0];
+  var body = '';
+  if (lv === 1){
+    body = shadow(82, 22) +
+      '<ellipse cx="35" cy="60" rx="12.5" ry="8.5" transform="rotate(-22 35 60)" fill="#C9A063"/>'+
+      '<ellipse cx="62" cy="58" rx="12.5" ry="8.5" transform="rotate(16 62 58)" fill="#DBB57B"/>'+
+      '<ellipse cx="49" cy="73" rx="12.5" ry="8.5" transform="rotate(-4 49 73)" fill="#B58B52"/>'+
+      '<circle cx="32" cy="59" r="1.8" fill="#8A6A3C"/><circle cx="63" cy="57" r="1.8" fill="#8A6A3C"/>'+
+      '<circle cx="49" cy="72" r="1.8" fill="#8A6A3C"/>'+
+      '<path d="M26 67c4 3 9 4 13 2M56 66c5 2 9 1 12-2" stroke="#A07C46" stroke-width="1.2" fill="none" opacity=".6"/>';
+  } else if (lv === 2){
+    body = shadow(80, 24) +
+      '<ellipse cx="50" cy="76" rx="23" ry="9" fill="'+C.soil+'"/>'+
+      '<path d="M50 77V60" stroke="'+P.stem+'" stroke-width="3.2" stroke-linecap="round"/>'+
+      '<path d="M50 68c-11-1-15-8-14-14 6-2 12 4 14 14z" fill="'+P.leaf+'"/>'+
+      '<path d="M50 62c11-2 15-9 14-15-6-2-12 5-14 15z" fill="'+P.leafL+'"/>'+
+      '<path d="M50 68c-6 1-10 0-14-1" stroke="'+P.leafD+'" stroke-width="1" fill="none" opacity=".5"/>';
+  } else if (lv === 3){
+    body = shadow(84, 20) +
+      '<path d="M50 84V40" stroke="'+P.stem+'" stroke-width="3.4" stroke-linecap="round"/>'+
+      '<path d="M50 72c-13-2-17-9-16-15 7-2 14 5 16 15z" fill="'+P.leafD+'"/>'+
+      '<path d="M50 66c13-3 17-10 16-16-7-2-14 6-16 16z" fill="'+P.leaf+'"/>'+
+      '<path d="M50 54c-10-1-13-7-12-12 5-1 11 4 12 12z" fill="'+P.leaf+'"/>'+
+      '<path d="M50 48c10-2 13-8 12-13-5-1-11 5-12 13z" fill="'+P.leafL+'"/>'+
+      '<path d="M50 76c-4 1-8 1-12 0M50 70c5-1 9-2 13-3M50 57c-3 0-6 0-9-1" stroke="'+C.cream+'" stroke-width=".9" fill="none" opacity=".55"/>';
+  } else if (lv === 4){
+    body = shadow(84, 20) +
+      '<path d="M50 84V52" stroke="'+P.stem+'" stroke-width="3.2" stroke-linecap="round"/>'+
+      '<path d="M50 74c-12-1-16-8-15-14 6-2 13 5 15 14z" fill="'+P.leaf+'"/>'+
+      '<path d="M50 70c12-2 16-9 15-15-6-2-13 6-15 15z" fill="'+P.leafL+'"/>'+
+      '<ellipse cx="50" cy="38" rx="'+(P.shape==='double'?11.4:9.6)+'" ry="'+(P.shape==='double'?14.4:15.6)+'" fill="'+P.petalD+'" stroke="'+shade(P.petalD,-26)+'" stroke-width=".9"/>'+
+      '<ellipse cx="50" cy="38" rx="'+(P.shape==='double'?8.2:6.7)+'" ry="'+(P.shape==='double'?13.2:14)+'" fill="'+P.petal+'"/>'+
+      (P.shape==='double' ? '<path d="M46 27c-3 6-3 16 0 24M54 27c3 6 3 16 0 24" stroke="'+shade(P.petalD,-14)+'" stroke-width="1" fill="none" opacity=".55"/>' : '')+
+      '<path d="M50 25v28" stroke="'+shade(P.petalD,-22)+'" stroke-width="1.4" opacity=".6"/>'+
+      '<path d="M42 37c0-8 3-13 8-16" stroke="'+P.petalL+'" stroke-width="1.6" fill="none"/>'+
+      '<path d="M50 55c-6-1-10-5-9-9 5-1 9 3 9 9z" fill="'+P.stemD+'"/>'+
+      // 花苞彩带：每种花色一条同色带，浅色花苞一眼能分开
+      '<path d="M37 47q13 9 26 0" stroke="'+P.mark+'" stroke-width="3.4" stroke-linecap="round" fill="none"/>'+
+      '<path d="M37 47l-6 1.5 1.4 4.2 6-1.7z" fill="'+P.mark+'"/>'+
+      '<path d="M63 47l6 1.5-1.4 4.2-6-1.7z" fill="'+P.mark+'"/>'+
+      '<circle cx="50" cy="52.5" r="2.6" fill="'+P.mark+'"/>'+
+      '<circle cx="50" cy="52.5" r="1.1" fill="'+P.petalL+'"/>'+
+      '<path d="M50 23.4c2.4 0 4.4 1.4 5 3.4-1.8-.8-3.4-1-5 .6z" fill="'+P.mark+'"/>';
+  } else if (lv === 5){
+    body = shadow(84, 22) +
+      '<path d="M50 84V50" stroke="'+P.stem+'" stroke-width="3.2" stroke-linecap="round"/>'+
+      '<path d="M50 74c-12-2-16-9-15-15 7-2 13 6 15 15z" fill="'+P.leaf+'"/>'+
+      '<path d="M50 69c12-2 16-9 15-15-6-2-13 6-15 15z" fill="'+P.leafL+'"/>'+
+      '<circle cx="50" cy="40" r="21" fill="rgba(255,255,255,.28)"/>'+
+      flower(50, 40, 19, P.petal, P.core, 12, P.shape);
+  } else if (lv === 6){
+    body = shadow(86, 22) +
+      '<path d="M50 84L36 62h28z" fill="'+C.wrap+'"/>'+
+      '<path d="M50 84L44 62M50 84l6-22" stroke="'+C.wrapD+'" stroke-width="1.6" opacity=".7"/>'+
+      '<path d="M38 62h24l-3-7H41z" fill="'+C.wrapD+'"/>'+
+      '<path d="M50 58V48M42 60l-4-8M58 60l4-8" stroke="'+P.stem+'" stroke-width="2.2"/>'+
+      flower(50, 36, 10, P.petal, P.core, 0, P.shape)+
+      flower(38, 44, 8.5, P.petalL, P.core, 20, P.shape)+
+      flower(62, 43, 8.5, P.petalD, P.core, 40, P.shape)+
+      '<path d="M30 34c6-3 12-2 16 2" stroke="'+P.leaf+'" stroke-width="2" fill="none"/>';
+  } else if (lv === 7){
+    body = shadow(88, 26) +
+      '<path d="M22 56h56l-4 22a5 5 0 0 1-5 4H31a5 5 0 0 1-5-4z" fill="'+C.wood+'" stroke="#8E6A3C" stroke-width="1.4"/>'+
+      '<path d="M26 63h48M27 70h46" stroke="#9A7040" stroke-width="1.3" opacity=".8"/>'+
+      '<path d="M28 56c4-14 18-19 26-15 6 3 9 8 10 15" fill="none" stroke="#8E6A3C" stroke-width="2"/>'+
+      '<path d="M50 55V42M40 55l-6-10M60 55l6-10M34 55l-3-9M66 55l3-9" stroke="'+P.stem+'" stroke-width="2.2"/>'+
+      flower(50, 36, 9.5, P.petal, P.core, 0, P.shape)+
+      flower(38, 45, 8, P.petalL, P.core, 30, P.shape)+
+      flower(62, 45, 8, P.petalD, P.core, 50, P.shape)+
+      flower(28, 47, 7, shade(P.petal, 12), P.core, 10, P.shape)+
+      flower(72, 47, 7, shade(P.petal, 12), P.core, 70, P.shape);
+  } else {
+    body = shadow(88, 28) +
+      '<path d="M18 62h64v22a3 3 0 0 1-3 3H21a3 3 0 0 1-3-3z" fill="#E4D3B0"/>'+
+      '<path d="M50 26L24 60h52z" fill="#C07A5C"/>'+
+      '<path d="M50 26L24 60h16zM50 26l26 34h-16z" fill="#A96348" opacity=".55"/>'+
+      '<path d="M22 60h56" stroke="#8E5A42" stroke-width="2"/>'+
+      '<rect x="33" y="67" width="13" height="19" rx="2" fill="'+P.leaf+'"/>'+
+      '<circle cx="42" cy="77" r="1.4" fill="#FFF8E4"/>'+
+      '<rect x="52" y="66" width="15" height="12" rx="2" fill="#FBF1D5" stroke="#8E6A3C" stroke-width="1.2"/>'+
+      '<path d="M59.5 66v12M52 72h15" stroke="#8E6A3C" stroke-width="1.2"/>'+
+      '<path d="M24 86c2-6 8-7 11-2M74 86c-2-5-7-6-10-1" stroke="'+P.leaf+'" stroke-width="2.4" fill="none"/>'+
+      '<circle cx="24" cy="82" r="3.4" fill="'+P.petal+'"/><circle cx="76" cy="82" r="3.4" fill="'+P.core+'"/>'+
+      '<circle cx="80" cy="76" r="2.4" fill="'+P.petalL+'"/>';
+  }
+  var art = {1:[1.62,71.5], 2:[1.75,71.5], 3:[1.66,65.5], 4:[1.42,53], 5:[1.33,51], 6:[1.52,56], 7:[1.40,57], 8:[1.26,56.5]}[lv];
+  return '<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">'+
+    '<g transform="translate(50 50) scale('+art[0]+') translate(-50 -'+art[1]+')">'+body+'</g></svg>';
+}
+
+function basketSVG(){
+  return '<svg viewBox="0 0 200 130" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">'+
+    '<ellipse cx="100" cy="116" rx="66" ry="12" fill="rgba(90,70,40,.14)"/>'+
+    '<path d="M40 62h120l-9 42a10 10 0 0 1-10 8H59a10 10 0 0 1-10-8z" fill="#D3A96F" stroke="#8E6A3C" stroke-width="2"/>'+
+    '<path d="M46 76h108M48 92h104" stroke="#B0804A" stroke-width="2" opacity=".85"/>'+
+    '<path d="M48 62c10-28 32-38 52-34 17 3 30 16 34 34" fill="none" stroke="#8E6A3C" stroke-width="3.4"/>'+
+    '<g>'+
+      '<ellipse cx="92" cy="56" rx="13" ry="9" transform="rotate(-18 92 56)" fill="#C9A063"/>'+
+      '<ellipse cx="112" cy="54" rx="13" ry="9" transform="rotate(14 112 54)" fill="#DBB57B"/>'+
+      '<ellipse cx="102" cy="68" rx="13" ry="9" transform="rotate(-4 102 68)" fill="#B58B52"/>'+
+      '<circle cx="89" cy="55" r="2" fill="#8A6A3C"/><circle cx="113" cy="53" r="2" fill="#8A6A3C"/>'+
+    '</g>'+
+    '<path d="M60 104c4-9 12-11 17-4" stroke="#7FA96B" stroke-width="3" fill="none"/>'+
+    '<path d="M140 104c-3-8-10-10-15-4" stroke="#A9C78B" stroke-width="3" fill="none"/>'+
+    '</svg>';
+}
+
+/* ================= 工具 ================= */
+function $(id){ return document.getElementById(id); }
+function qs(sel, root){ return (root||document).querySelector(sel); }
+function rnd(n){ return Math.floor(Math.random()*n); }
+function pick(arr){ return arr[rnd(arr.length)]; }
+function clamp(v,a,b){ return Math.max(a, Math.min(b, v)); }
+
+var boardEl = $('board'), orderEl = $('orders'), dexEl = $('dex'),
+    toastEl = $('toast'), dragLayer = $('dragLayer'), bowlEl = $('bowl'),
+    modalEl = $('modal'), basketArt = $('basketArt'), resetModal = $('resetModal');
+
+var cellEls = [];
+for (var i=0;i<CFG.cols*CFG.rows;i++){
+  var c = document.createElement('div');
+  c.className = 'cell'; c.dataset.idx = i;
+  boardEl.appendChild(c); cellEls.push(c);
+}
+
+/* ================= 状态 ================= */
+var S = null, drag = null, selected = -1, toastTimer = null, lastSeason = -1;
+
+function m6(n){ return Math.max(6, Math.round((n||0)/6) * 6); }
+function uid(){ S.nextId = (S.nextId||1)+1; return S.nextId; }
+
+function newState(){
+  var t = Date.now();
+  var slots = new Array(CFG.cols*CFG.rows).fill(null);
+  [7,8,9,13,14,15].forEach(function(idx, k){ slots[idx] = {id:k+1, lvl:1, v:pickVar()}; });
+  var st = {
+    v:1, slots: slots, coins:CFG.startCoins, energy:CFG.startEnergy, energyTs:t,
+    basket:1, startAt:t, orders:[], discovered:[1], merges:0, ordersDone:0, sold:0, house:{now:'living', owned:{}, hidden:{}}, spawnTs:t,
+    stands:new Array(VARS.length).fill(null), milestones:[], vars:[], varsPaid:[], varsLv:{}, varReward:false, dexVar:{}, visitor:null, standFull:false,
+    goal:null, combo:0, comboTs:0,
+    muted:false, tutorial:false, nextId:3
+  };
+  for (var q0=0; q0<slots.length; q0++){
+    if (slots[q0] && st.vars.indexOf(slots[q0].v) < 0) st.vars.push(slots[q0].v);
+  }
+  S = st;
+  st.visitor = null;
+  for (var i=0;i<CFG.orderSlots;i++) st.orders.push(makeOrder());
+  return st;
+}
+
+function save(){
+  if (!S) return;
+  try{
+    var copy = {}; for (var k in S) copy[k] = S[k];
+    copy.savedAt = Date.now();
+    localStorage.setItem(KEY, JSON.stringify(copy));
+  }catch(e){}
+}
+
+function load(){
+  try{
+    var raw = localStorage.getItem(KEY);
+    if (!raw) return false;
+    var o = JSON.parse(raw);
+    if (!o || !Array.isArray(o.slots)) return false;
+    var needCells = CFG.cols * CFG.rows;
+    var folded = 0;
+    if (o.slots.length !== needCells){
+      var live = o.slots.filter(Boolean);
+      var keep = live.slice().sort(function(a,b){ return (b.lvl||0)-(a.lvl||0); }).slice(0, needCells);
+      for (var fz=0; fz<live.length; fz++){
+        if (keep.indexOf(live[fz]) < 0) folded += (CFG.sell[live[fz].lvl] || 0);
+      }
+      o.slots = new Array(needCells).fill(null);
+      for (var fk=0; fk<keep.length; fk++) o.slots[fk] = keep[fk];
+      o.coins = (o.coins || 0) + folded;
+    }
+    o.nextId = o.nextId || 50;
+    S = o;
+    S.spawnTs = o.spawnTs || Date.now();
+    S.sold = o.sold || 0;
+    S.house = (o.house && typeof o.house === 'object') ? o.house : {now:'living', owned:{}, hidden:{}};
+    if (!S.house.owned) S.house.owned = {};
+    if (!S.house.hidden) S.house.hidden = {};
+    // 老存档的单间家具，搬进客厅
+    if (o.room && Array.isArray(o.room.owned)){
+      S.house.owned.living = S.house.owned.living || [];
+      for (var oi=0;oi<o.room.owned.length;oi++){
+        var oid = o.room.owned[oi];
+        if (S.house.owned.living.indexOf(oid) < 0) S.house.owned.living.push(oid);
+      }
+      if (Array.isArray(o.room.hidden)) S.house.hidden.living = o.room.hidden.slice();
+    }
+    S.orders = Array.isArray(o.orders) ? o.orders : [];
+    while (S.orders.length < CFG.orderSlots) S.orders.push(makeOrder());
+    S.discovered = Array.isArray(o.discovered) ? o.discovered : [1];
+    var oldStands = Array.isArray(o.stands) ? o.stands : [];
+    S.stands = new Array(VARS.length).fill(null);
+    for (var si2=0; si2<oldStands.length; si2++){
+      var sd = oldStands[si2];
+      if (typeof sd === 'number') sd = {lvl:sd, v:0};
+      if (!sd) continue;
+      if (sd.lvl >= 8 && sd.v >= 0 && sd.v < VARS.length && !S.stands[sd.v]) { S.stands[sd.v] = {lvl:8, v:sd.v}; continue; }
+      var emp = -1;
+      for (var se=0;se<S.slots.length;se++) if (!S.slots[se]) { emp = se; break; }
+      if (emp >= 0) S.slots[emp] = {id:uid(), lvl:sd.lvl, v:sd.v};
+    }
+    // 花架取消：架上原来的花搬回田里
+    var oldShow = Array.isArray(o.show) ? o.show : [], backShow = 0;
+    for (var sh2=0; sh2<oldShow.length; sh2++){
+      var shd = oldShow[sh2]; if (!shd) continue;
+      var emp2 = -1;
+      for (var se2=0; se2<S.slots.length; se2++) if (!S.slots[se2]) { emp2 = se2; break; }
+      if (emp2 >= 0){ S.slots[emp2] = {id:uid(), lvl:shd.lvl, v:shd.v}; backShow++; }
+    }
+    if (backShow > 0) setTimeout(function(){ toast('花架收起来了，架上的花都搬回了田里'); }, 1400);
+    delete o.show;
+    S.standFull = !!o.standFull;
+    for (var sj=0; sj<S.slots.length; sj++){
+      if (S.slots[sj] && S.slots[sj].v == null) S.slots[sj].v = 0;
+    }
+    S.vars = Array.isArray(o.vars) ? o.vars.filter(function(v, i, a){
+      return v >= 0 && v < VARS.length && a.indexOf(v) === i;
+    }) : [];
+    S.varsLv = (o.varsLv && typeof o.varsLv === 'object') ? o.varsLv : {};
+    if (!Array.isArray(o.varsPaid)){
+      S.varsPaid = S.vars.slice();
+    } else {
+      S.varsPaid = o.varsPaid.filter(function(v){ return v >= 0 && v < VARS.length; });
+    }
+    S.dexVar = (o.dexVar && typeof o.dexVar === 'object') ? o.dexVar : {};
+    S.varReward = !!o.varReward;
+    if (folded > 0){
+      setTimeout(function(){ toast('田地改成 6×6，多出的花折成 ' + folded + ' 金币'); }, 1200);
+    }
+    for (var sk=0; sk<S.slots.length; sk++){
+      if (S.slots[sk] && S.vars.indexOf(S.slots[sk].v) < 0) S.vars.push(S.slots[sk].v);
+    }
+    S.milestones = Array.isArray(o.milestones) ? o.milestones : [];
+    S.visitor = null;
+    // 离线回花露
+    var max = maxDew();
+    var from = o.savedAt || o.energyTs || Date.now();
+    var gained = Math.floor((Date.now()-from)/CFG.energyRegenMs);
+    if (gained > 0 && S.energy < max){
+      var add = Math.min(gained, max - S.energy);
+      S.energy += add;
+      setTimeout(function(){ toast('你不在的时候，花露长回了 '+add+' 点'); }, 700);
+    }
+    S.energyTs = Date.now();
+    if (S.energy > max) S.energy = max;
+    return true;
+  }catch(e){ return false; }
+}
+
+/* ================= 历法 ================= */
+function seasonInfo(){
+  var elapsed = Math.max(0, Date.now() - S.startAt);
+  var days = Math.floor(elapsed / CFG.dayMs);
+  var si = Math.floor(days / CFG.daysPerSeason) % 4;
+  var dayIn = days % CFG.daysPerSeason + 1;
+  var year = Math.floor(days / (CFG.daysPerSeason*4)) + 1;
+  return {si:si, dayIn:dayIn, year:year, days:days};
+}
+var CN = ['一','二','三','四','五','六','七','八','九','十'];
+function yearText(n){ return n<=10 ? '第'+CN[n-1]+'年' : '第'+n+'年'; }
+
+/* ================= 订单 ================= */
+var WHO = [
+  {n:'邻居阿婆', a:'婆'}, {n:'邮差小满', a:'满'}, {n:'隔壁阿禾', a:'禾'},
+  {n:'院里的猫', a:'猫'}, {n:'豆腐匠', a:'豆'}, {n:'晒被子的姑', a:'姑'}
+];
+
+function makeOrder(){
+  var s = seasonInfo();
+  var pool = [2,2,2,2,3,3,3,4,4,5];
+  var lvl = pick(pool);
+  if (S && S.merges < 4) lvl = 2 + rnd(2);
+  var cnt = lvl===2 ? 2+rnd(2) : lvl===3 ? 1+rnd(2) : lvl===4 ? 1+rnd(2) : 1;
+  var seasonal = CFG.seasons[s.si].fav.indexOf(lvl) >= 0 && Math.random() < 0.5;
+  var vWant = -1;
+  if (lvl >= 3 && S && S.vars && S.vars.length >= 3 && Math.random() < 0.22) vWant = pick(S.vars);
+  var reward = m6(CFG.orderValue[lvl] * cnt * (seasonal ? 1.5 : 1) * (vWant >= 0 ? 1.35 : 1));
+  var w = pick(WHO);
+  return {id:uid(), who:w.n, av:w.a, lvl:lvl, count:cnt, reward:reward, v:vWant,
+          seasonal:seasonal, season:CFG.seasons[s.si].name};
+}
+
+function haveCount(lvl, vv){
+  var n = 0, want = (vv == null ? -1 : vv);
+  for (var i=0;i<S.slots.length;i++){
+    var it = S.slots[i];
+    if (it && it.lvl === lvl && (want < 0 || it.v === want)) n++;
+  }
+  return n;
+}
+
+/* ================= 今日小目标 ================= */
+var GOALS = [
+  {type:'merge', label:'合成',     unit:'次', base:12, coin:24},
+  {type:'take',  label:'取种子',   unit:'颗', base:12, coin:18},
+  {type:'sell', label:'卖花', unit:'株', base:6,  coin:48}
+];
+function ensureGoal(){
+  if (!S) return;
+  var d = seasonInfo().days;
+  if (S.goal && S.goal.day === d) return;
+  var gi = GOALS[d % GOALS.length];
+  S.goal = {day:d, type:gi.type, label:gi.label, unit:gi.unit,
+            target:gi.base, count:0, coin:gi.coin || 0, dew:gi.dew || 0, done:false};
+  if (S.goal) save();
+}
+function bumpGoal(type, n){
+  if (!S || !S.goal || S.goal.done || S.goal.type !== type) return;
+  S.goal.count += (n || 1);
+  if (S.goal.count >= S.goal.target){
+    S.goal.done = true;
+    var g2 = S.goal, tail = '+' + (g2.coin || 0) + ' 金币';
+    if (g2.coin) S.coins += g2.coin;
+    setTimeout(function(){ toast('今日小目标完成，' + tail); }, 600);
+  }
+}
+function renderGoal(){
+  if (!$('goalCard')) return;
+  ensureGoal();
+  var g = S.goal;
+  if (!g) return;
+  var pct = Math.min(1, g.count / g.target) * 100;
+  $('goalCard').className = 'goal' + (g.done ? ' done' : '');
+  $('goalCard').innerHTML =
+    '<div class="goal-top"><span class="goal-t">今日 · ' + g.label + ' ' + g.target + g.unit + '</span>' +
+    '<span class="goal-c">' + Math.min(g.count, g.target) + '/' + g.target + '</span>' +
+    '<span class="goal-r">' + (g.done ? '已领 ✓' : '+' + (g.coin || 0) + ' 金币') + '</span></div>' +
+    '<div class="goal-bar"><i style="width:' + pct.toFixed(0) + '%"></i></div>';
+}
+
+/* ================= 小院：花台 / 节气 / 里程碑 ================= */
+var STAND_TIERS = [
+  {k:6, note:'卖价 +6%'},
+  {k:12, note:'+300 金币'}
+];
+function standCount(){ return (S && S.stands) ? S.stands.filter(function(x){return !!x;}).length : 0; }
+var MILE = [
+  {k:6, coins:96,  dew:0, note:'得 96 金币 · 露上限 +6'},
+  {k:8, coins:168, dew:0, note:'得 168 金币 · 卖价 +6%'}
+];
+var SEASON_EVENT = [
+  {n:'春雨', d:'花露回得快些 · +15%'},
+  {n:'长市', d:'花卖得贵些 · +12%'},
+  {n:'丰年', d:'秋收多卖些 · +6%'},
+  {n:'围炉', d:'风送种子更勤 · −6 秒'}
+];
+
+function buffs(){
+  var b = {dew:1, sell:1, spawn:CFG.freeSeedMs, maxAdd:0};
+  if (S){
+    var si = seasonInfo().si;
+    if (si === 0) b.dew += 0.15;
+    if (si === 1) b.sell += 0.12;
+    if (si === 2) b.sell += 0.06;
+    if (si === 3) b.spawn -= 6000;
+  }
+  if (b.spawn < 12000) b.spawn = 12000;
+  return b;
+}
+function maxDew(){
+  var base = CFG.gen[clamp((S && S.basket) || 1, 1, 3) - 1].max;
+  return base + buffs().maxAdd;
+}
+function makeVisitor(){
+  return null;
+  var lvl = pick([3,3,4,4,5,6]);
+  if (S && S.merges < 6) lvl = 3 + rnd(2);
+  var cnt = lvl >= 5 ? 1 : 2;
+  var w = pick(WHO);
+  return {id:uid(), who:w.n, av:w.a, lvl:lvl, count:cnt,
+          reward: m6(CFG.orderValue[lvl]*cnt*1.7),
+          until: Date.now() + CFG.visitorMs};
+}
+function claimStands(){
+  if (!S || S.standFull) return;
+  if (standCount() >= VARS.length){
+    S.standFull = true; S.coins += 300;
+    setTimeout(function(){ toast('十二株 08 都摆上了，+300 金币'); }, 800);
+    save();
+  }
+}
+function claimMilestones(){
+  if (!S) return;
+  var b = buffs();
+  for (var i=0;i<MILE.length;i++){
+    var m = MILE[i];
+    if (S.milestones.indexOf(m.k) >= 0) continue;
+    if (S.discovered.length >= m.k){
+      S.milestones.push(m.k);
+      S.coins += m.coins;
+      (function(kk, cc){
+        setTimeout(function(){ toast('图鉴亮到 ' + kk + ' 格，得 ' + cc + ' 金币'); }, 900);
+      })(m.k, m.coins);
+    }
+  }
+}
+
+function stageList(v){
+  if (!S || !S.varsLv || !S.varsLv[v]) return [];
+  return S.varsLv[v].filter(function(l){ return l >= 4 && l <= 8; });
+}
+function stageCount(v){ return stageList(v).length; }
+function noteStage(v, lvl){
+  if (!S || v == null || v < 0 || v >= VARS.length) return;
+  if (lvl < 4 || lvl > 8) return;
+  if (!S.varsLv || typeof S.varsLv !== 'object') S.varsLv = {};
+  if (!S.varsLv[v]) S.varsLv[v] = [];
+  for (var l=4; l<=lvl; l++) if (S.varsLv[v].indexOf(l) < 0) S.varsLv[v].push(l);
+}
+function syncStages(){
+  if (!S) return;
+  if (!S.varsLv || typeof S.varsLv !== 'object') S.varsLv = {};
+  for (var i=0;i<S.slots.length;i++){ var it = S.slots[i]; if (it) noteStage(it.v, it.lvl); }
+  if (Array.isArray(S.stands)) for (var j=0;j<S.stands.length;j++){ var sd = S.stands[j]; if (sd) noteStage(sd.v, sd.lvl); }
+}
+
+function syncDex(){
+  if (!S || !Array.isArray(S.vars)) return;
+  syncStages();
+  if (!Array.isArray(S.varsPaid)) S.varsPaid = [];
+  var fresh = [], lit = 0;
+  for (var v=0; v<VARS.length; v++){
+    if (stageCount(v) > 0){
+      lit++;
+      if (S.varsPaid.indexOf(v) < 0){ S.varsPaid.push(v); fresh.push(v); }
+    }
+  }
+  if (fresh.length){
+    var gain = 6 * fresh.length;
+    S.coins += gain; save(); beep('order');
+    var names = fresh.map(function(x){ return varName(x); }).join('、');
+    setTimeout(function(){ toast('图鉴点亮 ' + names + ' · +' + gain + ' 金币'); }, 620);
+  }
+  if (lit >= VARS.length && !S.varReward){
+    S.varReward = true; S.coins += 60; save();
+    setTimeout(function(){ toast('十二种花全点亮，图鉴收齐 · +60 金币'); }, 950);
+  }
+}
+
+function renderHome(){
+  if (!$('varsDex')) return;
+  syncDex();
+  var html = '', on = 0, stages = 0;
+  for (var i=0;i<VARS.length;i++){
+    var cnt = stageCount(i), got = cnt > 0;
+    if (got) on++;
+    stages += cnt;
+    var tag = (VARS[i].season != null) ? CFG.seasons[VARS[i].season].name : '常开';
+    html += '<div class="dv' + (got?' on':' lock') + '" data-v="' + i + '" title="' + VARS[i].n + ' · 点开看 04–08 五阶">' +
+      (got?'<span class="ck">✓</span>':'') +
+      '<div class="art">' + itemSVG(5, i) + '</div>' +
+      '<div class="nm">' + VARS[i].n + '</div>' +
+      '<div class="tg">' + tag + '</div>' +
+      '<div class="rw">' + (got ? (cnt + ' / 5 阶') : '花苞点亮 +6') + '</div></div>';
+  }
+  $('varsDex').innerHTML = html;
+
+  if ($('dexSub')) $('dexSub').textContent = '花苞到小院 · 五阶图鉴';
+  $('dexSum').innerHTML =
+    '<div class="ds-top"><span>图鉴点亮</span><b>' + on + ' / ' + VARS.length + '</b>' +
+    '<span class="ds-got">' + stages + ' / ' + (VARS.length*5) + ' 阶</span></div>' +
+    '<div class="ds-bar"><i style="width:' + (on/VARS.length*100).toFixed(1) + '%"></i></div>' +
+    '<div class="ds-foot">' + (on >= VARS.length ? '十二种都点亮了，图鉴收齐，+60 金币已入账' : '养到 04 花苞就点亮一种 +6 金币，点开看 04–08 五阶') + '</div>';
+
+  var b = buffs(), bchips = '';
+  bchips += '<span class="buff-pill' + (b.dew>1?' hot':'') + '">回露 ×' + b.dew.toFixed(2) + '</span>';
+  bchips += '<span class="buff-pill' + (b.sell>1?' hot':'') + '">卖价 ×' + b.sell.toFixed(2) + '</span>';
+  bchips += '<span class="buff-pill">风送 ' + Math.round(b.spawn/1000) + ' 秒</span>';
+  $('buffRow').innerHTML = bchips;
+
+  var si = seasonInfo().si;
+  $('seasonNote').innerHTML =
+    '<svg class="sn-ic" viewBox="0 0 32 32" aria-hidden="true">' +
+      '<circle cx="16" cy="16" r="13" fill="rgba(127,169,107,.16)" stroke="rgba(127,169,107,.5)" stroke-width="1.2"/>' +
+      '<path d="M16 8c4 5 6 8 6 11a6 6 0 1 1-12 0c0-3 2-6 6-11z" fill="#9CCFC4" stroke="#3C7570" stroke-width="1.1"/>' +
+    '</svg>' +
+    '<div><div class="sn-t">' + CFG.seasons[si].name + '季 · ' + SEASON_EVENT[si].n + '</div>' +
+    '<div class="sn-d">本季一路生效：' + SEASON_EVENT[si].d + '</div></div>';
+}
+
+var stageV = -1;
+function openStages(v){
+  if (!S) return;
+  stageV = v;
+  var arr = stageList(v);
+  $('lvTitle').textContent = VARS[v].n;
+  $('lvNote').textContent = '花苞到小院 · 已收 ' + arr.length + ' / 5 阶';
+  var html = '';
+  for (var lv=4; lv<=8; lv++){
+    var got = arr.indexOf(lv) >= 0;
+    html += '<div class="lv-cell' + (got?'':' lock') + '">' +
+      '<div class="art">' + itemSVG(lv, v) + '</div>' +
+      '<div class="lv-no">0' + lv + '</div>' +
+      '<div class="lv-nm">' + CFG.names[lv-1] + '</div>' +
+      '<div class="lv-st">' + (got?'已收':'未收') + '</div></div>';
+  }
+  $('lvGrid').innerHTML = html;
+  $('lvModal').classList.remove('hide');
+}
+function closeStages(){ $('lvModal').classList.add('hide'); stageV = -1; }
+$('varsDex').addEventListener('click', function(e){
+  var el = e.target.closest ? e.target.closest('.dv') : null;
+  if (!el) return;
+  openStages(parseInt(el.dataset.v, 10));
+});
+$('lvClose').addEventListener('click', closeStages);
+$('lvModal').addEventListener('click', function(e){ if (e.target === $('lvModal')) closeStages(); });
+
+function toggleStand(i){
+  var cur = S.stands[i];
+  if (cur){
+    var empty = firstEmpty();
+    if (empty < 0){ toast('田地满了，先空出一格'); beep('error'); return; }
+    S.slots[empty] = {id:uid(), lvl:cur.lvl, v:cur.v};
+    S.stands[i] = null;
+    save(); renderAll(); beep('move');
+    toast('把' + CFG.names[cur.lvl-1] + '搬回了田里');
+    return;
+  }
+  var best = -1, alt = -1, have8 = false;
+  for (var k=0;k<S.slots.length;k++){
+    var it = S.slots[k];
+    if (!it || it.lvl < 8) continue;
+    have8 = true;
+    if (it.v === i && best < 0) best = k;
+    else if (alt < 0 && it.v >= 0 && it.v < VARS.length && !S.stands[it.v]) alt = k;
+  }
+  if (best < 0 && alt >= 0){
+    var av = S.slots[alt].v;
+    S.stands[av] = {lvl:8, v:av};
+    S.slots[alt] = null;
+    save(); renderAll(); beep('order');
+    toast('这株是 08·' + VARS[av].n + '，摆进了 ' + VARS[av].n + ' 那一格');
+    return;
+  }
+  if (best < 0){
+    toast(have8 ? '这株 08 的花色那格已经摆上了' : '还没有 08·' + VARS[i].n + '，把这一色合到顶'); beep('error');
+    return;
+  }
+  S.stands[i] = {lvl:8, v:i};
+  S.slots[best] = null;
+  save(); renderAll(); beep('order');
+  var cnt = standCount(), note = '';
+  for (var t=0;t<STAND_TIERS.length;t++) if (STAND_TIERS[t].k === cnt) note = '，' + STAND_TIERS[t].note;
+  toast('摆上 08·' + VARS[i].n + '，花台 ' + cnt + '/' + VARS.length + note);
+}
+function openOrders(){ $('orderModal').classList.remove('hide'); }
+function closeOrders(){ $('orderModal').classList.add('hide'); }
+if ($('ordStrip')) $('ordStrip').addEventListener('click', function(e){
+  if (e.target.closest('.os-more')){ openOrders(); return; }
+  var el = e.target.closest('.os');
+  if (!el) return;
+  var i = el.dataset.os;
+  if (i != null && el.classList.contains('ok')){
+    var o = S.orders[parseInt(i, 10)];
+    if (o && haveCount(o.lvl, o.v) >= o.count){ deliverOrder(parseInt(i, 10)); return; }
+  }
+  openOrders();
+});
+if ($('ordClose')) $('ordClose').addEventListener('click', closeOrders);
+if ($('orderModal')) $('orderModal').addEventListener('click', function(e){ if (e.target === $('orderModal')) closeOrders(); });
+
+/* ================= 渲染 ================= */
+function renderHUD(){
+  var max = maxDew();
+  if (S.energy > max) S.energy = max;
+  $('coinText').textContent = S.coins;
+  $('dewText').textContent = S.energy;
+  $('dewMaxText').textContent = '/' + max;
+  $('energyText').textContent = S.energy + ' / ' + max;
+  $('energyFill').style.width = (S.energy/max*100) + '%';
+  var mins = Math.ceil((max - S.energy) * CFG.energyRegenMs / 60000);
+  $('energyRegen').textContent = S.energy >= max ? '已回满' : '回满约 ' + mins + ' 分';
+
+  var takeBtn = $('takeBtn');
+  takeBtn.disabled = S.energy < 1;
+
+  var g = CFG.gen[clamp(S.basket,1,3)-1];
+  var next = CFG.gen[clamp(S.basket,1,3)];
+  var up = $('upBtn');
+  if (!next){ up.textContent = '已到三级'; up.disabled = true; }
+  else {
+    up.textContent = '升级 · ' + next.cost + ' 金币';
+    up.disabled = S.coins < next.cost;
+  }
+  var buy = $('buyDew');
+  buy.disabled = S.coins < CFG.buyDew.cost || S.energy >= max;
+  buy.textContent = S.energy >= max ? '花露满着'
+    : (S.coins < CFG.buyDew.cost ? '金币不够' : '换花露 · ' + CFG.buyDew.cost + ' 金币');
+  $('tapHint').textContent = (window.innerWidth <= 620 ? 'Lv.' : 'Lv.') + S.basket + (window.innerWidth <= 620 ? '' : ' · 取种子');
+  $('statMerge').textContent = S.merges;
+  $('statOrder').textContent = S.sold || 0;
+  if ($('priceRow')){
+    var ph = '';
+    for (var pl=2; pl<=8; pl++) ph += '<span>'+CFG.names[pl-1]+' <b>'+CFG.sell[pl]+'</b></span>';
+    $('priceRow').innerHTML = ph;
+  }
+  $('statYear').textContent = seasonInfo().year;
+  $('dexCount').textContent = S.discovered.length + '/8';
+  var dp = $('dexProg'), df = $('dexFill');
+  if (dp) dp.textContent = S.discovered.length + ' / 8';
+  if (df) df.style.width = (S.discovered.length/8*100) + '%';
+}
+
+function buildYearStrip(){
+  var html = '';
+  for (var s=0;s<4;s++){
+    html += '<div class="yr" data-s="'+s+'"><div class="yr-days">';
+    for (var d=0;d<CFG.daysPerSeason;d++) html += '<i data-d="'+d+'"></i>';
+    html += '</div><span>'+CFG.seasons[s].name+'</span></div>';
+  }
+  $('yearStrip').innerHTML = html;
+}
+
+function renderYear(){
+  var s = seasonInfo();
+  var strip = $('yearStrip');
+  for (var q=0;q<4;q++){
+    var grp = strip.children[q];
+    grp.classList.toggle('on', q === s.si);
+    var days = grp.firstElementChild;
+    for (var d=0;d<CFG.daysPerSeason;d++){
+      var dot = days.children[d], st = '';
+      if (q < s.si) st = 'past';
+      else if (q === s.si) st = d < s.dayIn-1 ? 'past' : (d === s.dayIn-1 ? 'now' : '');
+      dot.className = st;
+    }
+  }
+  var left = CFG.daysPerSeason * 4 - (s.days % (CFG.daysPerSeason * 4)) - 1;
+  $('yearNote').textContent = left > 0 ? '还剩 ' + left + ' 天' : '岁末了';
+}
+
+function renderClock(){
+  var s = seasonInfo();
+  var chip = $('calText');
+  chip.textContent = yearText(s.year) + ' · ' + CFG.seasons[s.si].name + ' · 第' + s.dayIn + '天';
+  var dots = document.querySelectorAll('.chip.cal .seasons i');
+  for (var i=0;i<dots.length;i++) dots[i].classList.toggle('on', i === s.si);
+  var cls = CFG.seasons[s.si].cls;
+  if (lastSeason !== s.si){
+    document.body.className = cls;
+    lastSeason = s.si;
+    if (S) renderHome();
+  }
+  renderYear();
+}
+
+function renderStrip(){
+  if (!$('ordStrip')) return;
+  var h = '';
+  for (var i=0;i<3;i++){
+    var o = S.orders[i];
+    if (!o){ continue; }
+    var have = haveCount(o.lvl, o.v);
+    var ok = have >= o.count;
+    h += '<div class="os'+(ok?' ok':'')+'" data-os="'+i+'" title="'+(ok?'点一下直接交付':'点一下去订单页')+'">'+
+      '<div class="os-art">'+itemSVG(o.lvl, o.v)+'</div>'+
+      '<div class="os-mid"><span class="os-nm">'+CFG.names[o.lvl-1]+(o.v >= 0 ? '·'+varName(o.v) : '')+'</span>'+
+      '<span class="os-sub">'+(ok ? '可交 · '+o.reward+' 金币' : Math.min(have,o.count)+'/'+o.count+' · '+o.reward+' 金币')+'</span></div></div>';
+  }
+  if (!h) h = '<div class="os"><div class="os-mid"><span class="os-nm">田里还没有订单</span><span class="os-sub">点右边换一单</span></div></div>';
+  h += '<button class="os-more" data-more="1" title="看全部订单、换单">⋯</button>';
+  $('ordStrip').innerHTML = h;
+}
+
+function renderBoard(){
+  for (var i=0;i<cellEls.length;i++){
+    var it = S.slots[i], ce = cellEls[i];
+    ce.className = 'cell' + (selected === i ? ' sel' : '');
+    ce.innerHTML = it ? '<div class="item" data-idx="'+i+'" title="'+CFG.names[it.lvl-1]+'·'+varName(it.v)+(CFG.sell[it.lvl]?'·卖 '+CFG.sell[it.lvl]+' 金币':'')+'">'+itemSVG(it.lvl, it.v)+'</div>' : '';
+  }
+  var empty = 0;
+  for (var j=0;j<S.slots.length;j++) if (!S.slots[j]) empty++;
+  $('boardMeta').textContent = '空地 ' + empty + ' / ' + S.slots.length;
+}
+
+function claimVars(){
+  if (!S || S.varReward) return;
+  if (S.vars.length >= VARS.length){
+    S.varReward = true; S.coins += 120;
+    setTimeout(function(){ toast('十二种花都见过了，+120 金币'); }, 700);
+    save();
+  }
+}
+
+function renderDex(){
+  var html = '';
+  for (var lv=1; lv<=8; lv++){
+    var got = S.discovered.indexOf(lv) >= 0;
+    html += '<div class="dex-cell'+(got?'':' locked')+'" title="'+CFG.names[lv-1]+'">'+
+      '<i>0'+lv+'</i>'+
+      (got ? itemSVG(lv, (S.dexVar && S.dexVar[lv]) || 0) + '<em>'+CFG.names[lv-1]+'</em>'
+           : '<div class="qm">?</div><em>&nbsp;</em>') +
+      '</div>';
+  }
+  dexEl.innerHTML = html;
+}
+
+function visitorCard(){
+  var v = S.visitor;
+  if (!v) return '';
+  var have = haveCount(v.lvl), ok = have >= v.count;
+  var left = Math.max(0, Math.floor((v.until - Date.now())/1000));
+  var mm = Math.floor(left/60), ss = ('0' + (left%60)).slice(-2);
+  return '<div class="visitor-bar">'+
+    '<div class="vb-top"><div class="avatar">'+v.av+'</div>'+
+      '<div class="vb-name">'+v.who+' · 门前来客</div>'+
+      '<span class="v-tag" id="visLeft">剩 '+mm+':'+ss+'</span>'+
+      '<button class="vb-shoo" data-act="shoo" title="换一位来客">换</button></div>'+
+    '<div class="vb-mid">'+
+      '<div class="o-item vb-item">'+itemSVG(v.lvl)+'<b>×'+v.count+'</b></div>'+
+      '<span class="vb-want">'+CFG.names[v.lvl-1]+' <b style="color:'+(ok?'var(--moss)':'var(--ink-faint)')+'">'+have+'/'+v.count+'</b></span>'+
+      '<span class="vb-price">'+v.reward+' 金币</span>'+
+      '<button class="btn primary vb-btn" data-act="visitor"'+(ok?'':' disabled')+'>卖给他</button>'+
+    '</div></div>';
+}
+
+function renderOrders(){
+  if (!orderEl) return;
+  var html = S.visitor ? visitorCard() : '';
+  for (var i=0;i<S.orders.length;i++){
+    var o = S.orders[i];
+    var have = haveCount(o.lvl, o.v);
+    var ok = have >= o.count;
+    html += '<div class="order'+(o.seasonal?' seasonal':'')+'" data-oid="'+o.id+'">'+
+      '<div class="o-top"><div class="avatar">'+o.av+'</div>'+
+        '<div class="o-name">'+o.who+'</div>'+
+        (o.seasonal?'<span class="tag">'+o.season+'季 ×1.5</span>':'')+
+      '</div>'+
+      '<div class="o-want">'+
+        '<div class="o-item">'+itemSVG(o.lvl, o.v >= 0 ? o.v : 0)+'<b>×'+o.count+'</b></div>'+
+        '<span style="font-size:12px;color:var(--ink-soft)">'+CFG.names[o.lvl-1]+
+          (o.v >= 0 ? '·'+varName(o.v) : '')+
+          ' &nbsp;<span style="color:'+(ok?'var(--moss)':'var(--ink-faint)')+'">'+have+'/'+o.count+'</span></span>'+
+      '</div>'+
+      '<div class="o-reward"><svg viewBox="0 0 24 24" style="width:15px;height:15px"><circle cx="12" cy="12" r="9" fill="#F3CE7D" stroke="#9A6B18" stroke-width="1.4"/><circle cx="12" cy="12" r="5.4" fill="none" stroke="#9A6B18" stroke-width="1.1"/></svg>'+
+        '<b>'+o.reward+'</b><span>金币</span></div>'+
+      '<div class="o-actions">'+
+        '<button class="btn primary" data-act="deliver" data-i="'+i+'"'+(ok?'':' disabled')+'>交付</button>'+
+        '<button class="btn mini" data-act="reroll" data-i="'+i+'" title="花 6 金币换一单">换 6</button>'+
+      '</div></div>';
+  }
+  orderEl.innerHTML = html;
+
+  var ready = 0;
+  for (var r=0;r<S.orders.length;r++){
+    if (haveCount(S.orders[r].lvl, S.orders[r].v) >= S.orders[r].count) ready++;
+  }
+  if (S.visitor && haveCount(S.visitor.lvl) >= S.visitor.count) ready++;
+  var badge = $('orderBadge');
+  if (badge){
+    badge.textContent = ready;
+    badge.classList.toggle('hide', ready === 0);
+  }
+}
+
+function renderAll(){
+  renderGoal();
+  renderHUD(); renderBoard(); renderDex(); renderOrders(); renderHome(); renderStrip(); renderRoom();
+}
+
+/* ================= 手机 / 提示 ================= */
+function toast(msg){
+  toastEl.textContent = msg;
+  toastEl.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(function(){ toastEl.classList.remove('show'); }, 1900);
+}
+
+/* ================= 音效 ================= */
+var actx = null, mutedIconState = false;
+function tone(freq, delay, dur, gain, type){
+  if (!actx) return;
+  var t0 = actx.currentTime + (delay||0);
+  var osc = actx.createOscillator(), g = actx.createGain();
+  osc.type = type || 'sine';
+  osc.frequency.setValueAtTime(freq, t0);
+  g.gain.setValueAtTime(0.0001, t0);
+  g.gain.exponentialRampToValueAtTime(gain||0.05, t0+0.02);
+  g.gain.exponentialRampToValueAtTime(0.0001, t0+(dur||0.18));
+  osc.connect(g); g.connect(actx.destination);
+  osc.start(t0); osc.stop(t0+(dur||0.18)+0.02);
+}
+function beep(kind){
+  if (S.muted) return;
+  try{
+    if (!actx){
+      var AC = window.AudioContext || window.webkitAudioContext;
+      if (!AC) return;
+      actx = new AC();
+    }
+    if (actx.state === 'suspended') actx.resume();
+    if (kind === 'merge'){ tone(523,0,.12,.05); tone(659,.06,.14,.05); tone(784,.12,.2,.045); }
+    else if (kind === 'take'){ tone(392,0,.1,.04,'triangle'); tone(494,.06,.12,.035); }
+    else if (kind === 'order'){ tone(587,0,.14,.05); tone(784,.1,.14,.05); tone(988,.2,.24,.05); }
+    else if (kind === 'sell'){ tone(330,0,.1,.035,'triangle'); tone(262,.09,.16,.04); }
+    else if (kind === 'error'){ tone(196,0,.18,.03,'square'); }
+    else { tone(330,0,.08,.02,'triangle'); }
+  }catch(e){}
+}
+
+/* ================= 特效 ================= */
+function sparkleAt(idx){
+  var cell = cellEls[idx]; if (!cell) return;
+  for (var k=0;k<7;k++){
+    var s = document.createElement('div');
+    s.className = 'spark' + (k%2 ? ' g' : '');
+    var ang = Math.random()*Math.PI*2, dist = 16 + Math.random()*24;
+    s.style.setProperty('--dx', (Math.cos(ang)*dist).toFixed(1)+'px');
+    s.style.setProperty('--dy', (Math.sin(ang)*dist).toFixed(1)+'px');
+    s.style.left = '50%'; s.style.top = '50%';
+    cell.appendChild(s);
+    (function(el){ setTimeout(function(){ el.remove(); }, 700); })(s);
+  }
+}
+function popAt(idx){
+  var it = qs('.cell[data-idx="'+idx+'"] .item', boardEl);
+  if (it){ it.classList.add('pop'); setTimeout(function(){ it.classList.remove('pop'); }, 420); }
+  sparkleAt(idx);
+}
+function floatAt(idx, text){
+  var cell = cellEls[idx]; if (!cell) return;
+  var f = document.createElement('div');
+  f.className = 'float'; f.textContent = text;
+  f.style.left = '50%'; f.style.top = '34%';
+  cell.appendChild(f);
+  setTimeout(function(){ f.remove(); }, 950);
+}
+
+/* ================= 规则：取种子 / 合成 / 搬动 / 卖出 ================= */
+function firstEmpty(){
+  var spaces = [];
+  for (var i=0;i<S.slots.length;i++) if (!S.slots[i]) spaces.push(i);
+  return spaces.length ? pick(spaces) : -1;
+}
+
+function takeSeed(){
+  regen();
+  var g = CFG.gen[clamp(S.basket,1,3)-1];
+  if (S.energy < 1){ toast('花露用完了，等它慢慢回满'); beep('error'); return; }
+  var seeded = 0, lastIdx = -1, newV = -1;
+  // 一键：花露够就一路把空地补满
+  while (S.energy >= 1){
+    var idx = firstEmpty();
+    if (idx < 0) break;
+    var lvl = Math.random() < g.p2 ? 2 : 1;
+    var vi = pickVar();
+    S.slots[idx] = {id:uid(), lvl:lvl, v:vi};
+    S.energy -= 1; seeded += 1; lastIdx = idx;
+    if (!S.dexVar[lvl]) S.dexVar[lvl] = vi;
+    if (S.vars.indexOf(vi) < 0){ S.vars.push(vi); newV = vi; }
+    if (S.discovered.indexOf(lvl) < 0) S.discovered.push(lvl);
+  }
+  if (!seeded){ toast('田地满了，先把一样的小物合起来'); beep('error'); return; }
+  bumpGoal('take', seeded);
+  save(); renderAll();
+  if (lastIdx >= 0) popAt(lastIdx);
+  beep('take');
+  var full = firstEmpty() < 0;
+  toast(full
+    ? '空地一次补满了：' + seeded + ' 颗，花露剩 ' + S.energy
+    : '取了 ' + seeded + ' 颗，花露只剩 ' + S.energy + '，等它回一点');
+  if (newV > 0) setTimeout(function(){ toast('出了新花种：' + varName(newV) + ' · 图鉴 +6 金币'); }, 900);
+}
+
+function applyDrop(from, to){
+  selected = -1;
+  if (from === to){ renderBoard(); return; }
+  var a = S.slots[from], b = S.slots[to];
+  if (!a){ renderBoard(); return; }
+
+  if (b && a.lvl === b.lvl){
+    if (a.lvl >= CFG.maxLvl){ toast('两座小院已经住满了，先卖几株腾个地方'); beep('error'); renderBoard(); return; }
+    // 花苞（04）往上只能同色相合，不许混色
+    if (a.lvl >= 4 && a.v !== b.v){
+      toast('花苞以上只能同色相合，两株颜色不一样'); beep('error'); renderBoard(); return;
+    }
+    S.slots[from] = null;
+    var nv = a.v;
+    if (a.lvl < 4){
+      nv = (Math.random() < 0.5 ? a.v : (b.v != null ? b.v : a.v));
+      if (a.v != null && b.v != null && a.v !== b.v && Math.random() < 0.5) nv = Math.min(a.v, b.v);
+    }
+    S.slots[to] = {id:uid(), lvl:a.lvl+1, v:nv};
+    S.merges += 1;
+    bumpGoal('merge', 1);
+    var nowC = Date.now();
+    if (nowC - (S.comboTs || 0) < 12000) S.combo = (S.combo || 0) + 1; else S.combo = 1;
+    S.comboTs = nowC;
+    if (S.combo === 6 || S.combo === 12 || S.combo === 18){
+      (function(nn){ setTimeout(function(){ toast(nn + ' 连合'); }, 260); })(S.combo);
+    }
+    if (S.discovered.indexOf(a.lvl+1) < 0) S.discovered.push(a.lvl+1);
+    if (!S.dexVar[a.lvl+1]) S.dexVar[a.lvl+1] = nv;
+    if (S.vars.indexOf(nv) < 0) S.vars.push(nv);
+    save(); renderAll();
+    popAt(to); beep('merge'); floatAt(to, '合');
+    if (a.lvl+1 === 8) toast('小院落成了，图鉴第 08 格亮了');
+    return;
+  }
+  if (!b){
+    S.slots[to] = a; S.slots[from] = null;
+    save(); renderBoard(); beep('move');
+    return;
+  }
+  S.slots[from] = b; S.slots[to] = a;
+  save(); renderBoard(); beep('move');
+}
+
+function sellAt(idx){
+  var a = S.slots[idx];
+  if (!a) return;
+  var base = CFG.sell[a.lvl] || 0;
+  if (!base){ toast('种子先别卖，长成花了才值钱'); beep('error'); renderBoard(); return; }
+  var v = Math.max(6, Math.round(base * buffs().sell / 6) * 6);
+  S.slots[idx] = null; S.coins += v;
+  S.sold = (S.sold || 0) + 1;
+  bumpGoal('sell', 1);
+  save(); renderAll(); beep('sell');
+  var extra = v - base > 0 ? '（含卖价加成 +' + (v - base) + '）' : '';
+  toast('卖掉 ' + CFG.names[a.lvl-1] + '·' + varName(a.v) + '，得 ' + v + ' 金币' + extra);
+}
+
+function tapCell(idx){
+  if (selected < 0){
+    if (S.slots[idx]){ selected = idx; }
+    return;
+  }
+  if (selected === idx){ selected = -1; return; }
+  applyDrop(selected, idx);
+}
+
+/* ================= 拖拽 ================= */
+function cellFromPoint(x, y){
+  var el = document.elementFromPoint(x, y);
+  var c = el && el.closest ? el.closest('.cell') : null;
+  return c ? parseInt(c.dataset.idx, 10) : -1;
+}
+
+boardEl.addEventListener('pointerdown', function(e){
+  if (e.pointerType === 'mouse' && e.button !== 0) return;
+  var itemEl = e.target.closest ? e.target.closest('.item') : null;
+  if (!itemEl) return;
+  var idx = parseInt(itemEl.dataset.idx, 10);
+  if (!S.slots[idx]) return;
+  e.preventDefault();
+  drag = {idx:idx, el:itemEl, x0:e.clientX, y0:e.clientY, active:false, ghost:null, pid:e.pointerId};
+  try{ boardEl.setPointerCapture(e.pointerId); }catch(err){}
+}, {passive:false});
+
+boardEl.addEventListener('pointermove', function(e){
+  if (!drag) return;
+  var dx = e.clientX - drag.x0, dy = e.clientY - drag.y0;
+  if (!drag.active){
+    if (Math.sqrt(dx*dx + dy*dy) < 9) return;
+    drag.active = true; selected = -1;
+    drag.el.classList.add('dragging');
+    var g = document.createElement('div');
+    g.className = 'ghost';
+    g.innerHTML = itemSVG(S.slots[drag.idx].lvl, S.slots[drag.idx].v);
+    dragLayer.appendChild(g); drag.ghost = g;
+  }
+  e.preventDefault();
+  drag.ghost.style.left = e.clientX + 'px';
+  drag.ghost.style.top = e.clientY + 'px';
+
+  for (var i=0;i<cellEls.length;i++) cellEls[i].classList.remove('over');
+  var target = cellFromPoint(e.clientX, e.clientY);
+  if (target >= 0) cellEls[target].classList.add('over');
+  var el = document.elementFromPoint(e.clientX, e.clientY);
+  bowlEl.classList.toggle('over', !!(el && el.closest && el.closest('#bowl')));
+}, {passive:false});
+
+function endDrag(e){
+  if (!drag) return;
+  var d = drag; drag = null;
+  if (d.ghost) d.ghost.remove();
+  for (var i=0;i<cellEls.length;i++) cellEls[i].classList.remove('over');
+  bowlEl.classList.remove('over');
+  try{ boardEl.releasePointerCapture(d.pid); }catch(err){}
+
+  if (!d.active){ tapCell(d.idx); renderBoard(); return; }
+
+  var el = document.elementFromPoint(e.clientX, e.clientY);
+  if (el && el.closest && el.closest('#bowl')){ sellAt(d.idx); return; }
+  var target = cellFromPoint(e.clientX, e.clientY);
+  if (target >= 0) applyDrop(d.idx, target);
+  else renderBoard();
+}
+boardEl.addEventListener('pointerup', endDrag);
+boardEl.addEventListener('pointercancel', function(e){
+  if (!drag) return;
+  var d = drag; drag = null;
+  if (d.ghost) d.ghost.remove();
+  for (var i=0;i<cellEls.length;i++) cellEls[i].classList.remove('over');
+  bowlEl.classList.remove('over');
+  renderBoard();
+});
+
+/* ================= 小屋：九个房间，花金币添家具 ================= */
+function rg(cx,cy,rx,ry,c1,c2){
+  return '<ellipse cx="'+cx+'" cy="'+cy+'" rx="'+rx+'" ry="'+ry+'" fill="'+c1+'"/>'+
+         '<ellipse cx="'+cx+'" cy="'+cy+'" rx="'+(rx*0.78)+'" ry="'+(ry*0.72)+'" fill="'+c2+'"/>';
+}
+function lampFloor(x,y){
+  return '<path d="M'+(x-9)+' '+(y+22)+'h18" stroke="#8A6A3C" stroke-width="3"/>'+
+         '<path d="M'+x+' '+(y+18)+'V'+(y-24)+'" stroke="#B08A55" stroke-width="3"/>'+
+         '<path d="M'+(x-12)+' '+(y-24)+'h24l-6-18h-12z" fill="#F6D9A6" stroke="#C08A46" stroke-width="1.4"/>';
+}
+function clock(){
+  return '<circle cx="96" cy="46" r="9" fill="#FBF4E4" stroke="#B08A55" stroke-width="2"/>'+
+         '<path d="M96 40v7M96 46h5" stroke="#8A6A3C" stroke-width="1.4" stroke-linecap="round"/>';
+}
+function windowPane(){
+  return '<rect x="206" y="26" width="80" height="72" rx="4" fill="#CFE3DE" stroke="#C0A272" stroke-width="3"/>'+
+         '<path d="M246 26v72M206 62h80" stroke="#C0A272" stroke-width="2"/>'+
+         '<path d="M210 96l24-26 14 16 12-10 22 20" fill="none" stroke="rgba(127,169,107,.45)" stroke-width="2"/>'+
+         '<rect x="202" y="96" width="88" height="6" rx="3" fill="#D8BE8C"/>';
+}
+function curtains(){
+  return '<path d="M202 24q-12 42 2 76h12q-8-40 2-76z" fill="#E7C3BE"/>'+
+         '<path d="M290 24q12 42-2 76h-12q8-40-2-76z" fill="#E7C3BE"/>'+
+         '<path d="M205 26q-8 36 2 70M287 26q8 36-2 70" stroke="rgba(160,90,84,.30)" stroke-width="1.2" fill="none"/>';
+}
+function indoorBase(w,f,tile,win){
+  var s='';
+  s+='<rect x="0" y="0" width="320" height="152" fill="'+w+'"/>';
+  if (tile) s+='<path d="M0 38h320M0 76h320M0 114h320M40 0v152M80 0v152M120 0v152M160 0v152M200 0v152M240 0v152M280 0v152" stroke="rgba(120,110,90,.09)" stroke-width="1"/>';
+  s+='<rect x="0" y="152" width="320" height="68" fill="'+f+'"/>';
+  s+='<path d="M0 152h320" stroke="rgba(120,96,60,.30)" stroke-width="2"/>';
+  s+='<path d="M0 168h320M0 186h320" stroke="rgba(160,126,74,.16)" stroke-width="1"/>';
+  s+='<path d="M60 152v68M120 152v68M180 152v68M240 152v68" stroke="rgba(160,126,74,.14)" stroke-width="1"/>';
+  s+='<rect x="0" y="146" width="320" height="7" fill="#E6D0A6"/><path d="M0 146h320" stroke="#C9AE7D" stroke-width="1.4"/>';
+  if (win !== false) s+=windowPane();
+  s+=clock();
+  s+='<path d="M206 100l-70 52h32l58-40z" fill="rgba(255,244,214,.32)"/>';
+  return s;
+}
+function outdoorBase(sky,grass,hedge){
+  var s='';
+  s+='<rect x="0" y="0" width="320" height="112" fill="'+sky+'"/>';
+  s+='<circle cx="262" cy="34" r="26" fill="rgba(255,247,220,.55)"/>';
+  s+='<rect x="0" y="112" width="320" height="108" fill="'+grass+'"/>';
+  s+='<path d="M0 112h320" stroke="rgba(90,120,70,.35)" stroke-width="2"/>';
+  if (hedge){
+    var hp='M0 108';
+    for (var hx=0; hx<320; hx+=32) hp += 'q16-18 32 0';
+    hp += 'V114H0z';
+    s+='<path d="'+hp+'" fill="#A9C78B" opacity=".9"/>';
+  } else {
+    s+='<path d="M0 96h320" stroke="#C9AE7D" stroke-width="4"/>';
+    for (var i=0;i<32;i++){ var x=6+i*10; s+='<path d="M'+x+' 96v14" stroke="#D8BE8C" stroke-width="3"/>'; }
+    s+='<path d="M0 104h320" stroke="#C9AE7D" stroke-width="2"/>';
+  }
+  s+='<path d="M150 220c-8-26 0-42 14-54" stroke="rgba(150,120,70,.16)" stroke-width="16" fill="none"/>';
+  return s;
+}
+function bench(x,y,w,c1,c2){
+  return '<rect x="'+x+'" y="'+y+'" width="'+w+'" height="7" rx="3" fill="'+c1+'"/>'+
+         '<path d="M'+(x+6)+' '+y+'v14M'+(x+w-6)+' '+y+'v14" stroke="'+c2+'" stroke-width="3"/>';
+}
+function tableRound(cx,cy,rx){
+  return '<ellipse cx="'+cx+'" cy="'+(cy+4)+'" rx="'+rx+'" ry="12" fill="#D8A96C"/>'+
+         '<ellipse cx="'+cx+'" cy="'+cy+'" rx="'+rx+'" ry="12" fill="#E6BE86"/>'+
+         '<path d="M'+(cx-rx+8)+' '+(cy+8)+'v26M'+(cx+rx-8)+' '+(cy+8)+'v26" stroke="#B98A5C" stroke-width="3.2"/>';
+}
+
+var ROOMS = [
+  {id:'front', n:'前院', out:true, items:[
+    {id:'farch', n:'花拱门', p:66, d:function(){
+      return '<path d="M104 152c0-58 112-58 112 0" stroke="#C9AE7D" stroke-width="5" fill="none"/>'+
+             '<circle cx="116" cy="118" r="5" fill="#F7C6D2"/><circle cx="134" cy="104" r="5" fill="#E8908B"/>'+
+             '<circle cx="156" cy="98" r="5" fill="#F0C878"/><circle cx="180" cy="104" r="5" fill="#B79CD8"/>'+
+             '<circle cx="198" cy="118" r="5" fill="#F7C6D2"/><circle cx="146" cy="96" r="4" fill="#F6D9A6"/>';
+    }},
+    {id:'fbench', n:'石凳', p:96, d:function(){
+      return '<rect x="126" y="136" width="70" height="9" rx="4" fill="#D8D2C4"/>'+
+             '<path d="M132 145v14M190 145v14" stroke="#B9B3A7" stroke-width="6"/>'+
+             '<path d="M132 140h58" stroke="#C4BEB0" stroke-width="1.2"/>';
+    }},
+    {id:'fmail', n:'信箱', p:126, d:function(){
+      return '<path d="M262 152V118" stroke="#8A6A3C" stroke-width="4"/>'+
+             '<rect x="252" y="106" width="30" height="18" rx="4" fill="#9BA9E4" stroke="#6E7CC4" stroke-width="1.4"/>'+
+             '<path d="M252 112h30" stroke="#6E7CC4" stroke-width="1"/><path d="M282 96v10" stroke="#C0453F" stroke-width="2"/>';
+    }},
+    {id:'flamp', n:'路灯', p:186, d:function(){
+      return '<path d="M46 160V96" stroke="#8A6A3C" stroke-width="4"/>'+
+             '<path d="M34 96h24l-5-14h-14z" fill="#F6D9A6" stroke="#C08A46" stroke-width="1.4"/>'+
+             '<circle cx="46" cy="104" r="5" fill="#FFE9B6"/><ellipse cx="46" cy="168" rx="12" ry="4" fill="rgba(90,70,40,.18)"/>';
+    }}
+  ]},
+  {id:'living', n:'客厅', items:[
+    {id:'curtain', n:'窗帘', p:306, d:function(){ return curtains(); }},
+    {id:'frame', n:'花挂画', p:246, d:function(){
+      return '<rect x="118" y="40" width="54" height="44" rx="3" fill="#F6E4C6" stroke="#B08A55" stroke-width="3"/>'+
+             '<circle cx="145" cy="58" r="8" fill="#E8908B"/><circle cx="145" cy="58" r="3" fill="#EDB44C"/>'+
+             '<path d="M137 74c4-8 12-8 16 0" stroke="#7FA96B" stroke-width="2" fill="none"/>';
+    }},
+    {id:'shelf', n:'书架', p:186, d:function(){
+      return '<rect x="16" y="46" width="60" height="86" rx="3" fill="#D8B27A" stroke="#9A7440" stroke-width="2"/>'+
+             '<path d="M18 74h56M18 100h56" stroke="#9A7440" stroke-width="2"/>'+
+             '<rect x="24" y="54" width="7" height="18" fill="#9BA9E4"/><rect x="33" y="56" width="7" height="16" fill="#E8908B"/>'+
+             '<rect x="42" y="52" width="7" height="20" fill="#F0C878"/><rect x="51" y="57" width="7" height="15" fill="#B79CD8"/>'+
+             '<rect x="24" y="80" width="7" height="18" fill="#A9D6C2"/><rect x="33" y="82" width="7" height="16" fill="#F2A96B"/>'+
+             '<rect x="24" y="106" width="7" height="16" fill="#F7C6D2"/><rect x="33" y="108" width="7" height="14" fill="#F5F1E5"/>';
+    }},
+    {id:'hearth', n:'小壁炉', p:486, d:function(){
+      return '<rect x="232" y="112" width="68" height="44" rx="4" fill="#C7806B" stroke="#9A5B4C" stroke-width="2"/>'+
+             '<path d="M232 126h68M232 140h68M248 112v44M264 112v44M280 112v44" stroke="rgba(154,91,76,.65)" stroke-width="1.4"/>'+
+             '<rect x="250" y="136" width="32" height="20" rx="3" fill="#4B3A33"/>'+
+             '<path d="M258 152c0-7 5-9 8-15 3 6 8 8 8 15z" fill="#F2A65A"/>'+
+             '<path d="M262 152c0-4 3-5 4-9 2 4 4 6 4 9z" fill="#F7D27A"/>';
+    }},
+    {id:'rug', n:'羊毛毯', p:36, d:function(){
+      return rg(146,180,96,22,'#E8C9B6','#F1DACB')+'<ellipse cx="146" cy="180" rx="58" ry="12" fill="none" stroke="#D9AE97" stroke-width="2"/>';
+    }},
+    {id:'lamp', n:'落地灯', p:126, d:function(){ return lampFloor(46,138); }},
+    {id:'table', n:'木圆桌', p:66, d:function(){ return tableRound(132,126,40); }},
+    {id:'chair', n:'藤椅', p:96, d:function(){
+      return '<rect x="182" y="126" width="30" height="10" rx="4" fill="#CFA06A"/>'+
+             '<path d="M184 136v18M210 136v18" stroke="#A97D4A" stroke-width="2.6"/>'+
+             '<path d="M182 126c0-12 6-18 15-18s15 6 15 18" fill="#DDB07C"/>'+
+             '<path d="M188 120v-6M198 118v-6M208 120v-6" stroke="#B28757" stroke-width="1.2"/>';
+    }},
+    {id:'vase', n:'花瓶', p:156, d:function(){
+      return '<path d="M126 122c-4-6-4-12 0-16h10c4 4 4 10 0 16z" fill="#CFE0D6" stroke="#8FA997" stroke-width="1"/>'+
+             '<path d="M131 106V94" stroke="#7FA96B" stroke-width="1.6"/>'+
+             '<circle cx="131" cy="90" r="4.4" fill="#E8908B"/><circle cx="131" cy="90" r="1.7" fill="#EDB44C"/>'+
+             '<circle cx="124" cy="93" r="3.4" fill="#F7C6D2"/><circle cx="138" cy="94" r="3" fill="#F2A96B"/>';
+    }},
+    {id:'cat', n:'睡猫', p:216, d:function(){
+      return '<ellipse cx="214" cy="178" rx="17" ry="8" fill="#D6C0A6"/>'+
+             '<circle cx="200" cy="174" r="7" fill="#D6C0A6"/>'+
+             '<path d="M195 168l2 5M205 168l-2 5" stroke="#B49A7C" stroke-width="1.4"/>'+
+             '<path d="M219 178c8-2 10-6 8-9" stroke="#C4AB90" stroke-width="3" fill="none"/>';
+    }}
+  ]},
+  {id:'dining', n:'餐厅', items:[
+    {id:'dlamp', n:'吊灯', p:66, d:function(){
+      return '<path d="M160 0v26" stroke="#8A6A3C" stroke-width="2"/>'+
+             '<path d="M142 56h36l-9-16h-18z" fill="#F6D9A6" stroke="#C08A46" stroke-width="1.4"/>'+
+             '<circle cx="160" cy="62" r="4" fill="#FFE9B6"/><ellipse cx="160" cy="72" rx="26" ry="8" fill="rgba(255,233,182,.35)"/>';
+    }},
+    {id:'dcab', n:'餐边柜', p:186, d:function(){
+      return '<rect x="234" y="104" width="66" height="48" rx="3" fill="#D8B27A" stroke="#9A7440" stroke-width="2"/>'+
+             '<path d="M234 120h66" stroke="#9A7440" stroke-width="1.4"/>'+
+             '<rect x="242" y="126" width="22" height="18" rx="2" fill="#EBD3AB" stroke="#B08A55"/>'+
+             '<rect x="270" y="126" width="22" height="18" rx="2" fill="#EBD3AB" stroke="#B08A55"/>';
+    }},
+    {id:'dtable', n:'长餐桌', p:126, d:function(){
+      return '<ellipse cx="158" cy="136" rx="66" ry="14" fill="#D8A96C"/>'+
+             '<ellipse cx="158" cy="130" rx="66" ry="13" fill="#E9C28E"/>'+
+             '<path d="M100 140v20M216 140v20" stroke="#B98A5C" stroke-width="3"/>'+
+             '<ellipse cx="136" cy="128" rx="11" ry="4" fill="#FBF4E4"/><ellipse cx="180" cy="128" rx="11" ry="4" fill="#FBF4E4"/>';
+    }},
+    {id:'dchair', n:'餐椅', p:96, d:function(){
+      var one=function(x){return '<rect x="'+x+'" y="132" width="22" height="7" rx="3" fill="#CFA06A"/>'+
+        '<path d="M'+(x+3)+' 139v14M'+(x+19)+' 139v14" stroke="#A97D4A" stroke-width="2.4"/>'+
+        '<path d="M'+x+' 132c0-10 5-15 11-15s11 5 11 15" fill="#DDB07C"/>';};
+      return one(66)+one(206);
+    }}
+  ]},
+  {id:'kitchen', n:'厨房', tile:true, items:[
+    {id:'krack', n:'挂锅架', p:66, d:function(){
+      return '<rect x="118" y="40" width="84" height="4" rx="2" fill="#8A6A3C"/>'+
+             '<path d="M132 44v12M160 44v16M188 44v12" stroke="#8A6A3C" stroke-width="2"/>'+
+             '<ellipse cx="132" cy="62" rx="9" ry="6" fill="#B9B3A7"/>'+
+             '<path d="M184 56h16v8a8 8 0 0 1-16 0z" fill="#C7806B"/>';
+    }},
+    {id:'kfridge', n:'冰箱', p:186, d:function(){
+      return '<rect x="250" y="76" width="54" height="76" rx="5" fill="#EDF0E8" stroke="#9FA89B" stroke-width="2"/>'+
+             '<path d="M250 106h54" stroke="#9FA89B" stroke-width="1.6"/>'+
+             '<path d="M296 84v18M296 112v16" stroke="#8A9689" stroke-width="2"/>';
+    }},
+    {id:'kstove', n:'灶台', p:126, d:function(){
+      return '<rect x="16" y="110" width="80" height="42" rx="3" fill="#D8CBB2" stroke="#A9987A" stroke-width="1.6"/>'+
+             '<circle cx="38" cy="122" r="7" fill="#4B3A33"/><circle cx="70" cy="122" r="7" fill="#4B3A33"/>'+
+             '<rect x="28" y="134" width="56" height="12" rx="2" fill="#5B5248"/><path d="M40 140h32" stroke="#C9AE7D" stroke-width="1.6"/>'+
+             '<path d="M62 112h20l-3 10h-14z" fill="#B9B3A7" stroke="#8A8478" stroke-width="1.2"/>'+
+             '<path d="M62 114h-5M82 114h5" stroke="#8A8478" stroke-width="2"/>';
+    }},
+    {id:'ksink', n:'水槽', p:96, d:function(){
+      return '<rect x="108" y="114" width="100" height="38" rx="3" fill="#E9DFC8" stroke="#B9A582" stroke-width="1.6"/>'+
+             '<rect x="128" y="120" width="52" height="20" rx="6" fill="#CFE0D6"/>'+
+             '<path d="M154 120v-12h12" stroke="#8FA997" stroke-width="2.4"/>';
+    }}
+  ]},
+  {id:'bath', n:'卫生间', tile:true, win:false, items:[
+    {id:'bmirror', n:'镜子', p:66, d:function(){
+      return '<ellipse cx="226" cy="64" rx="26" ry="32" fill="#CFE0D6" stroke="#B08A55" stroke-width="3"/>'+
+             '<path d="M216 44c-6 10-6 24 0 34" stroke="rgba(255,255,255,.6)" stroke-width="3" fill="none"/>';
+    }},
+    {id:'btowel', n:'毛巾架', p:36, d:function(){
+      return '<path d="M44 54h54" stroke="#B08A55" stroke-width="3"/>'+
+             '<rect x="50" y="56" width="14" height="30" rx="2" fill="#F7C6D2"/>'+
+             '<rect x="72" y="56" width="14" height="26" rx="2" fill="#CFE0D6"/>';
+    }},
+    {id:'bbasin', n:'洗手台', p:96, d:function(){
+      return '<rect x="210" y="110" width="90" height="42" rx="3" fill="#E9E1D0" stroke="#B9A582" stroke-width="1.6"/>'+
+             '<ellipse cx="255" cy="114" rx="26" ry="8" fill="#FBF4E4" stroke="#C9AE7D" stroke-width="1.2"/>'+
+             '<path d="M255 108v-10h8" stroke="#8FA997" stroke-width="2.2"/>';
+    }},
+    {id:'btub', n:'浴缸', p:186, d:function(){
+      return '<path d="M36 120h144v26a24 24 0 0 1-24 24H60a24 24 0 0 1-24-24z" fill="#FBF4E4" stroke="#B9B3A7" stroke-width="2"/>'+
+             '<path d="M36 132c26 8 118 8 144 0" stroke="#CFE0D6" stroke-width="2"/>'+
+             '<path d="M48 172v8M168 172v8" stroke="#B9B3A7" stroke-width="4"/>'+
+             '<circle cx="60" cy="120" r="5" fill="#CFE0D6"/>';
+    }}
+  ]},
+  {id:'hall', n:'走廊', win:false, items:[
+    {id:'hhooks', n:'挂钩', p:36, d:function(){
+      return '<path d="M206 46h70" stroke="#8A6A3C" stroke-width="3"/>'+
+             '<circle cx="220" cy="50" r="2.6" fill="#8A6A3C"/><circle cx="244" cy="50" r="2.6" fill="#8A6A3C"/><circle cx="268" cy="50" r="2.6" fill="#8A6A3C"/>'+
+             '<path d="M244 52c-12 10-12 24-4 26 8 2 8-12 4-14" fill="#9BA9E4" stroke="#6E7CC4" stroke-width="1"/>'+
+             '<path d="M268 52c8 8 8 18 2 22" fill="#E8908B"/>';
+    }},
+    {id:'hsconce', n:'壁灯', p:96, d:function(){
+      return '<path d="M150 38v8" stroke="#8A6A3C" stroke-width="2"/>'+
+             '<path d="M140 46h20l-5 14h-10z" fill="#F6D9A6" stroke="#C08A46" stroke-width="1.3"/>'+
+             '<ellipse cx="150" cy="70" rx="16" ry="6" fill="rgba(255,233,182,.4)"/>';
+    }},
+    {id:'hconsole', n:'玄关桌', p:126, d:function(){
+      return '<rect x="18" y="116" width="78" height="7" rx="3" fill="#D8A96C"/>'+
+             '<path d="M26 123v28M88 123v28" stroke="#B98A5C" stroke-width="3"/>'+
+             '<path d="M54 116c-4-6-4-10 0-14h8c4 4 4 8 0 14z" fill="#CFE0D6" stroke="#8FA997" stroke-width="1"/>'+
+             '<circle cx="58" cy="97" r="4" fill="#F2A96B"/>';
+    }},
+    {id:'hrunner', n:'长地毯', p:66, d:function(){
+      return '<rect x="72" y="166" width="176" height="22" rx="3" fill="#E8C9B6"/>'+
+             '<rect x="80" y="170" width="160" height="14" rx="2" fill="#F1DACB"/>'+
+             '<path d="M96 171v12M112 171v12M224 171v12M240 171v12" stroke="#D9AE97" stroke-width="1.2"/>';
+    }}
+  ]},
+  {id:'bed', n:'卧室', items:[
+    {id:'bcurtain', n:'窗帘', p:66, d:function(){ return curtains(); }},
+    {id:'bward', n:'衣柜', p:216, d:function(){
+      return '<rect x="14" y="52" width="62" height="100" rx="3" fill="#D8B27A" stroke="#9A7440" stroke-width="2"/>'+
+             '<path d="M45 54v96" stroke="#9A7440" stroke-width="1.6"/>'+
+             '<circle cx="40" cy="100" r="2" fill="#8A6A3C"/><circle cx="50" cy="100" r="2" fill="#8A6A3C"/>';
+    }},
+    {id:'bnight', n:'床头柜', p:96, d:function(){
+      return '<rect x="246" y="126" width="44" height="26" rx="2" fill="#D8B27A" stroke="#9A7440" stroke-width="1.6"/>'+
+             '<path d="M246 138h44"/>'+
+             '<path d="M256 126v-14" stroke="#8A6A3C" stroke-width="2"/>'+
+             '<path d="M248 112h16l-4-10h-8z" fill="#F6D9A6" stroke="#C08A46" stroke-width="1.2"/>';
+    }},
+    {id:'bbed', n:'床', p:186, d:function(){
+      return '<rect x="96" y="96" width="140" height="20" rx="6" fill="#C99C63"/>'+
+             '<rect x="96" y="112" width="140" height="56" rx="8" fill="#EAD6BE"/>'+
+             '<rect x="104" y="104" width="42" height="18" rx="5" fill="#FBF4E4" stroke="#D9C7B0"/>'+
+             '<rect x="152" y="104" width="42" height="18" rx="5" fill="#FBF4E4" stroke="#D9C7B0"/>'+
+             '<rect x="96" y="134" width="140" height="34" rx="6" fill="#CFE0D6"/>'+
+             '<path d="M96 138c40 8 100 8 140 0" stroke="#B9D3C4" stroke-width="2"/>'+
+             '<path d="M104 168v8M228 168v8" stroke="#B98A5C" stroke-width="4"/>';
+    }}
+  ]},
+  {id:'study', n:'书房', win:false, items:[
+    {id:'sshelf', n:'书架', p:186, d:function(){
+      return '<rect x="246" y="52" width="60" height="100" rx="3" fill="#D8B27A" stroke="#9A7440" stroke-width="2"/>'+
+             '<path d="M248 84h56M248 116h56" stroke="#9A7440" stroke-width="2"/>'+
+             '<rect x="254" y="58" width="7" height="22" fill="#9BA9E4"/><rect x="263" y="60" width="7" height="20" fill="#E8908B"/>'+
+             '<rect x="272" y="56" width="7" height="24" fill="#F0C878"/>'+
+             '<rect x="254" y="90" width="7" height="22" fill="#A9D6C2"/><rect x="263" y="92" width="7" height="20" fill="#B79CD8"/>';
+    }},
+    {id:'sdesk', n:'书桌', p:126, d:function(){
+      return '<rect x="84" y="126" width="134" height="8" rx="3" fill="#D8A96C"/>'+
+             '<path d="M92 134v26M210 134v26" stroke="#B98A5C" stroke-width="3"/>'+
+             '<rect x="120" y="116" width="34" height="10" rx="2" fill="#FBF4E4" stroke="#C9AE7D"/>'+
+             '<rect x="168" y="118" width="8" height="8" rx="2" fill="#E8908B"/>';
+    }},
+    {id:'schair', n:'书椅', p:66, d:function(){
+      return '<rect x="146" y="140" width="34" height="8" rx="3" fill="#CFA06A"/>'+
+             '<path d="M150 148v22M176 148v22" stroke="#A97D4A" stroke-width="2.4"/>'+
+             '<path d="M146 140c0-12 7-18 17-18s17 6 17 18" fill="#DDB07C"/>';
+    }},
+    {id:'slamp', n:'台灯', p:36, d:function(){
+      return '<path d="M110 126v-12" stroke="#8A6A3C" stroke-width="2"/>'+
+             '<path d="M98 114h24l-6-12h-12z" fill="#F6D9A6" stroke="#C08A46" stroke-width="1.2"/>'+
+             '<ellipse cx="110" cy="128" rx="14" ry="5" fill="rgba(255,233,182,.45)"/>';
+    }}
+  ]},
+  {id:'back', n:'后院', out:true, hedge:true, items:[
+    {id:'btree', n:'大树', p:186, d:function(){
+      return '<path d="M54 152V102c0-14 8-24 17-24s17 10 17 24V152z" fill="#9A7440"/>'+
+             '<circle cx="66" cy="60" r="28" fill="#A9C78B"/><circle cx="94" cy="64" r="30" fill="#B9D3A0"/>'+
+             '<circle cx="80" cy="44" r="24" fill="#C4DBAE"/><circle cx="86" cy="72" r="22" fill="#96BB7C"/>';
+    }},
+    {id:'bswing', n:'秋千', p:216, d:function(){
+      return '<path d="M216 150V70M292 150V70M208 150h96" stroke="#B08A55" stroke-width="3" fill="none"/>'+
+             '<path d="M240 70v34M268 70v34" stroke="#8A6A3C" stroke-width="2"/>'+
+             '<rect x="234" y="106" width="40" height="9" rx="3" fill="#C99C63" stroke="#8A6A3C" stroke-width="1"/>';
+    }},
+    {id:'bbench', n:'木长椅', p:96, d:function(){
+      return bench(122,140,74,'#D8A96C','#A97D4A')+
+             '<path d="M128 140v-12h62v12" stroke="#C79A68" stroke-width="2.4" fill="none"/>';
+    }},
+    {id:'bpond', n:'小池塘', p:126, d:function(){
+      return '<ellipse cx="244" cy="182" rx="58" ry="20" fill="#CFE0D6" stroke="#A9C7BD" stroke-width="2"/>'+
+             '<ellipse cx="244" cy="180" rx="46" ry="14" fill="#B9D9D2"/>'+
+             '<circle cx="228" cy="178" r="4" fill="#F7C6D2"/><circle cx="262" cy="182" r="3" fill="#FBF4E4"/>';
+    }}
+  ]}
+];
+ROOMS.forEach(function(R){ R.items.forEach(function(it){ it.rid = R.id + '.' + it.id; }); });
+function roomById(id){
+  for (var i=0;i<ROOMS.length;i++) if (ROOMS[i].id === id) return ROOMS[i];
+  return ROOMS[1];
+}
+function houseState(){
+  if (!S.house || typeof S.house !== 'object') S.house = {now:'living', owned:{}, hidden:{}};
+  if (!S.house.owned) S.house.owned = {};
+  if (!S.house.hidden) S.house.hidden = {};
+  if (!S.house.now || !roomById(S.house.now).id) S.house.now = 'living';
+  return S.house;
+}
+function roomHas(R, id){
+  var h = houseState();
+  var own = h.owned[R.id] || [], hid = h.hidden[R.id] || [];
+  return own.indexOf(id) >= 0 && hid.indexOf(id) < 0;
+}
+function roomScene(id){
+  var R = roomById(id), s = '';
+  if (R.out) s += outdoorBase(R.hedge ? '#DDEBE0' : '#DCEBE4', R.hedge ? '#C2D79A' : '#CFE0AE', R.hedge);
+  else s += indoorBase(R.tile ? '#F4EFE2' : '#F8F0DC', R.tile ? '#DDE7E2' : '#E7D3AC', R.tile, R.win);
+  for (var i=0;i<R.items.length;i++){
+    if (roomHas(R, R.items[i].id)) s += R.items[i].d();
+  }
+  return '<svg viewBox="0 0 320 220" role="img" aria-label="'+R.n+'">'+s+'</svg>';
+}
+function renderRoom(){
+  if (!$('room')) return;
+  var h = houseState(), R = roomById(h.now);
+  $('room').innerHTML = roomScene(R.id);
+  var total = 0; ROOMS.forEach(function(x){ total += x.items.length; });
+  var ownAll = 0;
+  ROOMS.forEach(function(x){ ownAll += (h.owned[x.id]||[]).length; });
+  if ($('roomWarmth')) $('roomWarmth').textContent = ownAll + ' / ' + total;
+  if ($('roomSub')) $('roomSub').textContent = R.n + ' · 摆 ' + ((h.owned[R.id]||[]).length) + '/' + R.items.length;
+  var tabs = '';
+  for (var t=0;t<ROOMS.length;t++){
+    var RT = ROOMS[t], n2 = (h.owned[RT.id]||[]).length;
+    tabs += '<button class="rt'+(RT.id===R.id?' on':'')+'" data-rt="'+RT.id+'">'+RT.n+(n2?' '+n2:'')+'</button>';
+  }
+  $('roomTabs').innerHTML = tabs;
+  var sh = '';
+  for (var i=0;i<R.items.length;i++){
+    var it = R.items[i], owned = (h.owned[R.id]||[]).indexOf(it.id) >= 0;
+    var hidden = (h.hidden[R.id]||[]).indexOf(it.id) >= 0;
+    sh += '<button class="rf'+((owned && !hidden)?' on':'')+((owned && hidden)?' off':'')+((!owned && S.coins < it.p)?' poor':'')+'" data-rid="'+it.id+'">'+
+          '<span class="nm">'+it.n+'</span>'+
+          '<span class="pr">'+(owned ? (hidden?'收起了':'已摆上') : '<i></i>'+it.p)+'</span></button>';
+  }
+  $('roomShop').innerHTML = sh;
+}
+if ($('roomTabs')) $('roomTabs').addEventListener('click', function(e){
+  var b = e.target.closest ? e.target.closest('.rt') : null;
+  if (!b) return;
+  var h = houseState();
+  h.now = b.getAttribute('data-rt');
+  save(); renderRoom(); beep('move');
+});
+if ($('roomShop')) $('roomShop').addEventListener('click', function(e){
+  var btn = e.target.closest ? e.target.closest('.rf') : null;
+  if (!btn) return;
+  var h = houseState(), R = roomById(h.now);
+  var id = btn.getAttribute('data-rid'), it = null;
+  for (var i=0;i<R.items.length;i++) if (R.items[i].id === id) it = R.items[i];
+  if (!it) return;
+  h.owned[R.id] = h.owned[R.id] || [];
+  h.hidden[R.id] = h.hidden[R.id] || [];
+  var owned = h.owned[R.id].indexOf(id) >= 0;
+  if (!owned){
+    if (S.coins < it.p){ toast('还差 ' + (it.p - S.coins) + ' 金币，先去卖几株花'); beep('error'); return; }
+    S.coins -= it.p;
+    h.owned[R.id].push(id);
+    toast('买下' + it.n + '，' + R.n + '暖了一点');
+    beep('order');
+  } else {
+    var hi = h.hidden[R.id].indexOf(id);
+    if (hi >= 0){ h.hidden[R.id].splice(hi,1); toast(it.n + ' 又摆出来了'); }
+    else { h.hidden[R.id].push(id); toast('把' + it.n + '收起来了'); }
+    beep('move');
+  }
+  save(); renderAll();
+});
+
+/* ================= 底部标签页 ================= */
+function switchTab(name){
+  var panes = document.querySelectorAll('.pane');
+  for (var i=0;i<panes.length;i++) panes[i].classList.toggle('on', panes[i].getAttribute('data-pane') === name);
+  var tabs = document.querySelectorAll('.tab');
+  for (var j=0;j<tabs.length;j++) tabs[j].setAttribute('aria-selected', tabs[j].getAttribute('data-tab') === name ? 'true' : 'false');
+  if (window.scrollY > 0) window.scrollTo(0, 0);
+}
+$('tabbar').addEventListener('click', function(e){
+  var t = e.target.closest ? e.target.closest('.tab') : null;
+  if (t) switchTab(t.getAttribute('data-tab'));
+});
+
+/* ================= 按钮 ================= */
+$('takeBtn').addEventListener('click', takeSeed);
+basketArt.addEventListener('click', takeSeed);
+basketArt.addEventListener('keydown', function(e){
+  if (e.key === 'Enter' || e.key === ' '){ e.preventDefault(); takeSeed(); }
+});
+$('upBtn').addEventListener('click', function(){
+  var next = CFG.gen[clamp(S.basket,1,3)];
+  if (!next) return;
+  if (S.coins < next.cost){ toast('还差 ' + (next.cost - S.coins) + ' 金币'); beep('error'); return; }
+  S.coins -= next.cost; S.basket += 1;
+  var max = maxDew();
+  save(); renderAll(); beep('order');
+  toast('种子篮升到 Lv.' + S.basket + '，花露上限 ' + max);
+});
+
+$('buyDew').addEventListener('click', function(){
+  var max = maxDew();
+  if (S.energy >= max){ toast('花露已经是满的'); beep('error'); return; }
+  if (S.coins < CFG.buyDew.cost){ toast('金币不够，先交一单'); beep('error'); return; }
+  S.coins -= CFG.buyDew.cost;
+  S.energy = Math.min(max, S.energy + CFG.buyDew.amount);
+  save(); renderAll(); beep('take');
+  toast('花露 +' + CFG.buyDew.amount + '，可以再取几颗');
+});
+
+if (orderEl) orderEl.addEventListener('click', function(e){
+  var btn = e.target.closest ? e.target.closest('button[data-act]') : null;
+  if (!btn) return;
+  var act = btn.dataset.act;
+
+  if (act === 'visitor'){
+    var v0 = S.visitor;
+    if (!v0 || haveCount(v0.lvl) < v0.count){ toast('东西还没凑齐'); beep('error'); return; }
+    var removed2 = 0;
+    for (var q=S.slots.length-1; q>=0 && removed2<v0.count; q--){
+      if (S.slots[q] && S.slots[q].lvl === v0.lvl){ S.slots[q] = null; removed2++; }
+    }
+    S.coins += v0.reward;
+    S.visitor = makeVisitor();
+    save(); renderAll(); beep('order');
+    toast('来客收走了，+' + v0.reward + ' 金币');
+    return;
+  }
+  if (act === 'shoo'){
+    S.visitor = makeVisitor();
+    save(); renderAll(); beep('move');
+    toast('换了位来客，稍等一下');
+    return;
+  }
+
+  var i = parseInt(btn.dataset.i, 10);
+  var o = S.orders[i];
+  if (!o) return;
+
+  if (act === 'deliver'){
+    deliverOrder(i);
+  } else if (act === 'reroll'){
+    if (S.coins < 6){ toast('换单要 6 金币'); beep('error'); return; }
+    S.coins -= 6; S.orders[i] = makeOrder();
+    save(); renderAll(); beep('move');
+  }
+});
+
+function deliverOrder(i){
+  var o = S.orders[i];
+  if (!o) return;
+  var have = haveCount(o.lvl, o.v);
+  if (have < o.count){
+    toast('还差 ' + (o.count - have) + ' 个' + CFG.names[o.lvl-1] + (o.v >= 0 ? '·' + varName(o.v) : ''));
+    beep('error'); return;
+  }
+  var need = o.count, removed = 0;
+  for (var k=S.slots.length-1; k>=0 && removed<need; k--){
+    var itk = S.slots[k];
+    if (itk && itk.lvl === o.lvl && (o.v < 0 || itk.v === o.v)){ S.slots[k] = null; removed++; }
+  }
+  var pay = Math.round(o.reward * buffs().sell);
+  S.coins += pay; S.ordersDone += 1;
+  bumpGoal('order', 1);
+  S.orders[i] = makeOrder();
+  save(); renderAll(); beep('order');
+  toast('交付完成，+' + pay + ' 金币');
+}
+
+function paintMute(){
+  var on = '<path d="M4 9v6h3l4 3.5V5.5L7 9z" fill="#22322B"/><path d="M15 9.2a4 4 0 0 1 0 5.6M17.6 6.6a8 8 0 0 1 0 10.8" fill="none" stroke="#22322B" stroke-width="1.6"/>';
+  var off = '<path d="M4 9v6h3l4 3.5V5.5L7 9z" fill="#22322B"/><path d="M15.5 9.5l5 5m0-5l-5 5" stroke="#22322B" stroke-width="1.8"/>';
+  $('muteIcon').innerHTML = S.muted ? off : on;
+  $('muteIconB').innerHTML = S.muted ? off : on;
+}
+function toggleMute(){
+  S.muted = !S.muted; save(); paintMute();
+  if (!S.muted) beep('take');
+}
+$('muteBtn').addEventListener('click', toggleMute);
+$('muteBtnB').addEventListener('click', toggleMute);
+$('homeBtn').addEventListener('click', function(){
+  window.location.href = 'https://jyx010320-gif.github.io/RabbitOvOTsuki/';
+});
+
+function openReset(){ resetModal.classList.remove('hide'); }
+$('resetBtn').addEventListener('click', openReset);
+$('resetBtnB').addEventListener('click', openReset);
+$('resetCancel').addEventListener('click', function(){
+  resetModal.classList.add('hide');
+});
+$('resetOk').addEventListener('click', function(){
+  try{ localStorage.removeItem(KEY); }catch(e){}
+  drag = null; selected = -1; lastSeason = -1;
+  newState();
+  S.stands = new Array(VARS.length).fill(null); S.standFull = false; S.house = {now:'living', owned:{}, hidden:{}}; S.sold = 0; S.milestones = []; S.goal = null; S.combo = 0; S.comboTs = 0;
+  modalEl.classList.add('hide');
+  resetModal.classList.add('hide');
+  save(); renderAll(); renderClock();
+  switchTab('garden');
+  toast('田翻好了，从一颗种子重新长');
+  beep('order');
+});
+resetModal.addEventListener('click', function(e){
+  if (e.target === resetModal) resetModal.classList.add('hide');
+});
+
+$('startBtn').addEventListener('click', function(){
+  S.tutorial = true; save(); modalEl.classList.add('hide'); beep('order');
+});
+modalEl.addEventListener('click', function(e){
+  if (e.target === modalEl && S.tutorial){ S.tutorial = true; save(); modalEl.classList.add('hide'); }
+});
+
+/* ================= 时间循环 ================= */
+function regen(){
+  var max = maxDew();
+  var now = Date.now();
+  if (S.energy >= max){ S.energy = max; S.energyTs = now; return 0; }
+  var tick = CFG.energyRegenMs / buffs().dew;
+  var d = Math.floor((now - S.energyTs) / tick);
+  if (d > 0){
+    var add = Math.min(d, max - S.energy);
+    S.energy += add;
+    S.energyTs += d * tick;
+    if (S.energy >= max) S.energyTs = now;
+    return add;
+  }
+  return 0;
+}
+
+setInterval(function(){
+  var add = regen();
+  if (S.visitor){
+    var left = Math.floor((S.visitor.until - Date.now())/1000);
+    var vEl = $('visLeft');
+    if (left <= 0){
+      S.visitor = makeVisitor();
+      save();
+      if (document.querySelector('[data-pane="orders"]').classList.contains('on')) renderOrders();
+    } else if (vEl){
+      vEl.textContent = '剩 ' + Math.floor(left/60) + ':' + ('0' + (left%60)).slice(-2);
+    }
+  }
+  renderHUD(); renderClock();
+  var gd = seasonInfo().days;
+  if (S.goal && S.goal.day !== gd){ ensureGoal(); renderGoal(); save(); }
+  if (add > 0 && Math.random() < 0.35) save();
+
+  // 风送种子：有空地时每 42 秒落一颗，别让玩家干等着
+  if (!drag && !document.hidden){
+    var now = Date.now();
+    if (now - (S.spawnTs || now) >= buffs().spawn){
+      var empty = firstEmpty();
+      if (empty >= 0){
+        S.spawnTs = now;
+        S.slots[empty] = {id:uid(), lvl:1};
+        save(); renderBoard();
+        popAt(empty);
+      } else {
+        S.spawnTs = now;
+      }
+    }
+  }
+}, 1000);
+
+setInterval(save, 15000);
+document.addEventListener('visibilitychange', function(){
+  if (document.hidden) save();
+});
+// 关掉双击放大（浏览器手势）
+document.addEventListener('dblclick', function(e){ e.preventDefault(); }, {passive:false});
+document.addEventListener('contextmenu', function(e){ e.preventDefault(); }, {passive:false});
+document.addEventListener('selectstart', function(e){ e.preventDefault(); }, {passive:false});
+document.addEventListener('gesturestart', function(e){ e.preventDefault(); }, {passive:false});
+
+/* ================= 启动 ================= */
+(function init(){
+  basketArt.insertAdjacentHTML('afterbegin', basketSVG());
+  buildYearStrip();
+  var loaded = load();
+  if (!loaded){ newState(); }
+  lastSeason = -1;
+  renderAll(); renderClock();
+  if (!S.tutorial) modalEl.classList.remove('hide'); else modalEl.classList.add('hide');
+  paintMute();
+  if (!loaded) save();
+})();
+
 })();
 </script>
+</body>
+</html>
