@@ -9,12 +9,10 @@
         body {
             margin: 0;
             padding: 20px 10px;
-            background-color: #fff5f7;
-            /* 淡淡的网格背景，增加手账感 */
-            background-image: 
-                linear-gradient(#ffe4e8 1px, transparent 1px),
-                linear-gradient(90deg, #ffe4e8 1px, transparent 1px);
-            background-size: 20px 20px;
+            /* 使用 SVG 生成无缝拼接的小爱心背景 */
+            background-color: #fff0f5;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 38.5c-1-1-9.5-8-9.5-14 0-3.5 2.5-5.5 5.5-5.5 2 0 3.5 1 4 2 0.5-1 2-2 4-2 3 0 5.5 2 5.5 5.5 0 6-8.5 13-9.5 14z' fill='%23ffb6c1' fill-opacity='0.3'/%3E%3C/svg%3E");
+            background-attachment: fixed;
             font-family: "PingFang SC", "Microsoft YaHei", sans-serif;
             color: #5a4a4d;
             display: flex;
@@ -30,15 +28,15 @@
             gap: 20px;
         }
 
-        /* 统一的卡片样式（虚线边框） */
+        /* 统一的卡片样式（虚线边框，半透明白底能看到背景的爱心） */
         .card {
             background: rgba(255, 255, 255, 0.85);
             border: 2px dashed #f3c5d2;
             border-radius: 12px;
             padding: 20px;
-            box-shadow: 0 4px 10px rgba(243, 197, 210, 0.2);
+            box-shadow: 0 4px 15px rgba(243, 197, 210, 0.3);
             position: relative;
-            backdrop-filter: blur(5px);
+            backdrop-filter: blur(4px);
         }
 
         /* 顶部个人信息卡片 */
@@ -58,7 +56,8 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 30px;
+            font-size: 35px;
+            box-shadow: 0 2px 8px rgba(243, 197, 210, 0.5);
         }
 
         .info h1 {
@@ -116,12 +115,14 @@
             text-decoration: none;
             color: #5a4a4d;
             transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.02);
         }
 
         .project-item:hover {
             background: #fff0f3;
             border-color: #e3a8b8;
-            transform: translateX(5px); /* 鼠标悬停时向右移动一点 */
+            transform: translateX(5px);
+            box-shadow: 0 4px 8px rgba(243, 197, 210, 0.4);
         }
 
         .project-name {
@@ -137,6 +138,7 @@
             color: #d17b8e;
             padding: 2px 8px;
             border-radius: 10px;
+            border: 1px solid #f3c5d2;
         }
 
         .arrow {
@@ -144,7 +146,7 @@
             font-weight: bold;
         }
 
-        /* 占位提示卡片（方便以后加新项目） */
+        /* 占位提示卡片 */
         .placeholder-card {
             text-align: center;
             padding: 15px;
@@ -152,7 +154,7 @@
             color: #b09a9e;
             border: 1px dashed #f3c5d2;
             border-radius: 8px;
-            background: #fff0f3;
+            background: rgba(255, 240, 243, 0.8);
             margin-top: 10px;
         }
         
@@ -173,9 +175,9 @@
     <div class="card profile-card">
         <div class="avatar">🐰</div>
         <div class="info">
-            <h1>我的游戏小站 ✎</h1>
+            <h1>我的游戏小站</h1>
             <p>@jyx010320-gif</p>
-            <div class="subtitle">✨ 饲养员正在盯着某只小兔。</div>
+            <div class="subtitle">✨ o北极兔o</div>
         </div>
     </div>
 
@@ -183,7 +185,7 @@
     <div class="card">
         <div class="deco-icon">🎀</div>
         <div class="card-header">
-            <span>⚙️</span> 联系我的项目
+            <span>⚙️</span> ✨ 兔兔的奇妙口袋 ✨
         </div>
         
         <div class="project-list">
