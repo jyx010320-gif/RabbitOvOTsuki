@@ -282,6 +282,15 @@
         .name-tip { margin-top: 6px; font-size: 11px; color: var(--text-sub); text-align: center; font-weight: bold; }
         .voice-row { display: flex; flex-wrap: wrap; gap: 8px; }
         .voice-btn { flex: 1 1 calc(50% - 4px); padding: 10px; border-radius: 12px; background: var(--pwd-bg); color: var(--text-main); font-size: 12px; }
+        .voice-packs { margin-top: 12px; padding-top: 10px; border-top: 1px dashed var(--border); }
+        .vp-head { font-size: 12px; font-weight: bold; color: var(--text-sub); margin-bottom: 8px; }
+        .vp-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+        .vp-chip { padding: 7px 12px; border-radius: 12px; border: none; background: var(--card-bg); color: var(--text-main); font-size: 12px; font-weight: bold; box-shadow: var(--shadow); cursor: pointer; max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .vp-chip.active { background: var(--primary); color: #ffffff; }
+        .vp-empty { font-size: 12px; color: var(--text-sub); line-height: 1.6; }
+        .vp-actions { display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap; }
+        .vp-actions button { flex: 1 1 auto; padding: 7px 10px; border-radius: 10px; border: none; background: var(--btn-bg); color: var(--text-main); font-size: 12px; font-weight: bold; cursor: pointer; box-shadow: var(--shadow); }
+        .vp-actions button:disabled { opacity: 0.4; cursor: default; }
         .voice-btn.voice-btn-wide { flex: 1 1 100%; }
         .vf-list { max-height: 50vh; overflow-y: auto; -webkit-overflow-scrolling: touch; padding-right: 2px; }
         .vf-item { margin-bottom: 10px; }
@@ -291,6 +300,7 @@
         .voice-io { display: flex; gap: 8px; margin-top: 8px; }
         .mini-io { flex: 1; padding: 8px; font-size: 12px; border-radius: 10px; background: var(--pwd-bg); color: var(--text-sub); box-shadow: none; }
         .voice-tip { margin-top: 8px; font-size: 11px; line-height: 1.5; color: var(--text-sub); text-align: center; font-weight: bold; }
+        .voice-tip.flash { color: var(--primary); }
         body[data-theme="mono"] .voice-btn.active { color: #fff; }
         .mini-add { width: 100%; margin-top: 10px; padding: 9px; font-size: 12px; border-radius: 12px; background: var(--pwd-bg); color: var(--text-main); }
 
@@ -337,6 +347,7 @@
 <div class="drawer-overlay" id="drawer-overlay" onclick="closeDrawer()"></div>
 <div class="drawer" id="drawer">
     <h3>设置</h3>
+    <button class="action-btn" onclick="goHome()">返回主页</button>
     <div class="theme-section" id="theme-section">
         <div class="theme-title" onclick="toggleThemePanel()">修改配色</div>
         <div class="color-picker">
@@ -379,6 +390,15 @@
                 <button class="mini-io" onclick="importVoicePack()">导入文案</button>
             </div>
             <input type="file" id="voice-pack-file" accept="application/json,.json" style="display:none" onchange="onVoicePackFile(event)">
+            <div class="voice-packs">
+                <div class="vp-head">我的方案</div>
+                <div class="vp-chips" id="voice-pack-list"></div>
+                <div class="vp-actions">
+                    <button onclick="saveVoicePack()">存为方案</button>
+                    <button id="vp-rename" onclick="renameVoicePack()" disabled>改名</button>
+                    <button id="vp-delete" onclick="deleteVoicePack()" disabled>删除方案</button>
+                </div>
+            </div>
             <div class="voice-tip">选好会立刻弹一句，方便你听；自定义里留空的条目会沿用「默认」的说法</div>
         </div>
     </div>
@@ -560,6 +580,7 @@
     window.addEventListener('DOMContentLoaded', () => {
         updateColorDots(savedTheme);
         updateVoiceBtns();
+        renderVoicePacks();
     });
 
     function selectTheme(themeName, element) {
@@ -621,10 +642,15 @@
         document.getElementById('drawer').classList.add('active');
         document.getElementById('drawer-overlay').classList.add('active');
         tempSelectedTheme = localStorage.getItem('appTheme') || 'mint';
+        renderVoicePacks();
         applyTheme(tempSelectedTheme);
         updateColorDots(tempSelectedTheme);
         const nameInput = document.getElementById('app-name-input');
         if (nameInput) nameInput.value = getSavedName();
+    }
+
+    function goHome() {
+        window.location.href = 'https://jyx010320-gif.github.io/RabbitOvOTsuki/';
     }
 
     function closeDrawer() {
@@ -679,6 +705,11 @@
         normal: {
             themeSaved: '配色已保存',
             voiceSwitched: '已切换提示语风格',
+            packSaved: '方案已保存',
+            packSwitched: '已切换到「{name}」',
+            packDeleted: '「{name}」已删除',
+            packDeleteAsk: '「{name}」删了就没了，确定？',
+            packEmpty: '自定义文案还是空的，先写几条再存',
             backupNever: '⚠️ 还没导出过备份，点这里导出一份',
             backupOld: '⚠️ 上次备份是 {days} 天前，点这里再导出一份',
             backupNormal: '数据保存在当前浏览器，请勿清理缓存。',
@@ -975,6 +1006,8 @@
         clearAsk: '清空数据前的确认', cleared: '已清空',
         copied: '复制成功', copyFail: '复制失败',
         empty: '列表空着的时候', exportAsk: '导出备份前的确认', exported: '备份导出成功',
+        packSaved: '保存方案成功', packSwitched: '切换方案成功', packDeleted: '删除方案成功',
+        packDeleteAsk: '删除方案前的确认', packEmpty: '自定义还是空的，不让存方案',
         hintUrl: '网址填错时的提示（API 主机）', hintWeb: '网址填错时的提示（网页链接）',
         hintGroup: '网址填错时的提示（群聊 / QQ 群号）', hintRecharge: '网址填错时的提示（充值链接）',
         fileBad: '导入的文件格式不对',
@@ -1051,6 +1084,94 @@
         openVoiceCustom();
     }
 
+    // === 我的提示语方案 ===
+    let voicePacks = [];
+    try { voicePacks = JSON.parse(localStorage.getItem('voicePacks')) || []; } catch (e) { voicePacks = []; }
+    let voicePackActive = '';
+    try { voicePackActive = localStorage.getItem('voicePackActive') || ''; } catch (e) {}
+    if (!Array.isArray(voicePacks)) voicePacks = [];
+
+    function saveVoicePacks() { try { localStorage.setItem('voicePacks', JSON.stringify(voicePacks)); } catch (e) {} }
+    function setVoicePackActive(id) { voicePackActive = id || ''; try { localStorage.setItem('voicePackActive', voicePackActive); } catch (e) {} }
+    function findVoicePack(id) { return voicePacks.find(p => p && p.id === id); }
+    function cloneVoiceMap(m) { const o = {}; Object.keys(m || {}).forEach(k => { if (typeof m[k] === 'string') o[k] = m[k]; }); return o; }
+
+    function renderVoicePacks() {
+        const box = document.getElementById('voice-pack-list');
+        if (!box) return;
+        box.innerHTML = voicePacks.length
+            ? voicePacks.map(p => `<button class="vp-chip${p.id === voicePackActive ? ' active' : ''}" onclick="switchVoicePack('${p.id}')">${esc(p.name)}</button>`).join('')
+            : '<div class="vp-empty">还没有方案。先在「自定义」里写好，再点下面「存为方案」。</div>';
+        const has = !!findVoicePack(voicePackActive);
+        const r = document.getElementById('vp-rename'), d = document.getElementById('vp-delete');
+        if (r) r.disabled = !has;
+        if (d) d.disabled = !has;
+    }
+
+    function switchVoicePack(id) {
+        const p = findVoicePack(id);
+        if (!p) return;
+        customVoiceData = cloneVoiceMap(p.data);
+        try { localStorage.setItem('voiceCustom', JSON.stringify(customVoiceData)); } catch (e) {}
+        currentVoice = 'custom';
+        try { localStorage.setItem('appVoice', 'custom'); } catch (e) {}
+        setVoicePackActive(id);
+        updateVoiceBtns();
+        refreshFieldHints();
+        refreshNotice();
+        renderList();
+        renderVoicePacks();
+        flashVoiceTip(say('packSwitched', { name: p.name }));
+    }
+
+    function flashVoiceTip(msg) {
+        const tip = document.querySelector('#voice-section .voice-tip');
+        if (!tip) return;
+        if (!tip.dataset.origin) tip.dataset.origin = tip.textContent;
+        clearTimeout(flashVoiceTip._t);
+        tip.textContent = msg;
+        tip.classList.add('flash');
+        flashVoiceTip._t = setTimeout(function () {
+            tip.textContent = tip.dataset.origin;
+            tip.classList.remove('flash');
+        }, 1800);
+    }
+
+    function saveVoicePack() {
+        if (!Object.keys(customVoiceData || {}).length) return showToast(say('packEmpty'), '⚠️');
+        openPrompt({ title: '保存为方案', value: '方案 ' + (voicePacks.length + 1) }, (name) => {
+            let id = 'p' + Date.now().toString(36);
+            while (findVoicePack(id)) id += 'x';
+            voicePacks.push({ id: id, name: name.slice(0, 16), data: cloneVoiceMap(customVoiceData) });
+            saveVoicePacks();
+            setVoicePackActive(id);
+            renderVoicePacks();
+            showToast(say('packSaved'), '💾');
+        });
+    }
+
+    function renameVoicePack() {
+        const p = findVoicePack(voicePackActive);
+        if (!p) return;
+        openPrompt({ title: '方案改名', value: p.name }, (name) => {
+            p.name = name.slice(0, 16);
+            saveVoicePacks();
+            renderVoicePacks();
+        });
+    }
+
+    function deleteVoicePack() {
+        const p = findVoicePack(voicePackActive);
+        if (!p) return;
+        showConfirm(say('packDeleteAsk', { name: p.name }), () => {
+            voicePacks = voicePacks.filter(x => x.id !== p.id);
+            saveVoicePacks();
+            setVoicePackActive('');
+            renderVoicePacks();
+            showToast(say('packDeleted', { name: p.name }), '🗑️');
+        });
+    }
+
     function openVoiceCustom() {
         const box = document.getElementById('voice-field-list');
         if (!box) return;
@@ -1089,6 +1210,8 @@
         });
         customVoiceData = map;
         try { localStorage.setItem('voiceCustom', JSON.stringify(map)); } catch (e) {}
+        const activePack = findVoicePack(voicePackActive);
+        if (activePack) { activePack.data = cloneVoiceMap(map); saveVoicePacks(); }
         currentVoice = 'custom';
         try { localStorage.setItem('appVoice', 'custom'); } catch (e) {}
         cancelVoiceCustom();
@@ -1917,8 +2040,5 @@
     renderCatManager();
     renderList();
 </script>
-<a href="https://jyx010320-gif.github.io/RabbitOvOTsuki/" style="position: fixed; top: 15px; left: 15px; z-index: 9999; background: rgba(255, 255, 255, 0.85); border: 2px dashed #f3c5d2; color: #d17b8e; padding: 6px 12px; border-radius: 20px; text-decoration: none; font-family: sans-serif; font-weight: bold; font-size: 14px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); backdrop-filter: blur(4px);">
-    🏠 回到主页
-</a>
 </body>
 </html>
