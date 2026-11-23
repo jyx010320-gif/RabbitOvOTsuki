@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -601,6 +600,8 @@ canvas{-webkit-user-select:none;user-select:none}
   padding:4px 9px;border:1.5px solid var(--ink);background:var(--paper-2);color:var(--ink);border-radius:2px;
   cursor:pointer;box-shadow:2px 2px 0 var(--shadow);opacity:.92}
 .help-btn:hover{background:var(--paper-3)}
+.home-btn{top:26px}
+@media (min-width:760px){ .head .hud{margin-right:78px} }
 [data-theme="dusk"] .dayend{background:rgba(6,10,8,.62)}
 .order-head span{font-size:12.5px;font-weight:500}
 .order-head b{font-size:12px;color:var(--sun);font-weight:700;white-space:nowrap}
@@ -896,6 +897,7 @@ body[data-tab="stove"] .tool-dock{display:none}
       <div class="hud-item"><label>水缸</label><b class="num" id="waterBox">6 / 6</b></div>
     </div>
     <button class="help-btn" id="guideBtn" aria-label="怎么玩">玩法</button>
+    <button class="help-btn home-btn" id="homeBtn" aria-label="返回主页">返回主页</button>
   </header>
 
   <div class="tutor" id="tutor" hidden>
@@ -1855,7 +1857,7 @@ const el={
   seedHint:$('seedHint'), toast:$('toast'), taskLine:$('taskLine'),
   yardHint:$('yardHint'), refill:$('refillBtn'), upgrade:$('upgradeBtn'),
   saveNote:$('saveNote'), reset:$('resetBtn'),
-  guide:$('guide'), guideOk:$('guideOk'), guideBtn:$('guideBtn'),
+  guide:$('guide'), guideOk:$('guideOk'), guideBtn:$('guideBtn'), homeBtn:$('homeBtn'),
   eggCount:$('eggCount'), addHen:$('addHen'), stats:$('stats'),
   buys:$('buys'), tipBird:$('tipBird'),
   wishList:$('wishList'), wishHint:$('wishHint'), dryTip:$('dryTip'),
@@ -2961,6 +2963,7 @@ function closeGuide(){
 }
 if(el.guideOk) el.guideOk.addEventListener('click',closeGuide);
 if(el.guideBtn) el.guideBtn.addEventListener('click',showGuide);
+if(el.homeBtn) el.homeBtn.addEventListener('click',()=>{ window.location.href='https://jyx010320-gif.github.io/RabbitOvOTsuki/'; });
 if(el.guide) el.guide.addEventListener('click',e=>{ if(e.target===el.guide) closeGuide(); });
 function dayTipText(){
   if(repLv()<2) return '名声到 Lv2，镇上就会有人点名要你家的菜';
