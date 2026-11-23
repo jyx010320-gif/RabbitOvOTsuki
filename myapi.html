@@ -1,0 +1,1921 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#b8e6c8">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="api秘密基地">
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="icon" type="image/png" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALQAAAC0CAYAAAA9zQYyAAAE/UlEQVR4nO3dTVbjMBBFYSWn1wT7gCmsDqawD9hUetAH2gTb0U9Jqnq+37RDojiXiuwT0qfkxMPHy2X2GlDv/f75NHsNKaU0bREErG1W4EMflIiPaWTc3R+IiLHUO+5ud07I2NMrbPM7JWSUsA77bHlnxIxS1s2Y/HYQMixYTOvmCU3MsGLRUlPQxAxrrU1VjXhCxgg1W5DiCU3MGKWmtaKgiRmjlTaXHTQxY5aS9kyvQwOzZQXNdMZsuQ3eDJqY4UVOi7tBEzO8udUke2hI2Qya6Qyv9tpcDZqY4d1Wo2w5IOVX0ExnRLHWKhMaUn4EzXRGNNfNMqEhhaAh5TtothuIatkuExpSCBpSzimx3UB8Xw0zoSGFoCGFoCHlxP4ZSpjQkELQkELQkELQkELQkELQkELQkELQkELQkELQkELQkELQkELQkELQkELQkELQkELQkELQkELQkELQkELQkELQkELQkPJn9gJGeLt7yr7t4+drx5WgN9mgSyLe+jnijkcq6NqIc+6PuGOQCNo65L3HIGzfwp8Ujoh55uOhTOigZ8VF1H6F3HJ4CIotiE/hJrSHmJe8refoQgXtNR6v6zqiMEF7j8b7+o4iTNBAjhBBR5l+UdapzH3Q0SKJtl41ri/bWcexd4nN8rHe7p64nDeJ66At5Ia1vB1TNi63Ww6LqGqnpMV05ZdiDrdBt2qNki1DTJJBW8VI1PG4DLrl7do6wpb7Y9sxntRJYWl8Iz9HHVW0dymZoEsOfPTIRor2qUJ3W47esRFznSjHzV3QPUV5UbyKcPwkgo7ydoj+JILOEWG6ROD9OB4maBwDQUMKQUMKQUPKYYLmSogN78dRImjvZ94YRyLoXN6ni3cRjp+7oHsftAgvikdRjpu7oGuVfql5lBcIZU4PHy+X2Yu45unz0Cn5W8+anDXmrGXvfiIMAZcT2tOH6lVizrld67974DLoVlYHPsILWLrGrdtb/VLMJhl0Su0H3vsLh3Vug575VQIzv0IBbWT+BGtL7n/8w0TW4Drox89X86/oGoHpPI/bLceXaHFEW68a90GnFCeSKOtUFiJo9FfzpZYehQna+4H0vr4ct55DhOcYJuiU/B5Qr+uqsfVcojxH11c51lhf+WgV5YUuEfk5hQs6pf8HfGbYkV90ZaG2HNdmRUXMfoUOOqXxcRGzby4/D12r5xbEc8ilf9ygTCropaN9wMjqA/7RyQa9dJQJFv2vTSwcImgcR/iTQmCJoCGFoCGFoCGFoCGFoCGFoCGFoCGFoCGFoCGFoCGFoCGFoCGFoCGFoCGFoCGFoCGFoCGFoCGFoCGFoCGFoCGFoCGFoCGFoCGFoCGFoCGFoCGFoCGFoCGFoCGFoCGFoCGFoCHl/H7/fJq9CMDC+/3ziQkNKQQNKQQNKeeU/u09Zi8EaPHVMBMaUggaUr6DZtuBqJbtMqEhhaAh5UfQbDsQzXWzTGhI+RU0UxpRrLXKhIaU1aCZ0vBuq9HNCU3U8GqvTbYckLIbNFMa3txq8uaEJmp4kdNi1paDqDFbboPsoSElO2imNGYpaa9oQhM1RittrnjLQdQYpaa1pjgfPl4uLT8PrGkZmk0nhUxrWGttqvkqB1HDikVLpjGyBUENy6Foeh2aaY1S1s10C5BpjT29hl/3iUrYWOr9Lj50i0DcxzRyKzptz0vc2madT7k5iSPw2LxcEPgLpUqjrDhsFFYAAAAASUVORK5CYII=">
+    <link rel="apple-touch-icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALQAAAC0CAYAAAA9zQYyAAAE/UlEQVR4nO3dTVbjMBBFYSWn1wT7gCmsDqawD9hUetAH2gTb0U9Jqnq+37RDojiXiuwT0qfkxMPHy2X2GlDv/f75NHsNKaU0bREErG1W4EMflIiPaWTc3R+IiLHUO+5ud07I2NMrbPM7JWSUsA77bHlnxIxS1s2Y/HYQMixYTOvmCU3MsGLRUlPQxAxrrU1VjXhCxgg1W5DiCU3MGKWmtaKgiRmjlTaXHTQxY5aS9kyvQwOzZQXNdMZsuQ3eDJqY4UVOi7tBEzO8udUke2hI2Qya6Qyv9tpcDZqY4d1Wo2w5IOVX0ExnRLHWKhMaUn4EzXRGNNfNMqEhhaAh5TtothuIatkuExpSCBpSzimx3UB8Xw0zoSGFoCGFoCHlxP4ZSpjQkELQkELQkELQkELQkELQkELQkELQkELQkELQkELQkELQkELQkELQkELQkELQkELQkELQkELQkELQkELQkELQkELQkPJn9gJGeLt7yr7t4+drx5WgN9mgSyLe+jnijkcq6NqIc+6PuGOQCNo65L3HIGzfwp8Ujoh55uOhTOigZ8VF1H6F3HJ4CIotiE/hJrSHmJe8refoQgXtNR6v6zqiMEF7j8b7+o4iTNBAjhBBR5l+UdapzH3Q0SKJtl41ri/bWcexd4nN8rHe7p64nDeJ66At5Ia1vB1TNi63Ww6LqGqnpMV05ZdiDrdBt2qNki1DTJJBW8VI1PG4DLrl7do6wpb7Y9sxntRJYWl8Iz9HHVW0dymZoEsOfPTIRor2qUJ3W47esRFznSjHzV3QPUV5UbyKcPwkgo7ydoj+JILOEWG6ROD9OB4maBwDQUMKQUMKQUPKYYLmSogN78dRImjvZ94YRyLoXN6ni3cRjp+7oHsftAgvikdRjpu7oGuVfql5lBcIZU4PHy+X2Yu45unz0Cn5W8+anDXmrGXvfiIMAZcT2tOH6lVizrld67974DLoVlYHPsILWLrGrdtb/VLMJhl0Su0H3vsLh3Vug575VQIzv0IBbWT+BGtL7n/8w0TW4Drox89X86/oGoHpPI/bLceXaHFEW68a90GnFCeSKOtUFiJo9FfzpZYehQna+4H0vr4ct55DhOcYJuiU/B5Qr+uqsfVcojxH11c51lhf+WgV5YUuEfk5hQs6pf8HfGbYkV90ZaG2HNdmRUXMfoUOOqXxcRGzby4/D12r5xbEc8ilf9ygTCropaN9wMjqA/7RyQa9dJQJFv2vTSwcImgcR/iTQmCJoCGFoCGFoCGFoCGFoCGFoCGFoCGFoCGFoCGFoCGFoCGFoCGFoCGFoCGFoCGFoCGFoCGFoCGFoCGFoCGFoCGFoCGFoCGFoCGFoCGFoCGFoCGFoCGFoCGFoCGFoCGFoCGFoCHl/H7/fJq9CMDC+/3ziQkNKQQNKQQNKeeU/u09Zi8EaPHVMBMaUggaUr6DZtuBqJbtMqEhhaAh5UfQbDsQzXWzTGhI+RU0UxpRrLXKhIaU1aCZ0vBuq9HNCU3U8GqvTbYckLIbNFMa3txq8uaEJmp4kdNi1paDqDFbboPsoSElO2imNGYpaa9oQhM1RittrnjLQdQYpaa1pjgfPl4uLT8PrGkZmk0nhUxrWGttqvkqB1HDikVLpjGyBUENy6Foeh2aaY1S1s10C5BpjT29hl/3iUrYWOr9Lj50i0DcxzRyKzptz0vc2madT7k5iSPw2LxcEPgLpUqjrDhsFFYAAAAASUVORK5CYII=">
+    <title>api秘密基地</title>
+
+    <style>
+        /* 配色方案 */
+        :root { 
+            --shadow: 0 4px 12px rgba(0,0,0,0.04); 
+            --radius: 20px; 
+            --border: #ebdcd0; 
+        }
+
+        /* 主题1：薄荷奶绿 (默认) */
+        html[data-theme="mint"],
+        body[data-theme="mint"] {
+            --bg-color: #b8e6c8; --card-bg: #fffef9; --primary: #52c9a3; --primary-hover: #3bb58f;
+            --text-main: #5a4c40; --text-sub: #9b8e83; --danger: #ff6b6b; --danger-bg: #ffe3e3;
+            --pwd-bg: #f4f7f6; --btn-bg: #ffffff; --btn-hover: #f7f9f8;
+            --tag-yellow: #ffd571; --tag-blue: #8cd3ff; --tag-pink: #ffb7b2;
+            --btn-green: #a3d9b1; 
+        }
+        /* 主题2：樱花粉粉 */
+        html[data-theme="pink"],
+        body[data-theme="pink"] {
+            --bg-color: #fde4e4; --card-bg: #fffcfc; --primary: #ff9a9e; --primary-hover: #fecfef;
+            --text-main: #6b4c4c; --text-sub: #a88e8e; --danger: #e53e3e; --danger-bg: #fed7d7;
+            --pwd-bg: #fff0f0; --btn-bg: #ffffff; --btn-hover: #fff5f5;
+            --tag-yellow: #ffd571; --tag-blue: #90cdf4; --tag-pink: #fbb6ce;
+            --btn-green: #fbb6ce;
+        }
+        /* 主题3：星幻夜空 (暗黑) */
+        html[data-theme="dark"],
+        body[data-theme="dark"] {
+            --bg-color: #2d3748; --card-bg: #1a202c; --primary: #4fd1c5; --primary-hover: #38b2ac;
+            --text-main: #e2e8f0; --text-sub: #a0aec0; --danger: #fc8181; --danger-bg: #742a2a;
+            --pwd-bg: #2d3748; --btn-bg: #2d3748; --btn-hover: #4a5568;
+            --tag-yellow: #d69e2e; --tag-blue: #3182ce; --tag-pink: #d53f8c; --border: #4a5568;
+            --btn-green: #38a169;
+        }
+        /* 主题4：奶油香芋 */
+        html[data-theme="taro"],
+        body[data-theme="taro"] {
+            --bg-color: #e6e6fa; --card-bg: #ffffff; --primary: #b794f4; --primary-hover: #9f7aea;
+            --text-main: #553c9a; --text-sub: #805ad5; --danger: #e53e3e; --danger-bg: #fed7d7;
+            --pwd-bg: #faf5ff; --btn-bg: #ffffff; --btn-hover: #fcfaff;
+            --tag-yellow: #f6e05e; --tag-blue: #90cdf4; --tag-pink: #fbb6ce; --border: #d6bcfa;
+            --btn-green: #d6bcfa;
+        }
+        /* 主题5：蜜桃乌龙 */
+        html[data-theme="peach"],
+        body[data-theme="peach"] {
+            --bg-color: #ffe4d6; --card-bg: #fffdfb; --primary: #ff9a76; --primary-hover: #f4835c;
+            --text-main: #6b4a3f; --text-sub: #a8887c; --danger: #e05252; --danger-bg: #ffdada;
+            --pwd-bg: #fff3ec; --btn-bg: #ffffff; --btn-hover: #fff7f2;
+            --tag-yellow: #ffd571; --tag-blue: #8fd3f4; --tag-pink: #ffb7a8; --border: #f4dccf;
+            --btn-green: #ffc9b3;
+        }
+        /* 主题6：海盐苏打 */
+        html[data-theme="ocean"],
+        body[data-theme="ocean"] {
+            --bg-color: #d4ebf7; --card-bg: #fdfeff; --primary: #45a7d4; --primary-hover: #2f95c4;
+            --text-main: #3d5666; --text-sub: #829ab0; --danger: #e05c5c; --danger-bg: #ffe0e0;
+            --pwd-bg: #eef7fc; --btn-bg: #ffffff; --btn-hover: #f7fcfd;
+            --tag-yellow: #ffd571; --tag-blue: #87cdf0; --tag-pink: #ffb7c5; --border: #cfe4f0;
+            --btn-green: #b3dcf0;
+        }
+        /* 主题7：黑白灰 */
+        html[data-theme="mono"],
+        body[data-theme="mono"] {
+            --bg-color: #ececec; --card-bg: #ffffff; --primary: #4a4a4a; --primary-hover: #303030;
+            --text-main: #262626; --text-sub: #7c7c7c; --danger: #c0392b; --danger-bg: #f7dedb;
+            --pwd-bg: #f5f5f5; --btn-bg: #ffffff; --btn-hover: #f7f7f7;
+            --tag-yellow: #e3e3e3; --tag-blue: #d2d2d2; --tag-pink: #dedede; --border: #dedede;
+            --btn-green: #e0e0e0;
+        }
+        body[data-theme="mono"] .type-tag.sign-tag,
+        body[data-theme="mono"] .type-tag.pin-tag { color: #3a3a3a; }
+        body[data-theme="mono"] .notice-box { color: #3a3a3a; }
+        body[data-theme="mono"] .btn-add,
+        body[data-theme="mono"] .action-row button.move-btn,
+        body[data-theme="mono"] .info-row button { color: #2b2b2b; }
+        body[data-theme="mono"] .action-row button.recharge-btn { background: var(--primary); color: #ffffff; }
+        /* 主题8：柠檬苏打 */
+        html[data-theme="lemon"],
+        body[data-theme="lemon"] {
+            --bg-color: #fdf8dd; --card-bg: #fffefa; --primary: #c98a1f; --primary-hover: #b07713;
+            --text-main: #5f5230; --text-sub: #9b8f6b; --danger: #d9534f; --danger-bg: #ffe2e0;
+            --pwd-bg: #fdf8e4; --btn-bg: #ffffff; --btn-hover: #fffbeb;
+            --tag-yellow: #f2c94c; --tag-blue: #9ecbe0; --tag-pink: #f0a9a3; --border: #eee3c0;
+            --btn-green: #e3d59b;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: "PingFang SC", "Microsoft YaHei", sans-serif; transition: background-color 0.3s, color 0.3s; }
+        
+        body { 
+            background-color: var(--bg-color); 
+            min-height: 100vh;
+            color: var(--text-main); 
+            display: flex; 
+            justify-content: center; 
+            overflow-x: hidden; 
+            padding-bottom: calc(40px + env(safe-area-inset-bottom, 0px)); 
+        }
+        
+        /* 状态栏区域：铺当前主题底色，内容不会滑到时间/电量下面 */
+        .statusbar-fill { position: fixed; top: 0; left: 0; right: 0; height: env(safe-area-inset-top, 0px); background-color: var(--bg-color); z-index: 950; pointer-events: none; }
+
+        .app-container { 
+            width: 100%; 
+            max-width: 600px; 
+            position: relative; 
+            padding: calc(20px + env(safe-area-inset-top, 0px)) 24px calc(30px + env(safe-area-inset-bottom, 0px)) 24px; 
+        }
+
+        /* ====== 顶部导航 ====== */
+        .nav-container { display: flex; gap: 10px; margin: 10px 0 24px 0; align-items: center; position: relative; z-index: 1; }
+        
+        .menu-btn { 
+            padding: 10px 14px; border-radius: var(--radius); border: none; 
+            background: var(--card-bg); color: var(--text-main); 
+            font-size: 18px; cursor: pointer; box-shadow: var(--shadow); font-weight: bold; 
+        }
+        
+        .nav-tabs { display: flex; gap: 10px; flex: 1; align-items: stretch; }
+        
+        .nav-tabs .title-pill { 
+            flex: 1; min-width: 0; display: flex; align-items: center; justify-content: center;
+            overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+            padding: 10px 14px; border-radius: var(--radius); 
+            background: var(--card-bg); color: var(--text-main); 
+            font-size: 15px; font-weight: bold; box-shadow: var(--shadow); 
+        }
+        
+        .page { display: none; }
+        .page.active { display: block; animation: popIn 0.3s ease-out; }
+        @keyframes popIn { from { opacity: 0; transform: scale(0.98); } to { opacity: 1; transform: scale(1); } }
+
+        /* 提示横幅 */
+        .notice-box { background: var(--tag-yellow); color: #8c6a1d; padding: 8px 14px; border-radius: 10px; font-size: 12px; font-weight: bold; margin: 0 auto 24px auto; text-align: center; box-shadow: var(--shadow); width: fit-content; border: 1px solid rgba(0,0,0,0.05); }
+        .notice-box.notice-alert { cursor: pointer; background: var(--danger-bg); color: var(--danger); border-color: rgba(0,0,0,0.06); }
+        .notice-box.notice-alert:active { opacity: 0.7; }
+
+        /* 分类与操作区 */
+        .filter-actions-row { display: flex; gap: 10px; margin-bottom: 24px; align-items: stretch; }
+        .btn-add { flex: 0 0 auto; padding: 10px 16px; border-radius: var(--radius); border: none; background: var(--tag-pink); color: #fff; font-size: 14px; font-weight: bold; cursor: pointer; box-shadow: var(--shadow); white-space: nowrap; }
+        .btn-add:hover { transform: translateY(-2px); }
+        .filter-tabs { display: flex; gap: 6px; flex: 1; overflow-x: auto; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+        .filter-tabs::-webkit-scrollbar { display: none; }
+        .filter-tabs button .tab-n { font-size: 10px; opacity: 0.75; margin-left: 3px; font-weight: bold; }
+        .filter-tabs button { flex: 1 0 auto; min-width: 56px; padding: 10px 10px; border-radius: var(--radius); border: none; background: var(--card-bg); color: var(--text-sub); font-size: 12px; font-weight: bold; cursor: pointer; box-shadow: var(--shadow); white-space: nowrap; }
+        .filter-tabs button.active { background: var(--primary); color: white; }
+
+        .search-box { width: 100%; padding: 14px 18px; border-radius: var(--radius); border: none; font-size: 14px; margin-bottom: 24px; outline: none; background: var(--card-bg); color: var(--text-main); box-shadow: var(--shadow); }
+
+        /* 折叠卡片 */
+        .accordion-item { background: var(--card-bg); border: none; border-radius: var(--radius); margin-bottom: 16px; box-shadow: var(--shadow); overflow: hidden; }
+        .accordion-header { padding: 18px 20px; display: flex; align-items: center; cursor: pointer; font-size: 16px; font-weight: bold; user-select: none; }
+        .header-name { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .arrow { display: inline-block; margin-right: 12px; font-size: 12px; color: var(--text-sub); transform: rotate(0deg); transition: transform 0.3s; }
+        .accordion-item.active .arrow { transform: rotate(90deg); color: var(--primary); }
+        .header-tags { margin-left: auto; display: flex; gap: 6px; }
+        .type-tag { font-size: 11px; padding: 4px 10px; border-radius: 8px; color: var(--text-main); font-weight: bold; white-space: nowrap; box-shadow: inset 0 -2px 0 rgba(0,0,0,0.05); }
+        .type-tag.pin-tag { background: var(--tag-yellow); color: #8c6a1d; }
+        .type-tag.sign-tag { background: var(--tag-blue); color: #1c6b9e; }
+        .type-tag.other-tag { background: #e2e8f0; color: #64748b; }
+        body[data-theme="dark"] .type-tag.other-tag { background: #4a5568; color: #cbd5e0; }
+        
+        .accordion-body { display: none; padding: 0 20px 20px 20px; border-top: 1px dashed var(--border); margin-top: 0; background: var(--card-bg); }
+        .accordion-item.active .accordion-body { display: block; animation: slideDown 0.3s ease-out; }
+        @keyframes slideDown { from { opacity: 0; transform: translateY(-5px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* 密码框及按钮 */
+        .info-row { display: flex; gap: 8px; margin-bottom: 16px; align-items: center; margin-top: 16px; }
+        .pwd-display { flex: 1; min-width: 0; background: var(--pwd-bg); padding: 12px; border-radius: 12px; font-family: monospace; font-size: 15px; font-weight: bold; letter-spacing: 1px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+        /* 展开长密钥时最多两行，末尾省略号，别把「显示/复制」挤出屏幕 */
+        .pwd-display.expanded { white-space: normal; word-break: break-all; overflow-wrap: anywhere; line-height: 1.45; }
+        
+        button { cursor: pointer; border: none; font-weight: bold; }
+        .info-row button { flex: 0 0 auto; padding: 10px 14px; font-size: 13px; border-radius: 10px; background: var(--btn-green); color: #3b5e3b; box-shadow: 0 2px 0px rgba(0,0,0,0.05); }
+        body[data-theme="dark"] .info-row button { color: #fff; }
+
+        .text-row { font-size: 13px; color: var(--text-sub); margin-bottom: 10px; word-break: break-all; line-height: 1.5; }
+        .text-row a { color: var(--primary); text-decoration: none; font-weight: bold;}
+        
+        /* 操作按钮区 */
+        .action-row { display: flex; gap: 10px; margin-top: 16px; padding-top: 16px; border-top: 1px dashed var(--border); flex-wrap: wrap; }
+        .action-row button { flex: 1; padding: 10px 6px; font-size: 12px; border-radius: 12px; background: var(--pwd-bg); color: var(--text-main); min-width: 48px;}
+        .action-row button.danger { color: var(--danger); background: var(--danger-bg); }
+        
+        /* 排序按钮特殊样式 */
+        .action-row button.move-btn { flex: 0.5; background: var(--tag-blue); color: #1c6b9e; font-size: 15px; padding: 8px;}
+        body[data-theme="dark"] .action-row button.move-btn { color: #fff; }
+        
+        /* 充值按钮特殊样式 */
+        .action-row button.recharge-btn { background: var(--tag-yellow); color: #8c6a1d; }
+        body[data-theme="dark"] .action-row button.recharge-btn { color: #fff; }
+
+
+
+        /* API 主机行（和密钥行同一行排布） */
+        .link-block { display: flex; align-items: center; gap: 8px; margin-bottom: 16px; }
+        .link-url { flex: 1; min-width: 0; background: var(--pwd-bg); padding: 12px; border-radius: 12px; font-family: monospace; font-size: 12px; color: var(--text-sub); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .link-url.link-open { display: flex; align-items: center; gap: 6px; text-decoration: none; cursor: pointer; }
+        .link-url.link-open .u { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .link-url.link-open .go { flex: 0 0 auto; color: var(--primary); font-weight: bold; }
+        .link-block.web-row { margin-bottom: 6px; }
+        .link-url.qq-num { font-size: 13px; color: var(--text-main); font-family: monospace; letter-spacing: 0.5px; }
+        .qq-hint { font-size: 11px; color: var(--text-sub); margin: -8px 0 12px 2px; font-weight: bold; }
+        .link-url.web-link { background: none; padding: 6px 2px; color: var(--primary); font-weight: bold; }
+        .link-url.web-link.bad-link { color: var(--danger); }
+        .link-url.link-open:active { opacity: 0.65; }
+        .link-block button { flex: 0 0 auto; padding: 12px 13px; font-size: 12px; border-radius: 12px; background: var(--btn-green); color: #3b5e3b; box-shadow: 0 2px 0px rgba(0,0,0,0.05); }
+        body[data-theme="dark"] .link-block button { color: #fff; }
+        body[data-theme="mono"] .link-block button { color: #2b2b2b; }
+        .link-block button.group-btn { background: var(--tag-blue); color: #1c6b9e; }
+        body[data-theme="dark"] .link-block button.group-btn { color: #fff; }
+        body[data-theme="mono"] .link-block button.group-btn { color: #2b2b2b; }
+
+        /* 撤销条 */
+        .snackbar { position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%) translateY(16px); display: flex; align-items: center; gap: 14px; max-width: 92%; padding: 12px 16px; border-radius: 16px; background: #2f2f2f; color: #ffffff; font-size: 13px; font-weight: bold; box-shadow: 0 10px 26px rgba(0,0,0,0.24); opacity: 0; pointer-events: none; transition: opacity 0.25s ease, transform 0.25s ease; z-index: 2100; }
+        .snackbar.show { opacity: 1; transform: translateX(-50%) translateY(0); pointer-events: auto; }
+        .snackbar button { flex: 0 0 auto; padding: 6px 10px; font-size: 13px; border-radius: 10px; background: rgba(255,255,255,0.14); color: #8cd3ff; }
+
+        /* ================= 自定义提示框 ================= */
+        .custom-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.3); z-index: 2000; display: none; justify-content: center; align-items: center; backdrop-filter: blur(2px); opacity: 0; transition: opacity 0.3s; }
+        .custom-overlay.active { display: flex; opacity: 1; }
+        .custom-dialog { background: var(--card-bg); padding: 24px; border-radius: 24px; width: 80%; max-width: 320px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.15); transform: scale(0.9); transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        .custom-overlay.active .custom-dialog { transform: scale(1); }
+        .dialog-icon { font-size: 40px; margin-bottom: 12px; display: block; }
+        .dialog-text { font-size: 15px; font-weight: bold; color: var(--text-main); margin-bottom: 20px; line-height: 1.5; white-space: pre-line; }
+        .dialog-btns { display: flex; gap: 12px; justify-content: center; }
+        .dialog-btns button { flex: 1; padding: 12px; border-radius: 14px; font-size: 14px; background: var(--pwd-bg); color: var(--text-main); box-shadow: var(--shadow); }
+        .dialog-btns button.primary { background: var(--primary); color: white; }
+        .dialog-btns button.danger { background: var(--danger); color: white; }
+
+        /* ================= 侧边栏抽屉 ================= */
+        .drawer-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.2); z-index: 1000; display: none; opacity: 0; transition: opacity 0.3s; }
+        .drawer-overlay.active { display: block; opacity: 1; }
+        .drawer { position: fixed; top: 0; left: -320px; width: 300px; height: 100%; background: var(--card-bg); z-index: 1001; box-shadow: 5px 0 20px rgba(0,0,0,0.05); transition: left 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); padding: calc(30px + env(safe-area-inset-top, 0px)) 20px calc(30px + env(safe-area-inset-bottom, 0px)); display: flex; flex-direction: column; gap: 16px; border-radius: 0 30px 30px 0; overflow-y: auto; }
+        .drawer.active { left: 0; }
+        .drawer h3 { font-size: 18px; margin-bottom: 10px; color: var(--text-main); border-bottom: 1px dashed var(--border); padding-bottom: 16px; text-align: center; }
+        .theme-section { background: var(--btn-bg); padding: 14px 16px; border-radius: var(--radius); box-shadow: var(--shadow); margin-bottom: 0; transition: background-color 0.25s; }
+        .theme-section.open { background: var(--pwd-bg); background: color-mix(in srgb, var(--primary) 10%, var(--card-bg)); }
+        .theme-title { display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: bold; color: var(--text-main); cursor: pointer; user-select: none; }
+        .color-picker { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; padding: 0 8px; max-height: 0; opacity: 0; overflow: hidden; transition: max-height 0.35s ease, opacity 0.25s ease, padding 0.35s ease, margin-top 0.35s ease; }
+        .theme-section.open .color-picker { max-height: 260px; opacity: 1; padding: 8px; margin-top: 8px; }
+        .color-dot { width: 36px; height: 36px; border-radius: 50%; cursor: pointer; border: none; outline: 3px solid transparent; outline-offset: 2px; transition: outline-color 0.2s ease; }
+        .color-dot.active { outline-color: var(--text-main); }
+        .color-actions { flex: 0 0 100%; display: flex; justify-content: flex-end; margin-top: 2px; }
+        .mini-save { padding: 8px 18px; border-radius: 12px; background: var(--primary); color: #ffffff; font-size: 12px; box-shadow: var(--shadow); }
+        .drawer button.action-btn { width: 100%; padding: 14px; font-size: 14px; display: flex; align-items: center; justify-content: center; border-radius: var(--radius); background: var(--btn-bg); color: var(--text-main); box-shadow: var(--shadow); }
+        .drawer button.action-btn.danger-text { color: var(--danger); }
+        .drawer-credit { margin: 2px 0 0; padding-top: 6px; text-align: center; font-size: 11px; line-height: 1.6; letter-spacing: 0.6px; color: var(--text-sub); opacity: 0.6; user-select: none; }
+
+        /* 分类管理 */
+        .cat-section { background: var(--btn-bg); border-radius: var(--radius); box-shadow: var(--shadow); padding: 14px 16px; transition: background-color 0.25s; }
+        .cat-section.open { background: var(--pwd-bg); background: color-mix(in srgb, var(--primary) 10%, var(--card-bg)); }
+        .cat-head { display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: bold; color: var(--text-main); cursor: pointer; user-select: none; }
+        .cat-body { max-height: 0; opacity: 0; overflow: hidden; transition: max-height 0.35s ease, opacity 0.25s ease, margin-top 0.35s ease; }
+        .cat-section.open .cat-body { max-height: 44vh; opacity: 1; overflow-y: auto; margin-top: 10px; }
+        .cat-row { display: flex; flex-wrap: wrap; align-items: center; gap: 5px; padding: 8px 0; border-top: 1px dashed var(--border); }
+        .cat-row:first-child { border-top: none; }
+        .cat-name { flex: 1 1 100%; min-width: 0; font-size: 13px; font-weight: bold; color: var(--text-main); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .cat-ops { flex: 1 1 100%; display: flex; gap: 6px; justify-content: flex-end; }
+        .cat-name em { font-style: normal; font-size: 11px; font-weight: bold; color: var(--text-sub); margin-left: 4px; }
+        .cat-row button { flex: 0 0 auto; padding: 6px 12px; font-size: 12px; border-radius: 9px; background: var(--pwd-bg); color: var(--text-main); }
+        .cat-row button.danger { color: var(--danger); background: var(--danger-bg); }
+        .cat-row button.ord { padding: 6px 10px; color: var(--text-sub); }
+        .cat-row button.ord[disabled] { opacity: 0.3; }
+        .name-body { margin-top: 2px; }
+        .name-body input { width: 100%; padding: 12px 14px; border: none; border-radius: 12px; background: var(--pwd-bg); color: var(--text-main); outline: none; }
+        .name-tip { margin-top: 6px; font-size: 11px; color: var(--text-sub); text-align: center; font-weight: bold; }
+        .voice-row { display: flex; flex-wrap: wrap; gap: 8px; }
+        .voice-btn { flex: 1 1 calc(50% - 4px); padding: 10px; border-radius: 12px; background: var(--pwd-bg); color: var(--text-main); font-size: 12px; }
+        .voice-btn.voice-btn-wide { flex: 1 1 100%; }
+        .vf-list { max-height: 50vh; overflow-y: auto; -webkit-overflow-scrolling: touch; padding-right: 2px; }
+        .vf-item { margin-bottom: 10px; }
+        .vf-label { font-size: 12px; font-weight: bold; color: var(--text-sub); margin-bottom: 4px; }
+        .vf-item textarea { width: 100%; min-height: 44px; padding: 10px 12px; border: none; border-radius: 10px; background: var(--pwd-bg); color: var(--text-main); outline: none; resize: vertical; line-height: 1.45; }
+        .voice-btn.active { background: var(--primary); color: #fff; }
+        .voice-io { display: flex; gap: 8px; margin-top: 8px; }
+        .mini-io { flex: 1; padding: 8px; font-size: 12px; border-radius: 10px; background: var(--pwd-bg); color: var(--text-sub); box-shadow: none; }
+        .voice-tip { margin-top: 8px; font-size: 11px; line-height: 1.5; color: var(--text-sub); text-align: center; font-weight: bold; }
+        body[data-theme="mono"] .voice-btn.active { color: #fff; }
+        .mini-add { width: 100%; margin-top: 10px; padding: 9px; font-size: 12px; border-radius: 12px; background: var(--pwd-bg); color: var(--text-main); }
+
+        /* 新增/编辑弹窗 */
+        .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.3); display: none; justify-content: center; align-items: center; z-index: 1200; backdrop-filter: blur(2px); }
+        .modal { background: var(--card-bg); padding: 24px 22px; border-radius: 24px; width: 90%; max-width: 400px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); max-height: 86vh; overflow-y: auto; -webkit-overflow-scrolling: touch; }
+        .form-group { margin-bottom: 12px; }
+        .form-group .field-hint { display: none; margin: 7px 2px 0; font-size: 12px; line-height: 1.5; color: var(--danger); font-weight: bold; }
+        .form-group.invalid input, .form-group.invalid textarea { box-shadow: 0 0 0 2px var(--danger) inset; }
+        .form-group.invalid .field-hint { display: block; }
+        .form-group label { display: block; font-size: 13px; font-weight: bold; margin-bottom: 6px; color: var(--text-main); }
+        .req { color: var(--danger); margin-left: 2px; }
+        .form-group input, .form-group textarea, .form-group select { width: 100%; padding: 13px; border: none; border-radius: 12px; font-size: 14px; outline: none; background: var(--pwd-bg); color: var(--text-main); }
+        .modal-actions { display: flex; gap: 12px; margin-top: 14px; position: sticky; bottom: 0; background: var(--card-bg); padding: 10px 0 2px; }
+        .modal-actions button { flex: 1; padding: 14px; border-radius: 14px; background: var(--pwd-bg); color: var(--text-main); box-shadow: var(--shadow); }
+        .modal-actions button.primary { background: var(--primary); color: white; }
+
+
+        /* 充值弹窗 */
+        .modal-sub { font-size: 12px; color: var(--text-sub); margin: -12px 0 20px 0; font-weight: bold; }
+        .input-with-btn { display: flex; gap: 8px; align-items: center; }
+        .input-with-btn input { flex: 1; min-width: 0; }
+        .mini-btn { display: none; flex: 0 0 auto; padding: 13px 14px; border-radius: 12px; background: var(--primary); color: #fff; font-size: 13px; box-shadow: var(--shadow); white-space: nowrap; }
+        .mini-btn.show { display: inline-flex; align-items: center; justify-content: center; }
+        /* iOS Safari：输入框字号小于 16px 时，聚焦会自动放大页面，这里统一到 16px 避免跳动 */
+        input, textarea, select, .search-box { font-size: 16px !important; }
+        /* 防止锁定屏幕旋转后文字被系统放大 */
+        html { -webkit-text-size-adjust: 100%; background-color: var(--bg-color, #b8e6c8); min-height: 100%; }
+    </style>
+</head>
+<body data-theme="mint">
+<div class="statusbar-fill"></div>
+
+<!-- 自定义提示框 -->
+<div class="custom-overlay" id="custom-overlay">
+    <div class="custom-dialog" id="custom-dialog">
+        <span class="dialog-icon" id="dialog-icon">✨</span>
+        <div class="dialog-text" id="dialog-text">提示内容</div>
+        <div class="dialog-btns" id="dialog-btns"></div>
+    </div>
+</div>
+
+<!-- 侧边栏抽屉 -->
+<div class="drawer-overlay" id="drawer-overlay" onclick="closeDrawer()"></div>
+<div class="drawer" id="drawer">
+    <h3>设置</h3>
+    <div class="theme-section" id="theme-section">
+        <div class="theme-title" onclick="toggleThemePanel()">修改配色</div>
+        <div class="color-picker">
+            <div class="color-dot" style="background: #b8e6c8; box-shadow: inset 0 0 0 5px #52c9a3, 0 2px 6px rgba(0,0,0,0.12);" onclick="selectTheme('mint', this)"></div>
+            <div class="color-dot" style="background: #fde4e4; box-shadow: inset 0 0 0 5px #ff9a9e, 0 2px 6px rgba(0,0,0,0.12);" onclick="selectTheme('pink', this)"></div>
+            <div class="color-dot" style="background: #2d3748; box-shadow: inset 0 0 0 5px #4fd1c5, 0 2px 6px rgba(0,0,0,0.12);" onclick="selectTheme('dark', this)"></div>
+            <div class="color-dot" style="background: #e6e6fa; box-shadow: inset 0 0 0 5px #b794f4, 0 2px 6px rgba(0,0,0,0.12);" onclick="selectTheme('taro', this)"></div>
+            <div class="color-dot" style="background: #ffe4d6; box-shadow: inset 0 0 0 5px #ff9a76, 0 2px 6px rgba(0,0,0,0.12);" onclick="selectTheme('peach', this)"></div>
+            <div class="color-dot" style="background: #d4ebf7; box-shadow: inset 0 0 0 5px #45a7d4, 0 2px 6px rgba(0,0,0,0.12);" onclick="selectTheme('ocean', this)"></div>
+            <div class="color-dot" style="background: #ececec; box-shadow: inset 0 0 0 5px #4a4a4a, 0 2px 6px rgba(0,0,0,0.12);" onclick="selectTheme('mono', this)"></div>
+            <div class="color-dot" style="background: #fdf8dd; box-shadow: inset 0 0 0 5px #c98a1f, 0 2px 6px rgba(0,0,0,0.12);" onclick="selectTheme('lemon', this)"></div>
+            <div class="color-actions">
+                <button class="mini-save" onclick="saveSettings()">保存配色</button>
+            </div>
+        </div>
+    </div>
+    <div class="cat-section" id="name-section">
+        <div class="cat-head" onclick="toggleNamePanel()">软件名称</div>
+        <div class="cat-body">
+            <div class="name-body">
+            <input type="text" id="app-name-input" maxlength="20" placeholder="API 秘密基地" oninput="onNameInput(this.value)" autocomplete="off">
+            <div class="name-tip">留空就恢复「API 秘密基地」</div>
+            </div>
+        </div>
+    </div>
+    <div class="cat-section" id="voice-section">
+        <div class="cat-head" onclick="toggleVoicePanel()">提示语风格</div>
+        <div class="cat-body">
+            <div class="voice-row">
+                <button class="voice-btn" data-voice="normal" onclick="setVoice('normal')">默认</button>
+                <button class="voice-btn" data-voice="elegant" onclick="setVoice('elegant')">客气</button>
+                <button class="voice-btn" data-voice="yandere" onclick="setVoice('yandere')">别扭</button>
+                <button class="voice-btn" data-voice="steady" onclick="setVoice('steady')">稳重</button>
+                <button class="voice-btn" data-voice="puppy" onclick="setVoice('puppy')">软糯</button>
+                <button class="voice-btn" data-voice="tsundere" onclick="setVoice('tsundere')">嘴硬</button>
+                <button class="voice-btn voice-btn-wide" data-voice="custom" onclick="onCustomVoiceClick()">自定义</button>
+            </div>
+            <div class="voice-io">
+                <button class="mini-io" onclick="exportVoicePack()">导出文案</button>
+                <button class="mini-io" onclick="importVoicePack()">导入文案</button>
+            </div>
+            <input type="file" id="voice-pack-file" accept="application/json,.json" style="display:none" onchange="onVoicePackFile(event)">
+            <div class="voice-tip">选好会立刻弹一句，方便你听；自定义里留空的条目会沿用「默认」的说法</div>
+        </div>
+    </div>
+    <div class="cat-section" id="cat-section">
+        <div class="cat-head" onclick="toggleCatPanel()">分类管理</div>
+        <div class="cat-body">
+            <div id="cat-list"></div>
+            <button class="mini-add" onclick="newCategory()">＋ 新建分类</button>
+        </div>
+    </div>
+    <button class="action-btn" onclick="exportData()">导出备份</button>
+    <button class="action-btn" onclick="importData()">导入恢复</button>
+    <button class="action-btn danger-text" onclick="clearData()">清空数据</button>
+    <div class="drawer-credit">作者 @o北极兔o</div>
+</div>
+
+<div class="app-container">
+    <div class="nav-container">
+        <button class="menu-btn" onclick="openDrawer()">☰</button>
+        <div class="nav-tabs">
+            <div class="title-pill">API 秘密基地</div>
+        </div>
+    </div>
+
+    <!-- 我的背包页 -->
+    <div id="page-repo" class="page active">
+        <div style="text-align: center;">
+            <div class="notice-box" id="notice">数据保存在当前浏览器，请勿清理缓存。</div>
+        </div>
+
+        <div class="filter-actions-row">
+            <button class="btn-add" onclick="openModal()">+ 新增</button>
+            <div class="filter-tabs" id="filter-tabs"></div>
+        </div>
+
+        <input type="text" id="search-input" class="search-box" placeholder="🔍 搜索" oninput="renderList()">
+        
+        <div id="list-container"></div>
+    </div>
+
+</div>
+
+<!-- 新增/编辑弹窗 -->
+<div class="modal-overlay" id="modal">
+    <div class="modal">
+        <h3 id="modal-title" style="margin-bottom: 20px; font-size: 18px;">新增站点</h3>
+        <input type="hidden" id="edit-id">
+        <div class="form-group"><label>站点名称<span class="req">*</span></label><input type="text" id="input-name"></div>
+        <div class="form-group"><label>密钥<span class="req">*</span></label><input type="text" id="input-key"></div>
+        <div class="form-group">
+            <label>分类</label>
+            <select id="input-type" onchange="onCatSelectChange(this)"></select>
+        </div>
+        <div class="form-group" id="fg-url"><label>API 主机<span class="req">*</span></label><input type="url" id="input-url" placeholder="接口地址，如 https://api.xxx.com/v1" oninput="checkField('url')" onblur="checkField('url')"><div class="field-hint" id="hint-url">API 主机格式不对：要像 https://api.xxx.com/v1（也可以只写 api.xxx.com）</div></div>
+                <div class="form-group" id="fg-web"><label>网页链接（可选）</label><input type="url" id="input-web" placeholder="站点官网，如 https://openai.com" oninput="checkField('web')" onblur="checkField('web')"><div class="field-hint" id="hint-web">网页链接格式不对：要像 https://openai.com（也可以只写 openai.com）</div></div>
+                <div class="form-group" id="fg-group"><label>群聊链接 / QQ 群号（可选）</label><input type="text" id="input-group" placeholder="群链接，或直接填 QQ 群号" autocomplete="off" oninput="checkField('group')" onblur="checkField('group')"><div class="field-hint" id="hint-group">这里只能填两种：http(s) 群链接，或 5–12 位纯数字 QQ 群号</div></div>
+        <div class="form-group"><label>备注</label><textarea id="input-note" rows="2"></textarea></div>
+        <div class="modal-actions">
+            <button onclick="closeModal()">取消</button>
+            <button class="primary" onclick="saveData()">保存</button>
+        </div>
+    </div>
+</div>
+
+<!-- 充值详情弹窗 -->
+<div class="modal-overlay" id="recharge-modal">
+    <div class="modal">
+        <h3 style="margin-bottom: 20px; font-size: 18px;">充值详情</h3>
+        <div class="modal-sub" id="recharge-site">站点：—</div>
+        <div class="form-group"><label>充值比例</label><input type="text" id="input-rate" placeholder="例如：1元 = 1刀"></div>
+        <div class="form-group"><label>价格 / 备注</label><textarea id="input-price" rows="2" placeholder="例如：10元包月，找群主购买"></textarea></div>
+        <div class="form-group">
+            <label>充值链接</label>
+            <div class="form-group" id="fg-recharge" style="margin-bottom:0;">
+                <div class="input-with-btn">
+                    <input type="url" id="input-recharge-link" placeholder="选填，填了就会出现「去充值」" oninput="updateGoRecharge(this.value)" onblur="checkField('recharge')">
+                    <button class="mini-btn" id="btn-go-recharge" onclick="goRecharge()">去充值</button>
+                </div>
+                <div class="field-hint" id="hint-recharge">充值链接格式不对：要像 https://xxx.com/pay（也可以只写 xxx.com/pay）</div>
+            </div>
+        </div>
+        <div class="modal-actions">
+            <button onclick="closeRecharge()">取消</button>
+            <button class="primary" onclick="saveRecharge()">保存</button>
+        </div>
+    </div>
+</div>
+
+<!-- 输入弹窗 -->
+<div class="modal-overlay" id="prompt-modal">
+    <div class="modal" style="max-width: 340px;">
+        <h3 id="prompt-title" style="margin-bottom: 18px; font-size: 17px;">新建分类</h3>
+        <div class="form-group" style="margin-bottom: 12px;"><input type="text" id="prompt-input" placeholder="输入名称" style="padding: 12px 14px;"></div>
+        <div class="modal-actions">
+            <button onclick="cancelPrompt()">取消</button>
+            <button class="primary" onclick="submitPrompt()">确定</button>
+        </div>
+    </div>
+</div>
+
+<div class="modal-overlay" id="custom-voice-modal">
+    <div class="modal" style="max-width: 420px;">
+        <h3 style="margin-bottom: 6px; font-size: 17px;">自定义提示语</h3>
+        <div class="modal-sub" style="margin: 4px 0 14px 0;">留空的条目会自动沿用「默认」的说法</div>
+        <input type="text" id="voice-search" class="search-box" style="margin-bottom: 12px; padding: 12px 14px;" placeholder="搜索条目，比如 备份、删除" oninput="filterVoiceFields()" autocomplete="off">
+        <div class="vf-list" id="voice-field-list"></div>
+        <div class="modal-actions">
+            <button onclick="cancelVoiceCustom()">取消</button>
+            <button class="primary" onclick="saveVoiceCustom()">保存</button>
+        </div>
+    </div>
+</div>
+
+<!-- 撤销条 -->
+<div class="snackbar" id="snackbar">
+    <span id="snackbar-text"></span>
+    <button onclick="doUndo()">撤销</button>
+</div>
+
+<script>
+    const DEFAULT_APP_NAME = 'API 秘密基地';
+    // === 自定义提示框逻辑 ===
+    function showToast(message, icon = '✨') {
+        const overlay = document.getElementById('custom-overlay');
+        document.getElementById('dialog-icon').innerText = icon;
+        document.getElementById('dialog-text').innerText = message;
+        document.getElementById('dialog-btns').innerHTML = `<button class="primary" onclick="closeToast()">确定</button>`;
+        overlay.classList.add('active');
+    }
+
+    function showConfirm(message, onConfirm, opts = {}) {
+        const okText = opts.okText || '确定';
+        const okClass = opts.okClass || 'danger';
+        const icon = opts.icon || '❓';
+        const overlay = document.getElementById('custom-overlay');
+        document.getElementById('dialog-icon').innerText = icon;
+        document.getElementById('dialog-text').innerText = message;
+        document.getElementById('dialog-btns').innerHTML = `
+            <button onclick="closeToast()">取消</button>
+            <button class="${okClass}" onclick="confirmAction()">${okText}</button>
+        `;
+        overlay.classList.add('active');
+        window.currentConfirmAction = onConfirm;
+    }
+
+    function confirmAction() {
+        closeToast();
+        if (window.currentConfirmAction) {
+            window.currentConfirmAction();
+            window.currentConfirmAction = null;
+        }
+    }
+
+    function closeToast() {
+        document.getElementById('custom-overlay').classList.remove('active');
+    }
+
+    // === 初始化主题 ===
+    const THEME_BG = { mint:'#b8e6c8', pink:'#fde4e4', dark:'#2d3748', taro:'#e6e6fa', peach:'#ffe4d6', ocean:'#d4ebf7', mono:'#ececec', lemon:'#fdf8dd' };
+    function applyTheme(name) {
+        document.documentElement.setAttribute('data-theme', name);
+        document.body.setAttribute('data-theme', name);
+        const bg = THEME_BG[name] || '#b8e6c8';
+        document.documentElement.style.backgroundColor = bg;
+        document.body.style.backgroundColor = bg;
+        // iOS 会缓存状态栏/工具栏颜色，必须把 meta 整个换掉才会重新取色
+        const oldMeta = document.querySelector('meta[name="theme-color"]');
+        if (oldMeta) oldMeta.parentNode.removeChild(oldMeta);
+        const meta = document.createElement('meta');
+        meta.setAttribute('name', 'theme-color');
+        meta.setAttribute('content', bg);
+        document.head.appendChild(meta);
+    }
+    const savedTheme = localStorage.getItem('appTheme') || 'mint';
+    applyTheme(savedTheme);
+    applyName(getSavedName());
+    let tempSelectedTheme = savedTheme;
+
+    window.addEventListener('DOMContentLoaded', () => {
+        updateColorDots(savedTheme);
+        updateVoiceBtns();
+    });
+
+    function selectTheme(themeName, element) {
+        tempSelectedTheme = themeName;
+        applyTheme(themeName);
+        updateColorDots(themeName);
+    }
+
+    function toggleThemePanel() {
+        document.getElementById('theme-section').classList.toggle('open');
+    }
+
+    function toggleCatPanel() {
+        const sec = document.getElementById('cat-section');
+        if (sec) sec.classList.toggle('open');
+    }
+
+    function updateColorDots(themeName) {
+        document.querySelectorAll('.color-dot').forEach(dot => {
+            if(dot.getAttribute('onclick').includes(themeName)) {
+                dot.classList.add('active');
+            } else {
+                dot.classList.remove('active');
+            }
+        });
+    }
+
+    function getSavedName() {
+        try { return (localStorage.getItem('appName') || '').trim(); } catch (e) { return ''; }
+    }
+    function applyName(name) {
+        const n = (name || '').trim() || DEFAULT_APP_NAME;
+        const pill = document.querySelector('.title-pill');
+        if (pill) pill.textContent = n;
+        document.title = (n === DEFAULT_APP_NAME) ? 'api秘密基地' : n;
+        const input = document.getElementById('app-name-input');
+        if (input && document.activeElement !== input) input.value = (name || '').trim();
+    }
+    function toggleNamePanel() {
+        const sec = document.getElementById('name-section');
+        if (!sec) return;
+        sec.classList.toggle('open');
+    }
+
+    function onNameInput(v) {
+        const name = (v || '').trim().slice(0, 20);
+        const pill = document.querySelector('.title-pill');
+        if (pill) { const n = name || DEFAULT_APP_NAME; pill.textContent = n; document.title = (n === DEFAULT_APP_NAME) ? 'api秘密基地' : n; }
+        try { localStorage.setItem('appName', name); } catch (e) {}
+    }
+
+    function saveSettings() {
+        localStorage.setItem('appTheme', tempSelectedTheme);
+        showToast(say('themeSaved'), '🎨');
+        closeDrawer(); 
+    }
+
+    function openDrawer() {
+        document.getElementById('drawer').classList.add('active');
+        document.getElementById('drawer-overlay').classList.add('active');
+        tempSelectedTheme = localStorage.getItem('appTheme') || 'mint';
+        applyTheme(tempSelectedTheme);
+        updateColorDots(tempSelectedTheme);
+        const nameInput = document.getElementById('app-name-input');
+        if (nameInput) nameInput.value = getSavedName();
+    }
+
+    function closeDrawer() {
+        document.getElementById('drawer').classList.remove('active');
+        document.getElementById('drawer-overlay').classList.remove('active');
+        const currentSaved = localStorage.getItem('appTheme') || 'mint';
+        if(tempSelectedTheme !== currentSaved) {
+            tempSelectedTheme = currentSaved;
+            applyTheme(currentSaved);
+            updateColorDots(currentSaved);
+        }
+    }
+
+    // === 我的背包逻辑 ===
+    let sitesData = JSON.parse(localStorage.getItem('apiSitesData')) || [];
+    let currentFilter = 'all';
+    let openIds = new Set();
+
+    const DEFAULT_CATEGORIES = [
+        { id: 'sign', name: '签到' },
+        { id: 'common', name: '普通' }
+    ];
+    let categories = JSON.parse(localStorage.getItem('apiCategories')) || DEFAULT_CATEGORIES;
+
+    function saveCats() { localStorage.setItem('apiCategories', JSON.stringify(categories)); }
+    function findCat(id) { return categories.find(c => c.id === id); }
+    function getCat(id) { return findCat(id) || categories[0] || { id: 'common', name: '普通' }; }
+
+    function normalizeSites() {
+        let changed = false;
+        const fallback = findCat('common') ? 'common' : (categories[0] ? categories[0].id : 'common');
+        sitesData.forEach(it => {
+            if (!it.cat) {
+                it.cat = it.type === 'sign' ? 'sign' : fallback;
+                if (!findCat(it.cat)) it.cat = fallback;
+                changed = true;
+            }
+            if (!findCat(it.cat)) { it.cat = fallback; changed = true; }
+        });
+        if (changed) saveToLocal();
+    }
+
+    // === 通用小工具 ===
+    function esc(s) {
+        return String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+    }
+
+
+    // === 提示语风格（人设） ===
+    const DEFAULT_VOICE = 'normal';
+    const VOICES = {
+        normal: {
+            themeSaved: '配色已保存',
+            voiceSwitched: '已切换提示语风格',
+            backupNever: '⚠️ 还没导出过备份，点这里导出一份',
+            backupOld: '⚠️ 上次备份是 {days} 天前，点这里再导出一份',
+            backupNormal: '数据保存在当前浏览器，请勿清理缓存。',
+            empty: '没有找到站点',
+            nameEmpty: '名字不能为空',
+            catCreated: '已新建分类',
+            catRenamed: '已改名',
+            catNeedOne: '至少要留一个分类',
+            catInUse: '这个分类下还有 {n} 个站点，先把它们改到别的分类',
+            catDeleteAsk: '确定删除分类「{name}」吗？删除后不能恢复。',
+            catDeleted: '已删除分类',
+            movePinned: '置顶站点无法与普通站点交换位置',
+            noHost: '这个站点还没有填 API 主机',
+            noGroup: '这个站点还没有填群聊链接',
+            groupBad: '群聊链接无效，点“编辑”改一下再打开',
+            copied: '已复制到剪贴板',
+            copyFail: '复制失败',
+            siteNameEmpty: '站点名称不能为空',
+            keyEmpty: '密钥不能为空',
+            hostEmpty: 'API 主机不能为空',
+            hostBad: 'API 主机要以 http:// 或 https:// 开头',
+            webBad: '网页链接不像一个有效网址，检查一下域名',
+            groupUrlBad: '群聊链接不像一个有效网址，检查一下域名',
+            saved: '保存成功',
+            undo: '已删除「{name}」，5 秒内可撤销',
+            restored: '已恢复',
+            exportAsk: '备份含全部站点的密钥明文，只能自己留档，不要发给别人。确认导出？',
+            exported: '备份已导出，请妥善保管',
+            fileBad: '文件格式错误',
+            importHead: '备份里有 {sites} 个站点{cats}。',
+            importBody: '合并：只补充现在没有的站点（按 API 主机判重，不动原有数据）；覆盖：清空当前数据后整体替换。',
+            overwriteDone: '已覆盖导入',
+            mergeDone: '合并完成：新增 {added} 个站点',
+            mergeSkip: '，跳过重复 {skipped} 个',
+            mergeCats: '，新建 {newCats} 个分类',
+            clearAsk: '确定要清空所有数据吗？此操作不可恢复。',
+            cleared: '已清空',
+            hintUrl: 'API 主机格式不对，要像 https://api.xxx.com/v1，也可以只写 api.xxx.com',
+            hintWeb: '网页链接格式不对，要像 https://openai.com，也可以只写 openai.com',
+            hintGroup: '这里只收两种：http(s) 群链接，或 5–12 位纯数字 QQ 群号',
+            hintRecharge: '充值链接格式不对，要像 https://xxx.com/pay，也可以只写 xxx.com/pay',
+            rechargeBadLink: '链接要用 http:// 或 https:// 开头',
+            rechargeSaved: '充值信息已保存',
+            rechargeNoLink: '还没有填写有效的充值链接'
+        },
+        elegant: {
+            themeSaved: '配色定下了。这样看着，才像话。',
+            voiceSwitched: '换了副嗓子，您听听合不合意。',
+            backupNever: '⚠️ 一份备份都没有。您是想让我替您心疼？点这里。',
+            backupOld: '⚠️ 已经 {days} 天了。您总是这样健忘，只好我来提醒。',
+            backupNormal: '东西都存在这个浏览器里。缓存，请不要乱清。',
+            empty: '这里什么都没有。是您删的，还是本来就没有？',
+            nameEmpty: '连名字都懒得取。那我该怎么称呼它？',
+            catCreated: '分类，建好了。请别再随手乱塞。',
+            catRenamed: '名字换了。您高兴就好。',
+            catNeedOne: '最后一个分类，请留着。我不喜欢空空如也。',
+            catInUse: '里面还有 {n} 个站点。先请出去，再谈删除。',
+            catDeleteAsk: '「{name}」，您确定要删？我提醒过了，删了就没了。',
+            catDeleted: '删了。干净，我喜欢。',
+            movePinned: '置顶的，请别动。规矩，总要有。',
+            noHost: 'API 主机是空的。您这是让我猜吗？',
+            noGroup: '群链接还没有。想进去，得先给我钥匙。',
+            groupBad: '这链接不成立。改好，再来请我点。',
+            copied: '复制好了。请妥善使用。',
+            copyFail: '没成。请您再来一次。',
+            siteNameEmpty: '站点总得有个名字。空着，很不体面。',
+            keyEmpty: '密钥空着。您打算让我凭空变一个？',
+            hostEmpty: 'API 主机，必填。请补上。',
+            hostBad: '主机要以 http 或 https 开头。这点常识，还是有的。',
+            webBad: '网址不对。域名，请看清楚。',
+            groupUrlBad: '群链接不像样。重写一遍，我等着。',
+            saved: '收好了。以后，就按我说的来。',
+            undo: '「{name}」已经删了。五秒之内，我可以当您没动过手。',
+            restored: '还给您了。下次，请想清楚。',
+            exportAsk: '备份里全是您的密钥。只许自己留着，别送人。确定导出？',
+            exported: '导出完了。丢了，可别怪我没提醒。',
+            fileBad: '这文件不对。换一份。',
+            importHead: '备份里有 {sites} 个站点{cats}。',
+            importBody: '合并：只补您缺的，重复的我不要。覆盖：全部清空，请您想清楚。',
+            overwriteDone: '旧的都清了，换成新的。',
+            mergeDone: '合并完成：新收 {added} 个站点',
+            mergeSkip: '，重复 {skipped} 个，我没动',
+            mergeCats: '，另建 {newCats} 个分类',
+            clearAsk: '全部清空，就真的什么都不剩了。您确定？',
+            cleared: '清干净了。重新开始，也算体面。',
+            hintUrl: '主机格式不对。请以 http 或 https 开头，例如 https://api.xxx.com/v1。',
+            hintWeb: '网址格式不对。请核对域名，例如 https://openai.com。',
+            hintGroup: '此栏只收两种：http(s) 链接，或 5 至 12 位数字群号。',
+            hintRecharge: '充值链接格式不对。请以 http 或 https 开头，例如 https://xxx.com/pay。',
+            rechargeBadLink: '链接要 http 或 https 开头，请规矩些。',
+            rechargeSaved: '充值的事，记下了。',
+            rechargeNoLink: '充值链接空着。您让我点哪儿？'
+        },
+        yandere: {
+            themeSaved: '这个颜色…我喜欢。以后别换，好不好？',
+            voiceSwitched: '换了个声音。你听出来了，对吧。',
+            backupNever: '⚠️ 你一次都没备份过。是不是觉得，丢了也无所谓？点这里。',
+            backupOld: '⚠️ {days} 天了。你一直没备份…我替你记着呢。',
+            backupNormal: '东西就在这里。缓存别清，不然我真的会生气。',
+            empty: '空的。你把它们都藏哪去了？',
+            nameEmpty: '名字都不给…那我怎么记住它？',
+            catCreated: '新分类。以后只准放我允许的东西。',
+            catRenamed: '改了名字。我还认得出来。',
+            catNeedOne: '最后一个，不许动。一个都不剩我会难过的。',
+            catInUse: '里面还有 {n} 个站点。先搬走，不然我不许你删。',
+            catDeleteAsk: '「{name}」…真的要删？删了我会一直记得的。',
+            catDeleted: '删掉了。反正我记着。',
+            movePinned: '置顶的那个，不许挪。它就待在那儿。',
+            noHost: '主机没填。你是在等我替你想吗？',
+            noGroup: '群链接空着。你是不是不想让我进去？',
+            groupBad: '这个链接是坏的。改好。我等着。',
+            copied: '复制好了。拿去哪，我看着呢。',
+            copyFail: '没成功。再来一次，我陪着你。',
+            siteNameEmpty: '没名字…名字很重要的，你不知道吗？',
+            keyEmpty: '密钥呢？别让我一直问。',
+            hostEmpty: 'API 主机不能空。听我的。',
+            hostBad: 'http 或 https 开头。就这样，别问为什么。',
+            webBad: '这个网址是假的。你骗我？',
+            groupUrlBad: '群链接不对。重写，我在这儿。',
+            saved: '存好了。以后它归我照顾。',
+            undo: '「{name}」删掉了。五秒，反悔还来得及——我数着。',
+            restored: '还给你了。别再让我担心一次。',
+            exportAsk: '备份里是你的密钥。只准自己留着。答应我，别给别人。导出？',
+            exported: '导出好了。丢了我会很生气的。',
+            fileBad: '这个文件不对。换一个，我等你。',
+            importHead: '里面有 {sites} 个站点{cats}。',
+            importBody: '合并：只收你没有的。覆盖：全部清空…你真的舍得？',
+            overwriteDone: '旧的都没了，换成新的。',
+            mergeDone: '合并好了：新收 {added} 个站点',
+            mergeSkip: '，重复的 {skipped} 个我没碰',
+            mergeCats: '，多给你 {newCats} 个分类',
+            clearAsk: '全部清空…你就什么都不剩了。真的确定？',
+            cleared: '清空了。没关系，我还在。',
+            hintUrl: '格式不对。http 或 https 开头，别偷懒。',
+            hintWeb: '这网址是假的。域名看清楚，再写。',
+            hintGroup: '群链接不像样。链接，或者 5–12 位群号，选一个。',
+            hintRecharge: '链接不对。http 或 https 开头，写清楚。',
+            rechargeBadLink: '链接得是 http 或 https。别乱写，好吗？',
+            rechargeSaved: '充值记下了。别乱花。',
+            rechargeNoLink: '充值链接空着。你让我点哪儿？'
+        },
+        steady: {
+            themeSaved: '配色定了，就这样。稳当。',
+            voiceSwitched: '换个说法。听着踏实就好。',
+            backupNever: '⚠️ 还没备份。趁现在导一份，别拖。',
+            backupOld: '⚠️ 距上次备份 {days} 天了。该做了，别等出事。',
+            backupNormal: '数据在这台设备的浏览器里。缓存别清，记住了。',
+            empty: '没找着。换个词再搜搜。',
+            nameEmpty: '名字得填，不然记不住。',
+            catCreated: '分类建好了。放对地方，别乱塞。',
+            catRenamed: '名字改了，行。',
+            catNeedOne: '最后一个留着。总得有个兜底的。',
+            catInUse: '这里面还有 {n} 个站点。先挪走，再删。',
+            catDeleteAsk: '「{name}」要删了。删了不会回来，想清楚。',
+            catDeleted: '删了。',
+            movePinned: '置顶的先别动。它在上面有它的道理。',
+            noHost: 'API 主机空着。填上，才能用。',
+            noGroup: '群链接还没填。想进群，先有地址。',
+            groupBad: '这链接不对。改了再点。',
+            copied: '复制好了。用的时候当心。',
+            copyFail: '没复制上。再来一次。',
+            siteNameEmpty: '站点名字不能空。',
+            keyEmpty: '密钥得填，不然调不通。',
+            hostEmpty: 'API 主机是必填项。',
+            hostBad: '得是 http 或 https 开头。这个别错。',
+            webBad: '网址不对，检查域名。',
+            groupUrlBad: '群链接不对，检查一下。',
+            saved: '存好了。以后按这个用。',
+            undo: '「{name}」删了。五秒内能反悔，抓紧。',
+            restored: '给你放回去了。下回看清了再删。',
+            exportAsk: '备份里全是密钥，只自己留着，别往外发。导出吧。',
+            exported: '导出好了。找个稳妥的地方存着。',
+            fileBad: '文件不对。检查一下再导。',
+            importHead: '备份里 {sites} 个站点{cats}。',
+            importBody: '合并：只补缺的，重复的不动。覆盖：全清重来。自己掂量。',
+            overwriteDone: '已覆盖导入。',
+            mergeDone: '合并完了：新增 {added} 个站点',
+            mergeSkip: '，跳过重复 {skipped} 个',
+            mergeCats: '，新建 {newCats} 个分类',
+            clearAsk: '清空就全没了，回不来。确定？',
+            cleared: '清完了。从头来，也稳。',
+            hintUrl: '主机格式不对：需 http 或 https 开头，如 https://api.xxx.com/v1。',
+            hintWeb: '网页链接格式不对：需 http 或 https 开头，如 https://openai.com。',
+            hintGroup: '群聊栏只收 http(s) 链接，或 5–12 位数字群号。',
+            hintRecharge: '充值链接格式不对：需 http 或 https 开头，如 https://xxx.com/pay。',
+            rechargeBadLink: '链接得 http 或 https 开头。',
+            rechargeSaved: '充值信息存好了。',
+            rechargeNoLink: '充值链接没填，点不了。'
+        },
+        puppy: {
+            themeSaved: '这个颜色好看！就它啦～',
+            voiceSwitched: '我换个说法陪你聊，好不好嘛～',
+            backupNever: '⚠️ 你还没备份过诶…导一份好不好？点这里～',
+            backupOld: '⚠️ 都 {days} 天没备份了，我有点担心…点这里吧～',
+            backupNormal: '东西都在浏览器里哦，别清缓存好不好～',
+            empty: '咦，没找到…换个词试试？',
+            nameEmpty: '名字要写啦，不然我叫它什么嘛～',
+            catCreated: '分类建好啦！放进去就好～',
+            catRenamed: '改好名字啦～',
+            catNeedOne: '最后一个要留着哦，不能都删光啦。',
+            catInUse: '里面还有 {n} 个站点呢，先搬家再删好不好～',
+            catDeleteAsk: '「{name}」真的要删吗？删了就回不来啦…',
+            catDeleted: '删掉啦。',
+            movePinned: '置顶的先别挪哦，它想待在前面～',
+            noHost: 'API 主机空着耶，填一下嘛～',
+            noGroup: '群链接还没填，我想进去看看～',
+            groupBad: '这个链接坏掉啦，改一下再点嘛～',
+            copied: '复制好啦～拿去用吧！',
+            copyFail: '没复制上…再试一次好不好？',
+            siteNameEmpty: '站点名字要填哦～',
+            keyEmpty: '密钥空着呢，填上才能用呀～',
+            hostEmpty: 'API 主机是必填的哦～',
+            hostBad: '要用 http 或 https 开头哦～',
+            webBad: '这个网址怪怪的，检查一下嘛～',
+            groupUrlBad: '群链接不太对，再看一眼好不好～',
+            saved: '存好啦！我记着呢～',
+            undo: '「{name}」删掉啦～五秒内还能反悔哦！',
+            restored: '给你还回去啦～',
+            exportAsk: '备份里都是密钥哦，只给自己留着，别给别人好不好～现在导吗？',
+            exported: '导出好啦！找个安全的地方放着～',
+            fileBad: '文件不对耶，换一个好不好？',
+            importHead: '里面有 {sites} 个站点{cats}～',
+            importBody: '合并：只补你没有的～覆盖：会全部清空哦，想清楚嘛。',
+            overwriteDone: '覆盖好啦～',
+            mergeDone: '合并好啦：新增 {added} 个站点',
+            mergeSkip: '，重复的 {skipped} 个跳过啦',
+            mergeCats: '，还多建了 {newCats} 个分类',
+            clearAsk: '全部清空就都没了哦…真的确定吗？',
+            cleared: '清干净啦…没关系，我们重新来过～',
+            hintUrl: '主机格式不对哦～要 http 或 https 开头，像 https://api.xxx.com/v1 这样～',
+            hintWeb: '网址格式不对呢～要 http 或 https 开头，像 https://openai.com 呀～',
+            hintGroup: '这里只能填链接，或者 5–12 位的群号哦～',
+            hintRecharge: '充值链接格式不对哦～要 http 或 https 开头，像 https://xxx.com/pay 这样～',
+            rechargeBadLink: '链接要 http 或 https 开头哦～',
+            rechargeSaved: '充值信息记好啦～',
+            rechargeNoLink: '充值链接还没填，点不了哦～'
+        },
+        tsundere: {
+            themeSaved: '哼，还行吧。就当我勉强同意。',
+            voiceSwitched: '换个说话方式而已，别多想。',
+            backupNever: '⚠️ 一次都没备份。我才不是担心你，是嫌麻烦。点这里。',
+            backupOld: '⚠️ {days} 天没备份了。丢了可别来哭。点这里。',
+            backupNormal: '东西就存在这个浏览器里。缓存别乱清，听见没。',
+            empty: '空的。哼，也省得我看。',
+            nameEmpty: '连名字都懒得写，真拿你没办法。',
+            catCreated: '分类建好了。别乱放，我懒得再整理。',
+            catRenamed: '改名就改名，问我干嘛。',
+            catNeedOne: '最后一个不许删。都删了我看什么。',
+            catInUse: '里面还有 {n} 个站呢。先搬走，别让我替你想。',
+            catDeleteAsk: '「{name}」要删？……随便你。删了别后悔。',
+            catDeleted: '删了。我才不在意。',
+            movePinned: '置顶的别动。它就该在上面。',
+            noHost: '主机空的。你是要我猜吗？',
+            noGroup: '群链接都没填。想进群自己想办法。',
+            groupBad: '这链接是废的。改好再喊我。',
+            copied: '复制了。拿着。',
+            copyFail: '没成就再点一次，别愣着。',
+            siteNameEmpty: '名字总得有一个吧。',
+            keyEmpty: '密钥呢？空着能干什么。',
+            hostEmpty: 'API 主机必填。这也要我说？',
+            hostBad: 'http 或 https 开头。就这样。',
+            webBad: '网址不对。眼睛看哪儿了。',
+            groupUrlBad: '群链接不像样。重写。',
+            saved: '存好了。别指望我夸你。',
+            undo: '「{name}」删了。五秒，要反悔快点。',
+            restored: '还你了。下次看清楚。',
+            exportAsk: '备份里全是密钥。只许自己留着，别送人。……要导就导。',
+            exported: '导出完了。丢了别怪我。',
+            fileBad: '这文件不对。换。',
+            importHead: '备份里有 {sites} 个站点{cats}。',
+            importBody: '合并：只补你没有的。覆盖：全清。自己选。',
+            overwriteDone: '覆盖好了。',
+            mergeDone: '合并完了：新收 {added} 个站点',
+            mergeSkip: '，重复的 {skipped} 个我没要',
+            mergeCats: '，多建了 {newCats} 个分类',
+            clearAsk: '清空就全没了。……确定？',
+            cleared: '清干净了。哭也没用。',
+            hintUrl: '格式错的。http 或 https 开头，要我写几遍。',
+            hintWeb: '网址不对。域名都看不明白？',
+            hintGroup: '群链接不行。链接或群号，总得有个像样的。',
+            hintRecharge: '链接错。http 或 https 开头，别乱写。',
+            rechargeBadLink: '链接得 http 或 https 开头。别乱写。',
+            rechargeSaved: '充值记下了。别乱花。',
+            rechargeNoLink: '充值链接空着。点空气吗？'
+        }
+    };
+
+    Object.keys(VOICES).forEach(k => { VOICES[k] = Object.assign({}, VOICES.normal, VOICES[k]); });
+
+    const VOICE_LABELS = {
+        backupNever: '从未备份时的提醒', backupNormal: '备份还新时的提醒', backupOld: '备份过期时的提醒',
+        catCreated: '新建分类成功', catDeleteAsk: '删除分类前的确认', catDeleted: '删除分类成功', catInUse: '分类下还有站点，不让删',
+        catNeedOne: '不能删掉最后一个分类', catRenamed: '分类改名成功',
+        clearAsk: '清空数据前的确认', cleared: '已清空',
+        copied: '复制成功', copyFail: '复制失败',
+        empty: '列表空着的时候', exportAsk: '导出备份前的确认', exported: '备份导出成功',
+        hintUrl: '网址填错时的提示（API 主机）', hintWeb: '网址填错时的提示（网页链接）',
+        hintGroup: '网址填错时的提示（群聊 / QQ 群号）', hintRecharge: '网址填错时的提示（充值链接）',
+        fileBad: '导入的文件格式不对',
+        groupBad: '群链接打不开（点开时）', groupUrlBad: '填写时群链接不合法',
+        hostBad: 'API 主机格式不对', hostEmpty: 'API 主机没填',
+        importBody: '导入说明正文', importHead: '导入标题（会带站点数量）',
+        keyEmpty: '密钥没填',
+        mergeCats: '合并时自动建了分类', mergeDone: '合并完成', mergeSkip: '合并时跳过的重复站点',
+        movePinned: '置顶站点不能换位置', nameEmpty: '名字没填',
+        noGroup: '没填群聊的时候', noHost: '没填 API 主机的时候',
+        overwriteDone: '覆盖导入完成',
+        rechargeBadLink: '充值链接无效', rechargeNoLink: '没填充值链接', rechargeSaved: '充值信息已保存',
+        restored: '已撤销删除', saved: '保存成功', siteNameEmpty: '站点名称没填',
+        themeSaved: '配色已保存', undo: '删除后可以撤销', voiceSwitched: '切换提示语风格', webBad: '网页链接不合法'
+    };
+
+    let customVoiceData = {};
+    try { customVoiceData = JSON.parse(localStorage.getItem('voiceCustom') || '{}') || {}; } catch (e) { customVoiceData = {}; }
+
+    function sanitizeVoicePack(obj) {
+        const out = {};
+        if (!obj || typeof obj !== 'object') return out;
+        Object.keys(VOICE_LABELS).forEach(k => {
+            const v = obj[k];
+            if (typeof v === 'string' && v.trim()) out[k] = v.trim().slice(0, 200);
+        });
+        return out;
+    }
+
+    function exportVoicePack() {
+        const texts = sanitizeVoicePack(customVoiceData);
+        const n = Object.keys(texts).length;
+        if (!n) return showToast('还没有自定义文案，先点「自定义」写几条再导出', '⚠️');
+        const d = new Date();
+        const stamp = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+        const payload = { app: 'api秘密基地', type: 'voice-pack', version: 1, exportedAt: d.toISOString(), texts: texts };
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' }));
+        a.download = `voice_prompts_${stamp}.json`;
+        a.click();
+        showToast(`已导出 ${n} 条文案`, '📄');
+    }
+
+    function importVoicePack() {
+        const input = document.getElementById('voice-pack-file');
+        if (!input) return;
+        input.value = '';
+        input.click();
+    }
+
+    function onVoicePackFile(e) {
+        const file = e.target.files && e.target.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = ev => {
+            let data = null;
+            try { data = JSON.parse(ev.target.result); } catch (err) {}
+            const raw = data && data.texts ? data.texts : data;
+            const texts = sanitizeVoicePack(raw);
+            const n = Object.keys(texts).length;
+            if (!n) return showToast('这个文件里没有可用的文案', '⚠️');
+            customVoiceData = { ...customVoiceData, ...texts };
+            try { localStorage.setItem('voiceCustom', JSON.stringify(customVoiceData)); } catch (err) {}
+            currentVoice = 'custom';
+            try { localStorage.setItem('appVoice', 'custom'); } catch (err) {}
+            updateVoiceBtns(); refreshNotice(); renderList();
+            showToast(`已导入 ${n} 条文案，并切到自定义`, '📥');
+        };
+        reader.readAsText(file);
+    }
+
+    function onCustomVoiceClick() {
+        if (currentVoice !== 'custom') setVoice('custom');
+        openVoiceCustom();
+    }
+
+    function openVoiceCustom() {
+        const box = document.getElementById('voice-field-list');
+        if (!box) return;
+        box.innerHTML = Object.keys(VOICE_LABELS).map(k =>
+            `<div class="vf-item"><div class="vf-label">${esc(VOICE_LABELS[k])}</div><textarea rows="2" data-k="${k}"></textarea></div>`
+        ).join('');
+        box.querySelectorAll('textarea').forEach(ta => {
+            const k = ta.dataset.k;
+            ta.value = customVoiceData[k] || '';
+            ta.placeholder = VOICES.normal[k] != null ? VOICES.normal[k] : '';
+        });
+        const search = document.getElementById('voice-search');
+        if (search) search.value = '';
+        document.getElementById('custom-voice-modal').style.display = 'flex';
+    }
+
+    function cancelVoiceCustom() {
+        const m = document.getElementById('custom-voice-modal');
+        if (m) m.style.display = 'none';
+    }
+
+    function filterVoiceFields() {
+        const q = (document.getElementById('voice-search').value || '').trim().toLowerCase();
+        document.querySelectorAll('#voice-field-list .vf-item').forEach(it => {
+            const ta = it.querySelector('textarea');
+            const hay = (it.querySelector('.vf-label').textContent + ' ' + (ta.value || '') + ' ' + (ta.placeholder || '')).toLowerCase();
+            it.style.display = (!q || hay.includes(q)) ? '' : 'none';
+        });
+    }
+
+    function saveVoiceCustom() {
+        const map = {};
+        document.querySelectorAll('#voice-field-list textarea').forEach(ta => {
+            const v = (ta.value || '').trim();
+            if (v) map[ta.dataset.k] = v;
+        });
+        customVoiceData = map;
+        try { localStorage.setItem('voiceCustom', JSON.stringify(map)); } catch (e) {}
+        currentVoice = 'custom';
+        try { localStorage.setItem('appVoice', 'custom'); } catch (e) {}
+        cancelVoiceCustom();
+        updateVoiceBtns();
+        refreshFieldHints();
+        refreshNotice();
+        renderList();
+        showToast(say('voiceSwitched'), '🎭');
+    }
+
+    let currentVoice = DEFAULT_VOICE;
+    try { const v0 = localStorage.getItem('appVoice'); if (v0 && (VOICES[v0] || v0 === 'custom')) currentVoice = v0; } catch (e) {}
+
+    function say(key, vars) {
+        let str;
+        if (currentVoice === 'custom') {
+            const c = customVoiceData[key];
+            str = (c != null && c !== '') ? c : (VOICES.normal[key] != null ? VOICES.normal[key] : key);
+        } else {
+            const pack = VOICES[currentVoice] || VOICES.normal;
+            str = pack[key] != null ? pack[key] : (VOICES.normal[key] != null ? VOICES.normal[key] : key);
+        }
+        if (vars) Object.keys(vars).forEach(k => { str = str.split('{' + k + '}').join(vars[k]); });
+        return str;
+    }
+
+    function toggleVoicePanel() {
+        const sec = document.getElementById('voice-section');
+        if (sec) sec.classList.toggle('open');
+    }
+
+    function updateVoiceBtns() {
+        document.querySelectorAll('.voice-btn').forEach(b => b.classList.toggle('active', b.dataset.voice === currentVoice));
+    }
+
+    function refreshFieldHints() {
+        Object.keys(FIELD_MAP).forEach(function(k){
+            const f = FIELD_MAP[k];
+            const group = document.getElementById(f.group);
+            if (!group || !group.classList.contains('invalid')) return;
+            const hint = document.getElementById(f.hint);
+            if (hint) hint.textContent = say(f.say);
+        });
+    }
+
+    function setVoice(id) {
+        currentVoice = (VOICES[id] || id === 'custom') ? id : DEFAULT_VOICE;
+        try { localStorage.setItem('appVoice', currentVoice); } catch (e) {}
+        updateVoiceBtns();
+        refreshFieldHints();
+        refreshNotice();
+        renderList();
+        showToast(say('voiceSwitched'), '🎭');
+    }
+
+    const BACKUP_DAYS = 14;
+
+    function backupAgeDays() {
+        let ts = 0;
+        try { ts = Number(localStorage.getItem('apiLastExport') || 0); } catch (e) { return 0; }
+        if (!ts) return -1;
+        return Math.floor((Date.now() - ts) / 86400000);
+    }
+
+    function refreshNotice() {
+        const notice = document.getElementById('notice');
+        if (!notice) return;
+        const days = backupAgeDays();
+        if (days < 0) {
+            notice.innerText = say('backupNever');
+            notice.classList.add('notice-alert');
+            notice.onclick = exportData;
+        } else if (days >= BACKUP_DAYS) {
+            notice.innerText = say('backupOld', { days: days });
+            notice.classList.add('notice-alert');
+            notice.onclick = exportData;
+        } else {
+            notice.innerText = say('backupNormal');
+            notice.classList.remove('notice-alert');
+            notice.onclick = null;
+        }
+    }
+
+    function sortData() {
+        sitesData.sort((a, b) => (b.isPinned ? 1 : 0) - (a.isPinned ? 1 : 0));
+    }
+
+    function setFilter(id) {
+        currentFilter = id;
+        renderFilters();
+        renderList();
+    }
+
+    function renderFilters() {
+        const box = document.getElementById('filter-tabs');
+        if (!box) return;
+        const counts = {};
+        sitesData.forEach(it => { counts[it.cat] = (counts[it.cat] || 0) + 1; });
+        const items = [{ id: 'all', name: '全部', n: sitesData.length }].concat(categories.map(c => ({ id: c.id, name: c.name, n: counts[c.id] || 0 })));
+        if (!items.some(x => x.id === currentFilter)) currentFilter = 'all';
+        box.innerHTML = items.map(c => `<button class="${currentFilter === c.id ? 'active' : ''}" onclick="setFilter('${c.id}')">${esc(c.name)}<span class="tab-n">${c.n}</span></button>`).join('');
+    }
+
+    function renderCatManager() {
+        const list = document.getElementById('cat-list');
+        if (!list) return;
+        list.innerHTML = categories.map((c, i) => `
+            <div class="cat-row">
+                <span class="cat-name">${esc(c.name)}</span>
+                <div class="cat-ops">
+                    <button class="ord" ${i === 0 ? 'disabled' : ''} onclick="moveCategory('${c.id}',-1)">上移</button>
+                    <button class="ord" ${i === categories.length - 1 ? 'disabled' : ''} onclick="moveCategory('${c.id}',1)">下移</button>
+                    <button onclick="renameCategory('${c.id}')">改名</button>
+                    <button class="danger" onclick="deleteCategory('${c.id}')">删除</button>
+                </div>
+            </div>
+        `).join('');
+    }
+
+    function moveCategory(id, dir) {
+        const i = categories.findIndex(c => c.id === id);
+        const j = i + dir;
+        if (i < 0 || j < 0 || j >= categories.length) return;
+        const tmp = categories[i];
+        categories[i] = categories[j];
+        categories[j] = tmp;
+        saveCats();
+        renderCatManager();
+        renderFilters();
+    }
+
+    // === 输入弹窗 ===
+    let promptState = null;
+
+    function openPrompt(cfg, cb) {
+        promptState = { cb: cb, onCancel: cfg.onCancel || null };
+        document.getElementById('prompt-title').innerText = cfg.title || '输入';
+        document.getElementById('prompt-input').value = cfg.value || '';
+        document.getElementById('prompt-modal').style.display = 'flex';
+        setTimeout(() => { const el = document.getElementById('prompt-input'); if (el) el.focus(); }, 60);
+    }
+
+    function closePrompt() {
+        document.getElementById('prompt-modal').style.display = 'none';
+        promptState = null;
+    }
+
+    function cancelPrompt() {
+        const onCancel = promptState && promptState.onCancel;
+        closePrompt();
+        if (onCancel) onCancel();
+    }
+
+    function submitPrompt() {
+        if (!promptState) return;
+        const value = document.getElementById('prompt-input').value.trim();
+        if (!value) return showToast(say('nameEmpty'), '⚠️');
+        const cb = promptState.cb;
+        closePrompt();
+        if (cb) cb(value);
+    }
+
+    // === 分类增删改 ===
+    function openCreateCategory(after, onCancel) {
+        openPrompt({ title: '新建分类', value: '', onCancel: onCancel }, (name) => {
+            const id = addCategory(name);
+            if (after) after(id);
+        });
+    }
+
+    function addCategory(name) {
+        let id = 'c' + Date.now().toString(36);
+        while (findCat(id)) id += 'x';
+        categories.push({ id: id, name: name });
+        saveCats();
+        renderFilters();
+        renderCatManager();
+        showToast(say('catCreated'), '🏷️');
+        return id;
+    }
+
+    function newCategory() {
+        closeDrawer();
+        setTimeout(() => {
+            openCreateCategory(
+                () => { renderFilters(); renderList(); renderCatManager(); openDrawer(); },
+                () => { openDrawer(); }
+            );
+        }, 200);
+    }
+
+    function renameCategory(id) {
+        const c = findCat(id);
+        if (!c) return;
+        closeDrawer();
+        setTimeout(() => {
+            openPrompt({ title: '分类改名', value: c.name, onCancel: () => openDrawer() }, (name) => {
+                c.name = name;
+                saveCats();
+                renderFilters();
+                renderCatManager();
+                renderList();
+                showToast(say('catRenamed'), '✏️');
+                openDrawer();
+            });
+        }, 200);
+    }
+
+    function deleteCategory(id) {
+        const c = findCat(id);
+        if (!c) return;
+        if (categories.length <= 1) return showToast(say('catNeedOne'), '⚠️');
+        const used = sitesData.filter(s => s.cat === id).length;
+        if (used > 0) return showToast(say('catInUse', { n: used }), '⚠️');
+        showConfirm(say('catDeleteAsk', { name: c.name }), () => {
+            categories = categories.filter(x => x.id !== id);
+            saveCats();
+            if (currentFilter === id) currentFilter = 'all';
+            renderFilters();
+            renderCatManager();
+            renderList();
+            showToast(say('catDeleted'), '🗑️');
+        }, { okText: '删除', okClass: 'danger', icon: '🗑️' });
+    }
+
+    function renderList() {
+        const container = document.getElementById('list-container');
+        const keyword = document.getElementById('search-input').value.toLowerCase();
+        const terms = keyword.trim().split(/\s+/).filter(Boolean);
+        
+        sortData();
+
+        refreshNotice();
+
+        const filtered = sitesData.filter(item => {
+            if (currentFilter !== 'all' && item.cat !== currentFilter) return false;
+            if (!terms.length) return true;
+            const text = `${item.name} ${item.key} ${item.url} ${item.note} ${getCat(item.cat).name}`.toLowerCase();
+            return terms.every(t => text.includes(t));
+        });
+
+        container.innerHTML = '';
+        if (filtered.length === 0) { container.innerHTML = `<div style="text-align:center;padding:30px 0;color:var(--text-sub);font-weight:bold;font-size:14px;">${esc(say('empty'))}</div>`; return; }
+
+        filtered.forEach(item => {
+            const div = document.createElement('div');
+            div.className = 'accordion-item';
+            div.id = `acc-${item.id}`;
+            
+            const hasKey = !!item.key;
+            const cat = getCat(item.cat);
+            const urlHref = normalizeUrl(item.url || '');
+            const webHref = urlOk(item.webUrl || '');
+            const groupHref = urlOk(item.groupUrl || '');
+            const hasWeb = !!item.webUrl;
+            const hasGroup = !!item.groupUrl;
+
+            const realIndex = sitesData.findIndex(x => x.id === item.id);
+            const isFirst = realIndex === 0;
+            const isLast = realIndex === sitesData.length - 1;
+
+            const typeTag = `<span class="type-tag other-tag">${esc(cat.name)}</span>`;
+
+            div.innerHTML = `
+                <div class="accordion-header" onclick="toggleAccordion('${item.id}')">
+                    <span class="arrow">▶</span>
+                    <span class="header-name">${esc(item.name)}</span>
+                    <div class="header-tags">
+                        ${item.isPinned ? '<span class="type-tag pin-tag">已置顶</span>' : ''}
+                        ${typeTag}
+                    </div>
+                </div>
+                <div class="accordion-body">
+                    <div class="info-row">
+                        <div class="pwd-display" id="pwd-${item.id}">${hasKey ? '••••••••' : '无密钥'}</div>
+                        ${hasKey ? `<button onclick="togglePwd('${item.id}')" id="btn-toggle-${item.id}">显示</button>` : ''}
+                        ${hasKey ? `<button onclick="copyKey('${item.id}')">复制</button>` : ''}
+                    </div>
+                    <div class="link-block">
+                        ${urlHref
+                            ? `<div class="link-url" title="${esc(item.url)}">${esc(item.url)}</div>`
+                            : '<div class="link-url">未填 API 主机</div>'}
+                        ${urlHref ? `<button onclick="copyUrl('${item.id}')">复制主机</button>` : ''}
+                    </div>
+                    ${hasGroup ? (isQqNumber(item.groupUrl) ? `<div class="link-block">
+                        <div class="link-url qq-num" title="QQ 群号">${esc(item.groupUrl)}</div>
+                        <button class="group-btn" onclick="copyGroup('${item.id}')">复制群号</button>
+                        <button class="group-btn" onclick="openGroup('${item.id}')">打开QQ</button>
+                    </div>
+                    <div class="qq-hint">复制后到 QQ「查找群」里搜这个号码</div>` : `<div class="link-block">
+                        <div class="link-url" title="${esc(item.groupUrl)}">${esc(item.groupUrl)}</div>
+                        <button class="group-btn" onclick="openGroup('${item.id}')">直达群聊</button>
+                    </div>`) : ''}
+                    ${hasWeb ? `<div class="link-block web-row">
+                        ${webHref
+                            ? `<a class="link-url link-open web-link" href="${esc(webHref)}" target="_blank" rel="noopener" title="点一下进入网站">🔗 <span class="u">${esc(item.webUrl)}</span></a>`
+                            : `<div class="link-url web-link bad-link" title="链接无效，点“编辑”修正">🔗 <span class="u">${esc(item.webUrl)}</span></div>`}
+                    </div>` : ''}
+                    <div class="text-row">📝 ${esc(item.note) || '无备注'}</div>
+
+                    <div class="action-row">
+                        ${!isFirst ? `<button class="move-btn" onclick="moveItem('${item.id}', -1)">↑</button>` : ''}
+                        ${!isLast ? `<button class="move-btn" onclick="moveItem('${item.id}', 1)">↓</button>` : ''}
+                        <button class="recharge-btn" onclick="openRecharge('${item.id}')">充值</button>
+                        <button onclick="togglePin('${item.id}')">${item.isPinned ? '取消置顶' : '置顶'}</button>
+                        <button onclick="editItem('${item.id}')">编辑</button>
+                        <button class="danger" onclick="deleteItem('${item.id}')">删除</button>
+                    </div>
+                </div>
+            `;
+            if (openIds.has(item.id)) div.classList.add('active');
+            container.appendChild(div);
+        });
+    }
+
+    function toggleAccordion(id) {
+        const item = document.getElementById(`acc-${id}`);
+        if (!item) return;
+        const on = item.classList.toggle('active');
+        if (on) { openIds.add(id); } else { openIds.delete(id); }
+    }
+
+    // 排序功能
+    function moveItem(id, direction) {
+        const index = sitesData.findIndex(item => item.id === id);
+        if (index === -1) return;
+
+        const targetIndex = index + direction;
+        if (targetIndex < 0 || targetIndex >= sitesData.length) return;
+
+        if (sitesData[index].isPinned !== sitesData[targetIndex].isPinned) {
+            showToast(say('movePinned'), '⚠️');
+            return;
+        }
+
+        const temp = sitesData[index];
+        sitesData[index] = sitesData[targetIndex];
+        sitesData[targetIndex] = temp;
+
+        saveToLocal();
+        renderList();
+    }
+
+    function togglePwd(id) {
+        const item = sitesData.find(i => i.id === id);
+        const el = document.getElementById(`pwd-${id}`), btn = document.getElementById(`btn-toggle-${id}`);
+        if (!item || !el || !btn) return;
+        if (btn.innerText === '显示') {
+            el.innerText = item.key;
+            el.classList.add('expanded');
+            btn.innerText = '隐藏';
+        } else {
+            el.innerText = '••••••••';
+            el.classList.remove('expanded');
+            btn.innerText = '显示';
+        }
+    }
+
+    function copyKey(id) {
+        const item = sitesData.find(i => i.id === id);
+        if (item) copyText(item.key);
+    }
+
+    function copyUrl(id) {
+        const item = sitesData.find(i => i.id === id);
+        if (!item) return;
+        const link = normalizeUrl(item.url);
+        if (!link) return showToast(say('noHost'), '⚠️');
+        copyText(link);
+    }
+
+    
+    function copyGroup(id) {
+        const item = sitesData.find(i => i.id === id);
+        if (!item || !item.groupUrl) return showToast(say('noGroup'), '⚠️');
+        const g = String(item.groupUrl).trim();
+        copyText(isQqNumber(g) ? g : (urlOk(g) || ''));
+    }
+
+    function openGroup(id) {
+        const item = sitesData.find(i => i.id === id);
+        if (!item) return;
+        if (!item.groupUrl) return showToast(say('noGroup'), '⚠️');
+        const g = String(item.groupUrl).trim();
+        if (isQqNumber(g)) {
+            copyText(g);
+            showToast('群号已复制，正在试着打开 QQ', '💬');
+            const scheme = `mqqapi://card/show_pslcard?src_type=internal&version=1&uin=${encodeURIComponent(g)}&card_type=group&source=qrcode`;
+            setTimeout(() => { try { window.location.href = scheme; } catch (e) {} }, 300);
+            return;
+        }
+        const link = urlOk(g);
+        if (!link) return showToast(say('groupBad'), '⚠️');
+        window.open(link, '_blank', 'noopener');
+    }
+
+    function copyText(t) { 
+        if(!t) return; 
+        navigator.clipboard.writeText(t).then(() => showToast(say('copied'), '📋')).catch(() => showToast(say('copyFail'), '😢')); 
+    }
+    
+    function fillCatSelect(selectedId) {
+        const sel = document.getElementById('input-type');
+        if (!sel) return;
+        sel.innerHTML = categories.map(c => `<option value="${c.id}">${esc(c.name)}</option>`).join('')
+            + '<option value="__new">＋ 新建分类…</option>';
+        const target = selectedId && findCat(selectedId) ? selectedId : categories[0].id;
+        sel.value = target;
+        sel.dataset.prev = target;
+    }
+
+    function onCatSelectChange(sel) {
+        if (sel.value !== '__new') { sel.dataset.prev = sel.value; return; }
+        sel.value = sel.dataset.prev || categories[0].id;
+        openCreateCategory(id => { fillCatSelect(id); });
+    }
+
+    function openModal(id = null) {
+        document.getElementById('modal').style.display = 'flex';
+        resetFieldHints();
+        if (id) {
+            const item = sitesData.find(i => i.id === id);
+            document.getElementById('modal-title').innerText = '编辑站点';
+            document.getElementById('edit-id').value = item.id;
+            document.getElementById('input-name').value = item.name;
+            document.getElementById('input-key').value = item.key;
+            fillCatSelect(item.cat);
+            document.getElementById('input-url').value = item.url || '';
+            document.getElementById('input-web').value = item.webUrl || '';
+            document.getElementById('input-group').value = item.groupUrl || '';
+            document.getElementById('input-note').value = item.note || '';
+        } else {
+            document.getElementById('modal-title').innerText = '新增站点';
+            document.getElementById('edit-id').value = '';
+            document.getElementById('input-name').value = '';
+            document.getElementById('input-key').value = '';
+            fillCatSelect(currentFilter !== 'all' && findCat(currentFilter) ? currentFilter : categories[0].id);
+            document.getElementById('input-url').value = '';
+            document.getElementById('input-web').value = '';
+            document.getElementById('input-group').value = '';
+            document.getElementById('input-note').value = '';
+        }
+    }
+    function closeModal() { document.getElementById('modal').style.display = 'none'; }
+    
+    function saveData() {
+        const id = document.getElementById('edit-id').value;
+        const name = document.getElementById('input-name').value.trim();
+        const key = document.getElementById('input-key').value.trim();
+        
+        if (!name) return showToast(say('siteNameEmpty'), '⚠️');
+        if (!key) return showToast(say('keyEmpty'), '⚠️');
+
+        const rawUrl = document.getElementById('input-url').value.trim();
+        if (!rawUrl) { focusField('url'); return showToast(say('hostEmpty'), '⚠️'); }
+        const siteUrl = urlOk(rawUrl);
+        if (!siteUrl) { focusField('url'); return showToast(say('hostBad'), '⚠️'); }
+
+        const rawWeb = document.getElementById('input-web').value.trim();
+        let webUrl = '';
+        if (rawWeb) {
+            webUrl = urlOk(rawWeb);
+            if (!webUrl) { focusField('web'); return showToast(say('webBad'), '⚠️'); }
+        } else { checkField('web'); }
+
+        const rawGroup = document.getElementById('input-group').value.trim();
+        let groupUrl = '';
+        if (rawGroup) {
+            groupUrl = isQqNumber(rawGroup) ? rawGroup : urlOk(rawGroup);
+            if (!groupUrl) { focusField('group'); return showToast(say('groupUrlBad'), '⚠️'); }
+        } else { checkField('group'); }
+
+        const data = { 
+            name: name, 
+            key: key, 
+            cat: document.getElementById('input-type').value, 
+            url: siteUrl, 
+            webUrl: webUrl,
+            groupUrl: groupUrl,
+            note: document.getElementById('input-note').value.trim() 
+        };
+
+        if (data.cat === '__new' || !findCat(data.cat)) { data.cat = categories[0].id; }
+        
+        if (id) { 
+            const index = sitesData.findIndex(i => i.id === id); 
+            sitesData[index] = { ...sitesData[index], ...data }; 
+        } else { 
+            sitesData.unshift({ ...data, id: Date.now().toString(), isPinned: false }); 
+        }
+        saveToLocal(); 
+        closeModal(); 
+        renderList();
+        showToast(say('saved'), '🎉');
+    }
+    
+    function editItem(id) { openModal(id); }
+    
+    function deleteItem(id) {
+        const index = sitesData.findIndex(i => i.id === id);
+        if (index === -1) return;
+        const removed = sitesData[index];
+        sitesData.splice(index, 1);
+        openIds.delete(id);
+        saveToLocal();
+        renderList();
+        showUndo(say('undo', { name: removed.name }), () => {
+            sitesData.splice(Math.min(index, sitesData.length), 0, removed);
+            saveToLocal();
+            renderList();
+            showToast(say('restored'), '↩️');
+        });
+    }
+
+    let undoTimer = null;
+
+    function showUndo(message, onUndo) {
+        const bar = document.getElementById('snackbar');
+        if (!bar) { if (onUndo) onUndo(); return; }
+        document.getElementById('snackbar-text').innerText = message;
+        bar.classList.add('show');
+        window.pendingUndo = onUndo;
+        if (undoTimer) clearTimeout(undoTimer);
+        undoTimer = setTimeout(hideUndo, 5000);
+    }
+
+    function hideUndo() {
+        const bar = document.getElementById('snackbar');
+        if (bar) bar.classList.remove('show');
+        if (undoTimer) { clearTimeout(undoTimer); undoTimer = null; }
+        window.pendingUndo = null;
+    }
+
+    function doUndo() {
+        const fn = window.pendingUndo;
+        hideUndo();
+        if (fn) fn();
+    }
+    
+    function togglePin(id) { 
+        const i = sitesData.findIndex(x => x.id === id); 
+        sitesData[i].isPinned = !sitesData[i].isPinned; 
+        saveToLocal(); 
+        renderList(); 
+    }
+    
+    function saveToLocal() { localStorage.setItem('apiSitesData', JSON.stringify(sitesData)); }
+    
+    function exportData() { 
+        showConfirm(say('exportAsk'), () => {
+            const payload = { app: 'api秘密基地', version: 1, exportedAt: new Date().toISOString(), sites: sitesData, categories: categories, voice: { current: currentVoice, custom: customVoiceData } };
+            const d = new Date();
+            const stamp = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+            const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([JSON.stringify(payload, null, 2)], {type:"application/json"})); a.download = `api_backup_${stamp}.json`; a.click(); 
+            try { localStorage.setItem('apiLastExport', String(Date.now())); } catch (e) {}
+            refreshNotice();
+            showToast(say('exported'), '📦');
+        }, { okText: '确认导出', okClass: 'primary', icon: '📦' });
+    }
+    
+    function importData() { 
+        const input = document.createElement('input');
+        input.type = 'file'; input.accept = '.json';
+        input.onchange = e => {
+            const reader = new FileReader();
+            reader.onload = ev => {
+                let d;
+                try { d = JSON.parse(ev.target.result); } catch (err) { return showToast(say('fileBad'), '❌'); }
+                const data = Array.isArray(d) ? { sites: d }
+                    : (d && typeof d === 'object' && (Array.isArray(d.sites) || Array.isArray(d.categories)) ? d : null);
+                if (!data) return showToast(say('fileBad'), '❌');
+                const siteCount = Array.isArray(data.sites) ? data.sites.length : 0;
+                const catCount = Array.isArray(data.categories) ? data.categories.length : 0;
+                showImportChoice(data, siteCount, catCount);
+            };
+            reader.readAsText(e.target.files[0]);
+        };
+        input.click(); 
+    }
+    
+    function showImportChoice(data, siteCount, catCount) {
+        const overlay = document.getElementById('custom-overlay');
+        document.getElementById('dialog-icon').innerText = '📥';
+        document.getElementById('dialog-text').innerText =
+            say('importHead', { sites: siteCount, cats: catCount ? `、${catCount} 个分类` : '' }) + '\n' + say('importBody');
+        document.getElementById('dialog-btns').innerHTML = `
+            <button onclick="closeToast()">取消</button>
+            <button class="primary" onclick="doImport('merge')">合并</button>
+            <button class="danger" onclick="doImport('overwrite')">覆盖</button>
+        `;
+        window.pendingImport = data;
+        overlay.classList.add('active');
+    }
+
+    function doImport(mode) {
+        const data = window.pendingImport;
+        window.pendingImport = null;
+        closeToast();
+        if (!data) return;
+        // 恢复提示语（备份里带的话）
+        const packVoice = data.voice && typeof data.voice === 'object' ? data.voice : null;
+        if (packVoice) {
+            const texts = sanitizeVoicePack(packVoice.custom);
+            if (mode === 'overwrite') {
+                customVoiceData = texts;
+            } else if (Object.keys(texts).length) {
+                customVoiceData = { ...texts, ...customVoiceData };
+            }
+            try { localStorage.setItem('voiceCustom', JSON.stringify(customVoiceData)); } catch (e) {}
+            if (packVoice.current && (VOICES[packVoice.current] || packVoice.current === 'custom')) {
+                if (mode === 'overwrite') {
+                    currentVoice = packVoice.current;
+                    try { localStorage.setItem('appVoice', currentVoice); } catch (e) {}
+                    updateVoiceBtns();
+                }
+            }
+        }
+
+        if (mode === 'overwrite') {
+            if (Array.isArray(data.sites)) sitesData = data.sites;
+            if (Array.isArray(data.categories)) {
+                const clean = data.categories
+                    .filter(c => c && c.id && c.name)
+                    .map(c => ({ id: String(c.id), name: String(c.name) }));
+                if (clean.length) { categories = clean; saveCats(); }
+            }
+            normalizeSites(); saveToLocal();
+            renderFilters(); renderCatManager(); renderList();
+            return showToast(say('overwriteDone'), '📥');
+        }
+
+        // === 合并 ===
+        const catMap = {};   // 备份里的分类 id -> 本地分类 id
+        let newCats = 0;
+        if (Array.isArray(data.categories)) {
+            data.categories.forEach(c => {
+                if (!c || !c.id || !c.name) return;
+                const name = String(c.name);
+                const byId = findCat(String(c.id));
+                const byName = categories.find(x => x.name === name);
+                if (byId) { catMap[String(c.id)] = byId.id; return; }
+                if (byName) { catMap[String(c.id)] = byName.id; return; }
+                let nid = String(c.id);
+                while (findCat(nid)) nid += 'x';
+                categories.push({ id: nid, name: name });
+                catMap[String(c.id)] = nid;
+                newCats++;
+            });
+        }
+        const keyOf = u => normalizeUrl(u || '').toLowerCase();
+        const existing = new Set(sitesData.map(x => keyOf(x.url)).filter(Boolean));
+        let added = 0, skipped = 0;
+        (Array.isArray(data.sites) ? data.sites : []).forEach(raw => {
+            if (!raw || !raw.name) return;
+            const u = keyOf(raw.url);
+            if (u && existing.has(u)) { skipped++; return; }
+            if (u) existing.add(u);
+            let cat = catMap[String(raw.cat)];
+            if (!cat || !findCat(cat)) cat = findCat('common') ? 'common' : categories[0].id;
+            sitesData.push({
+                id: 'm' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6),
+                name: String(raw.name),
+                key: String(raw.key || ''),
+                cat: cat,
+                url: normalizeUrl(raw.url || ''),
+                webUrl: raw.webUrl ? (urlOk(raw.webUrl) || '') : '',
+                groupUrl: raw.groupUrl ? (isQqNumber(raw.groupUrl) ? String(raw.groupUrl) : (urlOk(raw.groupUrl) || '')) : '',
+                note: String(raw.note || ''),
+                rechargeRate: raw.rechargeRate || '',
+                rechargePrice: raw.rechargePrice || '',
+                rechargeLink: raw.rechargeLink || '',
+                isPinned: !!raw.isPinned
+            });
+            added++;
+        });
+        saveCats(); normalizeSites(); saveToLocal();
+        renderFilters(); renderCatManager(); renderList();
+        showToast(say('mergeDone', { added: added }) + (skipped ? say('mergeSkip', { skipped: skipped }) : '') + (newCats ? say('mergeCats', { newCats: newCats }) : ''), '📥');
+    }
+
+    function clearData() {
+        showConfirm(say('clearAsk'), () => {
+            sitesData = [];
+            saveToLocal();
+            renderList();
+            closeDrawer();
+            showToast(say('cleared'), '🧹');
+        });
+    }
+
+    // === 充值详情逻辑 ===
+    let rechargeSiteId = null;
+
+    // 只接受 http/https；裸域名自动补 https，其他协议（如 javascript:）一律判为无效
+    function normalizeUrl(raw) {
+        const v = (raw || '').trim();
+        if (!v) return '';
+        if (v.startsWith('//')) return 'https:' + v;
+        if (/^[a-zA-Z][a-zA-Z0-9+.\-]*:/.test(v)) {
+            return /^https?:/i.test(v) ? v : '';
+        }
+        return 'https://' + v;
+    }
+
+    // 比 normalizeUrl 更严：能打开的外部链接必须是“像样”的域名
+    function isQqNumber(raw) {
+        return /^\d{5,12}$/.test(String(raw || '').trim());
+    }
+
+    function urlOk(raw) {
+        const v = normalizeUrl(raw);
+        if (!v || /\s/.test(v)) return '';
+        try {
+            const u = new URL(v);
+            if (u.protocol !== 'http:' && u.protocol !== 'https:') return '';
+            const host = u.hostname;
+            if (!host) return '';
+            if (host === 'localhost') return (u.pathname === '/' && !u.search && !u.hash) ? u.origin : u.href;
+            if (/^\d{1,3}(\.\d{1,3}){3}$/.test(host)) return (u.pathname === '/' && !u.search && !u.hash) ? u.origin : u.href;
+            if (!/\.[a-z]{2,}$/i.test(host)) return '';
+            if (!/^[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)*\.[a-z]{2,}$/i.test(host)) return '';
+            return (u.pathname === '/' && !u.search && !u.hash) ? u.origin : u.href;
+        } catch (e) { return ''; }
+    }
+
+    // === 表单里网址的即时校验 ===
+    const FIELD_MAP = {
+        url:      { input: 'input-url',           group: 'fg-url',      kind: 'url',   hint: 'hint-url',      say: 'hintUrl' },
+        web:      { input: 'input-web',           group: 'fg-web',      kind: 'url',   hint: 'hint-web',      say: 'hintWeb' },
+        group:    { input: 'input-group',         group: 'fg-group',    kind: 'group', hint: 'hint-group',    say: 'hintGroup' },
+        recharge: { input: 'input-recharge-link', group: 'fg-recharge', kind: 'url',   hint: 'hint-recharge', say: 'hintRecharge' }
+    };
+
+    function fieldValueOk(kind, raw) {
+        const v = String(raw || '').trim();
+        if (!v) return true;                     // 空着交给各自保存逻辑处理
+        if (kind === 'group') return isQqNumber(v) || !!urlOk(v);
+        return !!urlOk(v);
+    }
+
+    function checkField(kind) {
+        const f = FIELD_MAP[kind];
+        if (!f) return true;
+        const input = document.getElementById(f.input);
+        const group = document.getElementById(f.group);
+        if (!input || !group) return true;
+        const ok = fieldValueOk(f.kind, input.value);
+        if (!ok) {
+            const hint = document.getElementById(f.hint);
+            if (hint) hint.textContent = say(f.say);
+        }
+        group.classList.toggle('invalid', !ok);
+        return ok;
+    }
+
+    function resetFieldHints() {
+        ['fg-url', 'fg-web', 'fg-group', 'fg-recharge'].forEach(id => {
+            const el = document.getElementById(id);
+            if (el) el.classList.remove('invalid');
+        });
+    }
+
+    function focusField(kind) {
+        const f = FIELD_MAP[kind];
+        const input = f && document.getElementById(f.input);
+        if (input) { input.focus(); checkField(kind); }
+    }
+
+    function updateGoRecharge(raw) {
+        const btn = document.getElementById('btn-go-recharge');
+        if (urlOk(raw)) { btn.classList.add('show'); }
+        else { btn.classList.remove('show'); }
+        checkField('recharge');
+    }
+
+    function openRecharge(id) {
+        const item = sitesData.find(i => i.id === id);
+        if (!item) return;
+        rechargeSiteId = id;
+        document.getElementById('recharge-site').innerText = `站点：${item.name}`;
+        document.getElementById('input-rate').value = item.rechargeRate || '';
+        document.getElementById('input-price').value = item.rechargePrice || '';
+        document.getElementById('input-recharge-link').value = item.rechargeLink || '';
+        resetFieldHints();
+        updateGoRecharge(item.rechargeLink || '');
+        document.getElementById('recharge-modal').style.display = 'flex';
+    }
+
+    function closeRecharge() {
+        document.getElementById('recharge-modal').style.display = 'none';
+        rechargeSiteId = null;
+    }
+
+    function saveRecharge() {
+        if (!rechargeSiteId) return;
+        const index = sitesData.findIndex(i => i.id === rechargeSiteId);
+        if (index === -1) return closeRecharge();
+
+        const rawLink = document.getElementById('input-recharge-link').value;
+        let link = '';
+        if (rawLink.trim()) {
+            link = urlOk(rawLink);
+            if (!link) { focusField('recharge'); return showToast(say('rechargeBadLink'), '⚠️'); }
+        }
+
+        sitesData[index] = {
+            ...sitesData[index],
+            rechargeRate: document.getElementById('input-rate').value.trim(),
+            rechargePrice: document.getElementById('input-price').value.trim(),
+            rechargeLink: link
+        };
+        saveToLocal();
+        closeRecharge();
+        renderList();
+        showToast(say('rechargeSaved'), '💰');
+    }
+
+    function goRecharge() {
+        const link = normalizeUrl(document.getElementById('input-recharge-link').value);
+        if (!link) return showToast(say('rechargeNoLink'), '⚠️');
+        window.open(link, '_blank', 'noopener');
+    }
+
+    normalizeSites();
+    renderFilters();
+    renderCatManager();
+    renderList();
+</script>
+</body>
+</html>
