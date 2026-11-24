@@ -9,28 +9,136 @@
 <style>
 /* ===== 设计变量：四时换色 ===== */
 :root{
-  --paper:#FAF6E7;
-  --paper-2:#F2EBD7;
-  --paper-3:#FFFCF0;
-  --ink:#22322B;
-  --ink-soft:#5B6A5C;
-  --ink-faint:#8A9689;
-  --line:rgba(34,50,43,.16);
-  --moss:#5E8259;
-  --leaf:#7FA96B;
-  --leaf-2:#A9C78B;
-  --clay:#C05A3E;
-  --marigold:#EDB44C;
-  --dew:#6FA79E;
+  --paper:#F7EFD9;
+  --paper-2:#EFE4CB;
+  --paper-3:#FCF6E6;
+  --ink:#3B2E22;
+  --ink-soft:#6A5B49;
+  --ink-faint:#94826C;
+  --line:rgba(59,46,34,.26);
+  --moss:#6D7F53;
+  --leaf:#8B9F68;
+  --leaf-2:#AEC78C;
+  --clay:#B65B3F;
+  --marigold:#D9A441;
+  --dew:#7BA79A;
   --shadow:0 2px 0 rgba(34,50,43,.14);
-  --sky:#E2EAD6;
-  --soil:#DDC6A0;
+  --sky:#DEE5CC;
+  --soil:#D9C39C;
   --soil-2:#C9AF87;
   --accent:#7FA96B;
 }
 body.s-1{--sky:#EEF0CE;--soil:#E6D6AC;--soil-2:#D6C193;--accent:#D8A03F;}
 body.s-2{--sky:#EEE1C9;--soil:#DCC49F;--soil-2:#CBAF86;--accent:#C06444;}
 body.s-3{--sky:#DFE7E9;--soil:#D9D3C2;--soil-2:#C6C0AE;--accent:#639099;}
+
+/* ===== 主题配色：14 个变量 × 10 套 ===== */
+:root{
+  --bg:#F6EDD6;--card:#FBF4E2;
+  --pink-100:#EDDFC2;--pink-200:#DDC79C;--pink-300:#CBB184;
+  --pink-400:#C79F52;--pink-500:#A87C2E;--pink-600:#8A6420;
+  --text:#3B2E22;--text-soft:#6A5B49;--line:#DCCBAA;--gray-bg:#EFE5CF;
+  --decor:#E9D9B8;
+  --shadow:0 2px 0 rgba(90,65,35,.14), 0 12px 24px rgba(90,65,35,.07);
+}
+body[data-theme="pink"]{
+  --bg:#FBE9F1;--card:#FFFFFF;
+  --pink-100:#FAD9E6;--pink-200:#F2B4CB;--pink-300:#E78CAF;
+  --pink-400:#D96A99;--pink-500:#C74D80;--pink-600:#A63362;
+  --text:#42303A;--text-soft:#866A77;--line:#EBB8CD;--gray-bg:#EBE0E7;
+  --decor:#F3BFD3;
+  --shadow:0 2px 0 rgba(170,60,105,.14), 0 12px 24px rgba(170,60,105,.07);
+}
+body[data-theme="purple"]{
+  --bg:#F3EBFB;--card:#FFFFFF;
+  --pink-100:#E7D8F6;--pink-200:#D3BAEE;--pink-300:#BB99E3;
+  --pink-400:#A375D8;--pink-500:#8B55C4;--pink-600:#6E3AA0;
+  --text:#3A2D4C;--text-soft:#78658C;--line:#D6C0EA;--gray-bg:#E6DFF0;
+  --decor:#CFB4E8;
+  --shadow:0 2px 0 rgba(105,60,150,.14), 0 12px 24px rgba(105,60,150,.07);
+}
+body[data-theme="blue"]{
+  --bg:#E9F3FC;--card:#FFFFFF;
+  --pink-100:#D7E8F7;--pink-200:#B9D6EF;--pink-300:#93C0E5;
+  --pink-400:#68A2D6;--pink-500:#4A86C0;--pink-600:#30669B;
+  --text:#26394A;--text-soft:#64798A;--line:#BFD6EC;--gray-bg:#E2EAF2;
+  --decor:#B6D1EB;
+  --shadow:0 2px 0 rgba(45,100,155,.14), 0 12px 24px rgba(45,100,155,.07);
+}
+body[data-theme="mint"]{
+  --bg:#EAF7EE;--card:#FFFFFF;
+  --pink-100:#D6F1E1;--pink-200:#B4E4C7;--pink-300:#8AD3A8;
+  --pink-400:#5EBE88;--pink-500:#41A46D;--pink-600:#2A7F52;
+  --text:#264234;--text-soft:#5E7C6C;--line:#BCE2CA;--gray-bg:#E0EEE5;
+  --decor:#B0DDC1;
+  --shadow:0 2px 0 rgba(35,120,80,.14), 0 12px 24px rgba(35,120,80,.07);
+}
+body[data-theme="mono"]{
+  --bg:#EFEFF2;--card:#FFFFFF;
+  --pink-100:#E4E4E8;--pink-200:#CFCFD5;--pink-300:#B4B4BB;
+  --pink-400:#8E8E96;--pink-500:#5F5F67;--pink-600:#3C3C44;
+  --text:#2C2C33;--text-soft:#78787F;--line:#D2D2D8;--gray-bg:#E9E9ED;
+  --decor:#BFBFC7;
+  --shadow:0 2px 0 rgba(45,45,55,.12), 0 12px 24px rgba(45,45,55,.06);
+}
+body[data-theme="cream"]{
+  --bg:#F6EDD6;--card:#FBF4E2;
+  --pink-100:#EDDFC2;--pink-200:#DDC79C;--pink-300:#CBB184;
+  --pink-400:#C79F52;--pink-500:#A87C2E;--pink-600:#8A6420;
+  --text:#3B2E22;--text-soft:#6A5B49;--line:#DCCBAA;--gray-bg:#EFE5CF;
+  --decor:#E9D9B8;
+  --shadow:0 2px 0 rgba(90,65,35,.14), 0 12px 24px rgba(90,65,35,.07);
+}
+body[data-theme="coral"]{
+  --bg:#FDEFE7;--card:#FFFFFF;
+  --pink-100:#FADCCE;--pink-200:#F3BFA6;--pink-300:#EB9C7C;
+  --pink-400:#DE7754;--pink-500:#C85C3C;--pink-600:#A2432A;
+  --text:#4C342A;--text-soft:#8C6F61;--line:#EFC7B4;--gray-bg:#EDE2DB;
+  --decor:#F0C8B4;
+  --shadow:0 2px 0 rgba(175,80,50,.14), 0 12px 24px rgba(175,80,50,.07);
+}
+body[data-theme="matcha"]{
+  --bg:#F6F9E9;--card:#FFFFFF;
+  --pink-100:#EDF2D0;--pink-200:#DCE4AC;--pink-300:#C5CF7C;
+  --pink-400:#A8B452;--pink-500:#8C9A38;--pink-600:#6E7A26;
+  --text:#3C4126;--text-soft:#7B805A;--line:#D9DFAE;--gray-bg:#ECEEDB;
+  --decor:#D9E0AC;
+  --shadow:0 2px 0 rgba(105,115,40,.14), 0 12px 24px rgba(105,115,40,.07);
+}
+body[data-theme="navy"]{
+  --bg:#EAEFF9;--card:#FFFFFF;
+  --pink-100:#DAE3F4;--pink-200:#B9C8E7;--pink-300:#93A6DA;
+  --pink-400:#5A6FBE;--pink-500:#45539C;--pink-600:#2E3A78;
+  --text:#272E4C;--text-soft:#6C7390;--line:#C0CCE7;--gray-bg:#E2E7F1;
+  --decor:#BCCAE6;
+  --shadow:0 2px 0 rgba(50,65,130,.14), 0 12px 24px rgba(50,65,130,.07);
+}
+body[data-theme="cocoa"]{
+  --bg:#F6EFE6;--card:#FFFFFF;
+  --pink-100:#ECDFCF;--pink-200:#D8C0A8;--pink-300:#C09E7E;
+  --pink-400:#A57A58;--pink-500:#87603F;--pink-600:#65462E;
+  --text:#3E3028;--text-soft:#806B5B;--line:#DEC9B5;--gray-bg:#EAE3DA;
+  --decor:#D7C2AD;
+  --shadow:0 2px 0 rgba(100,65,35,.14), 0 12px 24px rgba(100,65,35,.07);
+}
+/* 把主题色接到游戏原有变量 */
+body{
+  --paper:var(--card);
+  --paper-2:var(--pink-100);
+  --paper-3:var(--card);
+  --ink:var(--text);
+  --ink-soft:var(--text-soft);
+  --ink-faint:var(--text-soft);
+  --moss:var(--pink-500);
+  --leaf:var(--pink-400);
+  --leaf-2:var(--pink-300);
+  --clay:var(--pink-600);
+  --marigold:var(--pink-400);
+  --dew:var(--pink-500);
+  --accent:var(--pink-500);
+  --soil:var(--pink-200);
+  --soil-2:var(--pink-300);
+}
 
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;-webkit-user-select:none;-moz-user-select:none;user-select:none;-webkit-touch-callout:none}
 img,svg{-webkit-user-drag:none}
@@ -40,9 +148,10 @@ body{
   touch-action:manipulation;
   min-height:100vh;
   background:
-    radial-gradient(120% 80% at 50% -12%, rgba(255,255,255,.55), transparent 60%),
-    radial-gradient(90% 60% at 50% 115%, rgba(94,130,89,.16), transparent 65%),
-    var(--sky);
+    radial-gradient(120% 80% at 18% -10%, rgba(255,255,255,.85), transparent 60%),
+    radial-gradient(70% 55% at 88% 12%, var(--pink-100), transparent 72%),
+    radial-gradient(80% 60% at 50% 118%, var(--pink-200), transparent 68%),
+    var(--bg);
   color:var(--ink);
   font-family:"Noto Sans SC","PingFang SC","Microsoft YaHei",system-ui,sans-serif;
   font-weight:400;
@@ -53,9 +162,13 @@ body{
 }
 body::before{
   content:"";position:fixed;inset:0;pointer-events:none;z-index:0;
-  background-image:radial-gradient(rgba(34,50,43,.055) 1px, transparent 1px);
-  background-size:5px 5px;
-  opacity:.55;
+  background-image:
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/></filter><rect width='200' height='200' filter='url(%23n)' opacity='0.42'/></svg>"),
+    repeating-linear-gradient(0deg, rgba(110,88,58,.05) 0 1px, transparent 1px 5px),
+    repeating-linear-gradient(90deg, rgba(110,88,58,.035) 0 1px, transparent 1px 7px);
+  background-size:200px 200px, auto, auto;
+  mix-blend-mode:multiply;
+  opacity:.26;
 }
 
 /* ===== 版式 ===== */
@@ -80,8 +193,13 @@ body::before{
 .hud{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
 .chip{
   display:inline-flex;align-items:center;gap:7px;height:36px;padding:0 13px;
-  background:var(--paper);border:1.2px solid var(--line);border-radius:999px;
-  box-shadow:var(--shadow);font-weight:500;font-variant-numeric:tabular-nums;
+  background:
+    radial-gradient(120% 160% at 18% 0%, rgba(255,255,255,.7), transparent 55%),
+    radial-gradient(100% 140% at 90% 100%, rgba(190,166,124,.16), transparent 60%),
+    var(--paper);
+  border:1.25px solid rgba(59,46,34,.32);border-radius:999px;
+  box-shadow:0 1px 0 rgba(255,255,255,.5) inset, 0 2px 0 rgba(120,98,70,.10), var(--shadow);
+  font-weight:500;font-variant-numeric:tabular-nums;
   white-space:nowrap;
 }
 .chip svg{width:17px;height:17px;display:block}
@@ -105,7 +223,7 @@ body::before{
   transition:background .16s ease,color .16s ease;
 }
 .tab svg{width:22px;height:22px;display:block}
-.tab[aria-selected="true"]{color:var(--ink);background:rgba(127,169,107,.18)}
+.tab[aria-selected="true"]{color:var(--ink);background:color-mix(in srgb, var(--pink-500) .18%, transparent)}
 .tab[aria-selected="true"] svg{color:var(--moss)}
 .tab .badge{
   position:absolute;top:1px;left:calc(50% + 8px);min-width:16px;height:16px;border-radius:8px;
@@ -115,7 +233,16 @@ body::before{
 .tab .badge.hide{display:none}
 
 /* ===== 面板 ===== */
-.panel{background:var(--paper);border:1.2px solid var(--line);border-radius:16px;box-shadow:var(--shadow)}
+.panel{
+  background:
+    radial-gradient(120% 80% at 14% 0%, rgba(255,252,240,.9), transparent 58%),
+    radial-gradient(70% 45% at 92% 100%, rgba(198,172,128,.14), transparent 72%),
+    radial-gradient(40% 30% at 70% 18%, rgba(255,255,250,.35), transparent 70%),
+    var(--paper);
+  border:1.4px solid rgba(59,46,34,.46);
+  border-radius:15px 17px 13px 18px;
+  box-shadow:0 2px 0 rgba(59,46,34,.13), inset 0 0 0 2px rgba(255,251,238,.55), 0 12px 26px rgba(80,62,40,.07);
+}
 .panel-pad{padding:16px}
 .sec-label{
   display:flex;align-items:center;justify-content:space-between;
@@ -128,7 +255,7 @@ body::before{
 .gen{display:flex;flex-direction:column;gap:10px}
 .gen-art{
   position:relative;border:1.2px dashed rgba(34,50,43,.22);border-radius:14px;
-  background:linear-gradient(180deg,var(--paper-3),var(--paper-2));
+  background:linear-gradient(180deg,var(--card),var(--pink-100));
   padding:10px 10px 4px;cursor:pointer;transition:transform .15s ease, box-shadow .15s ease;
   border:1.2px dashed rgba(34,50,43,.22);
   touch-action:manipulation;
@@ -225,7 +352,7 @@ body::before{
   cursor:pointer;transition:transform .12s ease,border-color .12s ease,background .12s ease;
 }
 .os:hover{transform:translateY(-1px)}
-.os.ok{border-color:rgba(127,169,107,.7);background:rgba(127,169,107,.14)}
+.os.ok{border-color:color-mix(in srgb, var(--pink-500) .7%, transparent);background:color-mix(in srgb, var(--pink-500) .14%, transparent)}
 .os .os-art{width:20px;height:20px;flex:0 0 auto}
 .os .os-art svg{width:20px;height:20px;display:block}
 .os .os-mid{min-width:0;display:flex;flex-direction:column;gap:1px}
@@ -251,19 +378,33 @@ body::before{
 .garden-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;padding:0 3px}
 .garden-head .t{font-family:"Noto Serif SC",serif;font-size:13px;letter-spacing:.12em;color:var(--ink-soft)}
 .garden-head .m{font-size:11px;color:var(--ink-faint);letter-spacing:.04em}
+.garden-head .gh-right{display:flex;align-items:center;gap:6px;min-width:0}
+.tut-mini{border:1px solid color-mix(in srgb, #C39334 42%, transparent);background:rgba(243,206,125,.26);
+  color:#8A5A1C;font-family:inherit;font-size:9.5px;letter-spacing:.02em;padding:2px 7px;
+  border-radius:999px;cursor:pointer;white-space:nowrap;line-height:1.5}
+.tut-mini:active{transform:translateY(1px)}
+.tut-pulse{outline:2px solid #D96A7A;outline-offset:2px;animation:tutPulse 1.55s ease-in-out infinite}
+@keyframes tutPulse{0%,100%{outline-color:rgba(217,106,122,.9)}50%{outline-color:rgba(217,106,122,.24)}}
 .board{
   position:relative;display:grid;grid-template-columns:repeat(6,1fr);gap:6px;
   padding:10px;border-radius:16px;
   background:
-    radial-gradient(90% 70% at 18% 8%, rgba(255,255,255,.5), transparent 60%),
+    radial-gradient(90% 70% at 18% 8%, rgba(255,252,240,.55), transparent 60%),
+    repeating-linear-gradient(12deg, rgba(115,86,48,.035) 0 1px, transparent 1px 9px),
+    repeating-linear-gradient(102deg, rgba(255,248,230,.18) 0 2px, transparent 2px 9px),
     var(--soil);
   box-shadow:inset 0 2px 6px rgba(90,66,35,.18);
 }
 .cell{
-  position:relative;aspect-ratio:1;border-radius:12px;
-  background:linear-gradient(180deg,#FDF5DF,#F3E5C6);
-  border:1px solid rgba(120,95,60,.16);
-  box-shadow:inset 0 2px 0 #FFFDF5, inset 0 -3px 0 rgba(120,95,60,.14);
+  position:relative;aspect-ratio:1;border-radius:10px 12px 9px 11px;
+  background:
+    radial-gradient(90% 70% at 30% 12%, rgba(255,253,243,.85), transparent 65%),
+    radial-gradient(circle 1.1px at 6px 7px, rgba(122,92,54,.10) 0 .9px, transparent 1.4px),
+    radial-gradient(circle 1px at 9px 4px, rgba(122,92,54,.08) 0 .8px, transparent 1.3px),
+    linear-gradient(180deg,#FCF4DE,#F2E2C0);
+  background-size:auto, 13px 13px, 17px 17px, auto;
+  border:1px solid rgba(59,46,34,.28);
+  box-shadow:inset 0 0 0 1px rgba(255,250,235,.55), inset 0 -3px 0 rgba(120,95,60,.10);
   display:grid;place-items:center;
   touch-action:manipulation;
   transition:background .12s ease, outline-color .12s ease;
@@ -375,9 +516,9 @@ body::before{
 }
 .stand:hover{transform:translateY(-1px);border-color:var(--moss)}
 .stand:active{transform:translateY(1px)}
-.stand.filled{border-style:solid;border-color:rgba(127,169,107,.55);background:var(--paper-3)}
+.stand.filled{border-style:solid;border-color:color-mix(in srgb, var(--pink-500) .55%, transparent);background:var(--paper-3)}
 .stand.off{opacity:.55}
-.stand.ready{border-style:solid;border-color:rgba(127,169,107,.75);background:rgba(127,169,107,.13)}
+.stand.ready{border-style:solid;border-color:color-mix(in srgb, var(--pink-500) .75%, transparent);background:color-mix(in srgb, var(--pink-500) .13%, transparent)}
 .stand.ready::after{content:'';position:absolute;top:4px;right:4px;width:5px;height:5px;border-radius:50%;background:var(--moss)}
 .stand.off.filled{opacity:1}
 .stand .art{width:26px;height:26px;display:block}
@@ -389,16 +530,17 @@ body::before{
 .stand .ph small{display:none}
 .stand-tip{margin:8px 0 0;font-size:11px;color:var(--ink-faint);text-align:center;letter-spacing:.03em}
 .stand-legend{margin:4px 0 0;font-size:10px;color:rgba(34,50,43,.42);text-align:center;letter-spacing:.02em}
-.dexsum{border:1px solid rgba(127,169,107,.45);border-radius:12px;background:rgba(127,169,107,.10);padding:9px 11px;margin-bottom:10px}
+.dexsum{border:1px solid color-mix(in srgb, var(--pink-500) .45%, transparent);border-radius:12px;background:color-mix(in srgb, var(--pink-500) .10%, transparent);padding:9px 11px;margin-bottom:10px}
 .ds-top{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--ink);letter-spacing:.03em}
 .ds-top b{margin-left:auto;font-variant-numeric:tabular-nums;font-size:12.5px}
 .ds-got{font-size:10px;color:#8A6416;white-space:nowrap}
+.ds-grad{font-size:9px;font-weight:600;color:#8A6416;border:1px solid color-mix(in srgb,var(--marigold) 55%,transparent);border-radius:999px;background:var(--card);padding:1px 6px;white-space:nowrap}
 .ds-bar{height:4px;border-radius:2px;background:rgba(34,50,43,.10);margin-top:7px;overflow:hidden}
 .ds-bar i{display:block;height:100%;background:var(--moss);border-radius:2px;transition:width .25s}
 .ds-foot{margin-top:6px;font-size:10px;color:var(--ink-faint);letter-spacing:.02em}
 .varsdex{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px}
 .dv{position:relative;border:1px solid var(--line);border-radius:10px;background:var(--paper-3);padding:6px 3px 5px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;min-height:92px}
-.dv.on{border-color:rgba(127,169,107,.6);background:rgba(127,169,107,.10)}
+.dv.on{border-color:color-mix(in srgb, var(--pink-500) .6%, transparent);background:color-mix(in srgb, var(--pink-500) .10%, transparent)}
 .dv.lock{border-style:dashed;background:rgba(34,50,43,.045)}
 .dv .art svg{width:38px;height:38px;display:block}
 .dv.lock .art{filter:grayscale(1);opacity:.34}
@@ -408,6 +550,25 @@ body::before{
 .dv .rw{font-size:8.5px;color:#8A6416;font-variant-numeric:tabular-nums;line-height:1;white-space:nowrap}
 .dv.on .rw{color:var(--moss)}
 .dv .ck{position:absolute;right:4px;top:3px;width:12px;height:12px;border-radius:50%;background:var(--moss);color:#FBF7E9;font-size:8.5px;display:grid;place-items:center;line-height:1}
+.tut-sheet{width:min(360px,100%)}
+.tut-sub{margin:5px 0 10px;font-size:11.5px;color:var(--ink-faint);line-height:1.5}
+.tut-sub b{color:#A6711C}
+.tut-steps{display:flex;flex-direction:column;gap:7px;margin:10px 0 9px}
+.tut-step{display:grid;grid-template-columns:26px 1fr auto;align-items:center;gap:8px;padding:7px 9px;
+  border:1px solid var(--line);border-radius:11px;background:rgba(255,255,255,.42)}
+.tut-step .tn{width:22px;height:22px;border-radius:50%;display:grid;place-items:center;
+  background:rgba(59,46,34,.08);color:var(--ink-soft);font-size:11px;border:1px solid rgba(59,46,34,.18)}
+.tut-step b{display:block;font-size:12px;color:var(--ink)}
+.tut-step span{display:block;font-size:10px;color:var(--ink-faint);margin-top:1px}
+.tut-step em{font-style:normal;font-size:10px;color:var(--ink-faint);white-space:nowrap}
+.tut-step.on{border-color:color-mix(in srgb, #C39334 55%, transparent);background:rgba(243,206,125,.18)}
+.tut-step.on .tn{background:#F3CE7D;color:#5A3E18;border-color:#B9862C}
+.tut-step.on em{color:#A6711C}
+.tut-step.done{border-color:color-mix(in srgb, var(--moss) 40%, transparent);background:rgba(127,183,166,.12)}
+.tut-step.done .tn{background:var(--moss);color:#FFFDF6;border-color:var(--moss)}
+.tut-step.done em{color:var(--moss)}
+.tut-tip{font-size:10.5px;line-height:1.55;color:var(--ink-soft);margin:7px 0 10px}
+.tut-skip{box-shadow:none;margin-top:6px;background:transparent;border-style:dashed;font-size:11.5px;color:var(--ink-faint)}
 .lv-sheet{width:min(360px,100%)}
 .lv-close{width:30px;height:30px;border-radius:50%;border:1px solid var(--line);background:rgba(255,255,255,.6);color:var(--ink-soft);font-size:16px;line-height:1;cursor:pointer}
 .lv-head{display:flex;align-items:center;justify-content:space-between;gap:10px}
@@ -426,7 +587,7 @@ body::before{
 .lv-note{margin:4px 0 0;font-size:10.5px;color:var(--ink-faint);text-align:center;line-height:1.5}
 .season-note{
   margin-top:12px;padding:10px 12px;border-radius:13px;
-  border:1px solid rgba(127,169,107,.35);background:rgba(127,169,107,.10);
+  border:1px solid color-mix(in srgb, var(--pink-500) .35%, transparent);background:color-mix(in srgb, var(--pink-500) .10%, transparent);
   display:flex;align-items:center;gap:10px;
 }
 .season-note .sn-ic{width:28px;height:28px;flex:0 0 auto}
@@ -438,15 +599,15 @@ body::before{
   border:1px solid var(--line);border-radius:999px;padding:3px 9px;background:var(--paper-3);
   font-variant-numeric:tabular-nums;
 }
-.buff-pill.hot{color:var(--moss);border-color:rgba(127,169,107,.5);background:rgba(127,169,107,.10)}
+.buff-pill.hot{color:var(--moss);border-color:color-mix(in srgb, var(--pink-500) .5%, transparent);background:color-mix(in srgb, var(--pink-500) .10%, transparent)}
 .vars{display:flex;flex-wrap:wrap;align-items:center;gap:5px 5px;margin:0}
 .vars-cap{font-size:10.5px;color:var(--ink-faint);letter-spacing:.06em;margin-right:2px}
 .vchip{display:inline-flex;align-items:center;gap:4px;font-size:10.5px;color:var(--ink-soft);
   border:1px solid var(--line);border-radius:999px;padding:2px 7px;background:var(--paper-3);letter-spacing:.02em}
 .vchip i{width:8px;height:8px;border-radius:50%;display:block;flex:0 0 auto}
 .vchip{flex:0 0 auto}
-.goal{border:1px solid rgba(127,169,107,.45);border-radius:12px;background:rgba(127,169,107,.10);padding:9px 11px;margin-bottom:10px}
-.goal.done{border-color:rgba(127,169,107,.72);background:rgba(127,169,107,.17)}
+.goal{border:1px solid color-mix(in srgb, var(--pink-500) .45%, transparent);border-radius:12px;background:color-mix(in srgb, var(--pink-500) .10%, transparent);padding:9px 11px;margin-bottom:10px}
+.goal.done{border-color:color-mix(in srgb, var(--pink-500) .72%, transparent);background:color-mix(in srgb, var(--pink-500) .17%, transparent)}
 .goal-top{display:flex;align-items:center;gap:8px}
 .goal-t{font-size:12px;color:var(--ink);letter-spacing:.03em}
 .goal-c{font-size:11px;color:var(--ink-soft);font-variant-numeric:tabular-nums;margin-left:auto}
@@ -458,10 +619,10 @@ body::before{
 .vars-hint{flex-basis:100%;font-size:10px;color:rgba(34,50,43,.42);letter-spacing:.02em}
 .miles{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
 .mile{border:1px solid var(--line);border-radius:11px;background:var(--paper-3);padding:9px 7px;text-align:center}
-.mile.get{border-color:rgba(127,169,107,.6);background:rgba(127,169,107,.12)}
+.mile.get{border-color:color-mix(in srgb, var(--pink-500) .6%, transparent);background:color-mix(in srgb, var(--pink-500) .12%, transparent)}
 .tip-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:7px}
 .tip-list li{display:flex;align-items:center;gap:8px;font-size:11.5px;color:var(--ink-soft);letter-spacing:.02em}
-.tip-list li i{width:5px;height:5px;border-radius:50%;background:rgba(127,169,107,.6);flex:0 0 auto}
+.tip-list li i{width:5px;height:5px;border-radius:50%;background:color-mix(in srgb, var(--pink-500) .6%, transparent);flex:0 0 auto}
 .mile .mt{font-size:11px;color:var(--ink);letter-spacing:.04em}
 .mile .ms{font-size:10px;color:var(--ink-faint);margin-top:3px;line-height:1.35}
 .mile .mk{font-size:10px;color:var(--moss);margin-top:3px;font-weight:600}
@@ -526,7 +687,6 @@ body::before{
   .brand h1{font-size:20px;letter-spacing:.04em}
   .brand p{font-size:9.5px;letter-spacing:.1em;margin-top:3px}
   .hud{width:100%;gap:6px}
-  .home-btn{position:absolute;top:8px;right:10px;padding:4px 9px;font-size:11.5px;border-radius:8px}
   .chip{height:28px;padding:0 9px;font-size:12px;gap:5px}
   .chip svg{width:14px;height:14px}
   .chip.cal{padding:0 9px}
@@ -657,14 +817,17 @@ body::before{
 .price-row b{font-variant-numeric:tabular-nums;color:#A6711C;font-weight:700}
 .price-row em{font-style:normal;color:var(--ink-faint);font-size:9px}
 /* ===== 小屋 ===== */
+.panel-room{padding-top:14px;padding-bottom:14px}
 .panel-room{grid-column:1;grid-row:3}
 .room{
   position:relative;width:100%;border-radius:14px;overflow:hidden;margin-top:6px;
-  background:linear-gradient(180deg,#FBF4E4,#F1E3C6);border:1px solid rgba(34,50,43,.10);
+  background:linear-gradient(180deg,var(--card),var(--pink-100));border:1px solid var(--line);
 }
 .room svg{display:block;width:100%;height:auto}
-.room-warmth{display:flex;align-items:center;justify-content:space-between;font-size:11px;color:var(--ink-soft);margin:8px 2px 0;letter-spacing:.03em}
+.room-warmth{display:flex;align-items:center;justify-content:space-between;font-size:11px;color:var(--ink-soft);margin:6px 2px 0;letter-spacing:.03em}
 .room-warmth b{color:#A6711C;font-variant-numeric:tabular-nums}
+.room-warmth .rw-bonus{font-size:8.5px;color:#8A5A1C;background:rgba(243,206,125,.24);
+  border:1px solid rgba(195,147,52,.30);border-radius:999px;padding:1px 5px;margin-left:-4px;white-space:nowrap}
 .room-tabs{display:flex;flex-wrap:wrap;gap:5px;margin-top:6px}
 .rt{
   padding:5px 10px;border-radius:999px;border:1.2px solid var(--line);
@@ -672,11 +835,12 @@ body::before{
   cursor:pointer;transition:background .14s ease,border-color .14s ease,color .14s ease;
 }
 .rt:hover{border-color:var(--moss)}
-.rt.on{background:rgba(127,169,107,.18);border-color:rgba(127,169,107,.65);color:var(--ink);font-weight:600}
-.room-shop{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;margin-top:10px}
+.rt.on{background:color-mix(in srgb, var(--pink-500) 18%, transparent);border-color:color-mix(in srgb, var(--pink-500) 65%, transparent);color:var(--ink);font-weight:600}
+.room-shop{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:5px;margin-top:8px}
+.room-fold{grid-column:1/-1;width:100%;justify-content:center;min-height:28px;padding:4px 8px;font-size:10px}
 .rf{
   position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;
-  min-height:56px;padding:6px 3px 5px;border-radius:11px;border:1.2px dashed var(--line);
+  min-height:50px;padding:5px 3px 4px;border-radius:11px;border:1.2px dashed var(--line);
   background:rgba(255,255,255,.55);cursor:pointer;font-family:inherit;color:var(--ink);
   transition:transform .12s ease,border-color .12s ease,background .12s ease;
 }
@@ -685,26 +849,499 @@ body::before{
 .rf .nm{font-size:11px;letter-spacing:.04em;line-height:1}
 .rf .pr{font-size:9.5px;color:var(--ink-faint);display:flex;align-items:center;gap:3px;line-height:1}
 .rf .pr i{width:7px;height:7px;border-radius:50%;background:#F3CE7D;border:1px solid #9A6B18;display:inline-block}
-.rf.on{border-style:solid;border-color:rgba(127,169,107,.7);background:rgba(127,169,107,.16)}
+.rf.on{border-style:solid;border-color:color-mix(in srgb, var(--pink-500) 70%, transparent);background:color-mix(in srgb, var(--pink-500) 16%, transparent)}
 .rf.on .pr{color:var(--moss)}
 .rf.off{opacity:.62}
 .rf.poor{opacity:.72}
 .room-tip{margin:9px 0 0;font-size:10.5px;color:var(--ink-faint);text-align:center;letter-spacing:.02em}
+#room{position:relative;isolation:isolate}
+#room::after{
+  content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.82' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='.55'/%3E%3C/svg%3E");
+  mix-blend-mode:multiply;opacity:.09;
+}
+#room svg [fill]:not([fill="none"]):not([fill^="rgba"]){
+  stroke:#3B2E22;stroke-width:1.05;stroke-opacity:.68;stroke-linejoin:round;
+  paint-order:stroke fill;
+}
+#room svg [fill="none"]{stroke-linecap:round}
+.gen-art svg [fill]:not([fill="none"]):not([fill^="rgba"]){
+  stroke:#3B2E22;stroke-width:1;stroke-opacity:.55;paint-order:stroke fill;
+}
 @media (max-width:620px){
   .room-shop{grid-template-columns:repeat(5,minmax(0,1fr));gap:5px}
   .rf{min-height:50px}
   .rf .nm{font-size:10px}
   .rf .pr{font-size:9px}
 }
+
+/* 统一纸片质感：内页卡片 */
+.dex-cell,.order,.mile,.rf,.vchip,.buff-pill{
+  border-color:var(--line)!important;
+  background-color:var(--card);
+  background-image:radial-gradient(130% 110% at 16% 0%, rgba(255,255,255,.7), transparent 58%);
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.6), 0 1px 0 rgba(0,0,0,.05);
+}
+.dex-cell{border-width:1.2px}
+.dex-cell.locked{border-style:dashed;background-image:
+    radial-gradient(130% 110% at 16% 0%, rgba(255,255,255,.5), transparent 58%);}
+.mile.get,.rf.on{border-color:color-mix(in srgb, var(--pink-600) 62%, transparent)!important;background-image:
+    radial-gradient(130% 110% at 16% 0%, rgba(255,255,255,.7), transparent 60%),
+    linear-gradient(180deg, color-mix(in srgb, var(--pink-500) .16%, transparent), color-mix(in srgb, var(--pink-500) .08%, transparent));}
+.order.seasonal{background-image:
+    radial-gradient(130% 110% at 16% 0%, rgba(255,255,255,.75), transparent 58%),
+    linear-gradient(180deg, rgba(232,144,139,.12), rgba(255,248,232,.06));}
+
+/* ===== 主题化表面 ===== */
+.panel{
+  background:
+    radial-gradient(120% 80% at 14% 0%, rgba(255,255,255,.82), transparent 58%),
+    radial-gradient(70% 45% at 92% 100%, var(--pink-100), transparent 72%),
+    var(--card);
+  border-color:var(--line);
+}
+.chip{
+  background:
+    radial-gradient(120% 160% at 18% 0%, rgba(255,255,255,.85), transparent 55%),
+    radial-gradient(100% 140% at 90% 100%, var(--pink-100), transparent 60%),
+    var(--card);
+  border-color:var(--line);
+  box-shadow:var(--shadow);
+}
+.board{
+  background:
+    radial-gradient(90% 70% at 18% 8%, rgba(255,255,255,.5), transparent 60%),
+    repeating-linear-gradient(12deg, rgba(60,45,30,.05) 0 1px, transparent 1px 9px),
+    var(--pink-200);
+}
+.cell{
+  background:
+    radial-gradient(90% 70% at 30% 12%, rgba(255,255,255,.72), transparent 65%),
+    radial-gradient(circle 1.1px at 6px 7px, rgba(90,70,50,.08) 0 .9px, transparent 1.4px),
+    radial-gradient(circle 1px at 9px 4px, rgba(90,70,50,.07) 0 .8px, transparent 1.3px),
+    linear-gradient(180deg,var(--card),var(--pink-100));
+  background-size:auto,13px 13px,17px 17px,auto;
+  border-color:var(--line);
+}
+.cell.over{background:var(--pink-100)}
+.btn{
+  background:var(--card);
+  border-color:var(--line);
+  color:var(--text);
+  box-shadow:0 3px 0 rgba(0,0,0,.10);
+}
+.btn:hover{background:var(--pink-100)}
+.btn.primary{
+  background:linear-gradient(180deg,var(--pink-400),var(--pink-600));
+  border-color:var(--pink-600);color:#FFFDF6;
+  box-shadow:0 3px 0 var(--pink-600);
+}
+.btn.primary:hover{background:linear-gradient(180deg,var(--pink-300),var(--pink-500))}
+.stamp{background:var(--card);border-color:var(--text)}
+.tabbar{background:var(--card)}
+.tab[aria-selected="true"]{background:var(--pink-100)}
+
+/* ===== 顶栏工具与配色弹层 ===== */
+.hud-tools{display:flex;flex-direction:column;gap:4px;align-items:flex-end;flex:0 0 auto}
+.home-btn,.theme-btn{width:auto;white-space:nowrap}
+.theme-mask{position:fixed;inset:0;z-index:70;background:rgba(35,28,20,.28);backdrop-filter:blur(2px)}
+.theme-sheet{
+  position:fixed;left:50%;bottom:calc(66px + env(safe-area-inset-bottom));transform:translateX(-50%);
+  width:min(360px,calc(100vw - 22px));z-index:71;
+  background:var(--card);border:1.4px solid var(--line);border-radius:16px 18px 14px 17px;
+  box-shadow:var(--shadow);padding:12px 13px 11px;
+  animation:tsIn .18s ease both;
+}
+@keyframes tsIn{from{opacity:0;transform:translate(-50%,8px)}to{opacity:1;transform:translate(-50%,0)}}
+.ts-head{display:flex;align-items:center;gap:8px;margin:0 1px 10px}
+.ts-head b{font-family:"Noto Serif SC",serif;font-size:14px;letter-spacing:.1em;color:var(--text)}
+.ts-now{font-size:10.5px;color:var(--text-soft);margin-left:auto}
+.ts-close{width:24px;height:24px;border-radius:50%;border:1.2px solid var(--line);background:var(--card);color:var(--text-soft);font-size:15px;line-height:1;display:grid;place-items:center}
+.ts-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:9px 6px}
+.ts-item{display:flex;flex-direction:column;align-items:center;gap:4px}
+.ts-dot{
+  width:34px;height:34px;border-radius:50%;border:1.4px solid var(--line);padding:0;
+  background:radial-gradient(circle at 32% 26%, var(--c1), var(--c2));
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.5);
+  position:relative;transition:transform .12s ease;
+}
+.ts-dot:hover{transform:translateY(-1px)}
+.ts-dot.on{outline:2.4px solid var(--text);outline-offset:2px}
+.ts-dot.on::after{content:"";position:absolute;inset:12px;border-radius:50%;background:rgba(255,255,255,.85)}
+.ts-name{font-size:9.5px;color:var(--text-soft);letter-spacing:.03em;white-space:nowrap}
+.ts-item.on .ts-name{color:var(--text);font-weight:600}
+.ts-custom{
+  display:flex;align-items:center;gap:9px;margin-top:11px;padding-top:10px;
+  border-top:1px dashed var(--line);
+}
+.ts-custom input[type=color]{width:34px;height:30px;padding:0;border:1.2px solid var(--line);border-radius:8px;background:var(--card);cursor:pointer}
+.ts-info{flex:1;min-width:0;line-height:1.25}
+.ts-info b{display:block;font-size:11px;color:var(--text);font-weight:600}
+.ts-info span{font-size:9.5px;color:var(--text-soft);letter-spacing:.02em}
+@media (min-width:621px){
+  .theme-sheet{top:50%;bottom:auto;transform:translate(-50%,-50%);animation:none}
+}
+@media (max-width:620px){
+  .hud-tools{position:absolute;top:8px;right:10px;z-index:30}
+  .hud-tools .home-btn,.hud-tools .theme-btn{padding:4px 9px;font-size:11.5px;border-radius:8px}
+  .theme-sheet{bottom:calc(60px + env(safe-area-inset-bottom));padding:11px 11px 10px;width:min(340px,calc(100vw - 20px))}
+  .ts-grid{gap:8px 5px}
+  .ts-dot{width:31px;height:31px}
+}
+
+/* ===== 家具互动 ===== */
+.furni{cursor:pointer;transform-box:fill-box;transform-origin:50% 88%;transition:filter .14s ease}
+.furni:active{filter:brightness(.96) saturate(1.06)}
+.furni.pop{animation:furni-pop .42s ease both}
+@keyframes furni-pop{
+  0%{transform:scale(1)}
+  28%{transform:scale(1.045,.965) translateY(-1px)}
+  58%{transform:scale(.985,1.02)}
+  100%{transform:scale(1)}
+}
+.room-say{
+  position:absolute;left:50%;bottom:8px;transform:translate(-50%,4px);
+  background:var(--card);border:1.1px solid var(--line);border-radius:999px;
+  padding:3px 10px;font-size:10.5px;line-height:1.3;color:var(--text);
+  box-shadow:var(--shadow);opacity:0;pointer-events:none;white-space:nowrap;
+  transition:opacity .18s ease,transform .18s ease;max-width:92%;
+}
+.room-say.on{opacity:1;transform:translate(-50%,0)}
+
+/* ===== 小屋任务 / 成套收集 / 瓶花联动 ===== */
+.room-warmth .rw-right{display:flex;align-items:center;gap:8px}
+.post-btn{padding:3px 9px;font-size:10px;letter-spacing:.5px}
+@media (max-width:620px){
+  .panel-room .room-tip{display:none}
+  .panel-room{padding-bottom:12px}
+  .room-tabs{margin-top:4px}
+  .room-warmth{margin-top:4px}
+  .house-task,.set-strip,.vase-row{margin-top:4px}
+  .room-shop{margin-top:5px}
+}
+.house-task{display:flex;align-items:center;justify-content:space-between;gap:8px;
+  margin:6px 0 0;padding:6px 8px;border-radius:8px;
+  background:color-mix(in srgb,var(--marigold) 16%,transparent);
+  border:1px dashed color-mix(in srgb,var(--marigold) 55%,transparent);
+  font-size:10.5px;color:var(--text);line-height:1.35}
+.house-task .ht-t{flex:1;min-width:0}
+.house-task .btn{padding:3px 8px;font-size:10px;white-space:nowrap}
+.house-task .btn[disabled]{opacity:.6;filter:grayscale(.4)}
+.house-task.done{background:color-mix(in srgb,var(--moss) 14%,transparent);border-color:color-mix(in srgb,var(--moss) 45%,transparent)}
+.set-strip{display:flex;align-items:center;gap:6px;flex-wrap:wrap;
+  margin:6px 0 0;padding:6px 8px;border-radius:8px;
+  background:color-mix(in srgb,var(--card) 70%,transparent);
+  border:1px solid var(--line);font-size:10px;color:var(--muted)}
+.set-strip .ss-n{font-weight:600;color:var(--text);letter-spacing:.4px}
+.set-strip .ss-switch{font-family:inherit;font-size:10px;font-weight:600;color:var(--text);letter-spacing:.4px;border:1px solid var(--line);border-radius:999px;background:var(--card);padding:1px 6px;cursor:pointer;box-shadow:0 1px 0 rgba(34,50,43,.10)}
+.set-strip .ss-i{color:var(--muted)}
+.set-strip .ss-i.on{color:var(--moss);font-weight:600}
+.set-strip .ss-pay{margin-left:auto;color:var(--accent);font-weight:600}
+.set-strip.full{background:color-mix(in srgb,var(--moss) 12%,transparent);border-color:color-mix(in srgb,var(--moss) 40%,transparent)}
+.vase-row{display:flex;align-items:center;gap:4px;flex-wrap:wrap;
+  margin:6px 0 0;padding:6px 8px;border-radius:8px;border:1px solid var(--line);
+  background:color-mix(in srgb,var(--pink-100) 45%,transparent);font-size:10px;color:var(--text)}
+.vase-row .vr-t{font-weight:600;letter-spacing:.4px;margin-right:2px}
+.vase-dot{width:14px;height:14px;border-radius:50%;border:1.4px solid var(--line);padding:0;
+  cursor:pointer;box-shadow:inset 0 0 0 1px rgba(255,255,255,.4)}
+.vase-dot.on{outline:2px solid var(--ink);outline-offset:1px}
+.vase-none{padding:1px 7px;font-size:9.5px;border-radius:999px;border:1px solid var(--line);
+  background:var(--card);color:var(--muted);cursor:pointer}
+.vase-none.on{background:var(--ink);color:var(--card);border-color:var(--ink)}
+
+/* ===== 小屋明信片 ===== */
+.post-mask{position:fixed;inset:0;background:rgba(35,28,22,.42);backdrop-filter:blur(2px);z-index:78}
+.post-sheet{
+  position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);
+  width:min(360px,calc(100vw - 22px));max-height:92vh;overflow:auto;z-index:79;
+  background:var(--card);border:1.4px solid var(--line);border-radius:16px 18px 14px 17px;
+  box-shadow:var(--shadow);padding:11px 12px 10px;animation:psIn .2s ease both;
+}
+@keyframes psIn{from{opacity:0;transform:translate(-50%,-47%)}to{opacity:1;transform:translate(-50%,-50%)}}
+.ps-head{display:flex;align-items:center;margin:0 1px 8px}
+.ps-head b{font-family:"Noto Serif SC",serif;font-size:13.5px;letter-spacing:.12em;color:var(--text)}
+.ps-head .ts-close{margin-left:auto}
+.post-wrap{border-radius:10px;overflow:hidden;background:color-mix(in srgb,var(--pink-100) 35%,transparent);min-height:150px;display:grid;place-items:center}
+.post-wrap img{display:block;width:100%;height:auto}
+.post-load{font-size:11px;color:var(--muted);padding:46px 0;letter-spacing:.16em}
+.post-actions{display:flex;gap:8px;justify-content:center;margin:9px 0 0}
+.post-actions .btn{flex:1;width:auto;text-align:center;justify-content:center;text-decoration:none;padding:6px 0;font-size:11px}
+.post-actions .post-ghost{background:var(--card);color:var(--text-soft);box-shadow:none;border:1px solid var(--line)}
+.post-hint{margin:7px 0 0;text-align:center;font-size:9.5px;color:var(--muted);letter-spacing:.1em}
+
+@media (max-height:700px) and (max-width:620px){
+  .panel-room .room-tip{display:none}
+  .room-tabs{display:flex;flex-wrap:nowrap;overflow-x:auto;padding-bottom:2px;scrollbar-width:none}
+  .room-tabs .rt{flex:0 0 auto;white-space:nowrap}
+  .room-tabs::-webkit-scrollbar{display:none}
+  .room-shop{margin-top:7px;gap:5px}
+  .rf{min-height:52px;padding:5px 3px 4px}
+  .house-task{padding:4px 7px;margin-top:5px}
+  .set-strip,.vase-row{padding:4px 7px;margin-top:5px}
+}
+
+/* ===== 育种台 ===== */
+.breed-row{
+  margin:4px 0 0;padding:6px 8px;border-radius:8px;border:1px solid var(--line);
+  background:color-mix(in srgb,var(--moss) 9%,transparent);font-size:10px;color:var(--text);
+}
+.breed-note{display:flex;align-items:center;flex-wrap:wrap;gap:4px 5px;margin:0 0 5px;font-size:9.5px;line-height:1.5;color:var(--muted)}
+.breed-note b{color:var(--ink);font-weight:600}
+.breed-note .br-count{font-size:8.5px;color:#A6711C;font-weight:600}
+.b4-row{display:flex;align-items:center;gap:3px;flex-wrap:wrap;margin-left:2px}
+.b4{display:inline-flex;align-items:center;gap:3px;padding:1px 5px;border:1px solid var(--line);border-radius:999px;
+  font-size:8.5px;line-height:1.45;color:var(--muted);background:rgba(255,255,255,.35)}
+.b4 i{width:7px;height:7px;border-radius:50%;border:1px solid rgba(59,46,34,.45);display:block}
+.b4:not(.on) i{filter:grayscale(1);opacity:.42}
+.b4.on{color:var(--ink);background:color-mix(in srgb,var(--moss) 11%,transparent);border-color:color-mix(in srgb,var(--moss) 36%,transparent)}
+.b4.on:after{content:'✓';font-size:7.5px;color:var(--moss);margin-left:1px}
+.pity-row{display:flex;align-items:center;gap:6px;margin-top:5px;font-size:8.5px;color:var(--muted);white-space:nowrap}
+.pity-row b{color:#A6711C;font-variant-numeric:tabular-nums}
+.pity-bar{flex:1;height:4px;border-radius:999px;background:rgba(59,46,34,.13);overflow:hidden;min-width:40px}
+.pity-bar i{display:block;height:100%;border-radius:999px;background:linear-gradient(90deg,#F3CE7D,#C39334)}
+.pity-next{color:#A6711C}
+
+/* ===== 花店 ===== */
+.shop-row{margin:5px 0 0;padding:6px 8px;border-radius:8px;border:1px solid var(--line);
+  background:color-mix(in srgb,var(--marigold) 8%,transparent);font-size:10px;color:var(--text)}
+.shop-top{display:flex;align-items:center;gap:5px;flex-wrap:wrap}
+.shop-t{font-weight:600;letter-spacing:.4px}
+.shop-cust{display:flex;align-items:center;gap:5px;flex-wrap:wrap;font-size:9.5px;color:var(--muted);line-height:1.4;margin-top:5px}
+.shop-cust .btn{padding:2px 7px;font-size:8.5px;border-radius:8px;box-shadow:0 2px 0 rgba(34,50,43,.16)}
+.shop-cust b{color:var(--ink)}
+.shop-make{margin-left:auto;padding:3px 8px;font-size:10px;border-radius:8px;white-space:nowrap}
+.shop-levels{display:flex;align-items:center;gap:3px;flex-wrap:wrap;margin-top:5px}
+.shop-lv{min-width:37px;height:19px;padding:0 5px;border-radius:999px;border:1px solid var(--line);
+  background:rgba(255,255,255,.55);font-family:inherit;font-size:8.5px;color:var(--muted);cursor:pointer;white-space:nowrap}
+.shop-lv b{color:#A6711C;font-size:8px;margin-left:1px}
+.shop-lv.on{background:color-mix(in srgb,var(--marigold) 24%,transparent);border-color:color-mix(in srgb,var(--marigold) 62%,transparent);color:var(--ink)}
+.shop-lv[disabled]{opacity:.34;cursor:not-allowed}
+.shop-shelf{display:flex;gap:4px;margin-top:5px}
+.shop-slot{flex:1;min-width:0;min-height:38px;border:1px dashed var(--line);border-radius:8px;
+  padding:3px 5px;display:flex;align-items:center;gap:4px;background:rgba(255,255,255,.36)}
+.shop-slot.has{border-style:solid;background:rgba(255,251,240,.8)}
+.shop-slot .bq{width:30px;height:34px;flex:0 0 auto}
+.shop-slot .bq svg{width:100%;height:100%;display:block}
+.shop-slot .sm{min-width:0;flex:1}
+.shop-slot .sm b{display:block;font-size:9px;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.shop-slot .sm span{display:block;font-size:8px;color:#A6711C;line-height:1.3}
+.shop-slot .x{border:0;background:transparent;color:var(--ink-faint);font-family:inherit;font-size:8px;
+  padding:2px;cursor:pointer;white-space:nowrap}
+.shop-slot .empty{font-size:8.5px;color:var(--muted);line-height:1.3}
+.shop-slot.lock{opacity:.48;border-style:dotted}
+.shop-note{font-size:8.5px;color:var(--muted);margin-top:4px;line-height:1.4}
+.shop-note b{color:#A6711C}
+.shop-tier-chip{font-size:8.5px;color:var(--muted);white-space:nowrap;line-height:1.4;border-left:1px solid var(--line);padding-left:5px}
+.shop-tier-chip b{color:#A6711C;font-weight:600}
+.shop-quest{font-size:8.5px;color:var(--muted);line-height:1.4;margin-top:3px;padding-top:3px;border-top:1px dotted var(--line)}
+.shop-quest b{color:#A6711C}
+.shop-style-next{font-size:8.5px;color:var(--muted);line-height:1.4;margin-top:2px}
+.breed-top{display:flex;align-items:center;gap:5px;flex-wrap:wrap}
+.breed-top .br-t{font-weight:600;letter-spacing:.4px;margin-right:2px}
+.br-slot{display:inline-flex;align-items:center;gap:3px;padding:2px 6px 2px 3px;border-radius:999px;
+  border:1px solid var(--line);background:var(--card);font-size:9.5px;color:var(--muted);min-height:19px}
+.br-slot.on{color:var(--text)}
+.br-slot .sw{width:11px;height:11px;border-radius:50%;border:1px solid var(--line);display:inline-block}
+.br-x{color:var(--muted);font-size:10px}
+.br-go{margin-left:auto;padding:3px 8px;font-size:10px;border-radius:8px;white-space:nowrap}
+.br-pity{margin-left:2px;font-size:9px;color:var(--muted);white-space:nowrap}
+.breed-dots{display:flex;align-items:center;gap:3px;flex-wrap:wrap;margin-top:5px}
+.breed-dot{position:relative;min-height:20px;padding:3px 7px;border-radius:999px;border:1px solid var(--line);
+  cursor:pointer;font-size:8.5px;line-height:1.25;display:inline-flex;align-items:center;gap:3px;
+  box-shadow:0 1px 0 rgba(60,40,20,.10)}
+.breed-dot[disabled]{opacity:.28;cursor:not-allowed;filter:grayscale(.5)}
+.breed-dot .cnt{font-size:7.5px;opacity:.9;white-space:nowrap}
+.breed-dot.sel{outline:2px solid var(--ink);outline-offset:1px}
+.breed-hint{margin-left:auto;font-size:9px;color:var(--muted);white-space:nowrap}
+
+/* ===== 小屋访客 ===== */
+.guest-btn{position:relative;padding:3px 9px;font-size:10px}
+.gdot{display:none;position:absolute;top:1px;right:-2px;width:6px;height:6px;border-radius:50%;
+  background:var(--pink-500);border:1px solid var(--card);box-shadow:0 0 0 1px color-mix(in srgb,var(--pink-500) 35%,transparent)}
+.guest-btn.ready .gdot{display:block}
+.guest-fig{cursor:pointer;transition:filter .15s}
+.guest-fig:hover{filter:brightness(1.04)}
+.guest-mask{position:fixed;inset:0;background:rgba(35,28,22,.42);backdrop-filter:blur(2px);z-index:78}
+.guest-sheet{
+  position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);
+  width:min(340px,calc(100vw - 24px));z-index:79;
+  background:var(--card);border:1.4px solid var(--line);border-radius:16px 18px 14px 17px;
+  box-shadow:var(--shadow);padding:11px 12px 9px;animation:psIn .2s ease both;
+}
+.guest-body{font-size:11px;color:var(--text);line-height:1.6}
+.gs-head{display:flex;align-items:center;gap:9px;margin:1px 0 8px}
+.gs-ava{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;
+  font-family:"Noto Serif SC",serif;font-size:16px;color:#FFFDF6;background:var(--pink-500);
+  border:1.4px solid color-mix(in srgb,var(--ink) 25%,transparent);box-shadow:0 2px 0 rgba(34,50,43,.12);flex:0 0 auto}
+.gs-who b{font-family:"Noto Serif SC",serif;font-size:13px;letter-spacing:.08em;color:var(--text)}
+.gs-who span{display:block;font-size:9.5px;color:var(--muted);letter-spacing:.05em}
+.gs-req{background:color-mix(in srgb,var(--pink-100) 55%,transparent);border:1px dashed var(--line);
+  border-radius:9px;padding:7px 9px;margin:0 0 6px}
+.gs-req b{color:var(--accent)}
+.gs-note{font-size:9.5px;color:var(--muted);margin:0}
+.guest-actions{display:flex;gap:8px;margin:9px 0 0}
+.guest-actions .btn{flex:1;width:auto;padding:6px 0;font-size:11px}
+@media (max-width:620px){
+  .room-tabs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr))}
+  .room-tabs .rt{padding-left:2px;padding-right:2px;text-align:center}
+  .varsdex{gap:5px}
+  .dv{min-height:80px;padding:5px 2px 4px}
+  .dv .art svg{width:32px;height:32px}
+  .vase-dot{width:12px;height:12px}
+  .vase-row{gap:3px}
+}
+
+/* ===== 统一按钮皮肤：参考「返回主页」 ===== */
+.btn,
+.tab,
+.rt,
+.rf,
+.shop-lv,
+.breed-dot,
+.tut-mini,
+.icon-btn,
+.os-more,
+.vb-shoo,
+.dew-buy,
+.vase-none,
+.shop-slot .x,
+.ts-close,
+.lv-close {
+  border:1.4px solid rgba(34,50,43,.50);
+  border-radius:8px;
+  background:var(--card);
+  color:var(--ink);
+  box-shadow:0 2px 0 rgba(34,50,43,.16);
+  font-family:inherit;
+}
+.btn.primary,
+.btn.primary:hover {
+  background:var(--card);
+  border-color:rgba(34,50,43,.50);
+  color:var(--ink);
+  box-shadow:0 2px 0 rgba(34,50,43,.16);
+}
+.tab:hover,
+.rt:hover,
+.rf:hover,
+.shop-lv:hover:not([disabled]),
+.breed-dot:hover:not([disabled]),
+.tut-mini:hover,
+.icon-btn:hover,
+.os-more:hover,
+.vb-shoo:hover,
+.dew-buy:hover,
+.vase-none:hover,
+.shop-slot .x:hover,
+.ts-close:hover,
+.lv-close:hover {
+  background:#FFFDF4;
+}
+.tab:active,
+.rt:active,
+.rf:active,
+.shop-lv:active:not([disabled]),
+.breed-dot:active:not([disabled]),
+.tut-mini:active,
+.os-more:active,
+.vb-shoo:active,
+.vase-none:active,
+.shop-slot .x:active,
+.ts-close:active,
+.lv-close:active {
+  transform:translateY(1px);
+  box-shadow:0 1px 0 rgba(34,50,43,.16);
+}
+
+/* ===== 关键按钮：奶油底上的一点金 ===== */
+.btn.key-btn{
+  border-color:#B98A32;
+  box-shadow:inset 0 0 0 1px rgba(195,147,52,.38), 0 2px 0 rgba(34,50,43,.16);
+}
+.btn.key-btn::before{
+  content:"";
+  width:5px;height:5px;flex:0 0 auto;border-radius:50%;
+  background:var(--marigold);
+  box-shadow:0 0 0 1px rgba(154,107,24,.28);
+}
+.btn.key-btn:disabled::before{opacity:.35}
+.btn.key-btn:disabled{
+  box-shadow:inset 0 0 0 1px rgba(195,147,52,.20), 0 2px 0 rgba(34,50,43,.08);
+}
+
+/* ===== 花店预约客 / 花饰等级 ===== */
+.shop-appt{
+  display:flex;align-items:center;gap:5px;flex-wrap:wrap;
+  margin-top:5px;padding-top:5px;border-top:1px dashed var(--line);
+  font-size:9.5px;line-height:1.4;color:var(--muted);
+}
+.shop-appt.ready{
+  border-top:0;padding:4px 6px;border-radius:7px;
+  background:color-mix(in srgb,var(--marigold) 13%,transparent);
+  color:var(--ink);
+}
+.shop-appt b{color:#A6711C}
+.shop-appt .btn{padding:2px 7px;font-size:8.5px;border-radius:8px;box-shadow:0 2px 0 rgba(34,50,43,.16)}
+.shop-tier{
+  display:flex;align-items:center;justify-content:space-between;gap:4px;
+  margin-top:5px;padding-top:4px;border-top:1px dashed var(--line);
+  font-size:8.5px;color:var(--muted);line-height:1.4;
+}
+.shop-tier b{color:#A6711C}
+.shop-tier span{color:var(--muted)}
+@media (max-width:1020px){
+  .toast{bottom:calc(76px + env(safe-area-inset-bottom))}
+}
+
+/* ===== 选中 / 已购买：不再铺高光底色，只保留文字和描边 ===== */
+.tab[aria-selected="true"],
+.rt.on,
+.rf.on,
+.rf.off,
+.shop-lv.on,
+.vase-none.on{
+  background:var(--card)!important;
+  background-image:none!important;
+  border-color:var(--line)!important;
+  box-shadow:0 2px 0 rgba(34,50,43,.10)!important;
+  color:var(--ink)!important;
+}
+.tab[aria-selected="true"] svg{color:var(--ink)!important}
+.rt.on,
+.shop-lv.on,
+.tab[aria-selected="true"]{
+  font-weight:600;
+  text-decoration:underline;
+  text-underline-offset:3px;
+  text-decoration-thickness:1px;
+}
+.rf.on{border-style:solid}
+.rf.on .pr{color:var(--ink-faint)!important}
+.vase-none.on{font-weight:600}
 </style>
 </head>
-<body class="s-0">
+<body class="s-0" data-theme="cream">
 <!-- ===== 页面 ===== -->
 <div class="page">
   <header class="top">
     <div class="brand">
       <div class="stamp" aria-hidden="true">
-        <svg viewBox="0 0 100 100"><g fill="#E8908B"><ellipse cx="50" cy="30" rx="9" ry="14"/><ellipse cx="50" cy="70" rx="9" ry="14"/><ellipse cx="30" cy="50" rx="14" ry="9"/><ellipse cx="70" cy="50" rx="14" ry="9"/></g><circle cx="50" cy="50" r="10" fill="#EDB44C"/><circle cx="47" cy="47" r="3" fill="#FFF8E4"/></svg>
+        <svg viewBox="0 0 100 100">
+          <circle cx="52" cy="53" r="34" fill="#E8908B" opacity=".26"/>
+          <circle cx="49" cy="49" r="30" fill="none" stroke="#3B2E22" stroke-width="1.1" stroke-opacity=".42" stroke-dasharray="3 4"/>
+          <g fill="#E39A93" stroke="#3B2E22" stroke-width="1" stroke-opacity=".55">
+            <ellipse cx="49" cy="30" rx="10" ry="15" transform="rotate(-7 49 30)"/>
+            <ellipse cx="52" cy="69" rx="10.5" ry="14" transform="rotate(9 52 69)"/>
+            <ellipse cx="30" cy="51" rx="14" ry="9" transform="rotate(-4 30 51)"/>
+            <ellipse cx="69" cy="48" rx="15" ry="9.5" transform="rotate(6 69 48)"/>
+            <ellipse cx="37" cy="34" rx="9" ry="6" transform="rotate(38 37 34)"/>
+            <ellipse cx="63" cy="65" rx="9" ry="6" transform="rotate(38 63 65)"/>
+          </g>
+          <path d="M49 51c-3-4-1-8 0-9M52 52c3-3 4-7 3-9M48 55c-4 1-6 3-6 5M54 55c4 1 6 4 5 6" stroke="#B65B3F" stroke-width="1" fill="none" opacity=".55"/>
+          <circle cx="50" cy="51" r="9.6" fill="#EDB44C" stroke="#8A6420" stroke-width="1.1" stroke-opacity=".7"/>
+          <circle cx="47" cy="48" r="2.6" fill="#FFF6DA"/>
+          <g fill="#8A6420" opacity=".35"><circle cx="53" cy="54" r=".9"/><circle cx="56" cy="50" r=".8"/><circle cx="48" cy="56" r=".8"/></g>
+        </svg>
       </div>
       <div>
         <h1>半亩小院<span>·合花</span></h1>
@@ -724,7 +1361,10 @@ body::before{
         <svg viewBox="0 0 24 24"><path d="M12 3.4c3.6 4.2 6 7 6 9.8a6 6 0 1 1-12 0c0-2.8 2.4-5.6 6-9.8z" fill="#9CCFC4" stroke="#3C7570" stroke-width="1.2"/></svg>
         <b id="dewText">0</b><span style="color:var(--ink-faint)" id="dewMaxText">/12</span>
       </div>
-      <button class="btn mini home-btn" id="homeBtn" type="button">返回主页</button>
+      <div class="hud-tools">
+        <button class="btn mini home-btn" id="homeBtn" type="button">返回主页</button>
+        <button class="btn mini theme-btn" id="themeBtn" type="button" aria-haspopup="dialog" aria-expanded="false">配色</button>
+      </div>
     </div>
   </header>
 
@@ -742,7 +1382,7 @@ body::before{
             <div class="energy-row"><span>花露 <b id="energyText">12</b></span><span id="energyRegen">回满约 0 分</span></div>
             <div class="energy-bar"><span id="energyFill" style="width:100%"></span></div>
           </div>
-          <button class="btn primary" id="takeBtn" title="一键把空地补满">取种子<span class="cost"> · 一键补满</span></button>
+          <button class="btn primary key-btn" id="takeBtn" title="一键把空地补满">取种子<span class="cost"> · 一键补满</span></button>
           <div class="gen-btns">
             <button class="btn" id="upBtn">升级 · 120 金币</button>
             <button class="btn" id="buyDew">换花露 · 6 金币</button>
@@ -758,7 +1398,7 @@ body::before{
         <div class="garden">
           <div class="garden-head">
             <span class="t">半 亩 田</span>
-            <span class="m" id="boardMeta">空地 30 / 36</span>
+            <span class="gh-right"><span class="m" id="boardMeta">空地 30 / 36</span><button class="tut-mini" id="tutMini" type="button">新手 0/3</button></span>
           </div>
           <div class="board" id="board"></div>
           <div class="price-row" id="priceRow" aria-label="卖花价目"></div>
@@ -785,14 +1425,14 @@ body::before{
           <button class="icon-btn" id="muteBtnB" aria-label="开关声音">
             <svg viewBox="0 0 24 24" id="muteIconB"><path d="M4 9v6h3l4 3.5V5.5L7 9z" fill="#22322B"/><path d="M15 9.2a4 4 0 0 1 0 5.6M17.6 6.6a8 8 0 0 1 0 10.8" fill="none" stroke="#22322B" stroke-width="1.6"/></svg>
           </button>
-          <button class="btn mini" id="resetBtnB" style="box-shadow:none">重开一块田</button>
+          <button class="btn mini" id="resetBtnB">重开一块田</button>
         </div>
       </section>
     </div>
 
-    <!-- 标签页二：十二种花图鉴 -->
+    <!-- 标签页二：十六种花图鉴 -->
     <div class="pane pane-home" data-pane="home">
-      <section class="panel panel-home panel-pad" aria-label="十二种花图鉴">
+      <section class="panel panel-home panel-pad" aria-label="十六种花图鉴">
         <p class="sec-label">图鉴 <small id="dexSub">花苞到小院 · 五阶图鉴</small></p>
         <div class="dexsum" id="dexSum"></div>
         <div class="varsdex" id="varsDex"></div>
@@ -804,17 +1444,65 @@ body::before{
 
     <!-- 标签页四：小屋 -->
     <div class="pane pane-room" data-pane="room">
-      <section class="panel panel-room panel-pad" aria-label="小屋装饰">
-        <p class="sec-label">小屋 <small id="roomSub">卖花赚金币，一间间布置</small></p>
+      <section class="panel panel-room panel-pad" aria-label="花店与后屋">
+        <p class="sec-label">花店 <small id="roomSub">客厅门店 · 前院装饰</small></p>
         <div class="room-tabs" id="roomTabs" role="tablist" aria-label="房间"></div>
-        <div class="room" id="room" aria-label="小屋场景"></div>
-        <div class="room-warmth"><span>小屋温馨度</span><b id="roomWarmth">0 / 10</b></div>
+        <div class="room" id="room" aria-label="花店与后屋场景"></div>
+        <div class="room-warmth"><span>全屋温馨度</span><span class="rw-right"><b id="roomWarmth">0 / 10</b><span class="rw-bonus" id="warmBonus"></span><button class="btn mini guest-btn" id="guestBtn" type="button">访客<span class="gdot" id="guestDot"></span></button><button class="btn mini post-btn" id="postBtn" type="button">明信片</button></span></div>
+        <div class="shop-row" id="shopRow"></div>
+        <div class="house-task" id="houseTask"></div>
+        <div class="set-strip" id="setStrip"></div>
+        <div class="vase-row" id="vaseRow"></div>
+        <div class="breed-row" id="breedRow"></div>
         <div class="room-shop" id="roomShop"></div>
-        <p class="room-tip">点没买的买下，点已摆上的收起或再摆出来</p>
+        <p class="room-tip">点没买的买下，点已摆上的收起；点场景里的家具会有小反应</p>
       </section>
     </div>
 
   </main>
+
+<div class="theme-mask" id="themeMask" hidden></div>
+<div class="theme-sheet" id="themeSheet" role="dialog" aria-modal="true" aria-labelledby="themeTitle" hidden>
+  <div class="ts-head">
+    <b id="themeTitle">配色</b>
+    <span class="ts-now" id="themeNow">奶油黄</span>
+    <button class="ts-close" id="themeClose" type="button" aria-label="关闭">×</button>
+  </div>
+  <div class="ts-grid" id="themeGrid"></div>
+  <div class="ts-custom">
+    <input type="color" id="customColor" value="#C39334" aria-label="选一个主色">
+    <div class="ts-info"><b>自己调一个</b><span>选个主色，自动生成整套深浅</span></div>
+    <button class="btn mini" id="customApply" type="button">生成</button>
+  </div>
+</div>
+
+<div class="post-mask" id="postMask" hidden></div>
+<div class="post-sheet" id="postSheet" role="dialog" aria-modal="true" aria-labelledby="postTitle" hidden>
+  <div class="ps-head">
+    <b id="postTitle">花店明信片</b>
+    <button class="ts-close" id="postClose" type="button" aria-label="关闭">×</button>
+  </div>
+  <div class="post-wrap" id="postWrap"></div>
+  <div class="post-actions">
+    <a class="btn mini" id="postSave" download="半亩小院-明信片.png">保存图片</a>
+    <button class="btn mini post-ghost" id="postClose2" type="button">收好</button>
+  </div>
+  <p class="post-hint">手机上长按图片也能保存</p>
+</div>
+
+<div class="guest-mask" id="guestMask" hidden></div>
+<div class="guest-sheet" id="guestSheet" role="dialog" aria-modal="true" aria-labelledby="guestTitle" hidden>
+  <div class="ps-head">
+    <b id="guestTitle">今日访客</b>
+    <button class="ts-close" id="guestClose" type="button" aria-label="关闭">×</button>
+  </div>
+  <div class="guest-body" id="guestBody"></div>
+  <div class="guest-actions">
+    <button class="btn mini" id="guestGo" type="button">去看看</button>
+    <button class="btn mini primary" id="guestClaim" type="button">接待</button>
+  </div>
+  <p class="post-hint">接待完，客人就带着花意回家了</p>
+</div>
 
   <nav class="tabbar" id="tabbar" aria-label="页面切换">
     <button class="tab" data-tab="garden" aria-selected="true">
@@ -830,8 +1518,8 @@ body::before{
       <span>花阶</span>
     </button>
     <button class="tab" data-tab="room" aria-selected="false">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5.4 12.4V9.8c0-1.3 1-2.3 2.3-2.3h8.6c1.3 0 2.3 1 2.3 2.3v2.6"/><path d="M6.6 12.4h10.8c.9 0 1.6.7 1.6 1.6v2.8H5V14c0-.9.7-1.6 1.6-1.6z"/><path d="M4.4 16.8v1.8M19.6 16.8v1.8"/></svg>
-      <span>小屋</span>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 9.6h16l1 3.9H3z"/><path d="M5.3 13.5v5.2h13.4v-5.2"/><path d="M9.2 18.7v-3.1h5.6v3.1"/><path d="M4 9.6l1.2-3.1h13.6L20 9.6"/></svg>
+      <span>花店</span>
     </button>
   </nav>
 
@@ -845,7 +1533,7 @@ body::before{
       <button class="icon-btn" id="muteBtn" aria-label="开关声音" title="声音">
         <svg viewBox="0 0 24 24" id="muteIcon"><path d="M4 9v6h3l4 3.5V5.5L7 9z" fill="#22322B"/><path d="M15 9.2a4 4 0 0 1 0 5.6M17.6 6.6a8 8 0 0 1 0 10.8" fill="none" stroke="#22322B" stroke-width="1.6"/></svg>
       </button>
-      <button class="btn mini" id="resetBtn" style="box-shadow:none">重开</button>
+      <button class="btn mini" id="resetBtn">重开</button>
     </div>
   </footer>
 </div>
@@ -858,14 +1546,29 @@ body::before{
     <h2>小院怎么走</h2>
     <div class="sub">半亩小院 · 合花</div>
     <ul>
-      <li><span class="n">一</span><span>点 <b>种子篮</b> 一键补满空地，每颗耗一点 <b>花露</b>；种子会出十二种花，花型花色都不一样。</span></li>
+      <li><span class="n">一</span><span>点 <b>种子篮</b> 一键补满空地，每颗耗一点 <b>花露</b>；种子会出十二种基础花，书房育种台还能育出四种新花色。</span></li>
       <li><span class="n">二</span><span>把两个同级小物拖到一起长一级；<b>花苞往上要同色</b>才能合，不同色会挡住。</span></li>
       <li><span class="n">三</span><span>把花拖进 <b>收成筐</b> 卖掉换金币；等级越高越值钱，金币拿来升级种子篮、换花露。</span></li>
-      <li><span class="n">四</span><span><b>图鉴</b> 收十二种花：从 04 花苞到 08 小院五阶都记；养到花苞点亮一种 +6 金币，集满再 +60。</span></li>
-      <li><span class="n">五</span><span>赚了金币去 <b>小屋</b> 添家具，屋子越摆越暖，纯好看不花力气。</span></li>
+      <li><span class="n">四</span><span><b>图鉴</b> 收十六种花：十二种基础 + 四种育种；从 04 花苞到 08 小院五阶都记，集满再 +60。</span></li>
+      <li><span class="n">五</span><span>赚了金币去 <b>花店</b> 开张、布置后屋，点家具能互动；集齐一套有金币，每天有访客，还能寄明信片。</span></li>
     </ul>
     <div class="note">一天三分钟，一季五天，四季走完六十分钟，就是一年。</div>
     <button class="btn primary" id="startBtn">开始合花</button>
+  </div>
+</div>
+
+<div class="modal hide" id="guideModal">
+  <div class="sheet tut-sheet">
+    <div class="lv-head"><h3>新手三步 · 第一笔金币</h3><button class="lv-close" id="guideClose" aria-label="关闭">×</button></div>
+    <p class="tut-sub">照着做完，额外 <b>+18 金币</b>。卖 01 种子是 0 金币。</p>
+    <div class="tut-steps" id="tutSteps">
+      <div class="tut-step" data-gs="take"><span class="tn">1</span><div><b>取种子</b><span>点种子篮，一键补满空地</span></div><em>待完成</em></div>
+      <div class="tut-step" data-gs="merge"><span class="tn">2</span><div><b>合到 03</b><span>两朵同级拖到一起，先长到小花</span></div><em>待完成</em></div>
+      <div class="tut-step" data-gs="sell"><span class="tn">3</span><div><b>拖进收成筐</b><span>松手才结算，03 一株卖 18</span></div><em>待完成</em></div>
+    </div>
+    <p class="tut-tip">点花只会选中或移动，不会进账；一定要拖进种子篮下方的「收成筐」。</p>
+    <button class="btn primary" id="guideOk">我自己来</button>
+    <button class="btn tut-skip" id="guideSkip">跳过引导</button>
   </div>
 </div>
 
@@ -922,6 +1625,7 @@ var CFG = {
 var KEY = 'banmu-hehua-v1';
 
 /* ================= 插画（全部程序绘制，无外部图片） ================= */
+var INK = '#3B2E22';
 var C = {stem:'#5E8259', stemD:'#47663F', leaf:'#7FA96B', leafL:'#A9C78B', leafD:'#5A7C52',
          soil:'#D8C39C', soilD:'#B59B6F', petal:'#E8908B', petalL:'#F3B3AE', petalD:'#CE6F69',
          gold:'#EDB44C', goldD:'#C99433', wrap:'#C08457', wrapD:'#9A6740', wood:'#B98A5C',
@@ -932,26 +1636,30 @@ function shadow(y, rx){
 }
 function flower(cx, cy, r, petal, core, rot, shape){
   shape = shape || 'six';
-  var out = '', n, step, i, a;
+  var out = '', n, step, i, a, ink = INK;
+  var sw = '.9';
+  // 水彩晕底：先铺一层淡色，再上花瓣
+  out += '<circle cx="'+cx+'" cy="'+cy+'" r="'+(r*1.02).toFixed(1)+'" fill="'+petal+'" opacity=".20"/>';
   if (shape === 'double'){
     n = 12; step = 30;
     for (i=0;i<n;i++){
       a = rot + i*step;
       out += '<ellipse cx="'+cx+'" cy="'+(cy - r*0.52).toFixed(1)+'" rx="'+(r*0.30).toFixed(1)+
              '" ry="'+(r*0.52).toFixed(1)+'" fill="'+petal+'" opacity="'+(i%2?1:.9)+
-             '" transform="rotate('+a+' '+cx+' '+cy+')"/>';
+             '" stroke="'+ink+'" stroke-width="'+sw+'" stroke-opacity=".72" transform="rotate('+a+' '+cx+' '+cy+')"/>';
     }
     for (i=0;i<5;i++){
       a = rot + 18 + i*72;
       out += '<ellipse cx="'+cx+'" cy="'+(cy - r*0.26).toFixed(1)+'" rx="'+(r*0.20).toFixed(1)+
-             '" ry="'+(r*0.32).toFixed(1)+'" fill="'+lighten(petal)+'" transform="rotate('+a+' '+cx+' '+cy+')"/>';
+             '" ry="'+(r*0.32).toFixed(1)+'" fill="'+lighten(petal)+'" stroke="'+ink+'" stroke-width=".7" stroke-opacity=".55" transform="rotate('+a+' '+cx+' '+cy+')"/>';
     }
   } else if (shape === 'star'){
     n = 8; step = 45;
     for (i=0;i<n;i++){
       a = rot + i*step;
       out += '<ellipse cx="'+cx+'" cy="'+(cy - r*0.58).toFixed(1)+'" rx="'+(r*0.20).toFixed(1)+
-             '" ry="'+(r*0.66).toFixed(1)+'" fill="'+petal+'" stroke="'+shade(petal,-14)+'" stroke-width=".8" transform="rotate('+a+' '+cx+' '+cy+')"/>';
+             '" ry="'+(r*0.66).toFixed(1)+'" fill="'+petal+'" stroke="'+ink+'" stroke-width="'+sw+'" stroke-opacity=".72" transform="rotate('+a+' '+cx+' '+cy+')"/>'+
+             '<path d="M'+cx+' '+(cy - r*0.10).toFixed(1)+' L'+cx+' '+(cy - r*1.14).toFixed(1)+'" stroke="'+ink+'" stroke-width=".55" stroke-opacity=".4" fill="none" transform="rotate('+a+' '+cx+' '+cy+')"/>';
     }
   } else {
     n = (shape === 'five') ? 5 : 6;
@@ -959,11 +1667,18 @@ function flower(cx, cy, r, petal, core, rot, shape){
     for (i=0;i<n;i++){
       a = rot + i*step;
       out += '<ellipse cx="'+cx+'" cy="'+(cy - r*0.55).toFixed(1)+'" rx="'+(r*0.42).toFixed(1)+
-             '" ry="'+(r*0.62).toFixed(1)+'" fill="'+petal+'" transform="rotate('+a+' '+cx+' '+cy+')"/>';
+             '" ry="'+(r*0.62).toFixed(1)+'" fill="'+petal+'" stroke="'+ink+'" stroke-width="'+sw+'" stroke-opacity=".72" transform="rotate('+a+' '+cx+' '+cy+')"/>'+
+             '<path d="M'+cx+' '+(cy - r*0.12).toFixed(1)+' L'+cx+' '+(cy - r*1.08).toFixed(1)+'" stroke="'+ink+'" stroke-width=".55" stroke-opacity=".38" fill="none" transform="rotate('+a+' '+cx+' '+cy+')"/>';
     }
   }
-  return out + '<circle cx="'+cx+'" cy="'+cy+'" r="'+(r*0.3).toFixed(1)+'" fill="'+core+'"/>'+
-         '<circle cx="'+(cx - r*0.1).toFixed(1)+'" cy="'+(cy - r*0.12).toFixed(1)+'" r="'+(r*0.09).toFixed(1)+'" fill="#FFFDF4"/>';
+  // 花心：墨线圈 + 花蕊点 + 高光
+  out += '<circle cx="'+cx+'" cy="'+cy+'" r="'+(r*0.3).toFixed(1)+'" fill="'+core+'" stroke="'+ink+'" stroke-width=".8" stroke-opacity=".7"/>';
+  for (i=0;i<5;i++){
+    var ta = rot + i*72, tr = r*0.16;
+    out += '<circle cx="'+(cx+Math.cos(ta*Math.PI/180)*tr).toFixed(1)+'" cy="'+(cy+Math.sin(ta*Math.PI/180)*tr).toFixed(1)+'" r="'+(r*0.035).toFixed(1)+'" fill="'+ink+'" opacity=".55"/>';
+  }
+  out += '<circle cx="'+(cx - r*0.1).toFixed(1)+'" cy="'+(cy - r*0.12).toFixed(1)+'" r="'+(r*0.09).toFixed(1)+'" fill="#FFFDF4" stroke="'+ink+'" stroke-width=".4" stroke-opacity=".4"/>';
+  return out;
 }
 function shade(hex, amt){
   var h = hex.replace('#','');
@@ -973,24 +1688,30 @@ function shade(hex, amt){
   return '#' + ((1<<24) + (r<<16) + (g<<8) + b).toString(16).slice(1);
 }
 function lighten(hex){ return shade(hex, 18); }
+function inkOn(hex){
+  var h = (hex || '').replace('#','');
+  if (h.length !== 6) return '#FFFDF6';
+  var r = parseInt(h.substr(0,2),16), g = parseInt(h.substr(2,2),16), b = parseInt(h.substr(4,2),16);
+  return (r*299 + g*587 + b*114)/1000 >= 165 ? '#3B2E22' : '#FFFDF6';
+}
 
-/* 十二个品种：同一条等级链，花色/花型/叶色不同（8 常开 + 4 节气） */
+/* 十六个品种：12 基础（8 常开 + 4 节气）+ 4 育种 */
 var VARS = [
-  {n:'半亩玫', shape:'six',    w:22, petal:'#E26776', petalL:'#F29AA6', petalD:'#C24557', core:'#EDB44C',
+  {n:'半亩玫', shape:'six',    w:12, petal:'#E26776', petalL:'#F29AA6', petalD:'#C24557', core:'#EDB44C',
    leaf:'#7FA96B', leafL:'#A9C78B', leafD:'#5A7C52', stem:'#5E8259', stemD:'#47663F'},
-  {n:'青杏',   shape:'five',   w:17, petal:'#F7CE4E', petalL:'#FCE79A', petalD:'#D9A21C', core:'#E7A03C',
+  {n:'青杏',   shape:'five',   w:12, petal:'#F7CE4E', petalL:'#FCE79A', petalD:'#D9A21C', core:'#E7A03C',
    leaf:'#8FB165', leafL:'#B9D08A', leafD:'#6C8C4C', stem:'#5F8259', stemD:'#48683F'},
   {n:'白露',   shape:'star',   w:12, petal:'#F3E6C8', petalL:'#FFF8E8', petalD:'#DCC79A', core:'#E9C65C',
    leaf:'#7BA06A', leafL:'#A8C48F', leafD:'#57764F', stem:'#5C7C58', stemD:'#45603F'},
-  {n:'蓝楹',   shape:'five',   w:9, petal:'#7C8FE0', petalL:'#AEBDF2', petalD:'#5A6CBD', core:'#F3E2A6',
+  {n:'蓝楹',   shape:'five',   w:12, petal:'#7C8FE0', petalL:'#AEBDF2', petalD:'#5A6CBD', core:'#F3E2A6',
    leaf:'#6F9A72', leafL:'#9CC49A', leafD:'#4F7554', stem:'#567B5B', stemD:'#40603F'},
-  {n:'朱砂',   shape:'double', w:8,  petal:'#CB4B3C', petalL:'#E68274', petalD:'#A03024', core:'#F0C75E',
+  {n:'朱砂',   shape:'double', w:12,  petal:'#CB4B3C', petalL:'#E68274', petalD:'#A03024', core:'#F0C75E',
    leaf:'#6F9464', leafL:'#9CBE8A', leafD:'#51744A', stem:'#587A55', stemD:'#41603E'},
-  {n:'紫菀',   shape:'five',   w:9,  petal:'#A279CE', petalL:'#C6A9E6', petalD:'#7E55A8', core:'#F0CE63',
+  {n:'紫菀',   shape:'five',   w:12,  petal:'#A279CE', petalL:'#C6A9E6', petalD:'#7E55A8', core:'#F0CE63',
    leaf:'#79996F', leafL:'#A7C39A', leafD:'#57774F', stem:'#5C7C58', stemD:'#45603F'},
-  {n:'蜜橘',   shape:'six',    w:9,  petal:'#F08A3C', petalL:'#FAB47C', petalD:'#C96518', core:'#E8A63A',
+  {n:'蜜橘',   shape:'six',    w:12,  petal:'#F08A3C', petalL:'#FAB47C', petalD:'#C96518', core:'#E8A63A',
    leaf:'#85A862', leafL:'#B2CB88', leafD:'#628249', stem:'#5E8259', stemD:'#47663F'},
-  {n:'薄荷',   shape:'star',   w:8,  petal:'#7FD1BB', petalL:'#B4E8D9', petalD:'#55A891', core:'#EFC65C',
+  {n:'薄荷',   shape:'star',   w:12,  petal:'#7FD1BB', petalL:'#B4E8D9', petalD:'#55A891', core:'#EFC65C',
    leaf:'#7BA06C', leafL:'#A8C58D', leafD:'#57764E', stem:'#5C7C58', stemD:'#45603F'},
   {n:'樱吹雪', shape:'five',   w:12, season:0, petal:'#F78FB3', petalL:'#FFC2D6', petalD:'#D9678F', core:'#F2CE63',
    leaf:'#8CB37A', leafL:'#BCD69E', leafD:'#65895C', stem:'#5E8259', stemD:'#47663F'},
@@ -999,22 +1720,34 @@ var VARS = [
   {n:'金桂',   shape:'star',   w:12, season:2, petal:'#DDA01F', petalL:'#F3C65E', petalD:'#A8740F', core:'#B97C1E',
    leaf:'#7E9E5E', leafL:'#AFCB84', leafD:'#5A7A46', stem:'#587A4B', stemD:'#43603A'},
   {n:'雪梅',   shape:'five',   w:12, season:3, petal:'#FFFFFF', petalL:'#FFFFFF', petalD:'#E0C2C9', core:'#C9585C',
-   leaf:'#6E8F72', leafL:'#9CBB9C', leafD:'#4F6B54', stem:'#577356', stemD:'#415A42'}
+   leaf:'#6E8F72', leafL:'#9CBB9C', leafD:'#4F6B54', stem:'#577356', stemD:'#415A42'},
+  {n:'朱槿',   shape:'double', w:6,  breed:true, petal:'#FF6B5A', petalL:'#FFA094', petalD:'#CC4636', core:'#F5D06A',
+   leaf:'#7C9E68', leafL:'#AAC488', leafD:'#59794D', stem:'#5B7C55', stemD:'#43603E'},
+  {n:'孔雀',   shape:'star',   w:6,  breed:true, petal:'#1F8F8F', petalL:'#63C4BE', petalD:'#126B6B', core:'#F2D27A',
+   leaf:'#699B75', leafL:'#96C2A0', leafD:'#4B7557', stem:'#527B58', stemD:'#3C5F42'},
+  {n:'墨菊',   shape:'six',    w:6,  breed:true, petal:'#7B2D4E', petalL:'#B05E7E', petalD:'#571A34', core:'#E8BE62',
+   leaf:'#709468', leafL:'#9BBC8E', leafD:'#527549', stem:'#567A55', stemD:'#41603F'},
+  {n:'月白',   shape:'five',   w:6,  breed:true, petal:'#DCE7F4', petalL:'#F4FAFF', petalD:'#AFC4DE', core:'#E7C45E',
+   leaf:'#7E9E82', leafL:'#AEC7AF', leafD:'#5C7A60', stem:'#5A7C62', stemD:'#44604A'}
 ];
 /* 每种花的识别彩带色（花苞期靠这条带子分辨花色） */
 var MARKS = ['#C24557','#D9A21C','#C9B26A','#5A6CBD','#A03024','#7E55A8',
-             '#C96518','#2E9C82','#D9678F','#9E6482','#A8740F','#8C3A4A'];
+             '#C96518','#2E9C82','#D9678F','#9E6482','#A8740F','#8C3A4A',
+             '#E24E3D','#126B6B','#571A34','#AFC4DE'];
 VARS.forEach(function(V, i){ V.mark = MARKS[i]; });
-function pickVar(){
+function pickVar(baseOnly){
   var si = S ? seasonInfo().si : 0;
-  var tot = 0, i, pool = [];
+  var tot = 0, i, pool = [], wt = [];
   for (i=0;i<VARS.length;i++){
     var V = VARS[i];
     if (V.season != null && V.season !== si) continue;
-    pool.push(i); tot += V.w;
+    if (baseOnly && V.breed) continue;
+    if (V.breed && !(S && S.vars && S.vars.indexOf(i) >= 0)) continue;
+    var w = V.w * (V.season != null ? 1.5 : 1);
+    pool.push(i); wt.push(w); tot += w;
   }
   var r = Math.random()*tot;
-  for (i=0;i<pool.length;i++){ r -= VARS[pool[i]].w; if (r <= 0) return pool[i]; }
+  for (i=0;i<pool.length;i++){ r -= wt[i]; if (r <= 0) return pool[i]; }
   return 0;
 }
 function varName(v){ return (VARS[v] || VARS[0]).n; }
@@ -1023,39 +1756,44 @@ function itemSVG(lv, v){
   var P = VARS[v || 0] || VARS[0];
   var body = '';
   if (lv === 1){
-    body = shadow(82, 22) +
-      '<ellipse cx="35" cy="60" rx="12.5" ry="8.5" transform="rotate(-22 35 60)" fill="#C9A063"/>'+
-      '<ellipse cx="62" cy="58" rx="12.5" ry="8.5" transform="rotate(16 62 58)" fill="#DBB57B"/>'+
-      '<ellipse cx="49" cy="73" rx="12.5" ry="8.5" transform="rotate(-4 49 73)" fill="#B58B52"/>'+
-      '<circle cx="32" cy="59" r="1.8" fill="#8A6A3C"/><circle cx="63" cy="57" r="1.8" fill="#8A6A3C"/>'+
-      '<circle cx="49" cy="72" r="1.8" fill="#8A6A3C"/>'+
-      '<path d="M26 67c4 3 9 4 13 2M56 66c5 2 9 1 12-2" stroke="#A07C46" stroke-width="1.2" fill="none" opacity=".6"/>';
+    function seedOval(x, y, rot, col, hi){
+      return '<g transform="translate('+x+' '+y+') rotate('+rot+')">'+
+        '<path d="M0 -12.4C2.6 -11 5 -6 5.4 -.6 5.8 4.6 3.6 9.6 -.6 10.4 -4.6 11 -5.8 6.4 -5.2 .6 -4.6 -5.4 -2.4 -11 0 -12.4Z" fill="'+col+'" stroke="'+INK+'" stroke-width=".8" stroke-opacity=".65"/>'+
+        '<path d="M-1 -7.6c-1.6 4.6-1.6 10.4 0 15" stroke="'+shade(col,-32)+'" stroke-width=".8" opacity=".45" fill="none"/>'+
+        '<path d="M2.2 -8.6c1.2 4.4 1 10-.2 14.6" stroke="'+hi+'" stroke-width="1.1" opacity=".6" fill="none"/>'+
+        '<path d="M-4 7.4c2.2 1.6 4.8 1.8 7.2.6" stroke="'+hi+'" stroke-width=".7" opacity=".45" fill="none"/>'+
+        '</g>';
+    }
+    body = '<ellipse cx="50" cy="82" rx="21" ry="3.6" fill="rgba(90,70,40,.14)"/>'+
+      seedOval(43, 63, 74, '#BE8C50', '#F0DDB6') +
+      seedOval(58, 67, 102, '#CBA063', '#F6E7C6') +
+      seedOval(50, 77, 88, '#B07F47', '#EAD6AC');
   } else if (lv === 2){
     body = shadow(80, 24) +
-      '<ellipse cx="50" cy="76" rx="23" ry="9" fill="'+C.soil+'"/>'+
+      '<ellipse cx="50" cy="76" rx="23" ry="9" fill="'+C.soil+'" stroke="'+INK+'" stroke-width=".9" stroke-opacity=".55"/>'+
       '<path d="M50 77V60" stroke="'+P.stem+'" stroke-width="3.2" stroke-linecap="round"/>'+
-      '<path d="M50 68c-11-1-15-8-14-14 6-2 12 4 14 14z" fill="'+P.leaf+'"/>'+
-      '<path d="M50 62c11-2 15-9 14-15-6-2-12 5-14 15z" fill="'+P.leafL+'"/>'+
+      '<path d="M50 68c-11-1-15-8-14-14 6-2 12 4 14 14z" fill="'+P.leaf+'" stroke="'+INK+'" stroke-width=".85" stroke-opacity=".6"/>'+
+      '<path d="M50 62c11-2 15-9 14-15-6-2-12 5-14 15z" fill="'+P.leafL+'" stroke="'+INK+'" stroke-width=".85" stroke-opacity=".6"/>'+
       '<path d="M50 68c-6 1-10 0-14-1" stroke="'+P.leafD+'" stroke-width="1" fill="none" opacity=".5"/>';
   } else if (lv === 3){
     body = shadow(84, 20) +
       '<path d="M50 84V40" stroke="'+P.stem+'" stroke-width="3.4" stroke-linecap="round"/>'+
-      '<path d="M50 72c-13-2-17-9-16-15 7-2 14 5 16 15z" fill="'+P.leafD+'"/>'+
-      '<path d="M50 66c13-3 17-10 16-16-7-2-14 6-16 16z" fill="'+P.leaf+'"/>'+
-      '<path d="M50 54c-10-1-13-7-12-12 5-1 11 4 12 12z" fill="'+P.leaf+'"/>'+
-      '<path d="M50 48c10-2 13-8 12-13-5-1-11 5-12 13z" fill="'+P.leafL+'"/>'+
+      '<path d="M50 72c-13-2-17-9-16-15 7-2 14 5 16 15z" fill="'+P.leafD+'" stroke="'+INK+'" stroke-width=".85" stroke-opacity=".6"/>'+
+      '<path d="M50 66c13-3 17-10 16-16-7-2-14 6-16 16z" fill="'+P.leaf+'" stroke="'+INK+'" stroke-width=".85" stroke-opacity=".6"/>'+
+      '<path d="M50 54c-10-1-13-7-12-12 5-1 11 4 12 12z" fill="'+P.leaf+'" stroke="'+INK+'" stroke-width=".85" stroke-opacity=".6"/>'+
+      '<path d="M50 48c10-2 13-8 12-13-5-1-11 5-12 13z" fill="'+P.leafL+'" stroke="'+INK+'" stroke-width=".85" stroke-opacity=".6"/>'+
       '<path d="M50 76c-4 1-8 1-12 0M50 70c5-1 9-2 13-3M50 57c-3 0-6 0-9-1" stroke="'+C.cream+'" stroke-width=".9" fill="none" opacity=".55"/>';
   } else if (lv === 4){
     body = shadow(84, 20) +
       '<path d="M50 84V52" stroke="'+P.stem+'" stroke-width="3.2" stroke-linecap="round"/>'+
-      '<path d="M50 74c-12-1-16-8-15-14 6-2 13 5 15 14z" fill="'+P.leaf+'"/>'+
-      '<path d="M50 70c12-2 16-9 15-15-6-2-13 6-15 15z" fill="'+P.leafL+'"/>'+
+      '<path d="M50 74c-12-1-16-8-15-14 6-2 13 5 15 14z" fill="'+P.leaf+'" stroke="'+INK+'" stroke-width=".85" stroke-opacity=".6"/>'+
+      '<path d="M50 70c12-2 16-9 15-15-6-2-13 6-15 15z" fill="'+P.leafL+'" stroke="'+INK+'" stroke-width=".85" stroke-opacity=".6"/>'+
       '<ellipse cx="50" cy="38" rx="'+(P.shape==='double'?11.4:9.6)+'" ry="'+(P.shape==='double'?14.4:15.6)+'" fill="'+P.petalD+'" stroke="'+shade(P.petalD,-26)+'" stroke-width=".9"/>'+
       '<ellipse cx="50" cy="38" rx="'+(P.shape==='double'?8.2:6.7)+'" ry="'+(P.shape==='double'?13.2:14)+'" fill="'+P.petal+'"/>'+
       (P.shape==='double' ? '<path d="M46 27c-3 6-3 16 0 24M54 27c3 6 3 16 0 24" stroke="'+shade(P.petalD,-14)+'" stroke-width="1" fill="none" opacity=".55"/>' : '')+
       '<path d="M50 25v28" stroke="'+shade(P.petalD,-22)+'" stroke-width="1.4" opacity=".6"/>'+
       '<path d="M42 37c0-8 3-13 8-16" stroke="'+P.petalL+'" stroke-width="1.6" fill="none"/>'+
-      '<path d="M50 55c-6-1-10-5-9-9 5-1 9 3 9 9z" fill="'+P.stemD+'"/>'+
+      '<path d="M50 55c-6-1-10-5-9-9 5-1 9 3 9 9z" fill="'+P.stemD+'" stroke="'+INK+'" stroke-width=".8" stroke-opacity=".55"/>'+
       // 花苞彩带：每种花色一条同色带，浅色花苞一眼能分开
       '<path d="M37 47q13 9 26 0" stroke="'+P.mark+'" stroke-width="3.4" stroke-linecap="round" fill="none"/>'+
       '<path d="M37 47l-6 1.5 1.4 4.2 6-1.7z" fill="'+P.mark+'"/>'+
@@ -1066,13 +1804,13 @@ function itemSVG(lv, v){
   } else if (lv === 5){
     body = shadow(84, 22) +
       '<path d="M50 84V50" stroke="'+P.stem+'" stroke-width="3.2" stroke-linecap="round"/>'+
-      '<path d="M50 74c-12-2-16-9-15-15 7-2 13 6 15 15z" fill="'+P.leaf+'"/>'+
-      '<path d="M50 69c12-2 16-9 15-15-6-2-13 6-15 15z" fill="'+P.leafL+'"/>'+
+      '<path d="M50 74c-12-2-16-9-15-15 7-2 13 6 15 15z" fill="'+P.leaf+'" stroke="'+INK+'" stroke-width=".85" stroke-opacity=".6"/>'+
+      '<path d="M50 69c12-2 16-9 15-15-6-2-13 6-15 15z" fill="'+P.leafL+'" stroke="'+INK+'" stroke-width=".85" stroke-opacity=".6"/>'+
       '<circle cx="50" cy="40" r="21" fill="rgba(255,255,255,.28)"/>'+
       flower(50, 40, 19, P.petal, P.core, 12, P.shape);
   } else if (lv === 6){
     body = shadow(86, 22) +
-      '<path d="M50 84L36 62h28z" fill="'+C.wrap+'"/>'+
+      '<path d="M50 84L36 62h28z" fill="'+C.wrap+'" stroke="'+INK+'" stroke-width="1" stroke-opacity=".7"/>'+
       '<path d="M50 84L44 62M50 84l6-22" stroke="'+C.wrapD+'" stroke-width="1.6" opacity=".7"/>'+
       '<path d="M38 62h24l-3-7H41z" fill="'+C.wrapD+'"/>'+
       '<path d="M50 58V48M42 60l-4-8M58 60l4-8" stroke="'+P.stem+'" stroke-width="2.2"/>'+
@@ -1082,7 +1820,7 @@ function itemSVG(lv, v){
       '<path d="M30 34c6-3 12-2 16 2" stroke="'+P.leaf+'" stroke-width="2" fill="none"/>';
   } else if (lv === 7){
     body = shadow(88, 26) +
-      '<path d="M22 56h56l-4 22a5 5 0 0 1-5 4H31a5 5 0 0 1-5-4z" fill="'+C.wood+'" stroke="#8E6A3C" stroke-width="1.4"/>'+
+      '<path d="M22 56h56l-4 22a5 5 0 0 1-5 4H31a5 5 0 0 1-5-4z" fill="'+C.wood+'" stroke="'+INK+'" stroke-width="1.4"/>'+
       '<path d="M26 63h48M27 70h46" stroke="#9A7040" stroke-width="1.3" opacity=".8"/>'+
       '<path d="M28 56c4-14 18-19 26-15 6 3 9 8 10 15" fill="none" stroke="#8E6A3C" stroke-width="2"/>'+
       '<path d="M50 55V42M40 55l-6-10M60 55l6-10M34 55l-3-9M66 55l3-9" stroke="'+P.stem+'" stroke-width="2.2"/>'+
@@ -1097,33 +1835,48 @@ function itemSVG(lv, v){
       '<path d="M50 26L24 60h52z" fill="#C07A5C"/>'+
       '<path d="M50 26L24 60h16zM50 26l26 34h-16z" fill="#A96348" opacity=".55"/>'+
       '<path d="M22 60h56" stroke="#8E5A42" stroke-width="2"/>'+
-      '<rect x="33" y="67" width="13" height="19" rx="2" fill="'+P.leaf+'"/>'+
+      '<rect x="33" y="67" width="13" height="19" rx="2" fill="'+P.leaf+'" stroke="'+INK+'" stroke-width=".85" stroke-opacity=".6"/>'+
       '<circle cx="42" cy="77" r="1.4" fill="#FFF8E4"/>'+
       '<rect x="52" y="66" width="15" height="12" rx="2" fill="#FBF1D5" stroke="#8E6A3C" stroke-width="1.2"/>'+
       '<path d="M59.5 66v12M52 72h15" stroke="#8E6A3C" stroke-width="1.2"/>'+
       '<path d="M24 86c2-6 8-7 11-2M74 86c-2-5-7-6-10-1" stroke="'+P.leaf+'" stroke-width="2.4" fill="none"/>'+
-      '<circle cx="24" cy="82" r="3.4" fill="'+P.petal+'"/><circle cx="76" cy="82" r="3.4" fill="'+P.core+'"/>'+
+      '<circle cx="24" cy="82" r="3.4" fill="'+P.petal+'" stroke="'+INK+'" stroke-width=".8" stroke-opacity=".65"/><circle cx="76" cy="82" r="3.4" fill="'+P.core+'"/>'+
       '<circle cx="80" cy="76" r="2.4" fill="'+P.petalL+'"/>';
   }
-  var art = {1:[1.62,71.5], 2:[1.75,71.5], 3:[1.66,65.5], 4:[1.42,53], 5:[1.33,51], 6:[1.52,56], 7:[1.40,57], 8:[1.26,56.5]}[lv];
+  var art = {1:[1.56,60], 2:[1.75,71.5], 3:[1.66,65.5], 4:[1.42,53], 5:[1.33,51], 6:[1.52,56], 7:[1.40,57], 8:[1.26,56.5]}[lv];
   return '<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">'+
     '<g transform="translate(50 50) scale('+art[0]+') translate(-50 -'+art[1]+')">'+body+'</g></svg>';
 }
 
 function basketSVG(){
+  var ink=INK, weave='';
+  for (var i=0;i<9;i++){
+    var x=45+i*13;
+    weave += '<path d="M'+x+' 64l-5 44" stroke="#9C7444" stroke-width=".9" opacity=".45"/>';
+  }
+  weave += '<path d="M43 78h114M46 92h108M51 104h98" stroke="#8A6338" stroke-width="1.4" opacity=".55"/>';
+  for (var j=0;j<8;j++){
+    var wx=50+j*12;
+    weave += '<path d="M'+wx+' 82c3 2 5 2 8 0" stroke="#7E5A32" stroke-width=".7" opacity=".4" fill="none"/>';
+  }
   return '<svg viewBox="0 0 200 130" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">'+
-    '<ellipse cx="100" cy="116" rx="66" ry="12" fill="rgba(90,70,40,.14)"/>'+
-    '<path d="M40 62h120l-9 42a10 10 0 0 1-10 8H59a10 10 0 0 1-10-8z" fill="#D3A96F" stroke="#8E6A3C" stroke-width="2"/>'+
-    '<path d="M46 76h108M48 92h104" stroke="#B0804A" stroke-width="2" opacity=".85"/>'+
-    '<path d="M48 62c10-28 32-38 52-34 17 3 30 16 34 34" fill="none" stroke="#8E6A3C" stroke-width="3.4"/>'+
+    '<ellipse cx="100" cy="117" rx="68" ry="12" fill="rgba(90,70,40,.12)"/>'+
+    '<path d="M40 62h120l-9 42a10 10 0 0 1-10 8H59a10 10 0 0 1-10-8z" fill="#D9B279" stroke="'+ink+'" stroke-width="1.5" stroke-opacity=".75"/>'+
+    '<path d="M40 62c14 8 32 11 60 11s46-3 60-11" fill="rgba(255,248,225,.45)" stroke="'+ink+'" stroke-width="1.2" stroke-opacity=".5"/>'+
+    '<g opacity=".9">'+weave+'</g>'+
+    '<path d="M42 96c10 6 34 9 58 9s48-3 58-9" stroke="rgba(120,90,52,.5)" stroke-width="1" fill="none"/>'+
+    '<path d="M48 63c9-30 31-41 52-37 18 3 31 16 35 37" fill="none" stroke="'+ink+'" stroke-width="3.2" stroke-opacity=".7"/>'+
+    '<path d="M52 62c9-26 30-36 49-32 15 3 26 14 30 32" fill="none" stroke="#E3C08C" stroke-width="2" opacity=".8"/>'+
     '<g>'+
-      '<ellipse cx="92" cy="56" rx="13" ry="9" transform="rotate(-18 92 56)" fill="#C9A063"/>'+
-      '<ellipse cx="112" cy="54" rx="13" ry="9" transform="rotate(14 112 54)" fill="#DBB57B"/>'+
-      '<ellipse cx="102" cy="68" rx="13" ry="9" transform="rotate(-4 102 68)" fill="#B58B52"/>'+
-      '<circle cx="89" cy="55" r="2" fill="#8A6A3C"/><circle cx="113" cy="53" r="2" fill="#8A6A3C"/>'+
+      '<ellipse cx="90" cy="56" rx="13" ry="9" transform="rotate(-18 90 56)" fill="#C9A063" stroke="'+ink+'" stroke-width="1" stroke-opacity=".7"/>'+
+      '<ellipse cx="112" cy="52" rx="13" ry="9" transform="rotate(14 112 52)" fill="#DBB57B" stroke="'+ink+'" stroke-width="1" stroke-opacity=".7"/>'+
+      '<ellipse cx="101" cy="67" rx="12" ry="8" transform="rotate(-4 101 67)" fill="#B58B52" stroke="'+ink+'" stroke-width="1" stroke-opacity=".7"/>'+
+      '<path d="M84 50c3-2 6-3 9-2M106 48c3-1 6 0 8 2" stroke="'+ink+'" stroke-width=".8" opacity=".4" fill="none"/>'+
+      '<circle cx="87" cy="55" r="1.9" fill="#7A5A30"/><circle cx="114" cy="51" r="1.9" fill="#7A5A30"/>'+
+      '<path d="M96 60c2 2 5 3 8 2" stroke="'+ink+'" stroke-width=".8" opacity=".35" fill="none"/>'+
     '</g>'+
-    '<path d="M60 104c4-9 12-11 17-4" stroke="#7FA96B" stroke-width="3" fill="none"/>'+
-    '<path d="M140 104c-3-8-10-10-15-4" stroke="#A9C78B" stroke-width="3" fill="none"/>'+
+    '<path d="M58 104c4-9 12-11 17-4M142 104c-3-8-10-10-15-4" stroke="#7FA96B" stroke-width="2.6" fill="none"/>'+
+    '<path d="M65 100c2-4 6-5 9-2M74 100c-2-4-6-6-9-3M135 100c-2-4-6-5-9-2M128 101c2-4 6-5 9-2" stroke="'+ink+'" stroke-width=".7" fill="none" opacity=".35"/>'+
     '</svg>';
 }
 
@@ -1146,7 +1899,7 @@ for (var i=0;i<CFG.cols*CFG.rows;i++){
 }
 
 /* ================= 状态 ================= */
-var S = null, drag = null, selected = -1, toastTimer = null, lastSeason = -1;
+var S = null, drag = null, selected = -1, toastTimer = null, lastSeason = -1, lastGuideTarget = '';
 
 function m6(n){ return Math.max(6, Math.round((n||0)/6) * 6); }
 function uid(){ S.nextId = (S.nextId||1)+1; return S.nextId; }
@@ -1158,8 +1911,10 @@ function newState(){
   var st = {
     v:1, slots: slots, coins:CFG.startCoins, energy:CFG.startEnergy, energyTs:t,
     basket:1, startAt:t, orders:[], discovered:[1], merges:0, ordersDone:0, sold:0, house:{now:'living', owned:{}, hidden:{}}, spawnTs:t,
-    stands:new Array(VARS.length).fill(null), milestones:[], vars:[], varsPaid:[], varsLv:{}, varReward:false, dexVar:{}, visitor:null, standFull:false,
-    goal:null, combo:0, comboTs:0,
+    stands:new Array(VARS.length).fill(null), milestones:[], vars:[], varsPaid:[], varsLv:{}, varReward:false, varReward16:false, varReward80:false, dexVar:{}, visitor:null, standFull:false,
+    goal:null, combo:0, comboTs:0, breedPity:0, guest:null,
+    guide:{take:false, merge:false, sell:false, done:false, rewarded:false, skipped:false},
+    shop:{day:-1, wantLvl:3, claimed:false, paid:0, shelf:[null,null], sold:0, appt:null, apptLvl:0}, shopQuest:{bought:false, bouquet:false, sold:false, claimed:false},
     muted:false, tutorial:false, nextId:3
   };
   for (var q0=0; q0<slots.length; q0++){
@@ -1202,9 +1957,44 @@ function load(){
     S = o;
     S.spawnTs = o.spawnTs || Date.now();
     S.sold = o.sold || 0;
-    S.house = (o.house && typeof o.house === 'object') ? o.house : {now:'living', owned:{}, hidden:{}};
+    if (!S.guide || typeof S.guide !== 'object') S.guide = {take:false, merge:false, sell:false, done:false, rewarded:false, skipped:false};
+    if (!('take' in S.guide)) S.guide.take = false;
+    if (!('merge' in S.guide)) S.guide.merge = false;
+    if (!('sell' in S.guide)) S.guide.sell = false;
+    if (!('done' in S.guide)) S.guide.done = false;
+    if (!('rewarded' in S.guide)) S.guide.rewarded = false;
+    if (!S.shop || typeof S.shop !== 'object') S.shop = {day:-1, wantLvl:3, claimed:false, paid:0, shelf:[null,null], sold:0, appt:null, apptLvl:0};
+    if (!Array.isArray(S.shop.shelf)) S.shop.shelf = [null,null];
+    while (S.shop.shelf.length < 2) S.shop.shelf.push(null);
+    if (!('sold' in S.shop)) S.shop.sold = 0;
+    if (!('appt' in S.shop)) S.shop.appt = null;
+    if (!('apptLvl' in S.shop)) S.shop.apptLvl = 0;
+    S.house = (o.house && typeof o.house === 'object') ? o.house : {now:'living', owned:{}, hidden:{}, vase:{v:-1}, sets:[], task:null};
     if (!S.house.owned) S.house.owned = {};
     if (!S.house.hidden) S.house.hidden = {};
+    if (!Array.isArray(S.house.owned.front)) S.house.owned.front = [];
+    if (!Array.isArray(S.house.owned.living)) S.house.owned.living = [];
+    if (!Array.isArray(S.house.hidden.front)) S.house.hidden.front = [];
+    if (!Array.isArray(S.house.hidden.living)) S.house.hidden.living = [];
+    // 老存档的店件从院子搬进客厅
+    var shopMove = ['fcounter','fwindow','fsign'];
+    var fOwn = S.house.owned.front, lOwn = S.house.owned.living;
+    var fHid = S.house.hidden.front, lHid = S.house.hidden.living;
+    for (var smi=0; smi<shopMove.length; smi++){
+      var sid = shopMove[smi], fi = fOwn.indexOf(sid);
+      if (fi >= 0){ fOwn.splice(fi,1); if (lOwn.indexOf(sid)<0) lOwn.push(sid); }
+      var fhi = fHid.indexOf(sid);
+      if (fhi >= 0){ fHid.splice(fhi,1); if (lHid.indexOf(sid)<0) lHid.push(sid); }
+    }
+    // 老玩家默认落在客厅门店
+    if (S.house.now === 'front') S.house.now = 'living';
+    if (!S.shopQuest || typeof S.shopQuest !== 'object'){
+      var oldSold = (S.shop && S.shop.sold) || 0;
+      S.shopQuest = {bought:false, bouquet:false, sold:oldSold>0, claimed:oldSold>0};
+      var qOwn = S.house.owned.living || [];
+      if (qOwn.indexOf('fcounter') >= 0) S.shopQuest.bought = true;
+      if (S.shop && Array.isArray(S.shop.shelf) && S.shop.shelf.some(Boolean)) S.shopQuest.bouquet = true;
+    }
     // 老存档的单间家具，搬进客厅
     if (o.room && Array.isArray(o.room.owned)){
       S.house.owned.living = S.house.owned.living || [];
@@ -1253,6 +2043,9 @@ function load(){
     }
     S.dexVar = (o.dexVar && typeof o.dexVar === 'object') ? o.dexVar : {};
     S.varReward = !!o.varReward;
+    S.varReward16 = !!o.varReward16;
+    S.varReward80 = !!o.varReward80;
+    S.breedPity = typeof o.breedPity === 'number' ? o.breedPity : 0;
     if (folded > 0){
       setTimeout(function(){ toast('田地改成 6×6，多出的花折成 ' + folded + ' 金币'); }, 1200);
     }
@@ -1302,7 +2095,8 @@ function makeOrder(){
   var cnt = lvl===2 ? 2+rnd(2) : lvl===3 ? 1+rnd(2) : lvl===4 ? 1+rnd(2) : 1;
   var seasonal = CFG.seasons[s.si].fav.indexOf(lvl) >= 0 && Math.random() < 0.5;
   var vWant = -1;
-  if (lvl >= 3 && S && S.vars && S.vars.length >= 3 && Math.random() < 0.22) vWant = pick(S.vars);
+  var baseSeen = (S && S.vars) ? S.vars.filter(function(v){ return v >= 0 && v < 12; }) : [];
+  if (lvl >= 3 && baseSeen.length >= 3 && Math.random() < 0.22) vWant = pick(baseSeen);
   var reward = m6(CFG.orderValue[lvl] * cnt * (seasonal ? 1.5 : 1) * (vWant >= 0 ? 1.35 : 1));
   var w = pick(WHO);
   return {id:uid(), who:w.n, av:w.a, lvl:lvl, count:cnt, reward:reward, v:vWant,
@@ -1384,6 +2178,9 @@ function buffs(){
     if (si === 3) b.spawn -= 6000;
   }
   if (b.spawn < 12000) b.spawn = 12000;
+  try{
+    if (S && S.house && S.house.vase && S.house.vase.v >= 0 && roomHas(roomById('living'), 'vase')) b.dew += 0.06;
+  }catch(e){}
   return b;
 }
 function maxDew(){
@@ -1404,7 +2201,7 @@ function claimStands(){
   if (!S || S.standFull) return;
   if (standCount() >= VARS.length){
     S.standFull = true; S.coins += 300;
-    setTimeout(function(){ toast('十二株 08 都摆上了，+300 金币'); }, 800);
+    setTimeout(function(){ toast('十六株 08 都摆上了，+300 金币'); }, 800);
     save();
   }
 }
@@ -1447,23 +2244,31 @@ function syncDex(){
   if (!S || !Array.isArray(S.vars)) return;
   syncStages();
   if (!Array.isArray(S.varsPaid)) S.varsPaid = [];
-  var fresh = [], lit = 0;
+  var fresh = [], lit = 0, stagesTotal = 0;
   for (var v=0; v<VARS.length; v++){
-    if (stageCount(v) > 0){
+    var sc = stageCount(v);
+    stagesTotal += sc;
+    if (sc > 0){
       lit++;
       if (S.varsPaid.indexOf(v) < 0){ S.varsPaid.push(v); fresh.push(v); }
     }
   }
+  var rewarded = false;
   if (fresh.length){
     var gain = 6 * fresh.length;
-    S.coins += gain; save(); beep('order');
+    S.coins += gain; rewarded = true; save(); beep('order');
     var names = fresh.map(function(x){ return varName(x); }).join('、');
     setTimeout(function(){ toast('图鉴点亮 ' + names + ' · +' + gain + ' 金币'); }, 620);
   }
-  if (lit >= VARS.length && !S.varReward){
-    S.varReward = true; S.coins += 60; save();
-    setTimeout(function(){ toast('十二种花全点亮，图鉴收齐 · +60 金币'); }, 950);
+  if (lit >= VARS.length && !S.varReward16){
+    S.varReward16 = true; S.coins += 60; rewarded = true; save();
+    setTimeout(function(){ toast('十六种花全点亮，图鉴收齐 · +60 金币'); }, 950);
   }
+  if (stagesTotal >= VARS.length * 5 && !S.varReward80){
+    S.varReward80 = true; S.coins += 300; rewarded = true; save();
+    setTimeout(function(){ toast('八十阶全收，图鉴毕业 · +300 金币'); }, 1250);
+  }
+  if (rewarded && $('coinText')) renderHUD();
 }
 
 function renderHome(){
@@ -1474,7 +2279,7 @@ function renderHome(){
     var cnt = stageCount(i), got = cnt > 0;
     if (got) on++;
     stages += cnt;
-    var tag = (VARS[i].season != null) ? CFG.seasons[VARS[i].season].name : '常开';
+    var tag = (VARS[i].season != null) ? CFG.seasons[VARS[i].season].name : (VARS[i].breed ? '育种' : '常开');
     html += '<div class="dv' + (got?' on':' lock') + '" data-v="' + i + '" title="' + VARS[i].n + ' · 点开看 04–08 五阶">' +
       (got?'<span class="ck">✓</span>':'') +
       '<div class="art">' + itemSVG(5, i) + '</div>' +
@@ -1484,12 +2289,16 @@ function renderHome(){
   }
   $('varsDex').innerHTML = html;
 
-  if ($('dexSub')) $('dexSub').textContent = '花苞到小院 · 五阶图鉴';
+  var totalStages = VARS.length * 5, graduated = stages >= totalStages;
+  if ($('dexSub')) $('dexSub').textContent = graduated ? '图鉴毕业 · 五阶全收' : '花苞到小院 · 五阶图鉴';
   $('dexSum').innerHTML =
     '<div class="ds-top"><span>图鉴点亮</span><b>' + on + ' / ' + VARS.length + '</b>' +
-    '<span class="ds-got">' + stages + ' / ' + (VARS.length*5) + ' 阶</span></div>' +
+    '<span class="ds-got">' + stages + ' / ' + totalStages + ' 阶</span>' +
+    (graduated ? '<span class="ds-grad">毕业</span>' : '') + '</div>' +
     '<div class="ds-bar"><i style="width:' + (on/VARS.length*100).toFixed(1) + '%"></i></div>' +
-    '<div class="ds-foot">' + (on >= VARS.length ? '十二种都点亮了，图鉴收齐，+60 金币已入账' : '养到 04 花苞就点亮一种 +6 金币，点开看 04–08 五阶') + '</div>';
+    '<div class="ds-foot">' + (graduated ? '八十阶全收，图鉴毕业 · +300 金币已入账' :
+      on >= VARS.length ? '十六种都点亮了，图鉴收齐 +60；还差 ' + (totalStages - stages) + ' 阶毕业' :
+      '养到 04 花苞就点亮一种 +6 金币，点开看 04–08 五阶') + '</div>';
 
   var b = buffs(), bchips = '';
   bchips += '<span class="buff-pill' + (b.dew>1?' hot':'') + '">回露 ×' + b.dew.toFixed(2) + '</span>';
@@ -1500,7 +2309,7 @@ function renderHome(){
   var si = seasonInfo().si;
   $('seasonNote').innerHTML =
     '<svg class="sn-ic" viewBox="0 0 32 32" aria-hidden="true">' +
-      '<circle cx="16" cy="16" r="13" fill="rgba(127,169,107,.16)" stroke="rgba(127,169,107,.5)" stroke-width="1.2"/>' +
+      '<circle cx="16" cy="16" r="13" fill="color-mix(in srgb, var(--pink-500) .16%, transparent)" stroke="color-mix(in srgb, var(--pink-500) .5%, transparent)" stroke-width="1.2"/>' +
       '<path d="M16 8c4 5 6 8 6 11a6 6 0 1 1-12 0c0-3 2-6 6-11z" fill="#9CCFC4" stroke="#3C7570" stroke-width="1.1"/>' +
     '</svg>' +
     '<div><div class="sn-t">' + CFG.seasons[si].name + '季 · ' + SEASON_EVENT[si].n + '</div>' +
@@ -1707,7 +2516,7 @@ function claimVars(){
   if (!S || S.varReward) return;
   if (S.vars.length >= VARS.length){
     S.varReward = true; S.coins += 120;
-    setTimeout(function(){ toast('十二种花都见过了，+120 金币'); }, 700);
+    setTimeout(function(){ toast('十六种花都见过了，+120 金币'); }, 700);
     save();
   }
 }
@@ -1786,7 +2595,67 @@ function renderOrders(){
 function renderAll(){
   renderGoal();
   renderHUD(); renderBoard(); renderDex(); renderOrders(); renderHome(); renderStrip(); renderRoom();
+  renderGuide();
 }
+
+/* ================= 新手三步 ================= */
+function guideState(){
+  if (!S) return null;
+  if (!S.guide || typeof S.guide !== 'object') S.guide = {take:false, merge:false, sell:false, done:false, rewarded:false, skipped:false};
+  return S.guide;
+}
+function guideDoneCount(){
+  var g = guideState(); if (!g) return 0;
+  return (g.take?1:0) + (g.merge?1:0) + (g.sell?1:0);
+}
+function renderGuide(){
+  var g = guideState(); if (!g) return;
+  var done = !!(g.done || g.skipped);
+  var mini = $('tutMini');
+  if (mini){
+    mini.style.display = done ? 'none' : 'inline-flex';
+    if (!done) mini.textContent = '新手 ' + guideDoneCount() + '/3';
+  }
+  var target = '';
+  if (!done){
+    if (!g.take) target = 'takeBtn';
+    else if (!g.merge) target = 'board';
+    else if (!g.sell) target = 'bowl';
+  }
+  if (target !== lastGuideTarget){
+    ['takeBtn','board','bowl'].forEach(function(id){ var el = $(id); if (el) el.classList.remove('tut-pulse'); });
+    if (target){ var el2 = $(target); if (el2) el2.classList.add('tut-pulse'); }
+    lastGuideTarget = target;
+  }
+  var box = $('tutSteps');
+  if (box){
+    var nodes = box.querySelectorAll('.tut-step');
+    for (var i=0;i<nodes.length;i++){
+      var key = nodes[i].getAttribute('data-gs');
+      var on = done || !!g[key];
+      var cur = !done && !g[key] && target && ((key==='take'&&target==='takeBtn')||(key==='merge'&&target==='board')||(key==='sell'&&target==='bowl'));
+      nodes[i].classList.toggle('done', on);
+      nodes[i].classList.toggle('on', !!cur);
+      var em = nodes[i].querySelector('em');
+      if (em) em.textContent = on ? '已完成' : cur ? '进行中' : '待完成';
+    }
+  }
+}
+function guideTick(){
+  var g = guideState(); if (!g || g.done || g.rewarded) return false;
+  if (g.take && g.merge && g.sell){
+    g.rewarded = true; g.done = true; S.coins += 18;
+    return true;
+  }
+  return false;
+}
+function openGuide(){
+  var m = $('guideModal'); if (!m) return;
+  renderGuide();
+  m.classList.remove('hide');
+  beep('take');
+}
+function closeGuide(){ var m=$('guideModal'); if (m) m.classList.add('hide'); }
 
 /* ================= 手机 / 提示 ================= */
 function toast(msg){
@@ -1881,6 +2750,7 @@ function takeSeed(){
     if (S.discovered.indexOf(lvl) < 0) S.discovered.push(lvl);
   }
   if (!seeded){ toast('田地满了，先把一样的小物合起来'); beep('error'); return; }
+  if (S.guide && !S.guide.take) S.guide.take = true;
   bumpGoal('take', seeded);
   save(); renderAll();
   if (lastIdx >= 0) popAt(lastIdx);
@@ -1907,10 +2777,12 @@ function applyDrop(from, to){
     S.slots[from] = null;
     var nv = a.v;
     if (a.lvl < 4){
-      nv = (Math.random() < 0.5 ? a.v : (b.v != null ? b.v : a.v));
-      if (a.v != null && b.v != null && a.v !== b.v && Math.random() < 0.5) nv = Math.min(a.v, b.v);
+      if (a.v != null && b.v != null && a.v !== b.v) nv = pickVar(true);
+      else nv = (a.v != null ? a.v : b.v);
     }
     S.slots[to] = {id:uid(), lvl:a.lvl+1, v:nv};
+    if (S.guide && a.lvl + 1 >= 3) S.guide.merge = true;
+    var guideDone = guideTick();
     S.merges += 1;
     bumpGoal('merge', 1);
     var nowC = Date.now();
@@ -1925,6 +2797,7 @@ function applyDrop(from, to){
     save(); renderAll();
     popAt(to); beep('merge'); floatAt(to, '合');
     if (a.lvl+1 === 8) toast('小院落成了，图鉴第 08 格亮了');
+    else if (guideDone) toast('新手三步完成 · +18 金币');
     return;
   }
   if (!b){
@@ -1944,10 +2817,12 @@ function sellAt(idx){
   var v = Math.max(6, Math.round(base * buffs().sell / 6) * 6);
   S.slots[idx] = null; S.coins += v;
   S.sold = (S.sold || 0) + 1;
+  if (S.guide && a.lvl >= 3) S.guide.sell = true;
+  var guideDone = guideTick();
   bumpGoal('sell', 1);
   save(); renderAll(); beep('sell');
   var extra = v - base > 0 ? '（含卖价加成 +' + (v - base) + '）' : '';
-  toast('卖掉 ' + CFG.names[a.lvl-1] + '·' + varName(a.v) + '，得 ' + v + ' 金币' + extra);
+  toast('卖掉 ' + CFG.names[a.lvl-1] + '·' + varName(a.v) + '，得 ' + v + ' 金币' + extra + (guideDone ? ' · 新手 +18' : ''));
 }
 
 function tapCell(idx){
@@ -2043,7 +2918,7 @@ function clock(){
 function windowPane(){
   return '<rect x="206" y="26" width="80" height="72" rx="4" fill="#CFE3DE" stroke="#C0A272" stroke-width="3"/>'+
          '<path d="M246 26v72M206 62h80" stroke="#C0A272" stroke-width="2"/>'+
-         '<path d="M210 96l24-26 14 16 12-10 22 20" fill="none" stroke="rgba(127,169,107,.45)" stroke-width="2"/>'+
+         '<path d="M210 96l24-26 14 16 12-10 22 20" fill="none" stroke="color-mix(in srgb, var(--pink-500) .45%, transparent)" stroke-width="2"/>'+
          '<rect x="202" y="96" width="88" height="6" rx="3" fill="#D8BE8C"/>';
 }
 function curtains(){
@@ -2051,42 +2926,286 @@ function curtains(){
          '<path d="M290 24q12 42-2 76h-12q8-40-2-76z" fill="#E7C3BE"/>'+
          '<path d="M205 26q-8 36 2 70M287 26q8 36-2 70" stroke="rgba(160,90,84,.30)" stroke-width="1.2" fill="none"/>';
 }
-function indoorBase(w,f,tile,win){
-  var s='';
+function indoorBase(w,f,tile,win,withClock){
+  var s='', ink='#5A4632';
+  // 墙面：淡淡水彩 + 边缘压深
   s+='<rect x="0" y="0" width="320" height="152" fill="'+w+'"/>';
+  s+='<rect x="0" y="0" width="320" height="152" fill="rgba(210,186,144,.10)"/>';
+  s+='<rect x="0" y="0" width="120" height="152" fill="rgba(255,251,238,.12)"/>';
+  s+='<rect x="250" y="0" width="70" height="152" fill="rgba(160,132,94,.045)"/>';
   if (tile) s+='<path d="M0 38h320M0 76h320M0 114h320M40 0v152M80 0v152M120 0v152M160 0v152M200 0v152M240 0v152M280 0v152" stroke="rgba(120,110,90,.09)" stroke-width="1"/>';
+  // 墙缝与角落蛛网
+  s+='<path d="M196 12l3 12-2 9 4 12M198 33l-1 7" stroke="'+ink+'" stroke-width=".55" stroke-opacity=".26" fill="none"/>';
+  s+='<g stroke="'+ink+'" stroke-opacity=".18" stroke-width=".6" fill="none"><path d="M0 0l34 2M0 0l2 34M0 0l24 24M0 0l31 12M0 0l12 31"/><path d="M9 1q6 4 8 9M17 2q8 5 11 11M4 9q4 8 9 11"/></g>';
   s+='<rect x="0" y="152" width="320" height="68" fill="'+f+'"/>';
-  s+='<path d="M0 152h320" stroke="rgba(120,96,60,.30)" stroke-width="2"/>';
-  s+='<path d="M0 168h320M0 186h320" stroke="rgba(160,126,74,.16)" stroke-width="1"/>';
-  s+='<path d="M60 152v68M120 152v68M180 152v68M240 152v68" stroke="rgba(160,126,74,.14)" stroke-width="1"/>';
-  s+='<rect x="0" y="146" width="320" height="7" fill="#E6D0A6"/><path d="M0 146h320" stroke="#C9AE7D" stroke-width="1.4"/>';
+  s+='<path d="M0 152h320" stroke="rgba(90,70,46,.55)" stroke-width="1.6"/>';
+  s+='<path d="M0 168h320M0 186h320" stroke="rgba(140,108,66,.28)" stroke-width=".9"/>';
+  s+='<path d="M60 152v68M120 152v68M180 152v68M240 152v68" stroke="rgba(140,108,66,.24)" stroke-width=".9"/>';
+  // 木地板：木纹与钉眼
+  var grain='';
+  for (var gx=0; gx<320; gx+=40){
+    if (gx % 80 === 0){ grain += '<path d="M'+(gx+7)+' 158c9 2 18-1 27 1M'+(gx+9)+' 176c7-1 14 1 21-1"/>'; }
+    grain += '<circle cx="'+(gx+6)+'" cy="163" r=".8" fill="'+ink+'" opacity=".3"/>'+
+             '<circle cx="'+(gx+33)+'" cy="181" r=".8" fill="'+ink+'" opacity=".25"/>';
+  }
+  s+='<g fill="none" stroke="'+ink+'" stroke-opacity=".35" stroke-width=".7">'+grain+'</g>';
+  s+='<rect x="0" y="146" width="320" height="7" fill="#E6D0A6"/><path d="M0 146h320" stroke="'+ink+'" stroke-opacity=".5" stroke-width="1.2"/>';
+  s+='<path d="M0 148h320" stroke="#C9AE7D" stroke-width="1"/>';
   if (win !== false) s+=windowPane();
-  s+=clock();
-  s+='<path d="M206 100l-70 52h32l58-40z" fill="rgba(255,244,214,.32)"/>';
+  if (withClock !== false) s+=clock();
+  // 光柱：薄薄一层 + 细线
+  s+='<path d="M206 100l-70 52h32l58-40z" fill="rgba(255,244,214,.30)"/>';
+  s+='<path d="M198 104l-58 44M190 104l-54 44M182 104l-50 44" stroke="rgba(200,168,110,.20)" stroke-width="1" fill="none"/>';
+  // 空气里的小尘点
+  for (var d=0; d<7; d++){
+    var dx=150+d*9, dy=70+(d%3)*14;
+    s+='<circle cx="'+dx+'" cy="'+dy+'" r="'+(0.7+(d%2)*0.4)+'" fill="'+ink+'" opacity=".18"/>';
+  }
   return s;
 }
 function outdoorBase(sky,grass,hedge){
-  var s='';
+  var s='', ink='#5A4632';
   s+='<rect x="0" y="0" width="320" height="112" fill="'+sky+'"/>';
-  s+='<circle cx="262" cy="34" r="26" fill="rgba(255,247,220,.55)"/>';
-  s+='<rect x="0" y="112" width="320" height="108" fill="'+grass+'"/>';
-  s+='<path d="M0 112h320" stroke="rgba(90,120,70,.35)" stroke-width="2"/>';
-  if (hedge){
-    var hp='M0 108';
-    for (var hx=0; hx<320; hx+=32) hp += 'q16-18 32 0';
-    hp += 'V114H0z';
-    s+='<path d="'+hp+'" fill="#A9C78B" opacity=".9"/>';
-  } else {
-    s+='<path d="M0 96h320" stroke="#C9AE7D" stroke-width="4"/>';
-    for (var i=0;i<32;i++){ var x=6+i*10; s+='<path d="M'+x+' 96v14" stroke="#D8BE8C" stroke-width="3"/>'; }
-    s+='<path d="M0 104h320" stroke="#C9AE7D" stroke-width="2"/>';
+  s+='<rect x="0" y="0" width="320" height="112" fill="rgba(255,250,232,.18)"/>';
+  s+='<rect x="0" y="0" width="320" height="60" fill="rgba(190,214,206,.16)"/>';
+  // 远山与云
+  s+='<path d="M0 84c26-16 44-18 66-8 18 8 36 6 54-4 22-12 44-14 64-2 20 10 40 8 62-2 18-8 40-8 74 2V112H0z" fill="rgba(150,176,150,.22)" stroke="'+ink+'" stroke-width=".7" stroke-opacity=".22"/>';
+  s+='<path d="M22 32c6-9 18-11 26-5 8-2 15 2 17 8 6 4 6 10-1 12-7 4-16 3-18-2-9-1-18-4-18-9 0-2 2-4 4-6z" fill="rgba(255,252,240,.78)" stroke="'+ink+'" stroke-width=".8" stroke-opacity=".3"/>';
+  s+='<path d="M108 20c5-7 15-8 21-3 7-3 14 1 15 6 5 3 5 8-1 10-6 3-13 2-15-2-8 0-14-3-14-7 0-1 2-3 4-4z" fill="rgba(255,252,240,.62)" stroke="'+ink+'" stroke-width=".7" stroke-opacity=".26"/>';
+  // 太阳：墨线 + 光芒
+  s+='<circle cx="262" cy="34" r="24" fill="rgba(255,244,204,.72)" stroke="'+ink+'" stroke-width="1" stroke-opacity=".42"/>';
+  s+='<circle cx="262" cy="34" r="17" fill="rgba(255,250,222,.55)"/>';
+  for (var r=0; r<10; r++){
+    var ra=r*36*Math.PI/180;
+    s+='<path d="M'+(262+Math.cos(ra)*20).toFixed(1)+' '+(34+Math.sin(ra)*20).toFixed(1)+' l'+(Math.cos(ra)*6).toFixed(1)+' '+(Math.sin(ra)*6).toFixed(1)+'" stroke="'+ink+'" stroke-width=".7" stroke-opacity=".28"/>';
   }
-  s+='<path d="M150 220c-8-26 0-42 14-54" stroke="rgba(150,120,70,.16)" stroke-width="16" fill="none"/>';
+  s+='<rect x="0" y="112" width="320" height="108" fill="'+grass+'"/>';
+  s+='<rect x="0" y="112" width="320" height="108" fill="rgba(255,250,232,.10)"/>';
+  s+='<path d="M0 112h320" stroke="rgba(80,105,66,.55)" stroke-width="1.4"/>';
+  if (hedge){
+    var hp='M0 106';
+    for (var hx=0; hx<320; hx+=28) hp += 'q14-20 28 0';
+    hp += 'V114H0z';
+    s+='<path d="'+hp+'" fill="#A9C78B" stroke="'+ink+'" stroke-width=".8" stroke-opacity=".3"/>';
+    for (var hb=0; hb<10; hb++){
+      s+='<path d="M'+(14+hb*31)+' 107c-3-4-2-8 1-10M'+(14+hb*31)+' 107c4-3 5-7 3-10" stroke="#71855A" stroke-width=".7" fill="none" opacity=".55"/>';
+    }
+  } else {
+    s+='<path d="M0 94h320" stroke="#A98A5C" stroke-width="4"/>';
+    for (var i=0;i<21;i++){ var x=6+i*15; s+='<path d="M'+x+' 94v16" stroke="#B89B6C" stroke-width="3.2"/><path d="M'+x+' 94v16" stroke="'+ink+'" stroke-width=".7" stroke-opacity=".35"/>'; }
+    s+='<path d="M0 102h320" stroke="#A98A5C" stroke-width="2"/><path d="M0 102h320" stroke="'+ink+'" stroke-width=".7" stroke-opacity=".3"/>';
+  }
+  // 草叶、石头、野花、飞鸟
+  var flora='';
+  for (var q=0; q<18; q++){
+    var qx=8+((q*47)%310), qy=126+((q*23)%82);
+    flora += '<path d="M'+qx+' '+qy+'c-2-6-1-11 1-14M'+qx+' '+qy+'c1-5 3-9 6-11M'+qx+' '+qy+'c-4-4-7-6-10-6" stroke="#6F8554" stroke-width=".9" fill="none" opacity=".7"/>';
+  }
+  for (var p=0; p<9; p++){
+    var px=18+((p*71)%286), py=132+((p*37)%68);
+    flora += '<ellipse cx="'+px+'" cy="'+py+'" rx="'+(3+(p%3))+'" ry="2" fill="#CBB68E" stroke="'+ink+'" stroke-width=".6" stroke-opacity=".35"/>';
+  }
+  for (var f=0; f<4; f++){
+    var fx=36+f*74, fy=150+(f%2)*44;
+    flora += '<path d="M'+fx+' '+fy+'v-13" stroke="#71855A" stroke-width="1"/>'+
+             '<circle cx="'+fx+'" cy="'+(fy-15)+'" r="3" fill="#D98C7C" stroke="'+ink+'" stroke-width=".6" stroke-opacity=".45"/>'+
+             '<path d="M'+fx+' '+(fy-6)+'c-4-2-6-5-5-7 3 0 5 3 5 7" stroke="#71855A" stroke-width=".8" fill="none"/>';
+  }
+  s+='<g opacity=".8">'+flora+'</g>';
+  // 小鸟
+  s+='<path d="M110 62c4-3 7-3 10 0M120 60c3-3 6-3 9 0" stroke="'+ink+'" stroke-width="1" fill="none" opacity=".45"/>';
+  s+='<path d="M150 220c-8-26 0-42 14-54" stroke="rgba(150,120,70,.14)" stroke-width="16" fill="none"/>';
   return s;
 }
 function bench(x,y,w,c1,c2){
   return '<rect x="'+x+'" y="'+y+'" width="'+w+'" height="7" rx="3" fill="'+c1+'"/>'+
          '<path d="M'+(x+6)+' '+y+'v14M'+(x+w-6)+' '+y+'v14" stroke="'+c2+'" stroke-width="3"/>';
+}
+function miniBloom(cx,cy,r,petal,core){
+  var s='', ink=INK, n=5, i, a;
+  for (i=0;i<n;i++){
+    a = -90 + i*72;
+    var px = cx + Math.cos(a*Math.PI/180)*r*0.55;
+    var py = cy + Math.sin(a*Math.PI/180)*r*0.55;
+    s += '<circle cx="'+px.toFixed(1)+'" cy="'+py.toFixed(1)+'" r="'+(r*0.5).toFixed(1)+'" fill="'+petal+'" stroke="'+ink+'" stroke-width=".6" stroke-opacity=".55"/>';
+  }
+  s += '<circle cx="'+cx+'" cy="'+cy+'" r="'+(r*0.34).toFixed(1)+'" fill="'+core+'" stroke="'+ink+'" stroke-width=".55" stroke-opacity=".5"/>';
+  return s;
+}
+/* ===== 花团锦簇：房间花饰层 ===== */
+function floralLeaf(x,y,ang,len,color,w){
+  var a=ang*Math.PI/180, ex=x+Math.cos(a)*len, ey=y+Math.sin(a)*len;
+  var nx=Math.sin(a), ny=-Math.cos(a), mw=len*(w||0.30);
+  return '<path d="M'+x.toFixed(1)+' '+y.toFixed(1)+
+    ' Q'+(x+Math.cos(a)*len*0.5+nx*mw).toFixed(1)+' '+(y+Math.sin(a)*len*0.5+ny*mw).toFixed(1)+' '+ex.toFixed(1)+' '+ey.toFixed(1)+
+    ' Q'+(x+Math.cos(a)*len*0.5-nx*mw).toFixed(1)+' '+(y+Math.sin(a)*len*0.5-ny*mw).toFixed(1)+' '+x.toFixed(1)+' '+y.toFixed(1)+
+    'z" fill="'+color+'" stroke="'+INK+'" stroke-width=".5" stroke-opacity=".34"/>';
+}
+function floralBush(cx,cy,s,seed){
+  var out='<g opacity=".94">';
+  for (var k=0;k<6;k++){
+    var ang=-90+(k-2.5)*17, len=s*(0.94+(k%3)*0.10);
+    var bx=cx+Math.cos(ang*Math.PI/180)*len*0.95, by=cy+Math.sin(ang*Math.PI/180)*len;
+    var V=VARS[(seed+k*5)%16];
+    out += '<path d="M'+cx.toFixed(1)+' '+cy.toFixed(1)+' Q'+(cx+(bx-cx)*0.35).toFixed(1)+' '+(cy-6).toFixed(1)+' '+bx.toFixed(1)+' '+by.toFixed(1)+
+      '" stroke="'+V.stem+'" stroke-width=".85" fill="none" opacity=".82"/>';
+    out += floralLeaf(cx+(bx-cx)*0.42, cy-5, ang-38, s*0.42, V.leaf, .32);
+    out += floralLeaf(cx+(bx-cx)*0.58, cy-8, ang+32, s*0.34, V.leafL, .28);
+    out += '<ellipse cx="'+bx.toFixed(1)+'" cy="'+by.toFixed(1)+'" rx="'+(s*0.24).toFixed(1)+'" ry="'+(s*0.20).toFixed(1)+'" fill="'+V.petal+'" opacity=".16"/>';
+    out += flower(bx,by, Math.max(2.3,s*0.22), V.petal, V.core, -30+k*15, V.shape);
+  }
+  out += '</g>';
+  return out;
+}
+function floralGarland(x1,x2,y,seed,count){
+  count = Math.max(3, count||5);
+  var out='<g opacity=".92">';
+  out += '<path d="M'+x1+' '+y+' C'+(x1+(x2-x1)*.25)+' '+(y-5)+' '+(x1+(x2-x1)*.55)+' '+(y+6)+' '+x2+' '+y+
+    '" stroke="#67835A" stroke-width="1.1" fill="none" opacity=".7"/>';
+  for (var k=0;k<count;k++){
+    var t=(k+0.5)/count, x=x1+(x2-x1)*t, yy=y+Math.sin(k*1.7+seed)*2.4;
+    var V=VARS[(seed+k*3)%16], r=2.2+(k%3)*0.65;
+    out += '<path d="M'+x.toFixed(1)+' '+(yy-1).toFixed(1)+' q'+((k%2)?3:-3)+' 7 '+((k%2)?1:-1)+' 13" stroke="'+V.stem+'" stroke-width=".75" fill="none" opacity=".62"/>';
+    out += floralLeaf(x+2, yy+5, (k%2)?45:135, 4.2+(k%2), V.leaf, .26);
+    out += '<ellipse cx="'+x.toFixed(1)+'" cy="'+yy.toFixed(1)+'" rx="'+(r*1.18).toFixed(1)+'" ry="'+(r*0.95).toFixed(1)+'" fill="'+V.petal+'" opacity=".15"/>';
+    out += flower(x,yy,r,V.petal,V.core,k*31+(seed%17),V.shape);
+    if (k<count-1){
+      var mx=x+(x2-x1)/count/2, my=yy+2.6;
+      out += '<circle cx="'+mx.toFixed(1)+'" cy="'+my.toFixed(1)+'" r="1.3" fill="'+VARS[(seed+k+4)%16].petal+'" stroke="'+INK+'" stroke-width=".4" stroke-opacity=".35" opacity=".8"/>';
+    }
+  }
+  out += '</g>';
+  return out;
+}
+function floralPosy(cx,cy,s,seed){
+  var out='<g opacity=".95">', vh=s*0.46, vw=s*0.34, bodyW=Math.max(0.8, vw*2-6);
+  out += '<path d="M'+(cx-vw).toFixed(1)+' '+(cy-vh).toFixed(1)+'h'+(vw*2).toFixed(1)+'l-3 '+vh+'h-'+bodyW.toFixed(1)+'z" fill="#F8EFD9" stroke="#B98E62" stroke-width=".9" opacity=".9"/>';
+  out += '<path d="M'+(cx-vw+1).toFixed(1)+' '+(cy-vh+1).toFixed(1)+'h'+(vw*2-2).toFixed(1)+'" stroke="#D96A7A" stroke-width="1.4" opacity=".7"/>';
+  for (var k=0;k<4;k++){
+    var ang=-90+(k-1.5)*22, len=s*(0.9+(k%2)*0.14);
+    var bx=cx+Math.cos(ang*Math.PI/180)*len*0.8, by=cy-vh+Math.sin(ang*Math.PI/180)*len;
+    var V=VARS[(seed+k*4)%16];
+    out += '<path d="M'+cx.toFixed(1)+' '+(cy-vh).toFixed(1)+' Q'+(cx+(bx-cx)*0.5).toFixed(1)+' '+(by+6).toFixed(1)+' '+bx.toFixed(1)+' '+by.toFixed(1)+'" stroke="'+V.stem+'" stroke-width=".85" fill="none"/>';
+    out += floralLeaf(cx+(bx-cx)*0.4, by+7, ang-35, s*0.34, V.leaf, .28);
+    out += '<ellipse cx="'+bx.toFixed(1)+'" cy="'+by.toFixed(1)+'" rx="'+(s*0.3).toFixed(1)+'" ry="'+(s*0.25).toFixed(1)+'" fill="'+V.petal+'" opacity=".15"/>';
+    out += flower(bx,by, Math.max(2.2,s*0.19), V.petal,V.core,k*49+seed,V.shape);
+  }
+  out += '</g>';
+  return out;
+}
+function floralWreath(cx,cy,rx,ry,seed,count){
+  var out='<g opacity=".94">', n=count||10;
+  out += '<ellipse cx="'+cx+'" cy="'+cy+'" rx="'+rx+'" ry="'+ry+'" fill="none" stroke="#6B8A5F" stroke-width="1.4" opacity=".8"/>';
+  for (var k=0;k<n;k++){
+    var a=(k/n)*360*Math.PI/180, x=cx+Math.cos(a)*rx, y=cy+Math.sin(a)*ry;
+    var V=VARS[(seed+k*5)%16];
+    out += floralLeaf(cx+Math.cos(a)*(rx-2), cy+Math.sin(a)*(ry-2), (a*180/Math.PI)+70, 6.5, V.leaf, .30);
+    out += '<ellipse cx="'+x.toFixed(1)+'" cy="'+y.toFixed(1)+'" rx="3.6" ry="3" fill="'+V.petal+'" opacity=".16"/>';
+    out += flower(x,y, 2.6+(k%3)*0.4, V.petal,V.core,k*39,V.shape);
+  }
+  out += '</g>';
+  return out;
+}
+function floralPetals(seed,n){
+  var out='<g opacity=".58">';
+  for (var k=0;k<n;k++){
+    var V=VARS[(seed+k*3)%16], x=22+((k*67+seed*13)%280), y=160+((k*29+seed*7)%52), rot=(k*47)%180;
+    out += '<ellipse cx="'+x+'" cy="'+y+'" rx="3.2" ry="1.5" fill="'+V.petal+'" stroke="'+INK+'" stroke-width=".4" stroke-opacity=".28" transform="rotate('+rot+' '+x+' '+y+')"/>';
+  }
+  out += '</g>';
+  return out;
+}
+function roomFloralAmbient(R){
+  var h=houseState(), n=0, own=h.owned[R.id]||[], hid=h.hidden[R.id]||[];
+  for (var i=0;i<own.length;i++) if (hid.indexOf(own[i])<0) n++;
+  if (!n) return '';
+  var s='<g class="floral-ambient" pointer-events="none">';
+  var tier=shopTier(), style=shopStyle(), styleSeed=style*17;
+  if (!R.out){
+    s += floralGarland(7,313,9,n+2+tier*9+styleSeed, Math.min(16, 5+n+tier*2));
+  } else if (tier>=1){
+    s += floralGarland(24,296,205,n+2+tier*9+styleSeed, 4+tier*2);
+  }
+  s += floralBush(10,214, 8+Math.min(8,n*0.8)+tier*0.6, n*3+1+tier*13+styleSeed);
+  s += floralBush(310,214, 8+Math.min(8,n*0.8)+tier*0.6, n*3+4+tier*13+styleSeed);
+  if (n>=3) s += floralPetals(n*5+tier*3+styleSeed, Math.min(16,n*2+tier*2));
+  if (tier>=1) s += floralGarland(24,296,214,n+7+tier*11+styleSeed, 4+tier*2);
+  if (tier>=2) s += floralBush(160,214,10, 70+tier+styleSeed);
+  if (tier>=3) s += floralBush(110,214,7, 50+tier+styleSeed);
+  s += '</g>';
+  return s;
+}
+function roomFloralAccents(R){
+  var s='', has=function(id){ return roomHas(R,id); }, V0=VARS[0], V1=VARS[1], V3=VARS[3], V8=VARS[8];
+  if (R.id==='front'){
+    if (has('fcounter')) s += floralPosy(100,164,15,8);
+    if (has('farch')) s += floralBush(102,152,8,3)+floralBush(218,152,8,9);
+    if (has('flamp')) s += '<path d="M46 154C35 134 55 116 46 100" stroke="#67835A" stroke-width="1" fill="none" opacity=".7"/>'+floralLeaf(42,132,-45,7,V0.leaf,.3)+floralLeaf(51,120,35,6,V1.leaf,.28)+'<circle cx="46" cy="106" r="2.7" fill="'+V0.petal+'" stroke="'+INK+'" stroke-width=".5" stroke-opacity=".4"/>';
+    if (has('fsign')) s += floralGarland(130,190,62,3,4);
+  } else if (R.id==='living'){
+    if (has('shelf')) s += floralPosy(46,46,17,5);
+    if (has('frame')) s += floralLeaf(118,42,-135,8,V0.leaf,.3)+floralLeaf(172,42,-45,8,V8.leaf,.3)+'<circle cx="116" cy="40" r="2.6" fill="'+V0.petal+'" stroke="'+INK+'" stroke-width=".5" stroke-opacity=".4"/><circle cx="174" cy="40" r="2.4" fill="'+V8.petal+'" stroke="'+INK+'" stroke-width=".5" stroke-opacity=".4"/>';
+    if (has('hearth')) s += floralGarland(236,298,110,7,5)+floralPosy(266,112,12,9);
+    if (has('rug')) {
+      var rugSpots=[[90,170],[116,184],[146,176],[176,184],[202,170]];
+      for (var i=0;i<rugSpots.length;i++){
+        var RV=VARS[(i*3+2)%16];
+        s += miniBloom(rugSpots[i][0],rugSpots[i][1],3.0,RV.petal,RV.core);
+      }
+    }
+    if (has('table')) s += floralPosy(has('vase')?104:132,126,17,3);
+    if (has('lamp')) s += '<path d="M46 154C35 134 55 116 46 100" stroke="#67835A" stroke-width="1" fill="none" opacity=".7"/>'+floralLeaf(41,130,-45,7,V1.leaf,.3)+'<circle cx="50" cy="114" r="2.6" fill="'+V1.petal+'" stroke="'+INK+'" stroke-width=".5" stroke-opacity=".4"/>';
+    if (has('chair')) s += floralPosy(197,130,8,6);
+    if (has('fcounter')) s += floralPosy(52,164,14,8);
+    if (has('fsign')) s += floralGarland(130,190,60,3,5);
+    if (has('fwindow')) s += floralGarland(230,300,108,4,5);
+  } else if (R.id==='dining'){
+    if (has('dtable')) s += floralPosy(158,130,18,4)+floralPetals(3,3);
+    if (has('dcab')) s += floralPosy(266,104,16,8);
+    if (has('dchair')) s += floralPosy(77,127,8,3)+floralPosy(217,127,8,7);
+    if (has('dlamp')) s += floralGarland(144,176,55,5,4);
+  } else if (R.id==='kitchen'){
+    if (has('krack')) {
+      var hx=[128,154,182,198];
+      for (var h=0;h<hx.length;h++) s += '<path d="M'+hx[h]+' 44v16" stroke="'+VARS[h%4].stem+'" stroke-width=".8" opacity=".65"/>'+'<circle cx="'+hx[h]+'" cy="62" r="2.6" fill="'+VARS[h%4].petal+'" stroke="'+INK+'" stroke-width=".5" stroke-opacity=".4"/>';
+    }
+    if (has('kstove')) s += floralPosy(88,110,11,3);
+    if (has('ksink')) s += floralPosy(198,114,11,4);
+    if (has('kfridge')) s += floralPosy(277,76,13,6);
+  } else if (R.id==='bath'){
+    if (has('bmirror')) s += floralWreath(226,64,29,35,7,12);
+    if (has('btowel')) s += floralGarland(44,98,52,3,5);
+    if (has('bbasin')) s += floralPosy(286,110,11,8);
+    if (has('btub')) s += floralPosy(168,120,10,4)+'<g opacity=".7"><ellipse cx="78" cy="136" rx="3" ry="1.4" fill="'+V0.petal+'" stroke="'+INK+'" stroke-width=".4"/><ellipse cx="108" cy="146" rx="2.6" ry="1.3" fill="'+V8.petal+'" stroke="'+INK+'" stroke-width=".4"/><ellipse cx="140" cy="138" rx="3.2" ry="1.5" fill="'+V1.petal+'" stroke="'+INK+'" stroke-width=".4"/></g>';
+  } else if (R.id==='bed'){
+    if (has('bcurtain')) s += floralGarland(204,298,24,5,5);
+    if (has('bward')) s += floralPosy(46,52,15,6);
+    if (has('bnight')) s += floralPosy(282,126,10,7);
+    if (has('bbed')) s += floralGarland(100,232,94,3,9)+'<g opacity=".65"><ellipse cx="126" cy="145" rx="3" ry="1.4" fill="'+V8.petal+'" stroke="'+INK+'" stroke-width=".4"/><ellipse cx="184" cy="154" rx="2.7" ry="1.3" fill="'+V1.petal+'" stroke="'+INK+'" stroke-width=".4"/><ellipse cx="210" cy="140" rx="2.4" ry="1.2" fill="'+V0.petal+'" stroke="'+INK+'" stroke-width=".4"/></g>';
+  } else if (R.id==='study'){
+    if (has('sshelf')) s += floralPosy(276,52,16,8);
+    if (has('sdesk')) s += floralPosy(200,126,16,3);
+    if (has('schair')) s += floralPosy(163,140,8,5);
+    if (has('sbreed')) s += floralBush(30,126,7,2);
+  }
+  return s ? '<g class="floral-accent" pointer-events="none">'+s+'</g>' : '';
+}
+function vaseArt(){
+  var h=houseState(), v=h.vase ? h.vase.v : -1;
+  var P=(v!=null && v>=0) ? VARS[v] : null;
+  var flowers='';
+  if (P){
+    flowers = '<path d="M131 110V96M131 106c-7-2-10-7-9-12M131 104c7-2 10-7 9-12" stroke="'+P.stem+'" stroke-width="1.5" fill="none"/>'+
+              miniBloom(131,90,5.4,P.petal,P.core)+
+              miniBloom(122,93,4.2,P.petalL,P.core)+
+              miniBloom(140,94,3.8,P.petal,P.core)+
+              '<path d="M131 106c-5-2-7-6-7-9" stroke="'+P.leaf+'" stroke-width="1.2" fill="none" opacity=".7"/>';
+  } else {
+    flowers = '<path d="M127 116c2 1.5 6 1.5 8 0" stroke="#A9C4B5" stroke-width="1" fill="none" opacity=".7"/>';
+  }
+  return '<path d="M126 122c-4-6-4-12 0-16h10c4 4 4 10 0 16z" fill="#CFE0D6" stroke="#8FA997" stroke-width="1"/>'+
+         '<path d="M128 114c2 2 5 2 7 0" stroke="#8FA997" stroke-width=".8" opacity=".6"/>'+
+         flowers;
 }
 function tableRound(cx,cy,rx){
   return '<ellipse cx="'+cx+'" cy="'+(cy+4)+'" rx="'+rx+'" ry="12" fill="#D8A96C"/>'+
@@ -2116,6 +3235,61 @@ var ROOMS = [
       return '<path d="M46 160V96" stroke="#8A6A3C" stroke-width="4"/>'+
              '<path d="M34 96h24l-5-14h-14z" fill="#F6D9A6" stroke="#C08A46" stroke-width="1.4"/>'+
              '<circle cx="46" cy="104" r="5" fill="#FFE9B6"/><ellipse cx="46" cy="168" rx="12" ry="4" fill="rgba(90,70,40,.18)"/>';
+    }},
+    {id:'fsign', n:'花店招牌', p:96, d:function(){
+      var st=shopStyle(), boards=['#F6E4C6','#F8D8C8','#DCE8E2','#E7DFF0'], edges=['#9A7440','#B36F52','#6D8C7D','#8172A6'];
+      var f1=['#E26776','#D96A4A','#5F9C8A','#8B79C9'], f2=['#F7CE4E','#F1B84B','#E6C76A','#D9A4C6'], f3=['#7C8FE0','#8C74C4','#7E9DD6','#6FA9B8'];
+      return '<path d="M86 24h32M90 24v8M114 24v8" stroke="#8A6A3C" stroke-width="1.6" fill="none"/>'+
+             '<rect x="86" y="31" width="32" height="23" rx="3" fill="'+boards[st]+'" stroke="'+edges[st]+'" stroke-width="1.8"/>'+
+             '<circle cx="94" cy="42" r="3.2" fill="'+f1[st]+'" stroke="#3B2E22" stroke-width=".6"/>'+
+             '<circle cx="102" cy="41" r="3.2" fill="'+f2[st]+'" stroke="#3B2E22" stroke-width=".6"/>'+
+             '<circle cx="110" cy="42" r="3.2" fill="'+f3[st]+'" stroke="#3B2E22" stroke-width=".6"/>'+
+             '<path d="M96 48c2 2 5 2 7 0" stroke="#7FA96B" stroke-width="1.2" fill="none"/>';
+    }},
+    {id:'fwindow', n:'花店橱窗', p:126, d:function(){
+      return '<rect x="226" y="95" width="78" height="11" rx="3" fill="#FBF4E4" stroke="#9A7440" stroke-width="1.6"/>'+
+             '<path d="M230 106v4M300 106v4M230 98M300 98" stroke="#B08A55" stroke-width="1.2"/>'+
+             '<path d="M232 95c7-7 14-7 21 0M252 95c7-7 14-7 21 0M274 95c7-7 14-7 21 0" stroke="#7FA96B" stroke-width="1.1" fill="none" opacity=".6"/>'+
+             '<circle cx="240" cy="89" r="5" fill="#E8908B" stroke="#3B2E22" stroke-width=".6"/><circle cx="248" cy="90" r="5" fill="#F7CE4E" stroke="#3B2E22" stroke-width=".6"/>'+
+             '<circle cx="270" cy="89" r="5" fill="#B79CD8" stroke="#3B2E22" stroke-width=".6"/><circle cx="278" cy="90" r="5" fill="#7FD1BB" stroke="#3B2E22" stroke-width=".6"/>'+
+             '<circle cx="292" cy="89" r="4.6" fill="#F7C6D2" stroke="#3B2E22" stroke-width=".6"/>'+
+             '<path d="M240 95v-1M270 95v-1M292 95v-1" stroke="#7FA96B" stroke-width="1"/>';
+    }},
+    {id:'fcounter', n:'花店柜台', p:66, d:function(){
+      return '<rect x="8" y="164" width="104" height="11" rx="3" fill="#D8A96C" stroke="#8A5F32" stroke-width="2"/>'+
+             '<path d="M15 175v25M105 175v25" stroke="#B98A5C" stroke-width="3.4"/>'+
+             '<rect x="18" y="145" width="18" height="19" rx="3" fill="#FBF4E4" stroke="#C9AE7D" stroke-width="1.2"/>'+
+             '<path d="M27 145c0-9 5-12 9-12s8 5 8 12" stroke="#7FA96B" stroke-width="1.5" fill="none"/>'+
+             '<circle cx="27" cy="132" r="4" fill="#E26776" stroke="#3B2E22" stroke-width=".6"/><circle cx="36" cy="134" r="3.4" fill="#F7CE4E" stroke="#3B2E22" stroke-width=".6"/>'+
+             '<rect x="58" y="148" width="32" height="16" rx="2" fill="#FFFDF6" stroke="#C9AE7D" stroke-width="1"/>'+
+             '<path d="M63 153h22M63 158h16" stroke="#8A6A3C" stroke-width="1"/>'+
+             '<path d="M76 148v16" stroke="#C9AE7D" stroke-width=".8" opacity=".5"/>';
+    }},
+    {id:'fstone', n:'石灯暖光', p:66, d:function(){
+      return '<ellipse cx="32" cy="205" rx="17" ry="4" fill="rgba(80,60,40,.10)"/>'+
+             '<rect x="24" y="180" width="16" height="18" rx="3" fill="#CFC8B7" stroke="#8E8879" stroke-width="1.2"/>'+
+             '<path d="M20 180h24l-4-8h-16z" fill="#BDB6A5" stroke="#8E8879" stroke-width="1.2"/>'+
+             '<circle cx="32" cy="188" r="4" fill="#FBE3A8"/>'+
+             '<path d="M26 198h12" stroke="#8E8879" stroke-width="1"/>';
+    }},
+    {id:'fchime', n:'风铃轻响', p:96, d:function(){
+      return '<path d="M300 78v-16" stroke="#8A6A3C" stroke-width="1.6"/>'+
+             '<path d="M286 62h28" stroke="#8A6A3C" stroke-width="1.6"/>'+
+             '<path d="M292 62v9M300 62v13M308 62v9" stroke="#C9AE7D" stroke-width="1"/>'+
+             '<circle cx="292" cy="73" r="3" fill="#9CC7CE" stroke="#5F8D98" stroke-width=".5"/>'+
+             '<circle cx="300" cy="77" r="3.4" fill="#E8B7C8" stroke="#A96E85" stroke-width=".5"/>'+
+             '<circle cx="308" cy="73" r="3" fill="#F3D58A" stroke="#A68343" stroke-width=".5"/>'+
+             '<path d="M294 62c3-5 9-5 12 0" stroke="#7FA96B" stroke-width="1.1" fill="none"/>';
+    }},
+    {id:'fbasket', n:'野餐花篮', p:126, d:function(){
+      return '<ellipse cx="224" cy="205" rx="18" ry="4" fill="rgba(80,60,40,.10)"/>'+
+             '<path d="M210 188h28l-4 17h-20z" fill="#D9B279" stroke="#8A5F32" stroke-width="1.4"/>'+
+             '<path d="M214 188c0-10 20-10 20 0" stroke="#8A5F32" stroke-width="1.6" fill="none"/>'+
+             '<path d="M214 192h20M213 197h22" stroke="#B98A5C" stroke-width="1" opacity=".7"/>'+
+             '<circle cx="217" cy="183" r="4" fill="#E8908B" stroke="#3B2E22" stroke-width=".5"/>'+
+             '<circle cx="224" cy="180" r="4" fill="#F7CE4E" stroke="#3B2E22" stroke-width=".5"/>'+
+             '<circle cx="231" cy="183" r="4" fill="#7FD1BB" stroke="#3B2E22" stroke-width=".5"/>'+
+             '<path d="M217 188v-4M224 188v-5M231 188v-4" stroke="#7FA96B" stroke-width="1"/>';
     }}
   ]},
   {id:'living', n:'客厅', items:[
@@ -2151,12 +3325,7 @@ var ROOMS = [
              '<path d="M182 126c0-12 6-18 15-18s15 6 15 18" fill="#DDB07C"/>'+
              '<path d="M188 120v-6M198 118v-6M208 120v-6" stroke="#B28757" stroke-width="1.2"/>';
     }},
-    {id:'vase', n:'花瓶', p:156, d:function(){
-      return '<path d="M126 122c-4-6-4-12 0-16h10c4 4 4 10 0 16z" fill="#CFE0D6" stroke="#8FA997" stroke-width="1"/>'+
-             '<path d="M131 106V94" stroke="#7FA96B" stroke-width="1.6"/>'+
-             '<circle cx="131" cy="90" r="4.4" fill="#E8908B"/><circle cx="131" cy="90" r="1.7" fill="#EDB44C"/>'+
-             '<circle cx="124" cy="93" r="3.4" fill="#F7C6D2"/><circle cx="138" cy="94" r="3" fill="#F2A96B"/>';
-    }},
+    {id:'vase', n:'花瓶', p:156, d:function(){ return vaseArt(); }},
     {id:'cat', n:'睡猫', p:216, d:function(){
       return '<ellipse cx="214" cy="178" rx="17" ry="8" fill="#D6C0A6"/>'+
              '<circle cx="200" cy="174" r="7" fill="#D6C0A6"/>'+
@@ -2236,30 +3405,6 @@ var ROOMS = [
              '<circle cx="60" cy="120" r="5" fill="#CFE0D6"/>';
     }}
   ]},
-  {id:'hall', n:'走廊', win:false, items:[
-    {id:'hhooks', n:'挂钩', p:36, d:function(){
-      return '<path d="M206 46h70" stroke="#8A6A3C" stroke-width="3"/>'+
-             '<circle cx="220" cy="50" r="2.6" fill="#8A6A3C"/><circle cx="244" cy="50" r="2.6" fill="#8A6A3C"/><circle cx="268" cy="50" r="2.6" fill="#8A6A3C"/>'+
-             '<path d="M244 52c-12 10-12 24-4 26 8 2 8-12 4-14" fill="#9BA9E4" stroke="#6E7CC4" stroke-width="1"/>'+
-             '<path d="M268 52c8 8 8 18 2 22" fill="#E8908B"/>';
-    }},
-    {id:'hsconce', n:'壁灯', p:96, d:function(){
-      return '<path d="M150 38v8" stroke="#8A6A3C" stroke-width="2"/>'+
-             '<path d="M140 46h20l-5 14h-10z" fill="#F6D9A6" stroke="#C08A46" stroke-width="1.3"/>'+
-             '<ellipse cx="150" cy="70" rx="16" ry="6" fill="rgba(255,233,182,.4)"/>';
-    }},
-    {id:'hconsole', n:'玄关桌', p:126, d:function(){
-      return '<rect x="18" y="116" width="78" height="7" rx="3" fill="#D8A96C"/>'+
-             '<path d="M26 123v28M88 123v28" stroke="#B98A5C" stroke-width="3"/>'+
-             '<path d="M54 116c-4-6-4-10 0-14h8c4 4 4 8 0 14z" fill="#CFE0D6" stroke="#8FA997" stroke-width="1"/>'+
-             '<circle cx="58" cy="97" r="4" fill="#F2A96B"/>';
-    }},
-    {id:'hrunner', n:'长地毯', p:66, d:function(){
-      return '<rect x="72" y="166" width="176" height="22" rx="3" fill="#E8C9B6"/>'+
-             '<rect x="80" y="170" width="160" height="14" rx="2" fill="#F1DACB"/>'+
-             '<path d="M96 171v12M112 171v12M224 171v12M240 171v12" stroke="#D9AE97" stroke-width="1.2"/>';
-    }}
-  ]},
   {id:'bed', n:'卧室', items:[
     {id:'bcurtain', n:'窗帘', p:66, d:function(){ return curtains(); }},
     {id:'bward', n:'衣柜', p:216, d:function(){
@@ -2306,30 +3451,40 @@ var ROOMS = [
       return '<path d="M110 126v-12" stroke="#8A6A3C" stroke-width="2"/>'+
              '<path d="M98 114h24l-6-12h-12z" fill="#F6D9A6" stroke="#C08A46" stroke-width="1.2"/>'+
              '<ellipse cx="110" cy="128" rx="14" ry="5" fill="rgba(255,233,182,.45)"/>';
-    }}
-  ]},
-  {id:'back', n:'后院', out:true, hedge:true, items:[
-    {id:'btree', n:'大树', p:186, d:function(){
-      return '<path d="M54 152V102c0-14 8-24 17-24s17 10 17 24V152z" fill="#9A7440"/>'+
-             '<circle cx="66" cy="60" r="28" fill="#A9C78B"/><circle cx="94" cy="64" r="30" fill="#B9D3A0"/>'+
-             '<circle cx="80" cy="44" r="24" fill="#C4DBAE"/><circle cx="86" cy="72" r="22" fill="#96BB7C"/>';
     }},
-    {id:'bswing', n:'秋千', p:216, d:function(){
-      return '<path d="M216 150V70M292 150V70M208 150h96" stroke="#B08A55" stroke-width="3" fill="none"/>'+
-             '<path d="M240 70v34M268 70v34" stroke="#8A6A3C" stroke-width="2"/>'+
-             '<rect x="234" y="106" width="40" height="9" rx="3" fill="#C99C63" stroke="#8A6A3C" stroke-width="1"/>';
-    }},
-    {id:'bbench', n:'木长椅', p:96, d:function(){
-      return bench(122,140,74,'#D8A96C','#A97D4A')+
-             '<path d="M128 140v-12h62v12" stroke="#C79A68" stroke-width="2.4" fill="none"/>';
-    }},
-    {id:'bpond', n:'小池塘', p:126, d:function(){
-      return '<ellipse cx="244" cy="182" rx="58" ry="20" fill="#CFE0D6" stroke="#A9C7BD" stroke-width="2"/>'+
-             '<ellipse cx="244" cy="180" rx="46" ry="14" fill="#B9D9D2"/>'+
-             '<circle cx="228" cy="178" r="4" fill="#F7C6D2"/><circle cx="262" cy="182" r="3" fill="#FBF4E4"/>';
+    {id:'sbreed', n:'育种台', p:216, d:function(){
+      return '<rect x="18" y="126" width="92" height="9" rx="3" fill="#D8A96C" stroke="#9A7440" stroke-width="2"/>'+
+             '<path d="M26 135v24M106 135v24" stroke="#B98A5C" stroke-width="3"/>'+
+             '<rect x="32" y="112" width="18" height="15" rx="4" fill="#CFE0D6" stroke="#8FA997" stroke-width="1.2"/>'+
+             '<rect x="76" y="112" width="18" height="15" rx="4" fill="#F7C6D2" stroke="#C98C98" stroke-width="1.2"/>'+
+             '<path d="M41 112c0-8 4-12 8-12s8 4 8 12M85 112c0-7 3-11 7-11s7 4 7 11" stroke="#7FA96B" stroke-width="1.5" fill="none"/>'+
+             '<circle cx="41" cy="98" r="3.4" fill="#F7CE4E"/><circle cx="49" cy="100" r="3" fill="#E26776"/>'+
+             '<circle cx="85" cy="99" r="3.2" fill="#7C8FE0"/><circle cx="93" cy="101" r="2.8" fill="#7FD1BB"/>'+
+             '<rect x="104" y="104" width="20" height="14" rx="2" fill="#FBF4E4" stroke="#C9AE7D" stroke-width="1"/>'+
+             '<path d="M109 109h10M109 114h7" stroke="#8A6A3C" stroke-width="1"/>';
     }}
   ]}
 ];
+var ROOM_SETS = {
+  front:{n:'门前小景', ids:['farch','fbench','fmail'], pay:66},
+  front2:{key:'front2', room:'front', n:'院角小景', ids:['fstone','fchime','fbasket'], pay:66},
+  living:{n:'暖居三件', ids:['curtain','rug','vase'], pay:66},
+  dining:{n:'待客一桌', ids:['dlamp','dtable','dchair'], pay:66},
+  kitchen:{n:'灶间烟火', ids:['krack','kstove','ksink'], pay:66},
+  bath:{n:'洗漱三件', ids:['bmirror','btowel','btub'], pay:66},
+  bed:{n:'好眠三件', ids:['bcurtain','bbed','bnight'], pay:66},
+  study:{n:'读写三件', ids:['sshelf','sdesk','schair'], pay:66}
+};
+
+/* 花店门店从院子里搬进客厅：店里三件家具随房间走，前院只保留装饰 */
+(function(){
+  var shopIds=['fcounter','fwindow','fsign'], front=ROOMS[0], living=ROOMS[1];
+  for (var k=0;k<shopIds.length;k++){
+    for (var i=0;i<front.items.length;i++){
+      if (front.items[i].id===shopIds[k]){ living.items.push(front.items.splice(i,1)[0]); break; }
+    }
+  }
+})();
 ROOMS.forEach(function(R){ R.items.forEach(function(it){ it.rid = R.id + '.' + it.id; }); });
 function roomById(id){
   for (var i=0;i<ROOMS.length;i++) if (ROOMS[i].id === id) return ROOMS[i];
@@ -2339,7 +3494,12 @@ function houseState(){
   if (!S.house || typeof S.house !== 'object') S.house = {now:'living', owned:{}, hidden:{}};
   if (!S.house.owned) S.house.owned = {};
   if (!S.house.hidden) S.house.hidden = {};
-  if (!S.house.now || !roomById(S.house.now).id) S.house.now = 'living';
+  if (!S.house.vase || typeof S.house.vase !== 'object') S.house.vase = {v:-1};
+  if (!Array.isArray(S.house.sets)) S.house.sets = [];
+  if (!S.house.task || typeof S.house.task !== 'object') S.house.task = null;
+  if (!('guest' in S.house)) S.house.guest = null;
+  var nowR = roomById(S.house.now);
+  if (!S.house.now || nowR.id !== S.house.now) S.house.now = 'living';
   return S.house;
 }
 function roomHas(R, id){
@@ -2349,21 +3509,671 @@ function roomHas(R, id){
 }
 function roomScene(id){
   var R = roomById(id), s = '';
+  /* 草地固色：前院、后院不随主题配色变化 */
   if (R.out) s += outdoorBase(R.hedge ? '#DDEBE0' : '#DCEBE4', R.hedge ? '#C2D79A' : '#CFE0AE', R.hedge);
-  else s += indoorBase(R.tile ? '#F4EFE2' : '#F8F0DC', R.tile ? '#DDE7E2' : '#E7D3AC', R.tile, R.win);
+  else s += indoorBase(R.tile ? 'var(--pink-100)' : 'var(--card)', R.tile ? 'var(--pink-100)' : 'var(--pink-100)', R.tile, R.win, !(R.id==='kitchen'||R.id==='bath'));
+  s += roomFloralAmbient(R);
   for (var i=0;i<R.items.length;i++){
-    if (roomHas(R, R.items[i].id)) s += R.items[i].d();
+    if (roomHas(R, R.items[i].id)){
+      var fi = R.items[i];
+      s += '<g class="furni" data-fid="'+fi.id+'" role="button" tabindex="0" aria-label="'+fi.n+'">'+fi.d()+'</g>';
+    }
   }
-  return '<svg viewBox="0 0 320 220" role="img" aria-label="'+R.n+'">'+s+'</svg>';
+  s += roomFloralAccents(R);
+  var gg = houseState().guest;
+  if (gg && gg.room === R.id && !gg.claimed) s += guestSVG();
+  return '<svg viewBox="0 0 320 220" role="img" aria-label="'+R.n+'">'+
+    '<defs><filter id="wcEdge" x="-6%" y="-6%" width="112%" height="112%" color-interpolation-filters="sRGB">'+
+    '<feTurbulence type="fractalNoise" baseFrequency="0.032 0.046" numOctaves="3" seed="11" result="n"/>'+
+    '<feDisplacementMap in="SourceGraphic" in2="n" scale="1.7" xChannelSelector="R" yChannelSelector="G"/>'+
+    '</filter></defs><g filter="url(#wcEdge)">'+s+'</g></svg>';
+}
+/* ===== 小屋访客 ===== */
+var GUEST_POOL = [
+  {n:'邻居阿婆', a:'婆', verb:'想看看'},
+  {n:'邮差小满', a:'满', verb:'想坐坐'},
+  {n:'隔壁阿禾', a:'禾', verb:'想瞧瞧'},
+  {n:'晒被子的姑', a:'姑', verb:'想摸摸'}
+];
+function makeGuest(){
+  var h = houseState(), day = seasonInfo().days, who = pick(GUEST_POOL);
+  var g = {day:day, who:who.n, av:who.a, verb:who.verb, claimed:false, kind:'furni'};
+  if (roomHas(roomById('living'), 'vase') && h.vase.v >= 0 && Math.random() < 0.4){
+    var seen = (S.vars || []).filter(function(v){ return v >= 0 && v < VARS.length; });
+    if (!seen.length) seen = [0];
+    var ask = pick(seen);
+    if (ask === h.vase.v && seen.length > 1){
+      for (var k=0;k<seen.length;k++) if (seen[k] !== h.vase.v){ ask = seen[k]; break; }
+    }
+    g.kind = 'vase'; g.room = 'living'; g.v = ask;
+    return g;
+  }
+  var R = pick(ROOMS);
+  var pool = R.items.filter(function(it){ return it.p <= 216; });
+  if (!pool.length) pool = R.items;
+  var it = pick(pool);
+  g.room = R.id; g.id = it.id;
+  var seat = ['rug','chair','dchair','bbed','bswing','bbench','fbench'];
+  var soft = ['btowel','curtain','bcurtain','bbed','rug'];
+  g.verb = seat.indexOf(it.id) >= 0 ? '想坐坐' : (soft.indexOf(it.id) >= 0 ? '想摸摸' : '想看看');
+  return g;
+}
+function ensureGuest(){
+  var h = houseState(), day = seasonInfo().days;
+  if (!h.guest || h.guest.day !== day){ h.guest = makeGuest(); save(); }
+  return h.guest;
+}
+function guestRoom(g){ return roomById(g.room); }
+function guestNeedMet(g){
+  if (!g) return false;
+  if (g.kind === 'vase') return roomHas(roomById('living'), 'vase') && houseState().vase.v === g.v;
+  return roomHas(guestRoom(g), g.id);
+}
+function guestPerfect(g){
+  var set = ROOM_SETS[g.room]; if (!set) return false;
+  for (var i=0;i<set.ids.length;i++) if (!roomHas(guestRoom(g), set.ids[i])) return false;
+  return true;
+}
+function warmBonus(){
+  var h = houseState(), n = 0;
+  for (var r=0;r<ROOMS.length;r++){
+    var R = ROOMS[r], own = h.owned[R.id] || [], hid = h.hidden[R.id] || [];
+    for (var i=0;i<own.length;i++) if (hid.indexOf(own[i]) < 0) n++;
+  }
+  var b = Math.floor(n/6) * 6, total = 0;
+  for (var r=0;r<ROOMS.length;r++) total += ROOMS[r].items.length;
+  if (total && n >= total) b += 6;   // 满屋额外一档
+  return Math.min(36, b);
+}
+function guestPay(g){
+  if (g.claimed && g.paid) return g.paid;
+  return (guestPerfect(g) ? 126 : 66) + warmBonus();
+}
+function guestSVG(){
+  return '<g class="guest-fig" data-guest="1" role="button" aria-label="今日访客">'+
+    '<ellipse cx="292" cy="201" rx="16" ry="4.5" fill="rgba(80,60,40,.10)" stroke="none"/>'+
+    '<rect x="279" y="185" width="26" height="3.2" rx="1.2" fill="#D8A96C" stroke="'+INK+'" stroke-width=".8" stroke-opacity=".55"/>'+
+    '<path d="M282 188v9M302 188v9" stroke="#B08A55" stroke-width="2.4"/>'+
+    '<path d="M287 184l-3 11M297 184l3 11" stroke="#5B4A3C" stroke-width="3" fill="none"/>'+
+    '<path d="M282 195h4M298 195h4" stroke="#4B3A33" stroke-width="2.6"/>'+
+    '<path d="M281 160h20l5 25h-30z" fill="#B4645A" stroke="'+INK+'" stroke-width=".9" stroke-opacity=".6"/>'+
+    '<path d="M281 168c-5 4-7 9-6 14" stroke="#B4645A" stroke-width="5" fill="none"/>'+
+    '<circle cx="292" cy="154" r="7" fill="#F2D2B6" stroke="'+INK+'" stroke-width=".8" stroke-opacity=".55"/>'+
+    '<path d="M285 151c2-4 12-4 14 0" stroke="#6B4B36" stroke-width="3" fill="none"/>'+
+    '<ellipse cx="292" cy="150" rx="10" ry="2.6" fill="#DDB06C" stroke="#9A7440" stroke-width=".8"/>'+
+    '<circle cx="289" cy="154" r=".8" fill="#4B3A33"/><circle cx="295" cy="154" r=".8" fill="#4B3A33"/>'+
+    '<path d="M290 158c1 1 3 1 4 0" stroke="#B9756A" stroke-width=".8" fill="none"/>'+
+  '</g>';
+}
+function renderGuestBtn(){
+  if (!$('guestBtn')) return;
+  var g = ensureGuest(), ready = guestNeedMet(g) && !g.claimed;
+  $('guestBtn').classList.toggle('ready', ready);
+  $('guestBtn').title = g.who + (g.claimed ? ' · 今天已接待' : ready ? ' · 可以接待了' : ' · 还在等你备好');
+}
+function renderGuestSheet(){
+  var g = ensureGuest(), R = guestRoom(g), met = guestNeedMet(g), perfect = guestPerfect(g), pay = guestPay(g);
+  var req = '', note = '';
+  if (g.kind === 'vase'){
+    req = '坐在 <b>客厅</b>，想闻一闻瓶里的 <b>' + varName(g.v) + '</b> 香不香。';
+  } else {
+    var nm = g.id, itm = null;
+    for (var i=0;i<R.items.length;i++) if (R.items[i].id === g.id) itm = R.items[i];
+    if (itm) nm = itm.n;
+    req = '坐在 <b>' + R.n + '</b>，' + g.verb + ' <b>' + nm + '</b>。';
+  }
+  var warm = warmBonus();
+  var wtxt = warm ? '（含温馨度 +' + warm + '）' : '';
+  if (g.claimed) note = '今天已经接待过了，明天再来。';
+  else if (met) note = perfect ? '这间房已经成套，客人很满意 · 完美接待 +' + pay + wtxt : '客人要的已经备好了 · 接待 +' + pay + wtxt;
+  else note = g.kind === 'vase' ? '把客厅瓶花换成这一色，就能接待。' : '先去' + R.n + '把「' + (function(){ var n=g.id; for (var j=0;j<R.items.length;j++) if (R.items[j].id===g.id) n=R.items[j].n; return n; })() + '」摆出来。';
+  $('guestBody').innerHTML =
+    '<div class="gs-head"><span class="gs-ava">' + g.av + '</span><div class="gs-who"><b>' + g.who + '</b><span>今日访客 · ' + R.n + '</span></div></div>'+
+    '<p class="gs-req">' + req + '</p>'+
+    '<p class="gs-note">' + note + '</p>';
+  $('guestGo').textContent = '去' + R.n;
+  $('guestClaim').textContent = g.claimed ? '已接待 +' + pay : !met ? '还没备好' : perfect ? '完美接待 +' + pay : '接待 +' + pay;
+  $('guestClaim').title = warm ? '含全屋温馨度加成 +' + warm : '全屋添家具可提高接待金币';
+  $('guestClaim').disabled = g.claimed || !met;
+}
+function openGuest(){
+  if (!$('guestMask') || !$('guestSheet')) return;
+  renderGuestSheet();
+  $('guestMask').hidden = false; $('guestSheet').hidden = false;
+}
+function closeGuest(){
+  if ($('guestMask')) $('guestMask').hidden = true;
+  if ($('guestSheet')) $('guestSheet').hidden = true;
+}
+if ($('guestBtn')) $('guestBtn').addEventListener('click', function(){ beep('take'); openGuest(); });
+if ($('guestMask')) $('guestMask').addEventListener('click', closeGuest);
+if ($('guestClose')) $('guestClose').addEventListener('click', closeGuest);
+if ($('guestGo')) $('guestGo').addEventListener('click', function(){
+  var g = ensureGuest(), h = houseState();
+  h.now = g.room; save(); renderAll(); closeGuest();
+  toast('去' + guestRoom(g).n + '看看客人');
+});
+if ($('guestClaim')) $('guestClaim').addEventListener('click', function(){
+  var g = ensureGuest();
+  if (g.claimed) return;
+  if (!guestNeedMet(g)){ toast('客人要的还没备好'); beep('error'); return; }
+  var pay = guestPay(g), wb = warmBonus();
+  g.claimed = true; g.paid = pay; S.coins += pay;
+  toast('接待了' + g.who + ' · +' + pay + ' 金币' + (wb ? '（含温馨 +' + wb + '）' : ''));
+  beep('order'); save(); renderAll(); closeGuest();
+});
+
+/* ===== 育种台 ===== */
+var breedSelA = -1, breedSelB = -1;
+function lvl5Count(v){
+  var n = 0;
+  for (var i=0;i<S.slots.length;i++){ var it=S.slots[i]; if (it && it.lvl===5 && it.v===v) n++; }
+  return n;
+}
+function breedPickSlot(v){
+  for (var i=0;i<S.slots.length;i++){ var it=S.slots[i]; if (it && it.lvl===5 && it.v===v) return i; }
+  return -1;
+}
+function breedChoose(v){
+  if (lvl5Count(v) <= 0) return;
+  if (breedSelA === v){ breedSelA = -1; }
+  else if (breedSelB === v){ breedSelB = -1; }
+  else if (breedSelA < 0){ breedSelA = v; }
+  else if (breedSelB < 0){ breedSelB = v; }
+  else { breedSelB = v; }
+  renderBreedRow(); beep('take');
+}
+function renderBreedRow(){
+  if (!$('breedRow')) return;
+  var h = houseState(), R = roomById(h.now);
+  if (R.id !== 'study' || !roomHas(R, 'sbreed')){ $('breedRow').style.display='none'; $('breedRow').innerHTML=''; return; }
+  $('breedRow').style.display='block';
+  if (breedSelA >= 0 && lvl5Count(breedSelA) <= 0) breedSelA = -1;
+  if (breedSelB >= 0 && lvl5Count(breedSelB) <= 0) breedSelB = -1;
+  var slot = function(v, label){
+    if (v < 0) return '<span class="br-slot">'+label+' 未选</span>';
+    return '<span class="br-slot on"><i class="sw" style="background:'+VARS[v].petal+'"></i>'+label+' '+VARS[v].n+'</span>';
+  };
+  var dots = '', any = false;
+  for (var i=0;i<VARS.length;i++){
+    var c = lvl5Count(i);
+    if (!c) continue;
+    any = true;
+    var pc = VARS[i].petal, tc = inkOn(pc);
+    dots += '<button class="breed-dot'+(breedSelA===i||breedSelB===i?' sel':'')+'" data-breed="'+i+'" type="button" title="'+VARS[i].n+' · 05 ×'+c+'" style="background:'+pc+';color:'+tc+'"><span>'+VARS[i].n+'</span><span class="cnt">×'+c+'</span></button>';
+  }
+  var ready = breedSelA>=0 && breedSelB>=0 && breedSelA!==breedSelB && lvl5Count(breedSelA)>0 && lvl5Count(breedSelB)>0;
+  var four = '', got4 = 0;
+  for (var b4=12;b4<16;b4++){
+    var ok4 = S.vars.indexOf(b4) >= 0;
+    if (ok4) got4++;
+    four += '<span class="b4'+(ok4?' on':'')+'"><i style="background:'+VARS[b4].petal+'"></i>'+VARS[b4].n+'</span>';
+  }
+  var pity = Math.max(0, Math.min(11, S.breedPity || 0));
+  $('breedRow').innerHTML =
+    '<div class="breed-note"><b>可培育 4 种新花</b><span class="br-count">'+got4+'/4</span><div class="b4-row">'+four+'</div></div>'+
+    '<div class="breed-top"><span class="br-t">育种台</span>'+slot(breedSelA,'A')+'<span class="br-x">×</span>'+slot(breedSelB,'B')+
+      '<button class="btn mini br-go" id="breedGo" type="button"'+(ready?'':' disabled')+'>育一株</button></div>'+
+    '<div class="pity-row"><span>保底 <b>'+pity+'</b>/12</span><div class="pity-bar"><i style="width:'+(pity/12*100)+'%"></i></div><span class="'+(pity>=11?'pity-next':'')+'">'+(pity>=11?'下一株必成':'第 12 次必成')+'</span></div>'+
+    '<div class="breed-dots">'+(any?dots:'<span class="br-pity">先合出两朵不同色的 05 单花</span>')+
+      '<span class="breed-hint">双花异色 · 6%</span></div>';
+}
+function doBreed(){
+  var a = breedSelA, b = breedSelB;
+  if (a < 0 || b < 0 || a === b || lvl5Count(a) <= 0 || lvl5Count(b) <= 0){
+    toast('选两朵不同颜色的 05 单花'); beep('error'); return;
+  }
+  var ia = breedPickSlot(a), ib = breedPickSlot(b);
+  if (ia < 0 || ib < 0){ toast('田里的花不够了'); beep('error'); return; }
+  S.slots[ia] = null; S.slots[ib] = null;
+  if (selected === ia || selected === ib) selected = -1;
+  var lucky = (S.breedPity || 0) >= 11 || Math.random() < 0.06;
+  if (lucky){
+    var target = -1, isNew = false;
+    for (var i=12;i<16;i++){ if (stageCount(i) === 0){ target = i; isNew = true; break; } }
+    if (target < 0) target = 12 + rnd(4);
+    S.breedPity = 0;
+    S.slots[ia] = {id:uid(), lvl:5, v:target};
+    if (S.vars.indexOf(target) < 0) S.vars.push(target);
+    noteStage(target, 5);
+    if (!S.dexVar[5]) S.dexVar[5] = target;
+    toast(isNew ? '育出了新花色 · 05 ' + varName(target) + ' · 图鉴 +6' : '又育出一株 05·' + varName(target));
+    beep('order');
+  } else {
+    S.breedPity = (S.breedPity || 0) + 1;
+    S.slots[ia] = {id:uid(), lvl:5, v:a};
+    toast('这次没育成，留下 05·' + varName(a));
+    beep('error');
+  }
+  breedSelA = -1; breedSelB = -1;
+  save(); renderAll();
+}
+if ($('breedRow')) $('breedRow').addEventListener('click', function(e){
+  var dot = e.target.closest ? e.target.closest('[data-breed]') : null;
+  if (dot){ breedChoose(parseInt(dot.getAttribute('data-breed'), 10)); return; }
+  if (e.target.closest && e.target.closest('#breedGo')) doBreed();
+});
+if ($('shopRow')) $('shopRow').addEventListener('click', function(e){
+  var lv = e.target.closest ? e.target.closest('[data-shop-lv]') : null;
+  if (lv){ shopLevel = parseInt(lv.getAttribute('data-shop-lv'), 10); renderShopRow(); beep('take'); return; }
+  if (e.target.closest && e.target.closest('#shopMake')){ makeBouquet(); return; }
+  var sc = e.target.closest ? e.target.closest('[data-shop-scatter]') : null;
+  if (sc){ shopScatter(parseInt(sc.getAttribute('data-shop-scatter'), 10)); return; }
+  if (e.target.closest && e.target.closest('#shopSellCust')) shopClaim();
+  if (e.target.closest && e.target.closest('#shopApptBtn')) shopApptAct();
+});
+
+/* ===== 花店：花礼 / 柜台 / 顾客 ===== */
+var shopLevel = 0, roomFoldOpen = false, frontSetView = null;
+function shopTier(){
+  var n = (S && S.shop && S.shop.sold) || 0;
+  return Math.min(3, Math.max(0, Math.floor(n / 10)));
+}
+function shopTierName(t){
+  return ['初绽花庭','繁花满枝','锦绣花庭','满庭芳华'][Math.max(0, Math.min(3, t||0))];
+}
+function shopStyleAt(n){
+  return Math.min(3, Math.max(0, Math.floor(((n||0) - 30) / 20)));
+}
+function shopStyle(){
+  return shopStyleAt((S && S.shop && S.shop.sold) || 0);
+}
+function shopStyleName(t){
+  return ['原色花庭','晨光花色','暮色花色','月白花色'][Math.max(0, Math.min(3, t||0))];
+}
+function shopNextStyleText(){
+  var sold=(S && S.shop && S.shop.sold) || 0, style=shopStyle();
+  if (sold < 30) return '';
+  if (style >= 3) return '花饰配色已满';
+  var next=style+1, target=30+next*20, need=Math.max(0, target-sold);
+  return '下一套：' + shopStyleName(next) + ' · 还差 ' + need + ' 束';
+}
+function shopUpgradeSuffix(beforeSold, afterSold){
+  var oldT=Math.min(3, Math.max(0, Math.floor((beforeSold||0)/10)));
+  var newT=Math.min(3, Math.max(0, Math.floor((afterSold||0)/10)));
+  var oldS=shopStyleAt(beforeSold), newS=shopStyleAt(afterSold);
+  var parts=[];
+  if (newT > oldT) parts.push('花饰升级「' + shopTierName(newT) + '」');
+  if (newS > oldS && newS > 0) parts.push('花饰换色「' + shopStyleName(newS) + '」');
+  return parts.length ? ' · ' + parts.join(' · ') : '';
+}
+function shopApptLvl(){
+  var sold=(S && S.shop && S.shop.sold) || 0;
+  if (sold < 10) return 3 + rnd(2); // 03–04
+  if (sold < 20) return 4 + rnd(2); // 04–05
+  return 5 + rnd(2);              // 05–06
+}
+function ensureShop(){
+  if (!S.shop || typeof S.shop !== 'object') S.shop = {day:-1, wantLvl:3, claimed:false, paid:0, shelf:[null,null], sold:0, appt:null, apptLvl:0};
+  if (!Array.isArray(S.shop.shelf)) S.shop.shelf = [null,null];
+  while (S.shop.shelf.length < 2) S.shop.shelf.push(null);
+  if (!('sold' in S.shop)) S.shop.sold = 0;
+  if (!('appt' in S.shop)) S.shop.appt = null;
+  if (!('apptLvl' in S.shop)) S.shop.apptLvl = 0;
+  var day = seasonInfo().days, reset = false;
+  if (S.shop.day !== day){
+    S.shop.day = day;
+    S.shop.wantLvl = 3 + rnd(S.shop.sold >= 6 ? 4 : 3); // 03–05，卖满 6 束后到 06
+    S.shop.claimed = false; S.shop.paid = 0;
+    if (!S.shop.appt) S.shop.apptLvl = shopApptLvl(); // 预约客随成交进度升级
+    reset = true;
+  }
+  if (reset) save();
+  return S.shop;
+}
+function shopRoom(){ return roomById('living'); }
+function ensureShopQuest(){
+  if (!S.shopQuest || typeof S.shopQuest !== 'object'){
+    S.shopQuest = {bought:false, bouquet:false, sold:false, claimed:false};
+  }
+  var q = S.shopQuest;
+  if (!('bought' in q)) q.bought = false;
+  if (!('bouquet' in q)) q.bouquet = false;
+  if (!('sold' in q)) q.sold = false;
+  if (!('claimed' in q)) q.claimed = false;
+  if (!q.bought && roomHas(shopRoom(), 'fcounter')) q.bought = true;
+  return q;
+}
+function shopQuestText(){
+  var q = ensureShopQuest();
+  if (q.claimed) return '开张任务已完成';
+  var n = (q.bought ? 1 : 0) + (q.bouquet ? 1 : 0) + (q.sold ? 1 : 0);
+  var next = !q.bought ? '买花店柜台（首购 36）' : !q.bouquet ? '扎第一束' : !q.sold ? '接第一位顾客' : '等发奖励';
+  return '开张任务 ' + n + '/3 · 下一步：' + next + ' · 完成 +60';
+}
+function checkShopQuest(){
+  var q = ensureShopQuest();
+  if (q.claimed) return '';
+  if (q.bought && q.bouquet && q.sold){
+    q.claimed = true;
+    S.coins += 60;
+    return ' · 开张任务完成 +60';
+  }
+  return '';
+}
+function roomItemPrice(R, it){
+  if (R.id === 'living' && it.id === 'fcounter' && !ensureShopQuest().bought) return 36;
+  return it.p;
+}
+function shopSlots(){
+  if (!roomHas(shopRoom(), 'fcounter')) return 0;
+  return roomHas(shopRoom(), 'fwindow') ? 2 : 1;
+}
+function shopCounts(){
+  var c = {};
+  for (var i=0;i<S.slots.length;i++){
+    var it = S.slots[i];
+    if (it && it.lvl >= 3 && it.lvl <= 8) c[it.lvl] = (c[it.lvl]||0) + 1;
+  }
+  return c;
+}
+function shopPay(b){
+  return m6(b.price + warmBonus() + (roomHas(shopRoom(), 'fsign') ? 6 : 0));
+}
+function shopMatch(){
+  var s = ensureShop(), n = shopSlots();
+  for (var i=0;i<n;i++) if (s.shelf[i] && s.shelf[i].lvl === s.wantLvl) return i;
+  return -1;
+}
+function bouquetSVG(colors){
+  var cols = [];
+  for (var i=0;i<3;i++){ var vv = colors && colors[i] != null ? colors[i] : 0; cols.push(VARS[vv] || VARS[0]); }
+  var bloom = function(cx,cy,V){
+    var p='';
+    for (var k=0;k<5;k++){
+      var a = -90 + k*72, px = cx + Math.cos(a*Math.PI/180)*6.2, py = cy + Math.sin(a*Math.PI/180)*6.2;
+      p += '<circle cx="'+px.toFixed(1)+'" cy="'+py.toFixed(1)+'" r="6.2" fill="'+V.petal+'" stroke="'+INK+'" stroke-width=".7" stroke-opacity=".55"/>';
+    }
+    p += '<circle cx="'+cx+'" cy="'+cy+'" r="3.6" fill="'+V.core+'" stroke="'+INK+'" stroke-width=".6" stroke-opacity=".5"/>';
+    return p;
+  };
+  return '<svg viewBox="0 0 56 62" aria-hidden="true">'+
+    '<path d="M22 21C20 34 25 42 28 51M34 18C32 33 29 43 28 51M28 31C27 39 28 45 28 51" stroke="#5E8259" stroke-width="1.3" fill="none"/>'+
+    '<path d="M28 43c-6-2-9-6-9-9 5 0 8 4 9 9M28 43c6-2 9-6 9-9-5 0-8 4-9 9" stroke="#7FA96B" stroke-width="1.1" fill="none"/>'+
+    bloom(22,21,cols[0]) + bloom(34,18,cols[1]) + bloom(28,31,cols[2]) +
+    '<path d="M17 47h22l-4 13H21z" fill="#F3E3C2" stroke="'+INK+'" stroke-width=".9" stroke-opacity=".55"/>'+
+    '<path d="M28 47v13" stroke="#C9AE7D" stroke-width=".8" opacity=".7"/>'+
+    '<path d="M21 49c5-2 10-2 15 0" stroke="#D96A7A" stroke-width="1.6" fill="none"/>'+
+  '</svg>';
+}
+function makeBouquet(){
+  var s = ensureShop(), lvl = shopLevel, counts = shopCounts();
+  if (!lvl || (counts[lvl]||0) < 3){ toast('这一级至少要有 3 朵才能扎束'); beep('error'); return; }
+  var active = shopSlots(), empty = -1;
+  for (var q=0;q<active;q++) if (!s.shelf[q]){ empty = q; break; }
+  if (empty < 0){ toast('柜台摆满了，先卖一束再扎'); beep('error'); return; }
+  var pos = [], byColor = {};
+  for (var i=0;i<S.slots.length;i++){
+    var it = S.slots[i];
+    if (it && it.lvl === lvl){ pos.push(i); byColor[it.v] = (byColor[it.v]||[]).concat([i]); }
+  }
+  if (pos.length < 3){ toast('这一级的花不够 3 朵'); beep('error'); return; }
+  var bestV = -1, bestN = 0;
+  for (var k in byColor) if (byColor[k].length > bestN){ bestN = byColor[k].length; bestV = parseInt(k,10); }
+  var take = [], same = false;
+  if (bestN >= 3){ take = byColor[bestV].slice(0,3); same = true; }
+  else { take = pos.slice(0,3); }
+  var colors = [];
+  for (var t=0;t<3;t++){
+    var idx = take[t], item = S.slots[idx];
+    colors.push(item.v);
+    S.slots[idx] = null;
+    if (selected === idx) selected = -1;
+  }
+  var base = (CFG.sell[lvl]||0) * 3;
+  var price = m6(base * (same ? 1.8 : 1.5));
+  s.shelf[empty] = {id:uid(), lvl:lvl, same:same, price:price, colors:colors};
+  ensureShopQuest().bouquet = true;
+  save(); renderAll(); beep('order');
+  toast('扎好一束 ' + (lvl<10?'0':'') + lvl + ' 花礼 · 卖价 ' + price + (same?' · 同色精品':''));
+}
+function shopScatter(i){
+  var s = ensureShop(), b = s.shelf[i];
+  if (!b) return;
+  s.shelf[i] = null; S.coins += b.price;
+  save(); renderAll(); beep('sell');
+  toast('花礼散卖了 · +' + b.price + ' 金币');
+}
+function shopClaim(){
+  var s = ensureShop();
+  if (s.claimed){ toast('今天的顾客已经买走了'); return; }
+  var i = shopMatch();
+  if (i < 0){ toast('还没有顾客要的 ' + (s.wantLvl<10?'0':'') + s.wantLvl + ' 花礼'); beep('error'); return; }
+  var b = s.shelf[i], pay = shopPay(b), beforeSold = s.sold;
+  s.shelf[i] = null; s.claimed = true; s.paid = pay; s.sold += 1;
+  S.coins += pay;
+  ensureShopQuest().sold = true;
+  var questSuffix = checkShopQuest();
+  var up = shopUpgradeSuffix(beforeSold, s.sold);
+  save(); renderAll(); beep('order');
+  toast('顾客买走了 ' + (b.lvl<10?'0':'') + b.lvl + ' 花礼 · +' + pay + ' 金币' + up + questSuffix);
+}
+function shopApptEst(lvl, b){
+  var base = b ? b.price : (CFG.sell[lvl]||0) * 3;
+  return m6(base * 1.5 + warmBonus() + (roomHas(shopRoom(), 'fsign') ? 6 : 0));
+}
+function shopApptReserve(){
+  var s = ensureShop();
+  if (s.appt){ toast('已经有一张预约单了'); return; }
+  if (shopSlots() < 2){ toast('先在客厅摆下「花店橱窗」，才能接预约'); beep('error'); return; }
+  var lvl = s.apptLvl || 4, b = s.shelf[1];
+  if (!b || b.lvl !== lvl){ toast('橱窗里放一束 ' + (lvl<10?'0':'') + lvl + ' 花礼再预约'); beep('error'); return; }
+  var pay = shopApptEst(lvl, b);
+  s.shelf[1] = null;
+  s.appt = {lvl:lvl, pay:pay, same:b.same, readyDay:s.day + 1, claimed:false};
+  s.apptLvl = 0;
+  save(); renderAll(); beep('order');
+  toast('预约单收好 · 明天可取 +' + pay + ' 金币');
+}
+function shopApptClaim(){
+  var s = ensureShop();
+  if (!s.appt){ toast('还没有预约单'); return; }
+  if (s.appt.readyDay > s.day){ toast('预约客明天才来取花'); return; }
+  var a = s.appt, beforeSold = s.sold;
+  S.coins += a.pay; s.sold += 1;
+  s.appt = null; s.apptLvl = 0;
+  ensureShopQuest().sold = true;
+  var questSuffix = checkShopQuest();
+  var up = shopUpgradeSuffix(beforeSold, s.sold);
+  save(); renderAll(); beep('order');
+  toast('预约客取走了 ' + (a.lvl<10?'0':'') + a.lvl + ' 花礼 · +' + a.pay + ' 金币' + up + questSuffix);
+}
+function shopApptAct(){
+  var s = ensureShop();
+  if (s.appt) shopApptClaim();
+  else shopApptReserve();
+}
+function renderShopRow(){
+  if (!$('shopRow')) return;
+  var h = houseState(), R = roomById(h.now);
+  if (R.id !== 'living'){ $('shopRow').style.display='none'; $('shopRow').innerHTML=''; return; }
+  $('shopRow').style.display='block';
+  if (!roomHas(R, 'fcounter')){
+    $('shopRow').innerHTML = '<div class="shop-note">门店还没开张：在客厅买下「花店柜台」首购 36 金币，就能扎花礼、接顾客。</div>'+
+      '<div class="shop-quest">'+shopQuestText()+'</div>';
+    return;
+  }
+  var s = ensureShop(), counts = shopCounts(), active = shopSlots();
+  if (!shopLevel || !(counts[shopLevel]||0)){
+    for (var l=3;l<=8;l++) if ((counts[l]||0) >= 3){ shopLevel = l; break; }
+    if (!shopLevel) for (var l2=3;l2<=8;l2++) if (counts[l2]){ shopLevel = l2; break; }
+  }
+  var lvs = '';
+  for (var lv=3;lv<=8;lv++){
+    var c = counts[lv]||0;
+    lvs += '<button class="shop-lv'+(shopLevel===lv?' on':'')+'" data-shop-lv="'+lv+'" type="button"'+(c?'':' disabled')+'>'+ (lv<10?'0':'') + lv + '<b>×'+(c||0)+'</b></button>';
+  }
+  var empty = -1;
+  for (var e=0;e<active;e++) if (!s.shelf[e]){ empty=e; break; }
+  var ready = (counts[shopLevel]||0) >= 3 && empty >= 0;
+  var match = shopMatch();
+  var cust = '', custBtn = '';
+  if (s.claimed){
+    cust = '今日顾客已经买走了，明天再来。';
+    custBtn = '<button class="btn mini key-btn" id="shopSellCust" type="button" disabled>今天卖完了</button>';
+  } else {
+    cust = '今日顾客想买 <b>'+(s.wantLvl<10?'0':'')+s.wantLvl+' 花礼</b>';
+    if (match >= 0) cust += ' · 柜台里有一束';
+    else cust += ' · 柜台里还没有这一级';
+    custBtn = '<button class="btn mini key-btn" id="shopSellCust" type="button"'+(match<0?' disabled':'')+'>'+(match>=0?'卖给顾客 +'+shopPay(s.shelf[match]):'还没这级花礼')+'</button>';
+  }
+  var appt = s.appt, apptTxt = '', apptBtn = '', apptCls = '';
+  if (appt){
+    var apptLvlTxt = (appt.lvl<10?'0':'') + appt.lvl;
+    if (appt.readyDay > s.day){
+      apptTxt = '预约 <b>' + apptLvlTxt + '</b> · 明天可取 · <b>+' + appt.pay + '</b>';
+      apptBtn = '<button class="btn mini key-btn" id="shopApptBtn" type="button" disabled>明天</button>';
+    } else {
+      apptTxt = '预约 <b>' + apptLvlTxt + '</b> · 可取 · <b>+' + appt.pay + '</b>';
+      apptBtn = '<button class="btn mini key-btn" id="shopApptBtn" type="button">+' + appt.pay + ' 领取</button>';
+      apptCls = ' ready';
+    }
+  } else if (!s.apptLvl){
+    apptTxt = '预约 · 今天已经取走，明天再来';
+    apptBtn = '<button class="btn mini key-btn" id="shopApptBtn" type="button" disabled>明天再来</button>';
+  } else {
+    var alvl = s.apptLvl;
+    var alvlTxt = (alvl<10?'0':'') + alvl;
+    var b2 = (active >= 2 && s.shelf[1] && s.shelf[1].lvl === alvl) ? s.shelf[1] : null;
+    var apptEst = shopApptEst(alvl, b2);
+    if (active < 2){
+      apptTxt = '预约 <b>' + alvlTxt + '</b> · 明天取；先摆橱窗';
+      apptBtn = '<button class="btn mini key-btn" id="shopApptBtn" type="button" disabled>先摆橱窗</button>';
+    } else if (!b2){
+      apptTxt = '预约 <b>' + alvlTxt + '</b> · 明天取；橱窗放 ' + alvlTxt;
+      apptBtn = '<button class="btn mini key-btn" id="shopApptBtn" type="button" disabled>先放 ' + alvlTxt + '</button>';
+    } else {
+      apptTxt = '预约 <b>' + alvlTxt + '</b> · 明天 +' + apptEst;
+      apptBtn = '<button class="btn mini key-btn" id="shopApptBtn" type="button">放橱窗</button>';
+    }
+  }
+  var shelf = '';
+  for (var si=0;si<2;si++){
+    if (si >= active){
+      shelf += '<div class="shop-slot lock"><div class="empty">摆下「花店橱窗」<br>解锁第二格</div></div>';
+    } else if (!s.shelf[si]){
+      shelf += '<div class="shop-slot"><div class="empty">空位<br>扎一束放这里</div></div>';
+    } else {
+      var b = s.shelf[si];
+      shelf += '<div class="shop-slot has"><div class="bq">'+bouquetSVG(b.colors)+'</div><div class="sm"><b>'+(b.lvl<10?'0':'')+b.lvl+' '+(b.same?'同色花礼':'混色花礼')+'</b><span>'+b.price+' 金币</span></div><button class="x" data-shop-scatter="'+si+'" type="button">散卖</button></div>';
+    }
+  }
+  var tier = shopTier(), style = shopStyle(), tierLabel = shopTierName(tier);
+  if (style) tierLabel += '·' + shopStyleName(style);
+  var tierChip = '<span class="shop-tier-chip" title="成交 '+s.sold+' 束 · '+(tier>=3?'花饰已满阶，30 束后每 20 束换一套花色':'再 '+(10-(s.sold%10))+' 束升级')+'">花饰 <b>'+tierLabel+'</b> · '+s.sold+'</span>';
+  var q = ensureShopQuest(), questLine = q.claimed ? '' : '<div class="shop-quest">'+shopQuestText()+'</div>';
+  var nextStyle = shopNextStyleText();
+  var nextStyleLine = nextStyle ? '<div class="shop-style-next">'+nextStyle+'</div>' : '';
+  $('shopRow').innerHTML =
+    '<div class="shop-top"><span class="shop-t">客厅门店 · 花礼台</span>'+tierChip+'<button class="btn mini shop-make key-btn" id="shopMake" type="button"'+(ready?'':' disabled')+'>扎一束</button></div>'+
+    nextStyleLine+questLine+
+    '<div class="shop-levels">'+lvs+'</div>'+
+    '<div class="shop-cust"><span>'+cust+'</span>'+custBtn+'</div>'+
+    '<div class="shop-appt'+apptCls+'"><span>'+apptTxt+'</span>'+apptBtn+'</div>'+
+    '<div class="shop-shelf">'+shelf+'</div>'+
+    '<div class="shop-note">同色三朵 <b>1.8×</b> · 混色三朵 <b>1.5×</b> · 选中等级后用田里的花扎束</div>';
+}
+function ensureTask(){
+  var h = houseState(), day = seasonInfo().days;
+  if (!h.task || h.task.day !== day) h.task = {day:day, done:false, claimed:false};
+  return h.task;
+}
+function houseAction(kind){
+  if (kind !== 'place') return false;
+  var t = ensureTask();
+  if (!t.done){ t.done = true; save(); return true; }
+  return false;
+}
+function roomSetList(id){
+  var list = [];
+  for (var k in ROOM_SETS){
+    if (!ROOM_SETS.hasOwnProperty(k)) continue;
+    var set = ROOM_SETS[k];
+    if ((set.room || k) === id) list.push([k, set]);
+  }
+  return list;
+}
+function roomSetOf(id){
+  var h = houseState(), list = roomSetList(id);
+  for (var i=0;i<list.length;i++) if (h.sets.indexOf(list[i][0]) < 0) return list[i][1];
+  return list.length ? list[list.length-1][1] : null;
+}
+function checkSets(){
+  var h = houseState(), got = false, msg = '';
+  for (var k in ROOM_SETS){
+    if (!ROOM_SETS.hasOwnProperty(k)) continue;
+    if (h.sets.indexOf(k) >= 0) continue;
+    var set = ROOM_SETS[k], roomId = set.room || k, R = roomById(roomId), ok = true;
+    for (var i=0;i<set.ids.length;i++) if (!roomHas(R, set.ids[i])) ok = false;
+    if (ok){
+      h.sets.push(k); S.coins += set.pay; got = true;
+      msg = '集齐' + R.n + '「' + set.n + '」，+' + set.pay + ' 金币';
+    }
+  }
+  if (got){ toast(msg); beep('order'); save(); renderHUD(); }
+}
+function renderHouseStrip(){
+  var h = houseState(), R = roomById(h.now), set = roomSetOf(R.id);
+  if ($('houseTask')){
+    var t = ensureTask(), done = t.done, claimed = t.claimed;
+    $('houseTask').className = 'house-task' + (done?' done':'');
+    $('houseTask').innerHTML = '<span class="ht-t">今日全屋任务 · 摆一件家具'+
+      (done && !claimed ? ' · 已完成' : claimed ? ' · 明天再来' : '')+'</span>'+
+      '<button class="btn mini" id="taskClaim" type="button"'+(done&&!claimed?'':' disabled')+'>'+
+      (claimed ? '已领 +12' : '领取 +12')+'</button>';
+  }
+  if ($('setStrip')){
+    if (!set){ $('setStrip').innerHTML=''; $('setStrip').className='set-strip'; }
+    else {
+      var setList = roomSetList(R.id);
+      if (R.id === 'front' && setList.length > 1 && frontSetView){
+        for (var si=0;si<setList.length;si++){
+          if ((setList[si][1].key || setList[si][0]) === frontSetView){ set = setList[si][1]; break; }
+        }
+      }
+      var full = h.sets.indexOf(set.key || R.id) >= 0, got = 0, chips = '';
+      for (var i=0;i<set.ids.length;i++){
+        var on = roomHas(R, set.ids[i]); if (on) got++;
+        var nm = '';
+        for (var j=0;j<R.items.length;j++) if (R.items[j].id === set.ids[i]) nm = R.items[j].n;
+        chips += '<span class="ss-i'+(on?' on':'')+'">'+(on?'✓':'○')+nm+'</span>';
+      }
+      $('setStrip').className = 'set-strip' + (full?' full':'');
+      var nameBit = (R.id === 'front' && setList.length > 1)
+        ? '<button class="ss-n ss-switch" id="setSwitch" type="button" title="点一下切换另一套小景">'+set.n+' ↻</button>'
+        : '<span class="ss-n">'+set.n+'</span>';
+      $('setStrip').innerHTML = nameBit+chips+
+        '<span class="ss-pay">'+(full?'已集齐 +'+set.pay:'集齐 +'+set.pay)+'</span>';
+    }
+  }
+  if ($('vaseRow')){
+    if (R.id !== 'living' || !roomHas(R, 'vase')){ $('vaseRow').innerHTML=''; $('vaseRow').style.display='none'; }
+    else {
+      var hv = h.vase ? h.vase.v : -1, dots = '';
+      for (var v=0;v<VARS.length;v++){
+        if (VARS[v].breed && S.vars.indexOf(v) < 0) continue;
+        dots += '<button class="vase-dot'+(hv===v?' on':'')+'" data-vase="'+v+'" type="button" title="'+varName(v)+'" style="background:'+VARS[v].petal+'"></button>';
+      }
+      $('vaseRow').style.display='flex';
+      $('vaseRow').innerHTML = '<span class="vr-t" title="插上花，花露回复 +6%">瓶花'+(hv>=0?' 露+6%':'')+'</span><button class="vase-none'+(hv<0?' on':'')+'" data-vase="-1" type="button">空</button>'+dots;
+    }
+  }
 }
 function renderRoom(){
   if (!$('room')) return;
+  ensureGuest();
   var h = houseState(), R = roomById(h.now);
-  $('room').innerHTML = roomScene(R.id);
+  $('room').innerHTML = roomScene(R.id) + '<div class="room-say" aria-live="polite"></div>';
   var total = 0; ROOMS.forEach(function(x){ total += x.items.length; });
   var ownAll = 0;
-  ROOMS.forEach(function(x){ ownAll += (h.owned[x.id]||[]).length; });
+  ROOMS.forEach(function(x){
+    var own = h.owned[x.id] || [], hid = h.hidden[x.id] || [];
+    for (var oi=0;oi<own.length;oi++) if (hid.indexOf(own[oi]) < 0) ownAll++;
+  });
   if ($('roomWarmth')) $('roomWarmth').textContent = ownAll + ' / ' + total;
+  var wb = warmBonus();
+  if ($('warmBonus')) $('warmBonus').textContent = '访客 +' + wb;
+  if ($('roomWarmth')) $('roomWarmth').title = '每 6 点温馨度，访客接待 +6；摆满全屋再 +6，最高 +36。当前 +' + wb;
   if ($('roomSub')) $('roomSub').textContent = R.n + ' · 摆 ' + ((h.owned[R.id]||[]).length) + '/' + R.items.length;
   var tabs = '';
   for (var t=0;t<ROOMS.length;t++){
@@ -2372,14 +4182,25 @@ function renderRoom(){
   }
   $('roomTabs').innerHTML = tabs;
   var sh = '';
+  var ownedN = (h.owned[R.id]||[]).length;
+  var fold = window.innerWidth <= 380 && ownedN > 0;
+  var showOwned = !fold || roomFoldOpen;
+  if (fold) sh += '<button class="btn mini room-fold" id="roomFoldBtn" type="button">已摆上 '+ownedN+' 件 · '+(roomFoldOpen?'收起':'展开')+'</button>';
   for (var i=0;i<R.items.length;i++){
     var it = R.items[i], owned = (h.owned[R.id]||[]).indexOf(it.id) >= 0;
     var hidden = (h.hidden[R.id]||[]).indexOf(it.id) >= 0;
-    sh += '<button class="rf'+((owned && !hidden)?' on':'')+((owned && hidden)?' off':'')+((!owned && S.coins < it.p)?' poor':'')+'" data-rid="'+it.id+'">'+
+    if (owned && !showOwned) continue;
+    var price = roomItemPrice(R, it);
+    sh += '<button class="rf'+((owned && !hidden)?' on':'')+((owned && hidden)?' off':'')+((!owned && S.coins < price)?' poor':'')+'" data-rid="'+it.id+'">'+
           '<span class="nm">'+it.n+'</span>'+
-          '<span class="pr">'+(owned ? (hidden?'收起了':'已摆上') : '<i></i>'+it.p)+'</span></button>';
+          '<span class="pr">'+(owned ? (hidden?'收起了':'已摆上') : '<i></i>'+price)+'</span></button>';
   }
   $('roomShop').innerHTML = sh;
+  checkSets();
+  renderHouseStrip();
+  renderBreedRow();
+  renderShopRow();
+  renderGuestBtn();
 }
 if ($('roomTabs')) $('roomTabs').addEventListener('click', function(e){
   var b = e.target.closest ? e.target.closest('.rt') : null;
@@ -2388,7 +4209,20 @@ if ($('roomTabs')) $('roomTabs').addEventListener('click', function(e){
   h.now = b.getAttribute('data-rt');
   save(); renderRoom(); beep('move');
 });
+if ($('setStrip')) $('setStrip').addEventListener('click', function(e){
+  if (!(e.target.closest && e.target.closest('#setSwitch'))) return;
+  var list = roomSetList('front');
+  if (list.length < 2) return;
+  var curKey = frontSetView;
+  if (!curKey){ var cur = roomSetOf('front'); if (cur) curKey = cur.key || 'front'; }
+  var idx = -1;
+  for (var i=0;i<list.length;i++) if ((list[i][1].key || list[i][0]) === curKey) idx = i;
+  var next = list[(idx + 1) % list.length][1];
+  frontSetView = next.key || 'front';
+  renderHouseStrip(); beep('move');
+});
 if ($('roomShop')) $('roomShop').addEventListener('click', function(e){
+  if (e.target.closest && e.target.closest('.room-fold')){ roomFoldOpen = !roomFoldOpen; renderRoom(); beep('move'); return; }
   var btn = e.target.closest ? e.target.closest('.rf') : null;
   if (!btn) return;
   var h = houseState(), R = roomById(h.now);
@@ -2399,18 +4233,167 @@ if ($('roomShop')) $('roomShop').addEventListener('click', function(e){
   h.hidden[R.id] = h.hidden[R.id] || [];
   var owned = h.owned[R.id].indexOf(id) >= 0;
   if (!owned){
-    if (S.coins < it.p){ toast('还差 ' + (it.p - S.coins) + ' 金币，先去卖几株花'); beep('error'); return; }
-    S.coins -= it.p;
+    var price = roomItemPrice(R, it);
+    if (S.coins < price){ toast('还差 ' + (price - S.coins) + ' 金币，先去卖几株花'); beep('error'); return; }
+    S.coins -= price;
     h.owned[R.id].push(id);
-    toast('买下' + it.n + '，' + R.n + '暖了一点');
+    if (R.id === 'living' && id === 'fcounter') ensureShopQuest().bought = true;
+    var td1 = houseAction('place');
+    toast('买下' + it.n + '，' + R.n + '暖了一点' + (td1?' · 今日任务完成，可领 +12':'') + (window.innerWidth <= 380 ? ' · 已收进「已摆上」' : ''));
     beep('order');
   } else {
     var hi = h.hidden[R.id].indexOf(id);
-    if (hi >= 0){ h.hidden[R.id].splice(hi,1); toast(it.n + ' 又摆出来了'); }
+    if (hi >= 0){ h.hidden[R.id].splice(hi,1); var td2 = houseAction('place'); toast(it.n + ' 又摆出来了' + (td2?' · 今日任务完成，可领 +12':'')); }
     else { h.hidden[R.id].push(id); toast('把' + it.n + '收起来了'); }
     beep('move');
   }
   save(); renderAll();
+});
+
+/* ===== 小屋任务 / 瓶花 ===== */
+if ($('houseTask')) $('houseTask').addEventListener('click', function(e){
+  var b = e.target.closest ? e.target.closest('#taskClaim') : null;
+  if (!b) return;
+  var t = ensureTask();
+  if (!t.done || t.claimed) return;
+  t.claimed = true; S.coins += 12;
+  toast('全屋任务 +12 金币'); beep('order');
+  save(); renderAll();
+});
+if ($('vaseRow')) $('vaseRow').addEventListener('click', function(e){
+  var b = e.target.closest ? e.target.closest('[data-vase]') : null;
+  if (!b) return;
+  var h = houseState(), v = parseInt(b.getAttribute('data-vase'), 10);
+  h.vase.v = isNaN(v) ? -1 : v;
+  toast(v>=0 ? '瓶里插上了' + varName(v) : '花瓶空了');
+  beep('take');
+  save(); renderRoom();
+});
+
+/* ===== 小屋明信片 ===== */
+function bodyVar(name, fallback){
+  var v = getComputedStyle(document.body).getPropertyValue(name);
+  v = (v||'').trim();
+  return v || fallback || '';
+}
+function resolveVars(str){
+  return str.replace(/var\(\s*(--[a-zA-Z0-9-]+)\s*(?:,\s*([^)]*))?\)/g, function(m, name, fb){
+    var v = bodyVar(name, '');
+    return v || (fb||'').trim() || 'transparent';
+  });
+}
+function postcardSVG(){
+  var h = houseState(), R = roomById(h.now), s = seasonInfo();
+  var svgEl = document.querySelector('#room svg');
+  if (!svgEl) return null;
+  var inner = svgEl.outerHTML;
+  inner = resolveVars(inner);
+  inner = inner.replace(/^<svg[^>]*>/, '').replace(/<\/svg>\s*$/, '');
+  var card = bodyVar('--card', '#FBF6E7'), ink = bodyVar('--ink', '#3B2E22');
+  var soft = bodyVar('--text-soft', '#7A6A58'), line = bodyVar('--line', '#D9CDB6');
+  var accent = bodyVar('--accent', '#C39334'), pink = bodyVar('--pink-200', '#F3C9CD');
+  var mint = bodyVar('--mint-200', '#CFE0D6');
+  var title = R.n + ' · 半亩小院';
+  var date = '第' + s.year + '年 · ' + CFG.seasons[s.si].name + ' · 第' + s.dayIn + '天';
+  var warm = $('roomWarmth') ? $('roomWarmth').textContent : '';
+  var grain = '';
+  for (var i=0;i<70;i++){
+    var gx = (i*37 % 300) + 8, gy = (i*53 % 250) + 8;
+    grain += '<circle cx="'+gx+'" cy="'+gy+'" r="0.9" fill="'+ink+'" opacity="0.035"/>';
+  }
+  return '<svg xmlns="http://www.w3.org/2000/svg" width="640" height="540" viewBox="0 0 320 270">'+
+    '<defs><clipPath id="sceneClip"><rect x="8" y="36" width="304" height="209" rx="2"/></clipPath><style>'+
+      '.scene [fill]:not([fill="none"]):not([fill="transparent"]){stroke:'+ink+';stroke-width:.95;stroke-opacity:.62;paint-order:stroke fill}'+
+      '.scene text{stroke:none}'+
+    '</style></defs>'+
+    '<rect width="320" height="270" rx="7" fill="'+card+'"/>'+
+    '<ellipse cx="292" cy="22" rx="52" ry="18" fill="'+pink+'" opacity=".22"/>'+
+    '<ellipse cx="24" cy="256" rx="48" ry="16" fill="'+mint+'" opacity=".28"/>'+
+    '<rect x="4.5" y="4.5" width="311" height="261" rx="5" fill="none" stroke="'+ink+'" stroke-width="1.1" stroke-opacity=".6"/>'+
+    '<rect x="8.5" y="8.5" width="303" height="253" rx="4" fill="none" stroke="'+line+'" stroke-width=".6" stroke-dasharray="3 2.6"/>'+
+    grain+
+    '<text x="17" y="26" font-family="Noto Serif SC, Songti SC, serif" font-size="13.5" letter-spacing="1.6" fill="'+ink+'">'+title+'</text>'+
+    '<text x="303" y="25" text-anchor="end" font-family="Noto Serif SC, Songti SC, serif" font-size="8.6" letter-spacing=".8" fill="'+soft+'">'+date+'</text>'+
+    '<path d="M16 32.5H304" stroke="'+line+'" stroke-width=".8"/>'+
+    '<g clip-path="url(#sceneClip)"><g class="scene" transform="translate(8,36) scale(.95)">'+inner+'</g></g>'+
+    '<path d="M16 262H304" stroke="'+line+'" stroke-width=".8"/>'+
+    '<text x="17" y="261" font-family="Noto Serif SC, Songti SC, serif" font-size="8" fill="'+soft+'">全屋温馨度 '+warm+'</text>'+
+    '<text x="303" y="261" text-anchor="end" font-family="Noto Serif SC, Songti SC, serif" font-size="8" letter-spacing="1" fill="'+accent+'">半亩小院 · 合花</text>'+
+    '</svg>';
+}
+function makePostcard(){
+  return new Promise(function(resolve, reject){
+    var svgStr = postcardSVG();
+    if (!svgStr){ reject(new Error('no svg')); return; }
+    var blob = new Blob([svgStr], {type:'image/svg+xml;charset=utf-8'});
+    var url = URL.createObjectURL(blob);
+    var img = new Image();
+    img.onload = function(){
+      try{
+        var cv = document.createElement('canvas');
+        cv.width = 640; cv.height = 540;
+        var ctx = cv.getContext('2d');
+        ctx.drawImage(img, 0, 0, 640, 540);
+        ctx.fillStyle = 'rgba(120,92,60,.028)';
+        for (var i=0;i<1100;i++) ctx.fillRect(Math.random()*640, Math.random()*540, 1, 1);
+        URL.revokeObjectURL(url);
+        resolve(cv.toDataURL('image/png'));
+      }catch(err){ URL.revokeObjectURL(url); reject(err); }
+    };
+    img.onerror = function(){ URL.revokeObjectURL(url); reject(new Error('render fail')); };
+    img.src = url;
+  });
+}
+function showPost(){
+  var mask=$('postMask'), sheet=$('postSheet');
+  if (!mask || !sheet) return;
+  mask.hidden=false; sheet.hidden=false;
+  $('postWrap').innerHTML = '<div class="post-load">正在装框…</div>';
+  makePostcard().then(function(data){
+    $('postWrap').innerHTML = '<img id="postImg" alt="花店明信片" src="'+data+'">';
+    $('postSave').href = data;
+    $('postSave').download = '半亩小院-' + roomById(houseState().now).n + '.png';
+  }).catch(function(){
+    $('postWrap').innerHTML = '<div class="post-load">这张没画成，再点一次试试</div>';
+  });
+}
+function hidePost(){
+  if ($('postMask')) $('postMask').hidden = true;
+  if ($('postSheet')) $('postSheet').hidden = true;
+}
+if ($('postBtn')) $('postBtn').addEventListener('click', function(){ beep('take'); showPost(); });
+if ($('postMask')) $('postMask').addEventListener('click', hidePost);
+if ($('postClose')) $('postClose').addEventListener('click', hidePost);
+if ($('postClose2')) $('postClose2').addEventListener('click', hidePost);
+
+/* ===== 家具互动 ===== */
+var FURNI_SAY = {
+  cat:'喵～翻了个身', hearth:'火苗旺了一点', lamp:'灯芯轻轻晃', curtain:'窗帘被风吹动',
+  frame:'画里的花开了', shelf:'书页沙沙响', rug:'踩上去软软的', table:'桌面擦得很干净',
+  chair:'藤椅吱呀一声', vase:'花香散开', bmirror:'镜子里有个人', btowel:'毛巾晒得暖暖的',
+  btub:'水还温着', bbed:'被角陷下去一块', sdesk:'纸页翻了一下', schair:'椅子转了个圈',
+  kfridge:'冰箱嗡嗡两声', kstove:'灶火噼啪', ksink:'水珠滴答', btree:'树叶落了一地',
+  bswing:'秋千轻轻晃', bpond:'水面荡了一圈', fbench:'石凳有点凉', flamp:'灯亮了一瞬',
+  dchair:'椅子挪了一下', dlamp:'灯影摇了摇', sbreed:'小苗轻轻晃了晃'
+};
+var sayTimer = null;
+function roomSay(txt){
+  var el = document.querySelector('#room .room-say');
+  if (!el) return;
+  el.textContent = txt; el.classList.add('on');
+  clearTimeout(sayTimer);
+  sayTimer = setTimeout(function(){ el.classList.remove('on'); }, 1400);
+}
+if ($('room')) $('room').addEventListener('click', function(e){
+  var gst = e.target.closest ? e.target.closest('.guest-fig') : null;
+  if (gst){ beep('take'); openGuest(); roomSay('客人坐着歇脚'); return; }
+  var f = e.target.closest ? e.target.closest('.furni') : null;
+  if (!f) return;
+  f.classList.remove('pop');
+  void f.getBoundingClientRect();
+  f.classList.add('pop');
+  beep('take');
+  roomSay(FURNI_SAY[f.getAttribute('data-fid')] || '轻轻响了一声');
 });
 
 /* ================= 底部标签页 ================= */
@@ -2527,6 +4510,124 @@ $('homeBtn').addEventListener('click', function(){
   window.location.href = 'https://jyx010320-gif.github.io/RabbitOvOTsuki/';
 });
 
+/* ===== 配色主题（14 变量 · 10 套 · 取色器派生） ===== */
+var THEME_KEY='banmu-theme', CUSTOM_KEY='banmu-custom-color';
+var CUSTOM_VARS=['--bg','--card','--pink-100','--pink-200','--pink-300','--pink-400','--pink-500','--pink-600','--text','--text-soft','--line','--gray-bg','--decor','--shadow'];
+var THEMES=[
+  {id:'pink',  n:'蜜桃粉', c1:'#D96A99', c2:'#C74D80'},
+  {id:'purple',n:'香芋紫', c1:'#A375D8', c2:'#8B55C4'},
+  {id:'blue',  n:'晴空蓝', c1:'#68A2D6', c2:'#4A86C0'},
+  {id:'mint',  n:'薄荷绿', c1:'#5EBE88', c2:'#41A46D'},
+  {id:'mono',  n:'黑白灰', c1:'#8E8E96', c2:'#5F5F67'},
+  {id:'cream', n:'奶油黄', c1:'#D9AE45', c2:'#C39334'},
+  {id:'coral', n:'珊瑚橙', c1:'#DE7754', c2:'#C85C3C'},
+  {id:'matcha',n:'抹茶绿', c1:'#A8B452', c2:'#8C9A38'},
+  {id:'navy',  n:'深海蓝', c1:'#5A6FBE', c2:'#45539C'},
+  {id:'cocoa', n:'可可棕', c1:'#A57A58', c2:'#87603F'}
+];
+function hexToHsl(hex){
+  var r=parseInt(hex.slice(1,3),16)/255, g=parseInt(hex.slice(3,5),16)/255, b=parseInt(hex.slice(5,7),16)/255;
+  var max=Math.max(r,g,b), min=Math.min(r,g,b), h=0, s=0, l=(max+min)/2;
+  if (max!==min){
+    var d=max-min;
+    s = l>0.5 ? d/(2-max-min) : d/(max+min);
+    if (max===r) h=(g-b)/d+(g<b?6:0);
+    else if (max===g) h=(b-r)/d+2;
+    else h=(r-g)/d+4;
+    h*=60;
+  }
+  return {h:Math.round(h), s:Math.round(s*100), l:Math.round(l*100)};
+}
+function buildCustomPalette(hex){
+  var c=hexToHsl(hex), H=c.h, S=Math.min(86,Math.max(34,c.s));
+  function p(l,k){ k=k||1; return 'hsl('+H+' '+Math.round(S*k)+'% '+l+'%)'; }
+  return {
+    '--bg':p(96,.7),
+    '--card':'#FFFFFF',
+    '--pink-100':p(93,.8),
+    '--pink-200':p(85,.85),
+    '--pink-300':p(74,.9),
+    '--pink-400':p(62,.95),
+    '--pink-500':p(Math.min(58,Math.max(42,c.l))),
+    '--pink-600':p(Math.min(44,Math.max(30,Math.min(58,Math.max(42,c.l))-14))),
+    '--text':'hsl('+H+' '+Math.round(S*.45)+'% 20%)',
+    '--text-soft':'hsl('+H+' '+Math.round(S*.3)+'% 46%)',
+    '--line':p(83,.55),
+    '--gray-bg':p(92,.35,.4),
+    '--decor':p(80,.7),
+    '--shadow':'0 2px 0 hsla('+H+', '+Math.round(S*.6)+'%, 32%, .14), 0 12px 24px hsla('+H+', '+Math.round(S*.6)+'%, 32%, .07)'
+  };
+}
+function clearCustomPalette(){
+  CUSTOM_VARS.forEach(function(k){ document.body.style.removeProperty(k); });
+}
+function applyTheme(t){
+  if (t==='custom'){
+    var hex=localStorage.getItem(CUSTOM_KEY)||'#C39334';
+    var pal=buildCustomPalette(hex);
+    Object.keys(pal).forEach(function(k){ document.body.style.setProperty(k,pal[k]); });
+    document.body.dataset.theme='custom';
+    var cc=$('customColor'); if (cc) cc.value=hex;
+  } else {
+    clearCustomPalette();
+    document.body.dataset.theme=t;
+  }
+  var th=null;
+  for (var i=0;i<THEMES.length;i++) if (THEMES[i].id===t) th=THEMES[i];
+  if ($('themeNow')) $('themeNow').textContent = t==='custom' ? '自定义' : (th?th.n:'');
+  var dots=document.querySelectorAll('.ts-dot');
+  for (var j=0;j<dots.length;j++) dots[j].classList.toggle('on', dots[j].dataset.t===t);
+  var its=document.querySelectorAll('.ts-item');
+  for (var k=0;k<its.length;k++) its[k].classList.toggle('on', its[k].dataset.t===t);
+  document.documentElement.style.background = getComputedStyle(document.body).getPropertyValue('--bg').trim();
+}
+var themeGrid=$('themeGrid');
+if (themeGrid){
+  var tg='';
+  for (var ti=0; ti<THEMES.length; ti++){
+    var T=THEMES[ti];
+    tg += '<div class="ts-item" data-t="'+T.id+'"><button class="ts-dot" type="button" data-t="'+T.id+'" style="--c1:'+T.c1+';--c2:'+T.c2+'" aria-label="'+T.n+'"></button><span class="ts-name">'+T.n+'</span></div>';
+  }
+  themeGrid.innerHTML=tg;
+}
+function setThemeSheet(open){
+  var sh=$('themeSheet'), mk=$('themeMask'), btn=$('themeBtn');
+  if (!sh) return;
+  sh.hidden=!open; mk.hidden=!open;
+  btn.setAttribute('aria-expanded', open?'true':'false');
+  if (open) applyTheme(document.body.dataset.theme);
+}
+$('themeBtn').addEventListener('click', function(){ setThemeSheet($('themeSheet').hidden); });
+$('themeClose').addEventListener('click', function(){ setThemeSheet(false); });
+$('themeMask').addEventListener('click', function(){ setThemeSheet(false); });
+document.addEventListener('keydown', function(e){
+  if (e.key==='Escape' && $('themeSheet') && !$('themeSheet').hidden) setThemeSheet(false);
+});
+document.querySelectorAll('.ts-dot').forEach(function(dot){
+  dot.addEventListener('click', function(){
+    var t=dot.dataset.t;
+    localStorage.setItem(THEME_KEY,t);
+    applyTheme(t);
+    setThemeSheet(false);
+    toast('配色换成「'+(THEMES.filter(function(x){return x.id===t;})[0]||{}).n+'」');
+  });
+});
+$('customApply').addEventListener('click', function(){
+  var hex=$('customColor').value||'#C39334';
+  localStorage.setItem(CUSTOM_KEY,hex);
+  localStorage.setItem(THEME_KEY,'custom');
+  applyTheme('custom');
+  setThemeSheet(false);
+  toast('已应用自定义配色');
+});
+/* 启动时恢复上次配色 */
+(function(){
+  var saved=null;
+  try{ saved=localStorage.getItem(THEME_KEY); }catch(e){}
+  applyTheme(saved||'cream');
+})();
+
+
 function openReset(){ resetModal.classList.remove('hide'); }
 $('resetBtn').addEventListener('click', openReset);
 $('resetBtnB').addEventListener('click', openReset);
@@ -2537,7 +4638,7 @@ $('resetOk').addEventListener('click', function(){
   try{ localStorage.removeItem(KEY); }catch(e){}
   drag = null; selected = -1; lastSeason = -1;
   newState();
-  S.stands = new Array(VARS.length).fill(null); S.standFull = false; S.house = {now:'living', owned:{}, hidden:{}}; S.sold = 0; S.milestones = []; S.goal = null; S.combo = 0; S.comboTs = 0;
+  S.stands = new Array(VARS.length).fill(null); S.standFull = false; S.house = {now:'living', owned:{}, hidden:{}, vase:{v:-1}, sets:[], task:null}; S.sold = 0; S.milestones = []; S.goal = null; S.combo = 0; S.comboTs = 0;
   modalEl.classList.add('hide');
   resetModal.classList.add('hide');
   save(); renderAll(); renderClock();
@@ -2551,9 +4652,21 @@ resetModal.addEventListener('click', function(e){
 
 $('startBtn').addEventListener('click', function(){
   S.tutorial = true; save(); modalEl.classList.add('hide'); beep('order');
+  setTimeout(function(){ if (S.guide && !S.guide.done && !S.guide.take) toast('新手三步：先点「取种子」把田里补满'); }, 650);
 });
 modalEl.addEventListener('click', function(e){
   if (e.target === modalEl && S.tutorial){ S.tutorial = true; save(); modalEl.classList.add('hide'); }
+});
+
+if ($('tutMini')) $('tutMini').addEventListener('click', openGuide);
+if ($('guideClose')) $('guideClose').addEventListener('click', closeGuide);
+if ($('guideOk')) $('guideOk').addEventListener('click', closeGuide);
+if ($('guideModal')) $('guideModal').addEventListener('click', function(e){ if (e.target === $('guideModal')) closeGuide(); });
+if ($('guideSkip')) $('guideSkip').addEventListener('click', function(){
+  var g = guideState(); if (!g) return;
+  g.done = true; g.skipped = true;
+  save(); closeGuide(); renderAll();
+  toast('已跳过新手引导');
 });
 
 /* ================= 时间循环 ================= */
