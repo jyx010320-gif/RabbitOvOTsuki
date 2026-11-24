@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <title>俄罗斯方块</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23FFFFFF'/%3E%3Crect x='6' y='6' width='20' height='20' fill='none' stroke='%23FF8FB4' stroke-width='1.5'/%3E%3Crect x='9' y='9' width='6' height='6' fill='%23C2603F'/%3E%3Crect x='17' y='9' width='6' height='6' fill='%23D2944C'/%3E%3Crect x='9' y='17' width='6' height='6' fill='%237C9363'/%3E%3Crect x='17' y='17' width='6' height='6' fill='%235E7FA0'/%3E%3C/svg%3E">
 <link rel="stylesheet" href="https://miaoda.feishu.cn/fonts/css2?family=ZCOOL+KuaiLe&family=Noto+Sans+SC:wght@400;500;700&display=swap">
@@ -39,7 +39,16 @@
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 html,body{height:100%}
 
-/* ===== 触屏保护：长按不选字、不长按弹出系统菜单 ===== */
+/* ===== 触屏保护：全站禁选字、禁长按系统菜单、禁双指/多指缩放 ===== */
+*{
+  -webkit-user-select:none;
+  -moz-user-select:none;
+  -ms-user-select:none;
+  user-select:none;
+  -webkit-touch-callout:none;
+  -webkit-user-drag:none;
+}
+html,body{touch-action:manipulation}
 html,body{
   -webkit-user-select:none;
   -moz-user-select:none;
@@ -287,7 +296,7 @@ body::before{
 
 /* ===== 棋盘：旧掌机造型 ===== */
 .board-col{
-  --bh:min(720px,calc(100vh - 300px));
+  --bh:min(620px,calc(100vh - 400px));
   display:flex;
   flex-direction:column;
   gap:10px;
@@ -553,6 +562,18 @@ canvas#game.shake{animation:boardShake .24s ease-out both}
 .tools{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
 #view-menu .tools{grid-template-columns:repeat(2,1fr)}
 .mode-row{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-top:2px}
+.start-lv{display:flex;align-items:center;gap:8px;margin-top:9px;flex-wrap:wrap}
+.start-lv span{font-size:11.5px;color:var(--ink-soft);letter-spacing:.04em}
+.start-lv .sl-btns{display:flex;gap:5px}
+.start-lv button{
+  appearance:none;cursor:pointer;font-family:var(--sans);font-size:11.5px;
+  padding:5px 12px;border-radius:9px;border:1px solid var(--tile-line);
+  background:var(--tile-a);color:var(--ink-soft);
+}
+.start-lv button[aria-pressed="true"]{
+  background:var(--sel-b);border-color:var(--sel-line);color:#FFFFFF;
+}
+.start-lv i{font-style:normal;font-size:10.5px;color:var(--ink-soft);opacity:.8}
 .mode-btn{
   appearance:none;text-align:left;padding:9px 11px 10px;border-radius:12px;
   border:1px solid rgba(150,118,80,.45);cursor:pointer;
@@ -563,6 +584,7 @@ canvas#game.shake{animation:boardShake .24s ease-out both}
 }
 .mode-btn b{font-size:12.5px;color:#4A3626;font-weight:700;letter-spacing:.02em}
 .mode-btn i{font-style:normal;font-size:9.5px;color:#8A7358;letter-spacing:.02em}
+.mode-btn.is-wide{grid-column:span 2}
 .mode-btn[aria-pressed="true"]{
   background-image:linear-gradient(180deg,#6E5738,#59452C);
   border-color:rgba(70,52,32,.62);
@@ -662,11 +684,11 @@ canvas#game.shake{animation:boardShake .24s ease-out both}
 .sticker canvas{display:block;width:100%;height:100%}
 .sticker.locked{background:#F3E7D0;box-shadow:inset 0 0 0 1px rgba(150,118,80,.18)}
 .sticker.locked canvas{opacity:.44}
-.sticker.just{animation:stPulse .55s ease}
+.sticker.just{animation:stPulse .62s cubic-bezier(.2,.9,.3,1.2)}
 @keyframes stPulse{
-  0%{transform:scale(1)}
-  42%{transform:scale(1.14) rotate(-4deg)}
-  100%{transform:scale(1)}
+  0%{transform:rotate(var(--rot,0deg)) scale(.55);opacity:.35}
+  55%{transform:rotate(var(--rot,0deg)) scale(1.16)}
+  100%{transform:rotate(var(--rot,0deg)) scale(1);opacity:1}
 }
 .album-next{
   margin:0 0 12px;display:flex;align-items:baseline;justify-content:space-between;
@@ -682,60 +704,36 @@ canvas#game.shake{animation:boardShake .24s ease-out both}
 .guide-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;align-items:start;padding-top:clamp(8px,1.2vw,12px)}
 .guide-grid .panel .note{margin-top:10px}
 
-/* ===== 底部菜单：液态玻璃 ===== */
+/* ===== 底部菜单：参考合花的分格页签 ===== */
 .tabbar{
-  position:fixed;left:50%;z-index:60;
-  bottom:0;
-  transform:translateX(-50%);
-  display:flex;align-items:stretch;gap:2px;
-  width:min(430px,100vw);
-  padding:8px 8px calc(8px + env(safe-area-inset-bottom,0px));
-  border-radius:26px 26px 0 0;
-  background:linear-gradient(180deg,rgba(255,252,244,.56),rgba(247,238,220,.40));
-  -webkit-backdrop-filter:blur(20px) saturate(190%);
-  backdrop-filter:blur(20px) saturate(190%);
-  box-shadow:
-    0 22px 48px -16px rgba(74,54,34,.50),
-    0 4px 12px rgba(90,66,40,.14),
-    inset 0 1px 0 rgba(255,255,255,.98),
-    inset 0 -1px 0 rgba(255,255,255,.50),
-    inset 0 0 0 1px rgba(255,255,255,.44);
-  overflow:hidden;
+  position:fixed;left:0;right:0;bottom:0;z-index:60;
+  display:grid;grid-template-columns:repeat(4,1fr);gap:3px;
+  width:100%;max-width:520px;margin:0 auto;
+  padding:6px 12px calc(6px + env(safe-area-inset-bottom,0px));
+  background:var(--bg-a);
+  border-top:1.2px solid var(--rule);
+  box-shadow:0 -8px 22px var(--sheet-shadow);
 }
-.tabbar::before{
-  content:"";position:absolute;top:0;right:0;bottom:0;left:0;border-radius:inherit;pointer-events:none;z-index:0;
-  background:
-    radial-gradient(130% 92% at 50% -42%,rgba(255,255,255,.92) 0%,rgba(255,255,255,0) 58%),
-    radial-gradient(70% 130% at 106% 130%,rgba(255,226,176,.40) 0%,rgba(255,226,176,0) 62%),
-    radial-gradient(62% 120% at -4% 122%,rgba(255,255,255,.52) 0%,rgba(255,255,255,0) 58%);
-}
-.tab-pill{
-  position:absolute;z-index:1;top:8px;bottom:calc(8px + env(safe-area-inset-bottom,0px));left:8px;width:0;
-  border-radius:19px;
-  background:linear-gradient(180deg,rgba(255,255,255,.90),rgba(255,249,232,.60));
-  box-shadow:
-    inset 0 1px 0 rgba(255,255,255,1),
-    inset 0 -3px 8px rgba(178,146,100,.20),
-    0 6px 14px -6px rgba(120,90,58,.5);
-  transition:transform .3s cubic-bezier(.34,.9,.28,1),width .3s cubic-bezier(.34,.9,.28,1);
-}
+.tabbar::before{content:none}
+.tab-pill{display:none}
 .tab{
-  position:relative;z-index:2;flex:1;
+  position:relative;z-index:2;
   appearance:none;-webkit-appearance:none;border:0;background:transparent;
   display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;
-  min-height:48px;padding:5px 0 4px;border-radius:18px;
-  font-family:var(--sans);font-size:11.5px;letter-spacing:.05em;color:#7A6248;
+  min-height:46px;padding:6px 4px;border-radius:12px;
+  font-family:var(--sans);font-size:11.5px;font-weight:500;letter-spacing:.04em;
+  color:var(--ink-soft);
   cursor:pointer;touch-action:manipulation;
-  transition:color .18s ease;
+  transition:background .16s ease,color .16s ease;
   -webkit-user-select:none;user-select:none;-webkit-touch-callout:none;
 }
-.tab.is-active{color:#3B2A1B}
+.tab.is-active{color:var(--ink);font-weight:700;background:var(--bg-c)}
 .tab-ico{
-  width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linejoin:round;
-  opacity:.76;transition:opacity .18s ease,transform .18s ease;
+  width:21px;height:21px;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linejoin:round;
+  opacity:.9;transition:opacity .18s ease;
 }
-.tab.is-active .tab-ico{opacity:1;transform:scale(1.05)}
-.tab:focus-visible{outline:2px solid var(--red);outline-offset:2px}
+.tab.is-active .tab-ico{opacity:1;stroke:var(--sel-b)}
+.tab:focus-visible{outline:2px solid var(--sel-line);outline-offset:2px}
 
 /* 轻提示 */
 .toast{
@@ -833,8 +831,6 @@ canvas#game.shake{animation:boardShake .24s ease-out both}
 
 
 @supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){
-  .tabbar{background:linear-gradient(180deg,rgba(255,252,244,.94),rgba(247,238,220,.90))}
-  .tab-pill{background:linear-gradient(180deg,rgba(255,255,255,.98),rgba(255,249,232,.86))}
   .glass{background:linear-gradient(180deg,rgba(255,252,244,.94),rgba(248,240,222,.86))}
 }
 
@@ -951,17 +947,6 @@ body::before{opacity:.03}
 .mode-btn[aria-pressed="true"] b{color:#FFFFFF}
 .mode-btn[aria-pressed="true"] i{color:rgba(255,255,255,.86)}
 
-.tabbar{
-  background-image:linear-gradient(180deg,#FFA9C7,#FF8FB4);
-  border-radius:24px 24px 0 0;
-  box-shadow:0 -6px 22px rgba(229,82,127,.20), inset 0 1px 0 rgba(255,255,255,.45);
-}
-.tabbar::before{background:none}
-.tab{color:#FFFFFF;font-weight:600}
-.tab.is-active{color:#C8406E}
-.tab-pill{background:rgba(255,255,255,.94);border-radius:16px;box-shadow:0 2px 7px rgba(200,60,100,.20)}
-.tab:focus{outline-color:#FFFFFF}
-
 .veil-card{
   background:#FFFFFF;color:#5C4550;border:2px solid #FFE3EE;border-radius:26px;
   box-shadow:0 18px 44px rgba(170,70,110,.22);
@@ -1038,8 +1023,6 @@ body{
   background-image:linear-gradient(180deg,var(--sel-a),var(--sel-b));
   border-color:var(--sel-line);
 }
-.tabbar{background-image:linear-gradient(180deg,var(--bar-a),var(--bar-b));box-shadow:0 -6px 22px var(--sheet-shadow), inset 0 1px 0 rgba(255,255,255,.42)}
-.tab.is-active{color:var(--bar-active)}
 .veil .btn-primary{background-image:linear-gradient(180deg,var(--sel-a),var(--sel-b));box-shadow:0 6px 16px var(--sheet-shadow)}
 .board-frame{border-color:var(--ui-line)}
 /* ===== 配色联动：皮肤 / 配色小按钮的浅底也跟随主题 ===== */
@@ -1397,6 +1380,227 @@ body[data-theme="cocoa"]{
   border:1px solid var(--sel-line);color:var(--on-sel,#FFFFFF);
   background-image:linear-gradient(180deg,var(--sel-a),var(--sel-b));box-shadow:0 2px 6px var(--card-shadow)}
 
+
+/* ===== 主页布局 v2：标题+三列数据+棋盘右栏+四键+两入口 ===== */
+body[data-view="play"] .doc-head{display:flex}
+.doc-head{
+  display:flex;flex-direction:row;flex-wrap:nowrap;align-items:flex-start;justify-content:space-between;
+  gap:10px;padding:0 2px 6px;border-bottom:0;
+}
+.doc-head .title-block{min-width:0;flex:1}
+.title-block h1{font-size:24px;line-height:1.14;letter-spacing:.01em}
+.title-block h1 .h1-dot{font-style:normal;color:var(--red)}
+.title-block .kicker{font-size:10px;letter-spacing:.14em;margin-bottom:3px;color:var(--ink-soft)}
+.head-sub{font-family:var(--sans);font-size:11px;line-height:1.45;color:var(--ink-soft);margin-top:5px;letter-spacing:.02em}
+
+
+/* 三列数据 */
+.stats3{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin:10px 0 9px}
+.stat{min-width:0}
+.stat span{display:block;font-family:var(--sans);font-size:10px;letter-spacing:.06em;color:var(--ink-soft)}
+.stat b{
+  display:block;font-family:var(--sans);font-weight:700;font-size:25px;line-height:1.08;
+  color:var(--ink);margin-top:4px;white-space:nowrap;overflow:hidden;
+}
+.stat b.hot{color:var(--sel-b)}
+.stats3 #score{font-size:25px;line-height:1.08;color:var(--sel-b)}
+
+/* 棋盘 + 右栏 */
+.play-wrap{grid-template-columns:minmax(0,1fr) 84px;gap:9px;justify-content:stretch;align-items:start;padding-top:0}
+.board-col{width:auto;max-width:100%;gap:0}
+.rail{width:84px;gap:7px}
+.rail-card{padding:6px 6px 7px;border-radius:11px}
+.rail-box{padding-bottom:7px}
+.rail-hint{font-family:var(--sans);font-size:8.5px;color:#8A7358;margin-top:2px;text-align:center;line-height:1.2}
+.rail-soft,.rail-pause{min-height:38px;border-radius:11px;font-size:11.5px;letter-spacing:.04em}
+
+/* 提示 + 四键 */
+.pad{display:grid;width:100%;margin:16px 0 0;gap:9px;grid-template-columns:repeat(4,1fr)}
+.pad button{
+  min-height:58px;border-radius:16px;font-size:19px;line-height:1.05;color:var(--ink);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0;
+  border:1px solid var(--ui-line);
+  background-image:linear-gradient(180deg,#FFFFFF 0%,#F8F4F5 100%);
+  box-shadow:0 2px 8px var(--card-shadow);
+}
+.pad button em{font-style:normal;font-family:var(--sans);font-size:9.5px;letter-spacing:.09em;color:var(--ink-soft);margin-top:1px}
+.pad button[data-act="rotate"]{
+  color:var(--on-sel,#FFFFFF);border-color:var(--sel-line);
+  background-image:linear-gradient(180deg,var(--sel-a),var(--sel-b));
+  box-shadow:0 3px 10px var(--sheet-shadow);
+}
+.pad button[data-act="rotate"] em{color:rgba(255,255,255,.86)}
+.pad button[data-act="drop"]{
+  color:#2F6B5C;border-color:#BFDFD7;
+  background-image:linear-gradient(180deg,#E5F5F0,#D3ECE5);
+  box-shadow:0 2px 8px rgba(64,120,106,.16);
+}
+.pad button[data-act="drop"] em{color:#40796C}
+
+/* 底栏沿用原液态玻璃样式（四 tab） */
+
+/* 宽屏：内容收窄居中，保持手机版比例 */
+@media (min-width:861px){
+  .doc-head{max-width:540px;margin-left:auto;margin-right:auto}
+  .view{max-width:540px;margin-left:auto;margin-right:auto}
+  .stats3{max-width:540px}
+  .play-wrap{grid-template-columns:minmax(0,1fr) 96px}
+  .rail{width:96px}
+}
+
+/* ===== 方块样式按钮：统一底色（覆盖原先四色循环） ===== */
+#skinRow button{
+  background-image:none!important;
+  background-color:var(--tile-a)!important;
+  border-color:var(--tile-line)!important;
+  color:var(--ink-soft)!important;
+  box-shadow:0 2px 0 rgba(60,40,30,.06)!important;
+}
+/* 开局随机：独占一整行，宽度抵四个 */
+#skinRow button[data-skin="random"]{
+  flex:1 1 100%!important;
+  width:100%!important;
+  padding:7px 12px!important;
+  font-size:12px!important;
+  letter-spacing:.06em;
+  border-radius:10px!important;
+  margin-bottom:2px;
+}
+#skinRow button[aria-pressed="true"]{
+  background-image:none!important;
+  background-color:var(--sel-b)!important;
+  border-color:var(--sel-line)!important;
+  color:#FFFFFF!important;
+  box-shadow:0 3px 10px rgba(120,90,110,.22)!important;
+}
+#skinRow button[aria-disabled="true"]{
+  background-image:none!important;
+  background-color:var(--bg-b)!important;
+  border-color:var(--ui-line)!important;
+  color:var(--ink-soft)!important;
+  opacity:.5!important;
+}
+/* ===== 未解锁提示卡 ===== */
+.unlock-card{
+  position:fixed;left:50%;top:0;
+  width:min(320px,calc(100vw - 48px));
+  padding:14px 16px 13px;border-radius:18px;
+  background:var(--tile-a);border:1px solid var(--tile-line);
+  box-shadow:0 12px 34px var(--sheet-shadow);
+  color:var(--ink);text-align:center;
+  opacity:0;pointer-events:none;
+  transform:translate(-50%,6px);
+  transition:opacity .18s ease,transform .18s ease;z-index:60;
+}
+.unlock-card.show{opacity:1;transform:translate(-50%,0);pointer-events:auto}
+.unlock-card b{display:block;font-size:14.5px;letter-spacing:.02em;margin-bottom:5px}
+.unlock-card p{font-family:var(--sans);font-size:12.5px;line-height:1.6;color:var(--ink-soft);margin:0}
+.unlock-card span{display:block;margin-top:6px;font-family:var(--sans);font-size:11.5px;color:var(--sel-b)}
+/* ===== 贴纸墙：微微歪着贴上去的手感 ===== */
+.sticker{
+  transform:rotate(var(--rot,0deg));
+  transition:transform .22s ease,box-shadow .22s ease;
+}
+.sticker:hover,.sticker:focus{transform:rotate(0deg) scale(1.06)}
+.sticker.secret{background:var(--tile-b)}
+.sticker-grid{gap:9px}
+
+/* ===== 战绩面板 / 残局选关 / 成绩卡 / 结算次按钮 ===== */
+.veil-extra{display:flex;gap:8px;justify-content:center;width:100%}
+.veil-extra[hidden]{display:none}
+.veil-mini{
+  appearance:none;border:1px solid var(--rule);border-radius:10px;
+  background:var(--bg-b);color:var(--ink-soft);font-family:var(--sans);
+  font-size:11.5px;line-height:1.2;padding:8px 11px;cursor:pointer;
+  white-space:nowrap;flex:0 0 auto;
+}
+.veil-mini:active{transform:translateY(1px)}
+.rec-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin:3px 0 11px}
+.rec-cell{
+  background:var(--bg-b);border:1px solid var(--tile-line);border-radius:11px;
+  padding:8px 9px 7px;display:flex;flex-direction:column;gap:3px;
+}
+.rec-cell .k{font-size:9.5px;letter-spacing:.1em;color:var(--ink-soft)}
+.rec-cell .v{font-family:var(--sans);font-weight:700;font-size:17px;line-height:1.2;color:var(--ink)}
+.rec-strip{margin-top:9px}
+.rs-head{display:flex;justify-content:space-between;align-items:center;font-size:10.5px;letter-spacing:.08em;color:var(--ink-soft);margin-bottom:6px}
+.rs-head b{font-family:var(--sans);font-size:11.5px;letter-spacing:.02em;color:var(--ink)}
+.daily-dots{display:grid;grid-template-columns:repeat(7,1fr);gap:5px}
+/* 七日柱状：柱高 = 当天消行，完成的柱实色 */
+.daily-bars{display:grid;grid-template-columns:repeat(7,1fr);gap:5px;align-items:end}
+.db-col{display:flex;flex-direction:column;align-items:center;gap:4px}
+.db-track{width:100%;height:42px;border-radius:8px;border:1px solid var(--tile-line);background:var(--bg-b);display:flex;align-items:flex-end;overflow:hidden}
+.db-fill{width:100%;height:0;border-radius:6px 6px 0 0;background:var(--sel-b);opacity:.42;transition:height .3s ease}
+.db-col.done .db-fill{opacity:1}
+.db-col.today .db-track{outline:2px solid var(--sel-b);outline-offset:-2px}
+.db-col.today .db-fill{background:var(--sel-b)}
+.db-col b{font-size:9px;font-weight:600;letter-spacing:.02em;color:var(--ink-soft)}
+.db-col.today b{color:var(--ink)}
+.daily-dot{
+  height:32px;border-radius:9px;border:1px solid var(--tile-line);background:var(--bg-b);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;
+  font-size:9.5px;color:var(--ink-soft);
+}
+.daily-dot.on{background:var(--sel-b);border-color:var(--sel-line);color:#FFFFFF}
+.daily-dot b{font-size:9px;font-weight:600;letter-spacing:.02em}
+.daily-dot.today{outline:2px solid var(--sel-b);outline-offset:-2px}
+.sheet-mask{
+  position:fixed;top:0;right:0;bottom:0;left:0;z-index:80;
+  display:flex;align-items:center;justify-content:center;padding:16px;
+  background:rgba(30,22,18,.34);
+  -webkit-backdrop-filter:blur(2px);backdrop-filter:blur(2px);
+}
+.sheet-mask[hidden]{display:none}
+.sheet-box{
+  width:min(362px,100%);max-height:82vh;overflow:auto;
+  background:var(--bg-a);border:1.4px solid var(--rule);border-radius:18px;
+  box-shadow:0 18px 44px var(--sheet-shadow);padding:13px 14px 12px;
+}
+.sb-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.sb-head b{font-family:var(--sans);font-size:14px;letter-spacing:.1em;color:var(--ink)}
+.sb-x{
+  appearance:none;width:26px;height:26px;border-radius:50%;border:1.2px solid var(--rule);
+  background:var(--bg-b);color:var(--ink-soft);font-size:15px;line-height:1;cursor:pointer;
+  display:grid;place-items:center;
+}
+.pick-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:7px}
+.pick-cell{
+  appearance:none;border:1px solid var(--tile-line);border-radius:10px;background:var(--bg-b);
+  color:var(--ink-soft);font-family:var(--sans);font-size:12.5px;line-height:1.1;
+  padding:9px 0 7px;cursor:pointer;
+  display:flex;flex-direction:column;align-items:center;gap:2px;
+}
+.pick-cell.done{background:var(--bg-c);color:var(--ink);border-color:var(--sel-line)}
+.pick-cell.now{box-shadow:inset 0 0 0 2px var(--sel-b)}
+.pick-cell i{font-style:normal;font-size:9px;opacity:.8}
+.pick-cell .pk-star{font-size:10px;opacity:1;color:var(--sel-b);letter-spacing:.04em;line-height:1}
+.pick-cell.done .pk-star{color:var(--sel-b)}
+.achv-wrap{margin:10px 0 14px}
+.achv-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+.achv-head b{font-family:var(--sans);font-size:12.5px;letter-spacing:.1em;color:var(--ink)}
+.achv-head span{font-size:10.5px;color:var(--ink-soft)}
+.achv-row{display:grid;grid-template-columns:repeat(4,1fr);gap:7px}
+.achv{
+  display:flex;flex-direction:column;align-items:center;gap:3px;padding:8px 4px 7px;
+  border:1px dashed var(--rule);border-radius:10px;background:var(--bg-b);
+}
+.achv .achv-dot{
+  width:26px;height:26px;border-radius:50%;display:grid;place-items:center;
+  font-size:13px;line-height:1;border:1px solid var(--rule);color:var(--ink-soft);
+}
+.achv b{font-family:var(--sans);font-size:10px;font-weight:600;letter-spacing:.04em;color:var(--ink-soft)}
+.achv i{font-style:normal;font-size:8.5px;color:var(--ink-soft);opacity:.72;line-height:1.2;text-align:center}
+.achv.got{background:var(--bg-c);border-style:solid;border-color:var(--sel-line)}
+.achv.got .achv-dot{background:var(--sel-b);color:var(--on-sel);border-color:var(--sel-b)}
+.achv.got b{color:var(--ink)}
+.card-box{display:flex;flex-direction:column;gap:10px;align-items:center;background:transparent;border:0;box-shadow:none;padding:0;max-height:none}
+#cardSlot img{display:block;width:min(300px,84vw);border-radius:14px;box-shadow:0 14px 34px rgba(0,0,0,.28)}
+.card-btns{display:flex;gap:8px}
+.card-btns .mini-btn{display:inline-flex;align-items:center;text-decoration:none}
+.card-tip{color:rgba(255,255,255,.86);font-size:10.5px;letter-spacing:.04em;margin:0;text-align:center}
+.pick-open-row{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:10px}
+.pick-open-row span{font-size:10.5px;letter-spacing:.06em;color:var(--ink-soft)}
+.pick-open-row .mini-btn{padding:6px 14px;font-size:11px}
 </style>
 </head>
 <body>
@@ -1406,7 +1610,8 @@ body[data-theme="cocoa"]{
   <header class="doc-head">
     <div class="title-block">
       <div class="kicker">@o北极兔o</div>
-      <h1>俄罗斯<span>方块</span></h1>
+      <h1>俄罗斯<span>方块</span><i class="h1-dot">。</i></h1>
+      <p class="head-sub">把方块排成一行，烦恼一起消掉。</p>
     </div>
   </header>
 
@@ -1415,6 +1620,13 @@ body[data-theme="cocoa"]{
 
     <!-- 1 游戏 -->
     <section class="view is-active" id="view-play" aria-label="游戏">
+
+      <div class="stats3">
+        <div class="stat"><span>本局得分</span><b class="hot" id="score">0</b></div>
+        <div class="stat"><span>消除行数</span><b id="lines">0</b></div>
+        <div class="stat"><span>最高纪录</span><b id="hiscore">0</b></div>
+      </div>
+
       <div class="play-wrap">
         <div class="board-col">
           <div class="board-scroll">
@@ -1425,6 +1637,10 @@ body[data-theme="cocoa"]{
                 <h2 id="veilTitle">开始</h2>
                 <p id="veilText">点下面的方向键移动和旋转，按 ↓ 直接落底。</p>
                 <button class="btn-primary" id="veilBtn" type="button">开始游戏</button>
+                <div class="veil-extra" id="veilExtra" hidden>
+                  <button class="veil-mini" id="veilBtn2" type="button">换个模式</button>
+                  <button class="veil-mini" id="veilBtn3" type="button">存成绩卡</button>
+                </div>
               </div>
             </div>
           </div>
@@ -1432,38 +1648,31 @@ body[data-theme="cocoa"]{
         </div>
 
         <aside class="rail" aria-label="战况">
-          <div class="rail-card rail-lv">
-            <span class="ri-k">等级</span>
-            <b class="rail-num" id="level">1</b>
-          </div>
-          <div class="rail-card rail-score">
-            <span class="ri-k">得分</span>
-            <b class="rail-num hot" id="score">0</b>
-          </div>
-          <div class="rail-card rail-lines">
-            <span class="ri-k">消行</span>
-            <b class="rail-num sm" id="lines">0</b>
-            <div class="lv-track"><i id="lvBar"></i></div>
-            <span class="lv-mini"><span id="lvLabel">距下一级</span> <b id="lvNeed">10</b></span>
-          </div>
           <div class="rail-card rail-box">
-            <span class="ri-k">下一个</span>
+            <span class="ri-k">下一只</span>
             <canvas class="mini" id="next" aria-label="后续方块预览"></canvas>
           </div>
           <div class="rail-card rail-box">
             <span class="ri-k">暂存</span>
             <canvas class="mini" id="hold" aria-label="暂存方块"></canvas>
+            <span class="rail-hint">交换方块</span>
+          </div>
+          <div class="rail-card rail-lv">
+            <span class="ri-k" id="lvTitle">等级</span>
+            <b class="rail-num" id="level">1</b>
+            <div class="lv-track"><i id="lvBar"></i></div>
+            <span class="lv-mini"><span id="lvLabel">距下一级</span> <b id="lvNeed">10</b></span>
           </div>
           <button class="rail-pause" id="btnPause" type="button" aria-pressed="false">暂停</button>
-          <button class="rail-soft" id="btnSoft" type="button">降一格</button>
+          <button class="rail-soft" id="btnSoft" type="button">加速</button>
         </aside>
       </div>
 
       <div class="pad" id="pad">
         <button type="button" data-act="left" aria-label="左移">&#8592;</button>
-        <button type="button" data-act="rotate" aria-label="旋转">&#8635;</button>
+        <button type="button" data-act="rotate" aria-label="旋转"><i class="pad-ico">&#8635;</i><em>旋转</em></button>
         <button type="button" data-act="right" aria-label="右移">&#8594;</button>
-        <button type="button" data-act="drop" aria-label="直接落底">&#8681;</button>
+        <button type="button" data-act="drop" aria-label="直接落底"><i class="pad-ico">&#8681;</i><em>落下</em></button>
       </div>
 
     </section>
@@ -1476,6 +1685,8 @@ body[data-theme="cocoa"]{
           <button type="button" id="btnHold">暂存</button>
           <button type="button" id="btnRestart">重开</button>
           <button type="button" id="btnSound" aria-pressed="true">音效开</button>
+          <button type="button" id="btnVibe" aria-pressed="true">震动开</button>
+          <button type="button" id="btnAmb" aria-pressed="true">环境音开</button>
           <button type="button" id="btnHome">返回主页</button>
         </div>
         <p class="skin-note">点开任一功能会先回到棋盘再执行，不会在菜单里误触。</p>
@@ -1490,8 +1701,52 @@ body[data-theme="cocoa"]{
           <button type="button" class="mode-btn" data-mode="sprint" aria-pressed="false">
             <b>冲刺模式</b><i>消满 40 行计时</i>
           </button>
+          <button type="button" class="mode-btn" data-mode="daily" aria-pressed="false">
+            <b>每日一局</b><i>三分冲三十行</i>
+          </button>
+          <button type="button" class="mode-btn" data-mode="puzzle" aria-pressed="false">
+            <b>残局挑战</b><i>消行过关 · 二十关</i>
+          </button>
+          <button type="button" class="mode-btn is-wide" data-mode="zen" aria-pressed="false">
+            <b>禅意模式</b><i>不掉速 · 顶住了自动清底四行</i>
+          </button>
+        </div>
+        <div class="start-lv">
+          <span>起手等级</span>
+          <div class="sl-btns" id="startLvRow">
+            <button type="button" data-startlv="1" aria-pressed="true">1</button>
+            <button type="button" data-startlv="5" aria-pressed="false">5</button>
+            <button type="button" data-startlv="10" aria-pressed="false">10</button>
+          </div>
+          <i>无尽与冲刺可用 · 每日与残局固定 1 级</i>
+        </div>
+
+        <div class="pick-open-row">
+          <span id="pickOpenInfo">已通 0 / 20 关</span>
+          <button type="button" id="btnPuzzlePick" class="mini-btn">选关</button>
         </div>
         <p class="skin-note">换模式会直接开一局新的；点上面的按钮也能来回切。</p>
+      </div>
+
+      <div class="glass panel">
+        <div class="panel-title">我的战绩<span class="skin-meta" id="recMeta">共 0 局</span></div>
+        <div class="rec-grid">
+          <div class="rec-cell"><span class="k">累计消行</span><b class="v" id="recLines">0</b></div>
+          <div class="rec-cell"><span class="k">最高分</span><b class="v" id="recScore">0</b></div>
+          <div class="rec-cell"><span class="k">最高连击</span><b class="v" id="recCombo">0</b></div>
+          <div class="rec-cell"><span class="k">T-Spin</span><b class="v" id="recSpin">0</b></div>
+          <div class="rec-cell"><span class="k">四行清</span><b class="v" id="recQuad">0</b></div>
+          <div class="rec-cell"><span class="k">硬降</span><b class="v" id="recDrop">0</b></div>
+        </div>
+        <div class="rec-strip">
+          <div class="rs-head"><span>最近七天</span><b id="dailyStreak">0 天</b></div>
+          <div class="daily-bars" id="dailyDots"></div>
+        </div>
+        <div class="rec-strip">
+          <div class="rs-head"><span>残局进度</span><b id="recPzTxt">0 / 20</b></div>
+          <div class="lv-track"><i id="recPzBar" style="width:0%"></i></div>
+        </div>
+        <p class="skin-note">只记最高与累计，不会自动清空；「全部重开」会一起抹掉。</p>
       </div>
 
       <div class="glass panel">
@@ -1532,42 +1787,30 @@ body[data-theme="cocoa"]{
       </div>
 
       <div class="glass panel skin-panel">
-        <div class="panel-title">方块样式<span class="skin-meta" id="skinMeta">已解锁 4 / 30</span></div>
+        <div class="panel-title">方块样式<span class="skin-meta" id="skinMeta">已解锁 1 / 20</span></div>
         <div class="skin-row" id="skinRow">
           <button type="button" data-skin="random" class="skin-random">开局随机</button>
-          <button type="button" data-skin="animal">小动物</button>
-          <button type="button" data-skin="fuzzy">毛绒</button>
-          <button type="button" data-skin="candy">果冻糖</button>
-          <button type="button" data-skin="fruit">水果</button>
-          <button type="button" data-skin="stamp">邮票</button>
-          <button type="button" data-skin="tape">纸胶带</button>
-          <button type="button" data-skin="terrazzo">水磨石</button>
-          <button type="button" data-skin="pixel">像素复古</button>
-          <button type="button" data-skin="crayon">蜡笔纯色</button>
-          <button type="button" data-skin="wood">木纹</button>
-          <button type="button" data-skin="marble">大理石</button>
-          <button type="button" data-skin="plaid">苏格兰格</button>
-          <button type="button" data-skin="dots">波点</button>
-          <button type="button" data-skin="ripple">水波</button>
-          <button type="button" data-skin="star">星空</button>
-          <div class="skin-break">另十五款拿战绩换，越往后越难</div>
-          <button type="button" data-skin="cloud">云朵</button>
-          <button type="button" data-skin="leaf">叶脉</button>
-          <button type="button" data-skin="crackle">冰裂</button>
-          <button type="button" data-skin="patch">拼布</button>
-          <button type="button" data-skin="sprinkle">糖粒</button>
-          <button type="button" data-skin="lattice" aria-disabled="true">米字格</button>
-          <button type="button" data-skin="stripe" aria-disabled="true">斜条纹</button>
-          <button type="button" data-skin="raindrop" aria-disabled="true">雨滴</button>
-          <button type="button" data-skin="floral" aria-disabled="true">碎花</button>
-          <button type="button" data-skin="knit" aria-disabled="true">针织</button>
-          <button type="button" data-skin="checker" aria-disabled="true">棋盘格</button>
-          <button type="button" data-skin="bubble" aria-disabled="true">泡泡</button>
-          <button type="button" data-skin="hound" aria-disabled="true">千鸟格</button>
-          <button type="button" data-skin="papercut" aria-disabled="true">撕纸</button>
-          <button type="button" data-skin="galaxy" aria-disabled="true">银河</button>
+          <button type="button" data-skin="ink">松散墨水</button>
+          <button type="button" data-skin="riso" aria-disabled="true">红蓝国潮</button>
+          <button type="button" data-skin="toon3d" aria-disabled="true">立体卡通</button>
+          <button type="button" data-skin="glassy" aria-disabled="true">透明青春</button>
+          <button type="button" data-skin="crayon" aria-disabled="true">儿童蜡笔</button>
+          <button type="button" data-skin="sketch" aria-disabled="true">角色速写</button>
+          <button type="button" data-skin="gouache" aria-disabled="true">暖水粉彩</button>
+          <button type="button" data-skin="street" aria-disabled="true">东京街头</button>
+          <button type="button" data-skin="story" aria-disabled="true">童趣水彩</button>
+          <button type="button" data-skin="maximal" aria-disabled="true">极繁梦境</button>
+          <button type="button" data-skin="bluepink" aria-disabled="true">蓝粉童趣</button>
+          <button type="button" data-skin="quilt" aria-disabled="true">拼布刺绣</button>
+          <button type="button" data-skin="beads" aria-disabled="true">拼豆格子</button>
+          <button type="button" data-skin="cream" aria-disabled="true">糖霜奶油</button>
+          <button type="button" data-skin="wood" aria-disabled="true">原木年轮</button>
+          <button type="button" data-skin="mosaic" aria-disabled="true">马赛克砖</button>
+          <button type="button" data-skin="stamp" aria-disabled="true">邮票齿边</button>
+          <button type="button" data-skin="knit" aria-disabled="true">毛线针织</button>
+          <button type="button" data-skin="newsdot" aria-disabled="true">报纸网点</button>
+          <button type="button" data-skin="goldfoil" aria-disabled="true">金箔压印</button>
         </div>
-        <p class="skin-note">集贴纸解锁前十五款；云朵、叶脉、冰裂、拼布、糖粒与后十款要拿战绩换，越往后门槛越高。</p>
       </div>
 
     </section>
@@ -1576,11 +1819,15 @@ body[data-theme="cocoa"]{
     <section class="view" id="view-album" aria-label="贴纸本">
       <div class="album-head">
         <h2 class="view-title">贴纸本</h2>
-        <div class="album-meta"><b id="stOwned">0</b> / 14 枚</div>
+        <div class="album-meta"><b id="stOwned">0</b> / <span id="stTotal">21</span> 枚</div>
       </div>
       <div class="album-next">
         <span id="nextLabel"><i class="k">下一枚 · </i>消掉第一行</span>
         <span id="nextProg"><b>0</b> / 1</span>
+      </div>
+      <div class="achv-wrap">
+        <div class="achv-head"><b>战绩徽章</b><span id="achvMeta">0 / 8</span></div>
+        <div class="achv-row" id="achvRow"></div>
       </div>
       <div class="st-groups" id="stGroups"></div>
     </section>
@@ -1595,10 +1842,25 @@ body[data-theme="cocoa"]{
               <div><dt><kbd>←</kbd><kbd>→</kbd></dt><dd>左右移动</dd></div>
               <div><dt><kbd>↻</kbd></dt><dd>顺时针旋转</dd></div>
               <div><dt><kbd>↓</kbd></dt><dd>直接落底</dd></div>
-              <div><dt><kbd>降一格</kbd></dt><dd>逐格往下落</dd></div>
+              <div><dt><kbd>加速</kbd></dt><dd>连续往下落</dd></div>
               <div><dt><kbd>暂停</kbd></dt><dd>暂停 / 继续</dd></div>
-              <div><dt><kbd>菜单</kbd></dt><dd>暂存 · 重开 · 换模式</dd></div>
+              <div><dt><kbd>右上菜单</kbd></dt><dd>暂存 · 重开 · 换模式</dd></div>
             </dl>
+            <p class="skin-note">按钮之外，棋盘本身也能直接操作，详见下一张卡。</p>
+          </div>
+        </div>
+
+        <div class="glass panel">
+          <div class="panel-title">滑动手势</div>
+          <div class="ops">
+            <dl>
+              <div><dt><kbd>轻点</kbd></dt><dd>转一下方向</dd></div>
+              <div><dt><kbd>左右滑</kbd></dt><dd>一格一格横移</dd></div>
+              <div><dt><kbd>慢慢下拉</kbd></dt><dd>软降，一格一格往下</dd></div>
+              <div><dt><kbd>快速下滑</kbd></dt><dd>直接落到底</dd></div>
+              <div><dt><kbd>上滑</kbd></dt><dd>暂存当前方块</dd></div>
+            </dl>
+            <p class="skin-note">手势只在棋盘上生效，和下面的按钮可以混着用。</p>
           </div>
         </div>
 
@@ -1609,13 +1871,29 @@ body[data-theme="cocoa"]{
             <tr><td>双行</td><td>300</td></tr>
             <tr><td>三行</td><td>500</td></tr>
             <tr><td>四行</td><td>800</td></tr>
+            <tr><td>T-Spin 单行</td><td>800</td></tr>
+            <tr><td>T-Spin 双行</td><td>1200</td></tr>
+            <tr><td>连击加成</td><td>连 ×N 加 50·(N-1)</td></tr>
             </table>
+        </div>
+
+        <div class="glass panel">
+          <div class="panel-title">五种玩法</div>
+          <div class="ops">
+            <dl>
+              <div><dt><kbd>无尽</kbd></dt><dd>一直玩到封顶</dd></div>
+              <div><dt><kbd>冲刺</kbd></dt><dd>消满四十行计时</dd></div>
+              <div><dt><kbd>每日</kbd></dt><dd>三分钟冲三十行</dd></div>
+              <div><dt><kbd>残局</kbd></dt><dd>预置棋盘 · 二十关</dd></div>
+              <div><dt><kbd>禅意</kbd></dt><dd>不掉速 · 顶住清底</dd></div>
+            </dl>
+            <p class="skin-note">残局按用时评星，可在菜单里挑关重玩；一局结束能存一张成绩卡。</p>
+          </div>
         </div>
 
       </div>
 
       <footer class="doc-foot">
-        <span>最高分 <span class="hi" id="hiscore">0</span></span>
         <span>DAS 150ms · ARR 30ms</span>
         <span>7-bag 随机 · 显影预览</span>
         <span>盘面 10×25</span>
@@ -1625,6 +1903,26 @@ body[data-theme="cocoa"]{
   </main>
 
   <span class="fold" aria-hidden="true"></span>
+</div>
+
+<!-- ===== 残局选关 / 成绩卡 浮层 ===== -->
+<div class="sheet-mask" id="pickMask" hidden>
+  <div class="sheet-box pick-box">
+    <div class="sb-head"><b>残局选关</b><button class="sb-x" id="pickClose" type="button" aria-label="关闭">×</button></div>
+    <div class="pick-grid" id="pickGrid"></div>
+    <p class="skin-note">过一关开一关；已经通过的可以反复重玩。</p>
+  </div>
+</div>
+
+<div class="sheet-mask" id="cardMask" hidden>
+  <div class="sheet-box card-box">
+    <div id="cardSlot"></div>
+    <div class="card-btns">
+      <a class="mini-btn" id="cardSave" download="俄罗斯方块-成绩卡.png">保存图片</a>
+      <button class="mini-btn" id="cardClose" type="button">收起</button>
+    </div>
+    <p class="card-tip">点「保存图片」，或长按图片存进相册</p>
+  </div>
 </div>
 
 <!-- ===== 底部菜单：液态玻璃 ===== -->
@@ -1649,8 +1947,30 @@ body[data-theme="cocoa"]{
 </nav>
 
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
+<div class="unlock-card" id="unlockCard" aria-hidden="true">
+  <b id="unlockName"></b>
+  <p id="unlockHow"></p>
+  <span id="unlockProg"></span>
+</div>
 
 <script>
+/* ---------- 禁缩放：双指/三指捏合、双击放大 ---------- */
+(function(){
+  var opts = { passive: false };
+  function no(e){ e.preventDefault(); }
+  document.addEventListener("gesturestart", no, opts);
+  document.addEventListener("gesturechange", no, opts);
+  document.addEventListener("gestureend", no, opts);
+  document.addEventListener("dblclick", no, opts);
+  document.addEventListener("touchmove", function(e){
+    if (e.touches && e.touches.length > 1) e.preventDefault();
+  }, opts);
+  /* Safari 的缩放兜底：多指 touchstart 也拦掉 */
+  document.addEventListener("touchstart", function(e){
+    if (e.touches && e.touches.length > 1) e.preventDefault();
+  }, opts);
+})();
+
 /* ==== 游戏逻辑与渲染 ==== */
 (function(){
 "use strict";
@@ -1674,38 +1994,32 @@ var COLORS = {
 /* 方块样式：crayon 纯色 / animal 小动物 / candy 果冻糖 / stamp 邮票 */
 /* need = 需要集齐几枚贴纸才能用（0 = 开局就能用） */
 var SKINS = [
-  { id: "animal",  name: "小动物",   need: 0 },
-  { id: "fuzzy",   name: "毛绒",     need: 0 },
-  { id: "candy",   name: "果冻糖",   need: 0 },
-  { id: "crayon",  name: "蜡笔纯色", need: 0 },
-  { id: "fruit",   name: "水果",     need: 1 },
-  { id: "stamp",   name: "邮票",     need: 2 },
-  { id: "tape",    name: "纸胶带",   need: 3 },
-  { id: "terrazzo",name: "水磨石",   need: 4 },
-  { id: "pixel",   name: "像素复古", need: 5 },
-  { id: "wood",    name: "木纹",     need: 6 },
-  { id: "marble",  name: "大理石",   need: 8 },
-  { id: "plaid",   name: "苏格兰格", need: 9 },
-  { id: "dots",    name: "波点",     need: 10 },
-  { id: "ripple",  name: "水波",     need: 12 },
-  { id: "star",    name: "星空",     need: 14 },
-  /* 后十五款不用贴纸，靠战绩换 */
-  { id: "cloud",   name: "云朵",     need: 0, req: { k: "lines",   v: 120 },  unlock: "累计消行 120" },
-  { id: "leaf",    name: "叶脉",     need: 0, req: { k: "lines",   v: 300 },  unlock: "累计消行 300" },
-  { id: "crackle", name: "冰裂",     need: 0, req: { k: "quads",   v: 12 },   unlock: "累计四行 12 次" },
-  { id: "patch",   name: "拼布",     need: 0, req: { k: "doubles", v: 30 },   unlock: "累计双行 30 次" },
-  { id: "sprinkle",name: "糖粒",     need: 0, req: { k: "score",   v: 8000 }, unlock: "单局最高 8000 分" },
-  /* 后十款：细分战绩换 */
-  { id: "lattice", name: "米字格",   need: 0, req: { k: "drops",   v: 60 },   unlock: "累计硬降 60 次" },
-  { id: "stripe",  name: "斜条纹",   need: 0, req: { k: "run",     v: 8 },    unlock: "单局消行 8 行" },
-  { id: "raindrop",name: "雨滴",     need: 0, req: { k: "score",   v: 3000 }, unlock: "单局 3000 分" },
-  { id: "floral",  name: "碎花",     need: 0, req: { k: "doubles", v: 60 },   unlock: "累计双行 60 次" },
-  { id: "knit",    name: "针织",     need: 0, req: { k: "level",   v: 6 },    unlock: "升到六级" },
-  { id: "checker", name: "棋盘格",   need: 0, req: { k: "quads",   v: 20 },   unlock: "累计四行 20 次" },
-  { id: "bubble",  name: "泡泡",     need: 0, req: { k: "score",   v: 12000 },unlock: "单局 12000 分" },
-  { id: "hound",   name: "千鸟格",   need: 0, req: { k: "lines",   v: 450 },  unlock: "累计消行 450" },
-  { id: "papercut",name: "撕纸",     need: 0, req: { k: "owned",   v: 14 },   unlock: "集齐十四枚贴纸" },
-  { id: "galaxy",  name: "银河",     need: 0, req: { k: "run",     v: 15 },   unlock: "单局消行 15 行" }
+  { id: "ink",    name: "松散墨水", need: 0 },
+  { id: "riso",   name: "红蓝国潮", need: 2 },
+  { id: "toon3d", name: "立体卡通", need: 4 },
+  { id: "glassy", name: "透明青春", need: 6 },
+  { id: "crayon", name: "儿童蜡笔", need: 8 },
+  /* 后四款不用贴纸，靠战绩换 */
+  { id: "sketch", name: "角色速写", need: 0, req: { k: "lines", v: 120 }, unlock: "累计消行 120" },
+  { id: "gouache",name: "暖水粉彩", need: 0, req: { k: "score", v: 3000 }, unlock: "单局 3000 分" },
+  { id: "street", name: "东京街头", need: 0, req: { k: "drops", v: 60 },   unlock: "累计硬降 60 次" },
+  { id: "story",  name: "童趣水彩", need: 0, req: { k: "owned", v: 10 },   unlock: "集齐十枚贴纸" },
+  /* 第十二到十四款 */
+  { id: "maximal", name: "极繁梦境", need: 11 },
+  { id: "bluepink",name: "蓝粉童趣", need: 13 },
+  { id: "quilt",   name: "拼布刺绣", need: 0, req: { k: "lines", v: 450 },  unlock: "累计消行 450" },
+  /* 第十五到十七款 */
+  { id: "beads",   name: "拼豆格子", need: 0, req: { k: "games", v: 5 },    unlock: "累计五局" },
+  { id: "cream",   name: "糖霜奶油", need: 0, req: { k: "combo", v: 5 },    unlock: "连击 ×5" },
+  { id: "wood",    name: "原木年轮", need: 0, req: { k: "lines", v: 700 },  unlock: "累计消行 700" },
+  /* 第十八到二十款 */
+  { id: "mosaic",  name: "马赛克砖", need: 0, req: { k: "lines", v: 1200 }, unlock: "累计消行 1200" },
+  { id: "stamp",   name: "邮票齿边", need: 0, req: { k: "score", v: 8000 }, unlock: "单局 8000 分" },
+  { id: "knit",    name: "毛线针织", need: 0, req: { k: "games", v: 30 },   unlock: "累计 30 局" },
+  /* 第十九款：靠每日签到 */
+  { id: "newsdot", name: "报纸网点", need: 0, req: { k: "games", v: 40 }, unlock: "累计 40 局" },
+  /* 第二十款：贴纸本集齐才有的 */
+  { id: "goldfoil", name: "金箔压印", need: 0, req: { k: "owned", v: 17 }, unlock: "集齐十七枚贴纸" }
 ];
 function isSkinId(id){
   for (var i = 0; i < SKINS.length; i++){ if (SKINS[i].id === id) return true; }
@@ -1715,7 +2029,7 @@ function skinById(id){
   for (var i = 0; i < SKINS.length; i++){ if (SKINS[i].id === id) return SKINS[i]; }
   return null;
 }
-/* 贴纸数决定解锁数：前十五款 need 为贴纸数，后十五款看战绩 req */
+/* 贴纸数决定解锁数：前五款 need 为贴纸数，后四款看战绩 req */
 function isSkinOpen(id){
   var s = skinById(id);
   if (!s) return false;
@@ -1736,13 +2050,13 @@ function openSkinCount(){
   for (var i = 0; i < SKINS.length; i++) if (isSkinOpen(SKINS[i].id)) n++;
   return n;
 }
-var skin = "animal";
+var skin = "ink";
 var skinRandom = true;
 try {
   var savedSkin = localStorage.getItem("tetris-skin-0417");
   if (savedSkin && typeof isSkinId === "function" && isSkinId(savedSkin)){
     skin = savedSkin;
-    if (!isSkinOpen(savedSkin)) skin = "animal";
+    if (!isSkinOpen(savedSkin)) skin = "ink";
   }
   var randState = localStorage.getItem("tetris-skin-rand-0417");
   if (randState === "0") skinRandom = false;
@@ -1798,9 +2112,26 @@ var G = {
   combo: 0,
   bombs: 1,
   sprint: false,
+  gameMode: "endless",  // endless | sprint | daily | puzzle | zen
+  lastRot: false,       // 上一次操作是不是旋转（判 T-Spin 用）
+  pendingSpin: 0,       // 本次锁定是否 T-Spin，留给消行加分
+  timeLeft: 0,          // 每日一局剩余毫秒
+  puzzleGoal: 0,        // 残局本关初始方块数
+  maxCombo: 0,          // 本局最高连击，成绩卡用
   t0: 0
 };
 var SPRINT_GOAL = 40;
+var DAILY_SEC = 180000;      /* 每日一局：3 分钟 */
+var DAILY_GOAL = 30;         /* 每日一局：30 行 */
+var ZEN_SPEED = 620;         /* 禅意：固定下落间隔 */
+var GAME_MODES = {
+  endless: { label: "无尽", say: "无尽模式 · 一直玩到封顶" },
+  sprint:  { label: "冲刺", say: "冲刺模式 · 消满 40 行计时" },
+  daily:   { label: "每日", say: "每日一局 · 3 分钟冲 30 行" },
+  puzzle:  { label: "残局", say: "残局挑战 · 消满行数过关" },
+  zen:     { label: "禅意", say: "禅意模式 · 不掉速不结束" }
+};
+var dailySeed = 0, dailyRng = null, puzzleLevel = 1;
 var view = { w: 300, h: 600, cell: 30, ox: 0, oy: 0 };
 var bag = [];
 var hDir = 0, hTimer = 0;
@@ -1809,50 +2140,43 @@ var input = { left: false, right: false, down: false };
 /* ---------- 贴纸本：贴纸收集与插页解锁 ---------- */
 /* 十四枚贴纸：g = 所属页（0-3），k / v = 达成条件 */
 var STICKERS = [
-  { g: 0, label: "消掉第一行",   k: "lines",   v: 1 },
-  { g: 0, label: "一次消两行",   k: "doubles", v: 1 },
-  { g: 0, label: "一次消四行",   k: "quads",   v: 1 },
-  { g: 1, label: "累计消行 10",  k: "lines",   v: 10 },
-  { g: 1, label: "升到三级",     k: "level",   v: 3 },
-  { g: 1, label: "单局 800 分",  k: "score",   v: 800 },
-  { g: 1, label: "硬降 20 次",   k: "drops",   v: 20 },
-  { g: 2, label: "累计消行 25",  k: "lines",   v: 25 },
-  { g: 2, label: "升到五级",     k: "level",   v: 5 },
-  { g: 2, label: "单局 2000 分", k: "score",   v: 2000 },
-  { g: 2, label: "单局消行 10",  k: "run",     v: 10 },
-  { g: 3, label: "累计消行 60",  k: "lines",   v: 60 },
-  { g: 3, label: "升到八级",     k: "level",   v: 8 },
-  { g: 3, label: "单局 4000 分", k: "score",   v: 4000 }
+  { g: 0, name: "墨水瓶", icon: "ink",      label: "消掉第一行",   k: "lines",   v: 1 },
+  { g: 0, name: "线轴",   icon: "spool",    label: "一次消两行",   k: "doubles", v: 1 },
+  { g: 0, name: "蜡笔头", icon: "crayon",   label: "一次消四行",   k: "quads",   v: 1 },
+  { g: 1, name: "小招牌", icon: "sign",     label: "累计消行 10",  k: "lines",   v: 10 },
+  { g: 1, name: "铅笔",   icon: "pencil",   label: "升到三级",     k: "level",   v: 3 },
+  { g: 1, name: "画笔",   icon: "brush",    label: "单局 800 分",  k: "score",   v: 800 },
+  { g: 1, name: "调色盘", icon: "palette",  label: "硬降 20 次",   k: "drops",   v: 20 },
+  { g: 2, name: "胶带卷", icon: "tape",     label: "累计消行 25",  k: "lines",   v: 25 },
+  { g: 2, name: "印章",   icon: "stamp",    label: "升到五级",     k: "level",   v: 5 },
+  { g: 2, name: "剪刀",   icon: "scissors", label: "单局 2000 分", k: "score",   v: 2000 },
+  { g: 2, name: "纽扣",   icon: "button",   label: "单局消行 10",  k: "run",     v: 10 },
+  { g: 3, name: "线团",   icon: "yarn",     label: "累计消行 60",  k: "lines",   v: 60 },
+  { g: 3, name: "信封",   icon: "letter",   label: "升到八级",     k: "level",   v: 8 },
+  { g: 3, name: "月亮",   icon: "moon",     label: "单局 4000 分", k: "score",   v: 4000 },
+  /* 三枚藏起来的：达成才现形 */
+  { g: 4, name: "星芒",   icon: "sparkle",  label: "单局 8000 分", k: "score",   v: 8000, hidden: true },
+  { g: 4, name: "四叶草", icon: "clover",   label: "累计消行 120", k: "lines",   v: 120,  hidden: true },
+  { g: 4, name: "小皇冠", icon: "crown",    label: "单局消行 20",  k: "run",     v: 20,   hidden: true },
+  /* 陆 · 进阶：给已经集齐一册的人留的四枚 */
+  { g: 5, name: "连击火花", icon: "bolt",    label: "连击 ×15",       k: "combo", v: 15 },
+  { g: 5, name: "残局收束", icon: "flag",    label: "二十关全部清掉", k: "pzCleared", v: 20 },
+  { g: 5, name: "千行厚册", icon: "book",    label: "累计消行 3000",   k: "lines", v: 3000 },
+  { g: 5, name: "百局历练", icon: "medal",   label: "累计一百二十局", k: "games", v: 120 }
 ];
 
-/* 贴纸图案：3×3 网格里的格子坐标（列, 行） */
-var ST_LAYOUT = [
-  [[1,0]],
-  [[1,0],[1,1]],
-  [[1,0],[1,1],[1,2]],
-  [[0,1],[1,1]],
-  [[1,1],[2,1]],
-  [[0,0],[0,1],[1,1]],
-  [[1,0],[2,1]],
-  [[0,0],[0,1],[0,2],[1,1]],
-  [[1,0],[1,1],[1,2],[0,1]],
-  [[0,0],[1,0],[1,1],[2,1]],
-  [[1,0],[2,0],[2,1],[2,2]],
-  [[0,1],[1,0],[1,1],[2,1],[1,2]],
-  [[0,0],[0,2],[2,0],[2,2]],
-  [[0,1],[1,0],[1,1],[1,2],[2,1]]
-];
+
 
 /* 收集进度（长期留存） */
 var ST_KEY = "tetris-pages-0417";
-var S = { lines: 0, doubles: 0, quads: 0, drops: 0, level: 1, score: 0, run: 0, owned: [] };
+var S = { lines: 0, doubles: 0, quads: 0, drops: 0, level: 1, score: 0, run: 0, owned: [], games: 0, combo: 0, spins: 0, achv: [], dl: [] };
 (function loadStats(){
   try {
     var raw = localStorage.getItem(ST_KEY);
     if (!raw) return;
     var o = JSON.parse(raw);
     if (!o || typeof o !== "object") return;
-    var keys = ["lines", "doubles", "quads", "drops", "level", "score", "run"];
+    var keys = ["lines", "doubles", "quads", "drops", "level", "score", "run", "games", "combo", "spins"];
     for (var i = 0; i < keys.length; i++){
       var v = o[keys[i]];
       if (typeof v === "number" && isFinite(v)) S[keys[i]] = v;
@@ -1861,6 +2185,18 @@ var S = { lines: 0, doubles: 0, quads: 0, drops: 0, level: 1, score: 0, run: 0, 
       S.owned = o.owned.filter(function(n){
         return typeof n === "number" && n >= 0 && n < STICKERS.length;
       });
+    }
+    if (o.dl && o.dl.length){
+      for (var di = 0; di < o.dl.length; di++){
+        var dv = o.dl[di];
+        if (dv && typeof dv.d === "number" && typeof dv.n === "number"){
+          S.dl.push({ d: dv.d, n: dv.n });
+        }
+      }
+      if (S.dl.length > 40) S.dl = S.dl.slice(-40);
+    }
+    if (o.achv && o.achv.length){
+      S.achv = o.achv.filter(function(x){ return typeof x === "string"; });
     }
   } catch (e){}
 })();
@@ -1897,7 +2233,9 @@ var GROUPS = [
   { no: "壹", name: "起手", note: "开局就能拿到的三枚" },
   { no: "贰", name: "渐入", note: "十行 · 三级 · 八百分" },
   { no: "叁", name: "熟练", note: "二十五行 · 五级 · 单局十分" },
-  { no: "肆", name: "入定", note: "六十行 · 八级 · 四千分" }
+  { no: "肆", name: "入定", note: "六十行 · 八级 · 四千分" },
+  { no: "伍", name: "秘密", note: "三枚藏起来的小物，达成才现形" },
+  { no: "陆", name: "进阶", note: "残局 · 连击 · 千行之后" }
 ];
 
 function groupIdx(g){
@@ -1906,12 +2244,299 @@ function groupIdx(g){
   return out;
 }
 function isOwned(i){ return S.owned.indexOf(i) >= 0; }
+/* 起手等级：无尽 / 冲刺 可选用高起点，每日与残局固定 1 级 */
+var START_LV_KEY = "tetris-start-0417";
+var startLevel = 1;
+(function(){ try {
+  var v = Number(localStorage.getItem(START_LV_KEY) || 1);
+  if (v === 5 || v === 10) startLevel = v;
+} catch (e){} })();
+function paintStartLv(){
+  var row = document.getElementById("startLvRow");
+  if (!row) return;
+  var bs = row.querySelectorAll("button");
+  for (var i = 0; i < bs.length; i++){
+    var on = Number(bs[i].getAttribute("data-startlv")) === startLevel;
+    bs[i].setAttribute("aria-pressed", on ? "true" : "false");
+  }
+}
+(function(){
+  var row = document.getElementById("startLvRow");
+  if (!row) return;
+  row.addEventListener("click", function(e){
+    var b = e.target;
+    while (b && b !== row && !(b.getAttribute && b.getAttribute("data-startlv"))) b = b.parentNode;
+    if (!b || b === row) return;
+    AudioFX.resume();
+    startLevel = Number(b.getAttribute("data-startlv")) || 1;
+    try { localStorage.setItem(START_LV_KEY, String(startLevel)); } catch (e){}
+    paintStartLv();
+    queueToast(startLevel === 1 ? "起手等级 · 1" : "起手等级 · " + startLevel + " 级");
+  });
+})();
+
+/* 贴纸的进度值：多数直接读 S，残局这类要另算 */
+function stickerVal(k){
+  if (k === "pzCleared") return puzzleClearedCount();
+  return S[k] || 0;
+}
 function firstUnowned(){
-  for (var i = 0; i < STICKERS.length; i++) if (!isOwned(i)) return i;
+  for (var i = 0; i < STICKERS.length; i++){
+    if (STICKERS[i].hidden) continue;
+    if (!isOwned(i)) return i;
+  }
   return -1;
 }
 
-/* 一枚贴纸：小卡片里画 2-5 个蜡笔方块；没集到时画铅笔虚线 */
+/* 贴纸上的小物：画笔、墨水瓶、调色盘这一路的手绘简笔 */
+function stIcon(c, type, A, B){
+  var ink = "rgba(48,36,26,.88)";
+  var paper = "rgba(255,253,246,.95)";
+  var i, a2, bx, by, pts;
+  function pen(wd, col){ c.strokeStyle = col || ink; c.lineWidth = wd || 2.4; c.lineCap = "round"; c.lineJoin = "round"; }
+  switch (type){
+    case "ink":
+      pen(2.6);
+      c.beginPath(); c.moveTo(38, 40); c.lineTo(55, 40); c.lineTo(63, 78); c.lineTo(30, 78); c.closePath();
+      c.fillStyle = A; c.fill(); c.stroke();
+      c.beginPath(); c.moveTo(40, 26); c.lineTo(53, 26); c.lineTo(53, 40); c.lineTo(40, 40); c.closePath();
+      c.fillStyle = B; c.fill(); c.stroke();
+      c.fillStyle = "rgba(38,28,44,.52)";
+      c.beginPath(); c.moveTo(33, 64); c.lineTo(60, 64); c.lineTo(61, 76); c.lineTo(32, 76); c.closePath(); c.fill();
+      pen(2.2, "rgba(255,255,255,.85)");
+      c.beginPath(); c.moveTo(38, 48); c.lineTo(35, 60); c.stroke();
+      break;
+    case "spool":
+      pen(2.6);
+      c.beginPath(); c.rect(28, 26, 36, 8); c.fillStyle = B; c.fill(); c.stroke();
+      c.beginPath(); c.rect(28, 58, 36, 8); c.fillStyle = B; c.fill(); c.stroke();
+      c.beginPath(); c.rect(31, 34, 30, 24); c.fillStyle = A; c.fill(); c.stroke();
+      pen(1.7, "rgba(48,36,26,.45)");
+      for (i = 0; i < 5; i++){
+        c.beginPath(); c.moveTo(32, 38 + i * 4); c.lineTo(60, 37 + i * 4); c.stroke();
+      }
+      pen(2.2);
+      c.beginPath(); c.moveTo(64, 44); c.quadraticCurveTo(76, 36, 73, 24); c.stroke();
+      break;
+    case "crayon":
+      c.save();
+      c.translate(46, 46); c.rotate(-0.42);
+      pen(2.6);
+      c.beginPath(); c.rect(-9, -26, 18, 40); c.fillStyle = A; c.fill(); c.stroke();
+      c.beginPath(); c.moveTo(-9, 14); c.lineTo(9, 14); c.lineTo(0, 30); c.closePath();
+      c.fillStyle = B; c.fill(); c.stroke();
+      c.beginPath(); c.rect(-9, -26, 18, 8); c.fillStyle = paper; c.fill(); c.stroke();
+      pen(1.6, "rgba(48,36,26,.40)");
+      c.beginPath(); c.moveTo(-7, -14); c.lineTo(7, -14); c.stroke();
+      c.restore();
+      break;
+    case "sign":
+      pen(2.6);
+      c.beginPath(); c.rect(34, 22, 26, 50); c.fillStyle = A; c.fill(); c.stroke();
+      c.beginPath(); c.rect(29, 14, 36, 9); c.fillStyle = B; c.fill(); c.stroke();
+      pen(2.0, "rgba(48,36,26,.62)");
+      for (i = 0; i < 3; i++){
+        c.beginPath();
+        c.rect(40 + (i % 2) * 9, 30 + Math.floor(i / 2) * 18, 6, 11);
+        c.stroke();
+      }
+      c.beginPath(); c.rect(42, 58, 11, 8); c.stroke();
+      break;
+    case "pencil":
+      c.save();
+      c.translate(46, 46); c.rotate(0.5);
+      pen(2.6);
+      c.beginPath(); c.rect(-7, -28, 14, 44); c.fillStyle = A; c.fill(); c.stroke();
+      c.beginPath(); c.moveTo(-7, 16); c.lineTo(7, 16); c.lineTo(0, 30); c.closePath();
+      c.fillStyle = "#3B3430"; c.fill(); c.stroke();
+      c.beginPath(); c.moveTo(-3, 22); c.lineTo(3, 22); c.lineTo(0, 29); c.closePath();
+      c.fillStyle = paper; c.fill();
+      c.beginPath(); c.rect(-7, -28, 14, 8); c.fillStyle = B; c.fill(); c.stroke();
+      c.restore();
+      break;
+    case "brush":
+      c.save();
+      c.translate(46, 46); c.rotate(0.45);
+      pen(2.6);
+      c.beginPath(); c.rect(-3, -30, 6, 34); c.fillStyle = A; c.fill(); c.stroke();
+      c.beginPath(); c.rect(-8, 4, 16, 9); c.fillStyle = B; c.fill(); c.stroke();
+      c.beginPath(); c.moveTo(-8, 13); c.lineTo(8, 13); c.lineTo(3, 28); c.lineTo(-3, 28); c.closePath();
+      c.fillStyle = A; c.fill(); c.stroke();
+      c.restore();
+      c.fillStyle = B;
+      c.beginPath(); c.arc(70, 68, 2.8, 0, Math.PI * 2); c.fill();
+      break;
+    case "palette":
+      pen(2.6);
+      c.save();
+      c.translate(46, 44); c.scale(1, 0.74);
+      c.beginPath(); c.arc(0, 0, 29, 0, Math.PI * 2); c.fillStyle = paper; c.fill(); c.stroke();
+      c.restore();
+      c.fillStyle = A;
+      c.beginPath(); c.arc(35, 32, 5.4, 0, Math.PI * 2); c.fill();
+      c.fillStyle = B;
+      c.beginPath(); c.arc(52, 42, 5.4, 0, Math.PI * 2); c.fill();
+      c.fillStyle = "rgba(48,36,26,.55)";
+      c.beginPath(); c.arc(34, 54, 4.6, 0, Math.PI * 2); c.fill();
+      pen(2.2);
+      c.beginPath(); c.arc(56, 60, 7, 0, Math.PI * 2); c.stroke();
+      break;
+    case "tape":
+      pen(2.6);
+      c.beginPath(); c.arc(46, 46, 25, 0, Math.PI * 2); c.fillStyle = A; c.fill(); c.stroke();
+      c.beginPath(); c.arc(46, 46, 11, 0, Math.PI * 2); c.fillStyle = paper; c.fill(); c.stroke();
+      pen(1.6, "rgba(48,36,26,.32)");
+      for (i = 0; i < 8; i++){
+        a2 = i / 8 * Math.PI * 2;
+        c.beginPath();
+        c.moveTo(46 + Math.cos(a2) * 13, 46 + Math.sin(a2) * 13);
+        c.lineTo(46 + Math.cos(a2) * 23, 46 + Math.sin(a2) * 23);
+        c.stroke();
+      }
+      pen(2.2);
+      c.beginPath(); c.moveTo(67, 60); c.lineTo(80, 69); c.stroke();
+      break;
+    case "stamp":
+      pen(2.6);
+      c.beginPath(); c.rect(28, 52, 36, 13); c.fillStyle = A; c.fill(); c.stroke();
+      c.beginPath(); c.moveTo(38, 52); c.lineTo(42, 34); c.lineTo(50, 34); c.lineTo(54, 52); c.closePath();
+      c.fillStyle = B; c.fill(); c.stroke();
+      c.beginPath(); c.arc(46, 27, 7, 0, Math.PI * 2); c.fillStyle = A; c.fill(); c.stroke();
+      pen(1.8, "rgba(46,34,26,.28)");
+      c.setLineDash([4, 4]);
+      c.beginPath(); c.rect(32, 69, 28, 9); c.stroke();
+      c.setLineDash([]);
+      break;
+    case "scissors":
+      pen(2.5);
+      c.beginPath(); c.moveTo(38, 22); c.lineTo(56, 54); c.stroke();
+      c.beginPath(); c.moveTo(54, 22); c.lineTo(36, 54); c.stroke();
+      c.beginPath(); c.arc(31, 63, 7, 0, Math.PI * 2); c.stroke();
+      c.beginPath(); c.arc(61, 63, 7, 0, Math.PI * 2); c.stroke();
+      c.fillStyle = A;
+      c.beginPath(); c.arc(45, 44, 4, 0, Math.PI * 2); c.fill();
+      break;
+    case "button":
+      pen(2.6);
+      c.beginPath(); c.arc(46, 46, 22, 0, Math.PI * 2); c.fillStyle = A; c.fill(); c.stroke();
+      c.beginPath(); c.arc(46, 46, 15, 0, Math.PI * 2); c.stroke();
+      c.fillStyle = "rgba(44,32,22,.92)";
+      for (i = 0; i < 4; i++){
+        bx = 46 + (i % 2 ? 6.5 : -6.5);
+        by = 46 + (i > 1 ? 6.5 : -6.5);
+        c.beginPath(); c.arc(bx, by, 3.1, 0, Math.PI * 2); c.fill();
+      }
+      pen(1.8, "rgba(44,32,22,.70)");
+      c.beginPath(); c.moveTo(40, 49); c.lineTo(52, 43); c.stroke();
+      break;
+    case "yarn":
+      pen(2.6);
+      c.beginPath(); c.arc(44, 46, 24, 0, Math.PI * 2); c.fillStyle = A; c.fill(); c.stroke();
+      pen(1.8, "rgba(48,36,26,.45)");
+      for (i = 0; i < 3; i++){
+        c.beginPath(); c.arc(44, 46, 22 - i * 6, Math.PI * 0.10, Math.PI * 0.90); c.stroke();
+        c.beginPath(); c.arc(44, 46, 22 - i * 6, Math.PI * 1.10, Math.PI * 1.90); c.stroke();
+        c.beginPath(); c.moveTo(44 + (10 - i * 8), 26 + i * 6); c.lineTo(44 - (8 - i * 6), 66 - i * 6); c.stroke();
+      }
+      pen(2.4);
+      c.beginPath(); c.moveTo(64, 54); c.quadraticCurveTo(80, 64, 72, 80); c.stroke();
+      c.beginPath(); c.arc(72, 80, 2, 0, Math.PI * 2); c.stroke();
+      break;
+    case "letter":
+      pen(2.6);
+      c.beginPath(); c.rect(25, 32, 42, 31); c.fillStyle = paper; c.fill(); c.stroke();
+      pen(2.2);
+      c.beginPath(); c.moveTo(25, 32); c.lineTo(46, 50); c.lineTo(67, 32); c.stroke();
+      c.fillStyle = A;
+      c.beginPath(); c.arc(57, 53, 6, 0, Math.PI * 2); c.fill();
+      break;
+    case "moon":
+      pen(2.6);
+      c.beginPath();
+      c.arc(42, 44, 24, Math.PI * 0.40, Math.PI * 1.60);
+      c.arc(53, 42, 24, Math.PI * 1.60, Math.PI * 0.40, true);
+      c.closePath();
+      c.fillStyle = A; c.fill(); c.stroke();
+      c.fillStyle = B;
+      c.beginPath(); c.arc(70, 28, 4, 0, Math.PI * 2); c.fill();
+      c.beginPath(); c.arc(66, 68, 2.6, 0, Math.PI * 2); c.fill();
+      break;
+    case "sparkle":
+      pen(2.4);
+      c.beginPath();
+      c.moveTo(46, 20); c.quadraticCurveTo(50, 42, 70, 46);
+      c.quadraticCurveTo(50, 50, 46, 72);
+      c.quadraticCurveTo(42, 50, 22, 46);
+      c.quadraticCurveTo(42, 42, 46, 20);
+      c.closePath();
+      c.fillStyle = A; c.fill(); c.stroke();
+      c.fillStyle = B;
+      c.beginPath(); c.arc(68, 66, 4.4, 0, Math.PI * 2); c.fill();
+      c.beginPath(); c.arc(28, 26, 3, 0, Math.PI * 2); c.fill();
+      break;
+    case "clover":
+      pen(2.4);
+      pts = [[46, 34], [58, 46], [46, 58], [34, 46]];
+      c.fillStyle = A;
+      for (i = 0; i < 4; i++){
+        c.beginPath(); c.arc(pts[i][0], pts[i][1], 11, 0, Math.PI * 2); c.fill(); c.stroke();
+      }
+      pen(2.2);
+      c.beginPath(); c.moveTo(46, 55); c.quadraticCurveTo(50, 71, 43, 80); c.stroke();
+      break;
+    case "bolt":
+      pen(2.6);
+      c.beginPath();
+      c.moveTo(53, 18); c.lineTo(31, 50); c.lineTo(44, 50);
+      c.lineTo(39, 76); c.lineTo(63, 42); c.lineTo(50, 42);
+      c.closePath();
+      c.fillStyle = A; c.fill(); c.stroke();
+      break;
+    case "flag":
+      pen(2.6);
+      c.beginPath(); c.moveTo(34, 78); c.lineTo(34, 20); c.stroke();
+      c.beginPath(); c.moveTo(34, 22); c.lineTo(64, 31); c.lineTo(34, 41); c.closePath();
+      c.fillStyle = A; c.fill(); c.stroke();
+      c.fillStyle = B;
+      c.beginPath(); c.arc(34, 79, 4, 0, Math.PI * 2); c.fill(); c.stroke();
+      break;
+    case "book":
+      pen(2.6);
+      c.beginPath(); c.rect(26, 26, 42, 46); c.fillStyle = A; c.fill(); c.stroke();
+      c.beginPath(); c.rect(32, 32, 30, 34); c.fillStyle = paper; c.fill(); c.stroke();
+      pen(1.7, "rgba(48,36,26,.50)");
+      for (i = 0; i < 4; i++){ c.beginPath(); c.moveTo(36, 40 + i * 6); c.lineTo(62, 40 + i * 6); c.stroke(); }
+      c.fillStyle = B;
+      c.beginPath(); c.rect(26, 26, 7, 46); c.fill(); c.stroke();
+      break;
+    case "medal":
+      pen(2.6);
+      c.beginPath();
+      c.moveTo(38, 18); c.lineTo(48, 42); c.lineTo(56, 36); c.lineTo(46, 15); c.closePath();
+      c.fillStyle = B; c.fill(); c.stroke();
+      c.beginPath(); c.arc(46, 55, 16, 0, Math.PI * 2);
+      c.fillStyle = A; c.fill(); c.stroke();
+      pen(1.8, "rgba(255,255,255,.78)");
+      c.beginPath(); c.arc(46, 55, 9.5, 0, Math.PI * 2); c.stroke();
+      break;
+    case "crown":
+      pen(2.6);
+      c.beginPath();
+      c.moveTo(28, 66); c.lineTo(24, 34); c.lineTo(38, 48); c.lineTo(46, 28);
+      c.lineTo(54, 48); c.lineTo(68, 34); c.lineTo(64, 66); c.closePath();
+      c.fillStyle = A; c.fill(); c.stroke();
+      c.fillStyle = B;
+      c.beginPath(); c.arc(46, 56, 4, 0, Math.PI * 2); c.fill();
+      c.beginPath(); c.arc(34, 58, 2.6, 0, Math.PI * 2); c.fill();
+      c.beginPath(); c.arc(58, 58, 2.6, 0, Math.PI * 2); c.fill();
+      break;
+    default:
+      c.fillStyle = A;
+      c.beginPath(); c.arc(46, 46, 18, 0, Math.PI * 2); c.fill();
+  }
+}
+
+/* 一枚贴纸：集到就画那件小物，没集到是虚线口袋里的一句提示 */
 function drawSticker(cv, idx){
   var size = 92;
   var dpr = Math.min(window.devicePixelRatio || 1, 2);
@@ -1920,31 +2545,35 @@ function drawSticker(cv, idx){
   var c = cv.getContext("2d");
   c.setTransform(dpr, 0, 0, dpr, 0, 0);
   c.clearRect(0, 0, size, size);
-  var cells = ST_LAYOUT[idx % ST_LAYOUT.length];
-  var cell = 26, step = 27;
-  var start = (size - (step * 3 - (step - cell))) / 2;
-  var tints = [COLORS.L, COLORS.O, COLORS.S, COLORS.J, COLORS.T, COLORS.I];
-  var owned = isOwned(idx);
-  for (var k = 0; k < cells.length; k++){
-    var cx = start + cells[k][0] * step;
-    var cy = start + cells[k][1] * step;
-    if (owned){
-      paintBlock(c, cx, cy, cell, tints[(idx + k) % tints.length]);
-    } else {
-      c.save();
-      c.strokeStyle = "rgba(120,92,58,.46)";
-      c.lineWidth = 1.6;
-      c.setLineDash([5, 4]);
-      c.strokeRect(cx + 1, cy + 1, cell - 2, cell - 2);
-      c.restore();
-    }
+  var st = STICKERS[idx];
+  var tints = [COLORS.L, COLORS.O, COLORS.S, COLORS.J, COLORS.T, COLORS.I, COLORS.Z];
+  var A = mx2(tints[idx % 6], "#FFFFFF", 0.18), B = mx2(tints[(idx + 3) % 6], "#FFFFFF", 0.18);
+  if (!isOwned(idx)){
+    c.save();
+    c.strokeStyle = st.hidden ? "rgba(104,90,120,.45)" : "rgba(124,96,62,.40)";
+    c.lineWidth = 1.8;
+    c.setLineDash([5, 4]);
+    c.beginPath();
+    c.moveTo(20, 30); c.lineTo(20, 74); c.lineTo(72, 74); c.lineTo(72, 30);
+    c.closePath();
+    c.stroke();
+    c.setLineDash([]);
+    c.fillStyle = st.hidden ? "rgba(104,90,120,.55)" : "rgba(124,96,62,.42)";
+    c.font = "700 24px -apple-system,'PingFang SC','Noto Sans CJK SC',sans-serif";
+    c.textAlign = "center";
+    if (st.hidden) c.fillText("?", 46, 60);
+    c.restore();
+    return;
   }
+  stIcon(c, st.icon, A, B);
 }
 
 function renderAlbum(){
   var owned = 0, g, k, s, i;
   for (i = 0; i < STICKERS.length; i++) if (isOwned(i)) owned++;
   stOwnedEl.textContent = owned;
+  var totEl = document.getElementById("stTotal");
+  if (totEl) totEl.textContent = STICKERS.length;
 
   for (g = 0; g < groupCards.length; g++){
     var ids = groupIdx(g), got = 0;
@@ -1954,7 +2583,11 @@ function renderAlbum(){
   }
   for (s = 0; s < STICKERS.length; s++){
     if (!stViews[s]) continue;
-    stViews[s].box.classList.toggle("locked", !isOwned(s));
+    var stx = STICKERS[s];
+    var got = isOwned(s);
+    stViews[s].box.classList.toggle("locked", !got);
+    stViews[s].box.classList.toggle("secret", !got && !!stx.hidden);
+    stViews[s].box.setAttribute("title", (!got && stx.hidden) ? "？？？ · 藏起来了" : (stx.name + " · " + stx.label));
     drawSticker(stViews[s].cv, s);
   }
 
@@ -1962,11 +2595,82 @@ function renderAlbum(){
   if (nx >= 0){
     var st = STICKERS[nx];
     nextLabelEl.innerHTML = '<i class="k">下一枚 · </i>' + st.label;
-    nextProgEl.innerHTML = "<b>" + Math.min(S[st.k] || 0, st.v) + "</b> / " + st.v;
+    nextProgEl.innerHTML = "<b>" + Math.min(stickerVal(st.k), st.v) + "</b> / " + st.v;
   } else {
-    nextLabelEl.innerHTML = '<i class="k">贴纸本</i>十四枚已经集齐';
-    nextProgEl.innerHTML = "<b>" + STICKERS.length + "</b> / " + STICKERS.length;
+    var hid = [], hi;
+    for (hi = 0; hi < STICKERS.length; hi++){
+      if (STICKERS[hi].hidden && !isOwned(hi)) hid.push(hi);
+    }
+    if (hid.length){
+      var hs = STICKERS[hid[0]];
+      nextLabelEl.innerHTML = '<i class="k">还差 ' + hid.length + ' 枚藏起来的小物 · </i>' + hs.label;
+      nextProgEl.innerHTML = "<b>" + Math.min(stickerVal(hs.k), hs.v) + "</b> / " + hs.v;
+    } else {
+      nextLabelEl.innerHTML = '<i class="k">贴纸本</i>全册二十一枚集齐';
+      nextProgEl.innerHTML = "<b>" + STICKERS.length + "</b> / " + STICKERS.length;
+    }
   }
+}
+
+/* ---------- 战绩徽章 ---------- */
+var ACHV = [
+  { id: "first",   name: "初次落笔", say: "完成第一局",      cond: function(){ return (S.games || 0) >= 1; } },
+  { id: "quad",    name: "四行清场", say: "一次消掉四行",    cond: function(){ return (S.quads || 0) >= 1; } },
+  { id: "combo5",  name: "五连成串", say: "连击达到 ×5",     cond: function(){ return (S.combo || 0) >= 5; } },
+  { id: "line100", name: "百行成章", say: "累计消行 100",    cond: function(){ return (S.lines || 0) >= 100; } },
+  { id: "line1000",name: "千行不倦", say: "累计消行 1000",   cond: function(){ return (S.lines || 0) >= 1000; } },
+  { id: "spin",    name: "扭转乾坤", say: "做出一次 T-Spin", cond: function(){ return (S.spins || 0) >= 1; } },
+  { id: "day7",    name: "七日渐成", say: "连续打卡 7 天",   cond: function(){ return (loadDaily().streak || 0) >= 7; } },
+  { id: "pz20",    name: "残局通幽", say: "二十关全部清掉",  cond: function(){ return puzzleClearedCount() >= 20; } },
+  { id: "daily10", name: "日课十次", say: "每日挑战完成 10 次", cond: function(){ return dailyDoneCount() >= 10; } },
+  { id: "star5",   name: "三星满堂", say: "残局拿到五个三星", cond: function(){ return puzzleStar3Count() >= 5; } },
+  { id: "games100",name: "百局成习", say: "累计一百局",       cond: function(){ return (S.games || 0) >= 100; } },
+  { id: "spin5",   name: "扭转五次", say: "累计五次 T-Spin",   cond: function(){ return (S.spins || 0) >= 5; } }
+];
+function achvHas(id){
+  return (S.achv || []).indexOf(id) >= 0;
+}
+function paintAchv(){
+  var row = document.getElementById("achvRow");
+  if (!row) return;
+  var html = "", got = 0, i;
+  for (i = 0; i < ACHV.length; i++){
+    var a = ACHV[i], on = achvHas(a.id);
+    if (on) got++;
+    html += '<div class="achv' + (on ? " got" : "") + '">'
+         +  '<span class="achv-dot">' + (on ? "\u2605" : "\u2606") + '</span>'
+         +  '<b>' + (on ? a.name : "未达成") + '</b>'
+         +  '<i>' + a.say + '</i></div>';
+  }
+  row.innerHTML = html;
+  var meta = document.getElementById("achvMeta");
+  if (meta) meta.textContent = got + " / " + ACHV.length;
+}
+function checkAchv(silent){
+  var newly = [], i;
+  for (i = 0; i < ACHV.length; i++){
+    if (achvHas(ACHV[i].id)) continue;
+    try {
+      if (ACHV[i].cond()){
+        S.achv = (S.achv || []).concat(ACHV[i].id);
+        newly.push(ACHV[i]);
+      }
+    } catch (e){}
+  }
+  paintAchv();
+  if (newly.length){
+    saveStats();
+    if (!silent){
+      if (newly.length === 1){
+        queueToast("徽章解锁 · " + newly[0].name);
+      } else {
+        var nm = [];
+        for (i = 0; i < newly.length && i < 3; i++) nm.push(newly[i].name);
+        queueToast("解锁 " + newly.length + " 枚徽章 · " + nm.join("、") + (newly.length > 3 ? " 等" : ""));
+      }
+    }
+  }
+  return newly.length;
 }
 
 function queueToast(text){
@@ -1988,7 +2692,7 @@ function drainToast(){
 function checkStickers(){
   var gained = [], i;
   for (i = 0; i < STICKERS.length; i++){
-    if (!isOwned(i) && (S[STICKERS[i].k] || 0) >= STICKERS[i].v) gained.push(i);
+    if (!isOwned(i) && stickerVal(STICKERS[i].k) >= STICKERS[i].v) gained.push(i);
   }
   if (!gained.length){ renderAlbum(); return; }
 
@@ -2007,8 +2711,12 @@ function checkStickers(){
     if (SKINS[k0].need > S.owned.length - gained.length && SKINS[k0].need <= S.owned.length) fresh.push(SKINS[k0].name);
   }
 
-  if (gained.length === 1) queueToast("新贴纸 · " + STICKERS[gained[0]].label);
-  else queueToast("新贴纸 ×" + gained.length);
+  if (gained.length === 1){
+    var gst = STICKERS[gained[0]];
+    queueToast((gst.hidden ? "藏起来的一枚 · " : "新贴纸 · ") + gst.name);
+  } else {
+    queueToast("新贴纸 ×" + gained.length);
+  }
   if (fresh.length) queueToast("解锁样式 · " + fresh.join("、"));
 
   for (var j = 0; j < gained.length; j++){
@@ -2020,7 +2728,18 @@ function checkStickers(){
   AudioFX.clear(Math.min(3, gained.length));
 }
 
+function syncStickers(){
+  var add = [];
+  for (var i = 0; i < STICKERS.length; i++){
+    if (isOwned(i)) continue;
+    if ((S[STICKERS[i].k] || 0) >= STICKERS[i].v) add.push(i);
+  }
+  if (!add.length) return;
+  S.owned = S.owned.concat(add).sort(function(a, b){ return a - b; });
+  saveStats();
+}
 function initAlbum(){
+  syncStickers();
   for (var g = 0; g < GROUPS.length; g++){
     (function(g){
       var ids = groupIdx(g);
@@ -2052,6 +2771,8 @@ function initAlbum(){
         (function(idx){
           var box = document.createElement("div");
           box.className = "sticker";
+          var rot = ["-2.6deg", "1.8deg", "-1.2deg", "2.4deg", "-1.8deg", "1.2deg", "-2.2deg", "2.6deg"];
+          box.style.setProperty("--rot", rot[idx % rot.length]);
           box.setAttribute("title", STICKERS[idx].label);
           var cv = document.createElement("canvas");
           box.appendChild(cv);
@@ -2060,6 +2781,7 @@ function initAlbum(){
           drawSticker(cv, idx);
         })(ids[k]);
       }
+      if (g === GROUPS.length - 1) card.style.gridColumn = "1 / -1";
       card.appendChild(head);
       card.appendChild(noteEl);
       card.appendChild(grid);
@@ -2073,12 +2795,13 @@ function initAlbum(){
 /* ---------- 分区切换（底部液态玻璃菜单） ---------- */
 function movePill(){
   var active = tabbar.querySelector(".tab.is-active");
-  if (!active) return;
+  if (!active){ tabPill.style.width = "0px"; return; }
   tabPill.style.width = active.offsetWidth + "px";
   tabPill.style.transform = "translateX(" + (active.offsetLeft - 8) + "px)";
 }
 function setView(name){
   if (name === curView) return;
+  if (name !== "play") Ambience.stop();
   if (curView === "play" && G.mode === "playing") togglePause();
   curView = name;
   document.body.setAttribute("data-view", name);
@@ -2091,6 +2814,10 @@ function setView(name){
     var on = tabs[t].getAttribute("data-view") === name;
     tabs[t].classList.toggle("is-active", on);
     tabs[t].setAttribute("aria-selected", on ? "true" : "false");
+  }
+  if (name === "menu"){
+    paintRecords();
+    if (typeof paintSkinButtons === "function") paintSkinButtons();
   }
   movePill();
   window.scrollTo(0, 0);
@@ -2106,6 +2833,8 @@ tabbar.addEventListener("click", function(e){
 });
 window.addEventListener("resize", movePill);
 
+
+
 /* ---------- 工具 ---------- */
 function emptyRow(){ return new Array(COLS).fill(0); }
 function emptyGrid(){
@@ -2116,11 +2845,19 @@ function emptyGrid(){
 function cloneMatrix(m){
   return m.map(function(row){ return row.slice(); });
 }
+function mulberry32(a){
+  return function(){
+    a |= 0; a = a + 0x6D2B79F5 | 0;
+    var t = Math.imul(a ^ a >>> 15, 1 | a);
+    t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t;
+    return ((t ^ t >>> 14) >>> 0) / 4294967296;
+  };
+}
 function pullType(){
   if (!bag.length){
     bag = TYPES.slice();
     for (var i = bag.length - 1; i > 0; i--){
-      var j = Math.floor(Math.random() * (i + 1));
+      var j = Math.floor((dailyRng ? dailyRng() : Math.random()) * (i + 1));
       var tmp = bag[i]; bag[i] = bag[j]; bag[j] = tmp;
     }
   }
@@ -2176,6 +2913,7 @@ function tryMove(dx){
   if (!G.piece || G.mode !== "playing" || G.clearing) return false;
   if (!collide(G.piece.m, G.piece.x + dx, G.piece.y)){
     G.piece.x += dx;
+    G.lastRot = false;
     AudioFX.move();
     return true;
   }
@@ -2189,7 +2927,9 @@ function tryRotate(dir){
     if (!collide(m, G.piece.x + kicks[i], G.piece.y)){
       G.piece.m = m;
       G.piece.x += kicks[i];
+      G.lastRot = true;
       AudioFX.rotate();
+      buzz(8);
       return;
     }
   }
@@ -2216,6 +2956,7 @@ function hardDrop(){
     dist++;
   }
   /* 硬降不再加分：分数只来自消行 */
+  buzz(16);
   S.drops += 1;
   if (S.drops % 5 === 0) checkStickers(); else saveStats();
   lockPiece();
@@ -2235,12 +2976,38 @@ function doHold(){
   G.canHold = false;
   drawHold();
   AudioFX.rotate();
+  buzz(8);
 }
 
+/* 消行飘字：从消掉的那几行往上浮，慢慢淡出 */
+function pushFloat(label, amount, rows, tone, delay){
+  if (!G.floats) G.floats = [];
+  var mid = (rows && rows.length) ? (rows[0] + rows[rows.length - 1]) / 2 : ROWS - 3;
+  G.floats.push({
+    label: label,
+    amount: amount || "",
+    row: mid,
+    t: delay ? -Math.round(delay * 1000) : 0,
+    tone: tone || "#FFF4DA"
+  });
+}
 /* ---------- 锁定 / 消行 ---------- */
+/* T 方块最后一手是旋转，且落点四角有三个被占：算 T-Spin */
+function tspinNow(){
+  if (!G.piece || G.piece.type !== "T" || !G.lastRot) return 0;
+  var px = G.piece.x, py = G.piece.y, cnt = 0;
+  var cs = [[px, py], [px + 2, py], [px, py + 2], [px + 2, py + 2]];
+  for (var i = 0; i < 4; i++){
+    var gx = cs[i][0], gy = cs[i][1];
+    if (gx < 0 || gx >= COLS || gy >= ROWS) cnt++;
+    else if (gy >= 0 && G.grid[gy][gx]) cnt++;
+  }
+  return cnt >= 3 ? 1 : 0;
+}
 function lockPiece(){
   var m = G.piece.m, px = G.piece.x, py = G.piece.y;
   var topOut = false;
+  var spin = 0;
   for (var r = 0; r < m.length; r++){
     for (var c = 0; c < m[r].length; c++){
       if (!m[r][c]) continue;
@@ -2249,20 +3016,35 @@ function lockPiece(){
       G.grid[gy][gx] = G.piece.type;
     }
   }
+  spin = tspinNow();
+  G.lastRot = false;
   boardDirty = true;
   AudioFX.lock();
 
-  if (topOut){ gameOver(); return; }
+  if (topOut){
+    G.pendingSpin = 0;
+    if (G.gameMode === "zen"){
+      /* 禅意不结束：清底再放一只新的 */
+      zenClear();
+      G.piece = null;
+      nextPiece();
+      return;
+    }
+    gameOver();
+    return;
+  }
 
   var rows = [];
   for (var rr = ROWS - 1; rr >= 0; rr--){
     if (G.grid[rr].every(function(v){ return v; })) rows.push(rr);
   }
   if (rows.length){
+    G.pendingSpin = spin;
     G.piece = null;
     G.clearing = { rows: rows, t: 0 };
     AudioFX.clear(rows.length);
   } else {
+    G.pendingSpin = 0;
     G.piece = null;
     G.combo = 0;
     nextPiece();
@@ -2272,23 +3054,40 @@ function collapseRows(rows){
   rows.forEach(function(r){ G.grid.splice(r, 1); G.grid.unshift(emptyRow()); });
   boardDirty = true;
   var n = rows.length;
-  addScore(LINE_SCORES[n] * G.level);
+  var spin = G.pendingSpin;
+  G.pendingSpin = 0;
+  if (spin){
+    /* T-Spin：单行 800 / 双行 1200 / 三行 1600，比普通消行贵 */
+    var tscore = (n >= 3 ? 1600 : n === 2 ? 1200 : 800) * G.level;
+    addScore(tscore);
+    S.spins = (S.spins || 0) + 1;
+    queueToast("T-Spin " + (n >= 3 ? "三行" : n === 2 ? "双行" : "单行") + " · +" + tscore);
+    pushFloat("T-Spin " + (n >= 3 ? "三行" : n === 2 ? "双行" : "单行"), "+" + tscore, rows, "#F3B84A");
+  } else {
+    var base = LINE_SCORES[n] * G.level;
+    addScore(base);
+    if (n >= 2) pushFloat(n === 4 ? "四行清" : n === 3 ? "三行清" : "双行", "+" + base, rows, n === 4 ? "#F3B84A" : "#FFF4DA");
+  }
   /* 连击：连续几手都在消行，越连越贵 */
   G.combo = (G.combo || 0) + 1;
   if (G.combo >= 2){
     var bonus = 50 * (G.combo - 1) * G.level;
     addScore(bonus);
     queueToast("连击 ×" + G.combo + " · +" + bonus);
+    pushFloat("连击 ×" + G.combo, "+" + bonus, rows, "#F58BA7", 0.55);
   }
+  if (G.combo > (G.maxCombo || 0)) G.maxCombo = G.combo;
+  if (G.combo > (S.combo || 0)) S.combo = G.combo;
   shakeBoard();
   G.lines += n;
   var newLevel = 1 + Math.floor(G.lines / 10);
   if (newLevel !== G.level){
     G.level = newLevel;
-    G.dropInterval = speedFor(G.level);
+    G.dropInterval = G.gameMode === "zen" ? ZEN_SPEED : speedFor(G.level);
   }
   /* 收集进度：累计消行、多行清除次数、单局纪录 */
   S.lines += n;
+  addDayLines(n);
   if (n >= 2) S.doubles += 1;
   if (n === 4) S.quads += 1;
   S.run = Math.max(S.run, G.lines);
@@ -2297,6 +3096,11 @@ function collapseRows(rows){
   updateHUD();
   checkStickers();
   if (G.sprint && G.lines >= SPRINT_GOAL) finishSprint();
+  if (G.gameMode === "daily" && G.lines >= DAILY_GOAL) finishDaily();
+  if (G.gameMode === "puzzle"){
+    G.puzzleDone += n;
+    if (G.puzzleDone >= G.puzzleGoal) finishPuzzle();
+  }
 }
 
 /* ---------- 流程 ---------- */
@@ -2306,8 +3110,18 @@ function nextPiece(){
   refillQueue();
   G.canHold = true;
   G.dropAcc = 0;
+  G.lastRot = false;
   drawNext();
-  if (collide(G.piece.m, G.piece.x, G.piece.y)) gameOver();
+  if (collide(G.piece.m, G.piece.x, G.piece.y)){
+    if (G.gameMode === "zen"){
+      /* 禅意：顶住了不算输，清掉底下几行继续 */
+      zenClear();
+      if (!collide(G.piece.m, G.piece.x, G.piece.y)) return;
+      zenClear();
+      if (!collide(G.piece.m, G.piece.x, G.piece.y)) return;
+    }
+    gameOver();
+  }
 }
 function addScore(n){
   G.score += n;
@@ -2327,10 +3141,41 @@ function resetGame(){
   G.clearing = null;
   G.piece = null;
   G.combo = 0;
+  G.maxCombo = 0;
+  G.floats = [];
+  runCounted = false;
   G.bombs = 1;
   bag = [];
   hDir = 0; hTimer = 0;
+  /* 模式专属开局 */
+  G.lastRot = false;
+  G.pendingSpin = 0;
+  G.timeLeft = 0;
+  G.puzzleGoal = 0;
+  G.puzzleDone = 0;
+  G.shownSec = -1;
+  dailyRng = null;
+  if (G.gameMode === "daily"){
+    G.timeLeft = DAILY_SEC;
+    dailySeed = dailyNumber();
+    dailyRng = mulberry32(dailySeed * 7919 + 13);
+    bag = [];
+    G.queue = [];
+  } else if (G.gameMode === "puzzle"){
+    puzzleLevel = loadPuzzleLevel();
+    G.grid = puzzleBoard(puzzleLevel);
+    G.puzzleGoal = puzzleRows(puzzleLevel);
+    G.puzzleDone = 0;
+    boardDirty = true;
+  } else if (G.gameMode === "zen"){
+    G.dropInterval = ZEN_SPEED;
+  }
   nextPiece();
+  /* 起手等级：只作用于无尽与冲刺，其余模式按 1 级走 */
+  if (startLevel > 1 && (G.gameMode === "endless" || G.gameMode === "sprint")){
+    G.level = startLevel;
+    G.dropInterval = speedFor(startLevel);
+  }
   updateHUD();
   drawHold();
   drawNext();
@@ -2342,18 +3187,24 @@ function startGame(){
   G.mode = "playing";
   hideVeil();
   AudioFX.resume();
+  Ambience.start();
   updateHUD();
 }
 function togglePause(){
   if (G.mode === "playing"){
     G.mode = "paused";
+    Ambience.stop();
     showVeil("暂停", "棋盘已封存。按 P 或点下面按钮继续。", "继续");
   } else if (G.mode === "paused"){
     G.mode = "playing";
     hideVeil();
+    Ambience.start();
   }
 }
 function gameOver(){
+  if (G.mode === "over") return;
+  if (G.gameMode === "daily"){ finishDaily(); return; }
+  if (G.gameMode === "puzzle"){ failPuzzle(); return; }
   G.mode = "over";
   if (G.score > G.hi){
     G.hi = G.score;
@@ -2365,7 +3216,10 @@ function gameOver(){
   saveStats();
   updateHUD();
   AudioFX.over();
+  Ambience.stop();
   showVeil("结束", "得分 " + G.score + " · 消行 " + G.lines + "。再来一局？", "重新开始");
+  veilExtra(true, "换个模式", null, "存成绩卡");
+  endRun();
   checkStickers();
 }
 /* 炸弹：清掉盘面最底部的几行 */
@@ -2388,6 +3242,238 @@ function useBomb(){
   queueToast("炸弹引爆 · 清 " + rows.length + " 行");
 }
 
+/* ---------- 模式：每日一局 ---------- */
+function dailyNumber(){
+  var d = new Date();
+  return Math.floor(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()) / 86400000);
+}
+var DAILY_KEY = "tetris-daily-0417";
+function loadDaily(){
+  var o = { day: 0, best: 0, done: false, streak: 0, hist: [] };
+  try {
+    var raw = localStorage.getItem(DAILY_KEY);
+    if (raw){
+      var p = JSON.parse(raw);
+      if (p && typeof p === "object"){
+        o.day = Number(p.day) || 0;
+        o.best = Number(p.best) || 0;
+        o.done = !!p.done;
+        o.streak = Number(p.streak) || 0;
+        if (p.hist && p.hist.length){
+          for (var i = 0; i < p.hist.length; i++){
+            if (p.hist[i] && typeof p.hist[i].d === "number"){
+              o.hist.push({ d: p.hist[i].d, done: p.hist[i].done ? 1 : 0 });
+            }
+          }
+        }
+      }
+    }
+  } catch (e){}
+  return o;
+}
+function saveDaily(o){ try { localStorage.setItem(DAILY_KEY, JSON.stringify(o)); } catch (e){} }
+function finishDaily(){
+  if (G.mode === "over") return;
+  G.mode = "over";
+  var rec = loadDaily();
+  var today = dailySeed;
+  var hit = G.lines >= DAILY_GOAL;
+  if (rec.day === today){
+    rec.best = Math.max(rec.best, G.lines);
+    rec.done = rec.done || hit;
+    if (hit && rec.streak <= 0) rec.streak = 1;
+  } else {
+    var cont = (rec.day === today - 1 && rec.done);
+    rec.best = G.lines;
+    rec.done = hit;
+    rec.streak = hit ? (cont ? rec.streak + 1 : 1) : 0;
+    rec.day = today;
+  }
+  /* 打卡记录：战绩页的七天格子用 */
+  var hist = rec.hist || [];
+  var found = false;
+  for (var hi = 0; hi < hist.length; hi++){
+    if (hist[hi].d === today){ hist[hi].done = rec.done ? 1 : 0; found = true; }
+  }
+  if (!found) hist.push({ d: today, done: rec.done ? 1 : 0 });
+  hist.sort(function(a, b){ return a.d - b.d; });
+  rec.hist = hist.length > 40 ? hist.slice(-40) : hist;
+  saveDaily(rec);
+  AudioFX.over();
+  updateHUD();
+  showVeil(hit ? "今日达成" : "今日结束",
+    "今日 " + G.lines + " / " + DAILY_GOAL + " 行 · 连日 " + rec.streak + " 天", "再来一局");
+  endRun();
+  veilExtra(true, "换个模式", null, "存成绩卡");
+  checkStickers();
+}
+
+/* ---------- 模式：残局挑战（二十关） ---------- */
+var PUZZLE_KEY = "tetris-puzzle-0417";
+/* 存档：{ lv: 当前关卡, best: { "3": { sec: 42 } } }，兼容旧的纯数字 */
+function loadPuzzleData(){
+  var o = { lv: 1, best: {} };
+  try {
+    var raw = localStorage.getItem(PUZZLE_KEY);
+    if (raw){
+      if (raw.charAt(0) === "{"){
+        var p = JSON.parse(raw);
+        if (p && typeof p === "object"){
+          var lv = Number(p.lv) || 1;
+          o.lv = Math.max(1, Math.min(20, lv));
+          if (p.best && typeof p.best === "object"){
+            for (var k in p.best){
+              if (p.best[k] && typeof p.best[k].sec === "number"){
+                o.best[k] = { sec: p.best[k].sec };
+                if (typeof p.best[k].star === "number") o.best[k].star = Math.max(0, Math.min(3, p.best[k].star));
+              }
+            }
+          }
+        }
+      } else {
+        var n = Number(raw) || 1;
+        o.lv = Math.max(1, Math.min(20, n));
+      }
+    }
+  } catch (e){}
+  return o;
+}
+function savePuzzleData(o){ try { localStorage.setItem(PUZZLE_KEY, JSON.stringify(o)); } catch (e){} }
+function loadPuzzleLevel(){ return loadPuzzleData().lv; }
+function savePuzzleLevel(n){
+  var o = loadPuzzleData();
+  o.lv = Math.max(1, Math.min(20, n));
+  savePuzzleData(o);
+}
+function puzzleClearedCount(){
+  var o = loadPuzzleData(), n = 0;
+  for (var k = 1; k <= 20; k++) if (o.best[String(k)]) n++;
+  return n;
+}
+function puzzleStar3Count(){
+  var o = loadPuzzleData(), n = 0, k, b, st;
+  for (k = 1; k <= 20; k++){
+    b = o.best[String(k)];
+    if (!b) continue;
+    st = b.star || puzzleStars(k, b.sec);
+    if (st >= 3) n++;
+  }
+  return n;
+}
+/* 每日挑战一共完成了几次 */
+function dailyDoneCount(){
+  var o = loadDaily(), n = 0;
+  for (var i = 0; i < (o.hist || []).length; i++) if (o.hist[i].done) n++;
+  return n;
+}
+function puzzleOpenMax(){
+  /* 能挑战到第几关：过掉的最高关 +1，最多 20 */
+  var o = loadPuzzleData(), m = 1;
+  for (var k = 1; k <= 20; k++) if (o.best[String(k)]) m = Math.max(m, k + 1);
+  return Math.min(20, m);
+}
+function recordPuzzleClear(level, sec){
+  var o = loadPuzzleData();
+  var key = String(level);
+  var cur = o.best[key];
+  var s = Math.max(1, Math.round(sec));
+  var st = puzzleStars(level, s);
+  var keep = cur ? Math.max(cur.star || puzzleStars(level, cur.sec) || 1, st) : st;
+  if (!cur || s < cur.sec) o.best[key] = { sec: s, star: keep };
+  else if (keep !== (cur.star || 0)) o.best[key].star = keep;
+  savePuzzleData(o);
+}
+/* 第 level 关：底部堆 h 行，关卡越高堆得越高、空洞越少；消掉 h 行算过关 */
+function puzzleRows(level){ return 5 + Math.floor((level - 1) * 0.37); }
+
+/* 残局评级：一行按 14 秒作为基准，越快越多星 */
+function puzzleStars(level, sec){
+  if (!sec) return 0;
+  var target = puzzleRows(level) * 14;
+  if (sec <= target * 0.90) return 3;
+  if (sec <= target * 1.30) return 2;
+  return 1;
+}
+function starText(n){
+  var t = "";
+  for (var i = 0; i < 3; i++) t += i < n ? "\u2605" : "\u2606";
+  return t;
+}
+function puzzleBoard(level){
+  var g = emptyGrid();
+  var h = puzzleRows(level);
+  var hole = 0.16 + (level - 1) * 0.01;
+  var rng = mulberry32(level * 1337 + 7);
+  var kinds = ["J", "L", "S", "O", "T", "Z", "I"];
+  for (var r = ROWS - h; r < ROWS; r++){
+    var gaps = 0;
+    for (var c = 0; c < COLS; c++){
+      if (rng() < hole){ g[r][c] = 0; gaps++; }
+      else g[r][c] = kinds[Math.floor(rng() * 7)];
+    }
+    if (gaps === 0) g[r][Math.floor(rng() * COLS)] = 0;
+    if (gaps > 4){
+      for (var c2 = 0; c2 < COLS && gaps > 3; c2++){
+        if (!g[r][c2]){ g[r][c2] = kinds[(c2 + r) % 7]; gaps--; }
+      }
+    }
+  }
+  return g;
+}
+function countFilled(){
+  var n = 0;
+  for (var r = 0; r < ROWS; r++){
+    for (var c = 0; c < COLS; c++) if (G.grid[r][c]) n++;
+  }
+  return n;
+}
+function finishPuzzle(){
+  if (G.mode === "over") return;
+  G.mode = "over";
+  var lv = puzzleLevel;
+  var next = Math.min(20, lv + 1);
+  var sec = (Date.now() - G.t0) / 1000;
+  var stars = puzzleStars(lv, sec);
+  recordPuzzleClear(lv, sec);
+  if (lv < 20) savePuzzleLevel(next);
+  AudioFX.clear(4);
+  updateHUD();
+  var starLine = starText(stars) + " · 用时 " + sec.toFixed(0) + " 秒";
+  if (stars >= 3) queueToast("三星通关 · 第 " + lv + " 关");
+  if (lv >= 20){
+    showVeil("二十关全通", "二十个残局都清干净了。" + starText(stars) + " · 最后一关 " + sec.toFixed(0) + " 秒。", "再来一关");
+    veilExtra(true, "选关重玩", openPickMask, "存成绩卡");
+  } else {
+    showVeil("第 " + lv + " 关通过 · " + starText(stars), "消满 " + G.puzzleGoal + " 行 · " + starLine + "。下一关是第 " + next + " 关。", "下一关");
+    veilExtra(true, "选关重玩", openPickMask, "存成绩卡");
+  }
+  endRun();
+  checkStickers();
+}
+function failPuzzle(){
+  if (G.mode === "over") return;
+  G.mode = "over";
+  AudioFX.over();
+  updateHUD();
+  showVeil("第 " + puzzleLevel + " 关没过", "堆到顶了，还差 " + Math.max(0, G.puzzleGoal - G.puzzleDone) + " 行。要不要再试一次？", "重开本关");
+  veilExtra(true, "选关重玩", openPickMask, "存成绩卡");
+  endRun();
+  checkStickers();
+}
+
+/* ---------- 模式：禅意（顶住了清底） ---------- */
+function zenClear(){
+  var rows = [];
+  for (var r = ROWS - 1; r >= 0 && rows.length < 4; r--){
+    if (G.grid[r].some(function(v){ return v; })) rows.push(r);
+  }
+  if (!rows.length) return;
+  rows.forEach(function(r){ G.grid.splice(r, 1); G.grid.unshift(emptyRow()); });
+  boardDirty = true;
+  AudioFX.clear(2);
+  queueToast("顶住了 · 清掉底下 " + rows.length + " 行");
+}
+
 /* 冲刺模式收尾：记录用时 */
 function finishSprint(){
   var sec = (Date.now() - G.t0) / 1000;
@@ -2401,6 +3487,315 @@ function finishSprint(){
   AudioFX.clear(4);
   updateHUD();
   showVeil("冲刺完成", "40 行 · " + sec.toFixed(1) + " 秒。最佳 " + best.toFixed(1) + " 秒。", "再来一局");
+  veilExtra(true, "换个模式", null, "存成绩卡");
+  endRun();
+}
+
+/* ---------- 战绩 / 残局选关 / 成绩卡 ---------- */
+var runCounted = false;
+function endRun(){
+  if (runCounted) return;
+  runCounted = true;
+  S.games = (S.games || 0) + 1;
+  saveStats();
+  paintRecords();
+  checkAchv();
+}
+/* 当天消行累计（只留最近 40 天，够画一排柱子） */
+function addDayLines(n){
+  var t = dailyNumber(), last = S.dl[S.dl.length - 1];
+  if (last && last.d === t){ last.n += n; }
+  else { S.dl.push({ d: t, n: n }); if (S.dl.length > 40) S.dl = S.dl.slice(-40); }
+}
+function paintRecords(){
+  var set = function(id, v){
+    var el = document.getElementById(id);
+    if (el) el.textContent = v;
+  };
+  set("recMeta", "共 " + (S.games || 0) + " 局");
+  set("recLines", S.lines || 0);
+  set("recScore", fmtScore(S.score || 0));
+  set("recCombo", S.combo ? "×" + S.combo : "0");
+  set("recSpin", S.spins || 0);
+  set("recQuad", S.quads || 0);
+  set("recDrop", S.drops || 0);
+
+  var dotsEl = document.getElementById("dailyDots");
+  if (dotsEl){
+    var rec = loadDaily();
+    var today = dailyNumber();
+    var map = {};
+    for (var i = 0; i < (rec.hist || []).length; i++) map[rec.hist[i].d] = rec.hist[i].done;
+    if (rec.day === today) map[today] = rec.done ? 1 : 0;
+    var wk = ["日", "一", "二", "三", "四", "五", "六"];
+    /* 柱高按这七天的最大值归一 */
+    var linesOf = {}, i2, mx = 0;
+    for (i2 = 0; i2 < (S.dl || []).length; i2++){
+      linesOf[S.dl[i2].d] = S.dl[i2].n;
+      if (S.dl[i2].n > mx) mx = S.dl[i2].n;
+    }
+    var html = "";
+    for (var k = 6; k >= 0; k--){
+      var d = today - k;
+      var w = new Date(d * 86400000).getUTCDay();
+      var n2 = linesOf[d] || 0;
+      var hh = 0;
+      if (mx) hh = n2 ? Math.max(6, Math.round(n2 / mx * 100)) : (map[d] ? 5 : 0);
+      else hh = map[d] ? 5 : 0;
+      html += '<div class="db-col' + (map[d] ? " done" : "") + (k === 0 ? " today" : "") + '">' +
+              '<div class="db-track" title="' + (n2 ? n2 + " 行" : "没玩") + '"><i class="db-fill" style="height:' + hh + '%"></i></div>' +
+              '<b>周' + wk[w] + '</b></div>';
+    }
+    dotsEl.innerHTML = html;
+    var sk = document.getElementById("dailyStreak");
+    if (sk) sk.textContent = "连日 " + (rec.streak || 0) + " 天";
+  }
+
+  var cleared = puzzleClearedCount();
+  set("recPzTxt", cleared + " / 20");
+  set("pickOpenInfo", "已通 " + cleared + " / 20 关");
+  var bar = document.getElementById("recPzBar");
+  if (bar) bar.style.width = (cleared / 20 * 100) + "%";
+
+}
+
+/* 选关浮层 */
+function openPickMask(){
+  if (G.mode === "playing") togglePause();
+  var grid = document.getElementById("pickGrid");
+  if (grid){
+    var data = loadPuzzleData();
+    var openMax = puzzleOpenMax();
+    var cur = data.lv;
+    var html = "";
+    for (var i = 1; i <= 20; i++){
+      var b = data.best[String(i)];
+      var cls = "pick-cell" + (b ? " done" : "") + (i === cur ? " now" : "");
+      var sub = b
+        ? ('<i class="pk-star">' + starText(b.star || puzzleStars(i, b.sec)) + '</i><i class="pk-sec">' + b.sec + ' 秒</i>')
+        : ('<i>' + (i <= openMax ? "可挑战" : "未解锁") + '</i>');
+      html += '<button type="button" class="' + cls + '" data-lv="' + i + '">' + i + sub + '</button>';
+    }
+    grid.innerHTML = html;
+  }
+  var mask = document.getElementById("pickMask");
+  if (mask) mask.hidden = false;
+}
+function closePickMask(){
+  var mask = document.getElementById("pickMask");
+  if (mask) mask.hidden = true;
+}
+
+/* 成绩卡：用当前配色画一张竖版卡 */
+function buildScoreCard(){
+  var W = 360, H = 470, DPR = 2;
+  var cv = document.createElement("canvas");
+  cv.width = W * DPR; cv.height = H * DPR;
+  var c = cv.getContext("2d");
+  c.setTransform(DPR, 0, 0, DPR, 0, 0);
+  var cs = getComputedStyle(document.body);
+  var bgA = cs.getPropertyValue("--bg-a").trim() || "#FDF6F9";
+  var bgC = cs.getPropertyValue("--bg-c").trim() || "#FAD9E6";
+  var ink = cs.getPropertyValue("--ink").trim() || "#42303A";
+  var soft = cs.getPropertyValue("--ink-soft").trim() || "#866A77";
+  var selB = cs.getPropertyValue("--sel-b").trim() || "#BD4577";
+  var rule = cs.getPropertyValue("--rule").trim() || "#EBB8CD";
+  var F = '"PingFang SC","Microsoft YaHei","Noto Sans CJK SC",system-ui,sans-serif';
+
+  function rr(x, y, w, h, r){
+    c.beginPath();
+    c.moveTo(x + r, y);
+    c.lineTo(x + w - r, y); c.quadraticCurveTo(x + w, y, x + w, y + r);
+    c.lineTo(x + w, y + h - r); c.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+    c.lineTo(x + r, y + h); c.quadraticCurveTo(x, y + h, x, y + h - r);
+    c.lineTo(x, y + r); c.quadraticCurveTo(x, y, x + r, y);
+    c.closePath();
+  }
+
+  c.fillStyle = bgA;
+  c.fillRect(0, 0, W, H);
+  /* 淡淡的横格纸纹 */
+  c.globalAlpha = 0.05;
+  c.strokeStyle = rule;
+  c.lineWidth = 1;
+  for (var gy = 24; gy < H; gy += 34){
+    c.beginPath();
+    c.moveTo(0, gy);
+    c.lineTo(W, gy);
+    c.stroke();
+  }
+  c.globalAlpha = 1;
+
+  /* 顶部色带 */
+  c.fillStyle = bgC;
+  rr(20, 20, W - 40, 92, 16);
+  c.fill();
+  c.fillStyle = ink;
+  c.font = '700 22px ' + F;
+  c.textBaseline = "alphabetic";
+  c.fillText("俄罗斯方块", 36, 60);
+  c.fillStyle = soft;
+  c.font = '400 11px ' + F;
+  var modeLabel = (GAME_MODES[G.gameMode] ? GAME_MODES[G.gameMode].label : "无尽") + "模式";
+  if (G.gameMode === "puzzle") modeLabel += " · 第 " + puzzleLevel + " 关";
+  c.fillText("一局成绩 · " + modeLabel, 36, 82);
+  c.textAlign = "right";
+  var dtNow = new Date();
+  c.fillText(dtNow.getFullYear() + "." + (dtNow.getMonth() + 1) + "." + dtNow.getDate(), W - 36, 82);
+  c.textAlign = "left";
+
+  /* 分数 · 主角 · 居中 */
+  c.textAlign = "center";
+  c.fillStyle = soft;
+  c.font = '400 10px ' + F;
+  c.fillText("本局得分", W / 2, 150);
+  c.fillStyle = ink;
+  var sv = fmtScore(G.score);
+  /* 按实测宽度收字号，极端大数也不出血 */
+  var scFs = sv.length > 7 ? 36 : sv.length > 6 ? 40 : sv.length > 5 ? 46 : 52;
+  while (scFs > 18){
+    c.font = '800 ' + scFs + 'px ' + F;
+    if (c.measureText(sv).width <= W - 84) break;
+    scFs -= 2;
+  }
+  c.font = '800 ' + scFs + 'px ' + F;
+  c.fillText(sv, W / 2, 204 - (52 - scFs) * 0.3);
+  c.textAlign = "left";
+
+  /* 三列数据 */
+  var cols = [
+    ["消行", String(G.lines || 0)],
+    ["等级", String(G.level || 1)],
+    ["最高连击", G.maxCombo ? "×" + G.maxCombo : "—"]
+  ];
+  for (var i = 0; i < 3; i++){
+    var x = 36 + i * 100;
+    c.fillStyle = bgC;
+    rr(x, 232, 88, 80, 12);
+    c.fill();
+    c.fillStyle = soft;
+    c.font = '400 10px ' + F;
+    c.fillText(cols[i][0], x + 13, 256);
+    c.fillStyle = ink;
+    var vFs = 26;
+    while (vFs > 13){
+      c.font = '700 ' + vFs + 'px ' + F;
+      if (c.measureText(cols[i][1]).width <= 62) break;
+      vFs -= 1;
+    }
+    c.font = '700 ' + vFs + 'px ' + F;
+    c.fillText(cols[i][1], x + 13, 294 - (26 - vFs) * 0.34);
+  }
+
+  /* 分隔 */
+  c.strokeStyle = rule;
+  c.lineWidth = 1;
+  c.beginPath();
+  c.moveTo(36, 348);
+  c.lineTo(W - 36, 348);
+  c.stroke();
+
+  /* 用时 */
+  var used = Math.max(1, Math.round((Date.now() - (G.t0 || Date.now())) / 1000));
+  c.textAlign = "center";
+  c.fillStyle = soft;
+  c.font = '400 11px ' + F;
+  var usedTxt = used >= 60 ? Math.floor(used / 60) + " 分 " + (used % 60) + " 秒" : used + " 秒";
+  var tail = "";
+  if (G.gameMode === "puzzle" && (G.puzzleDone || 0) >= (G.puzzleGoal || 1)){
+    tail = " · " + starText(puzzleStars(puzzleLevel, used));
+  } else {
+    tail = " · 第 " + (S.games || 1) + " 局";
+  }
+  var ft1 = "用时 · " + usedTxt;
+  c.font = '400 11px ' + F;
+  var w1 = c.measureText(ft1).width;
+  var w2 = c.measureText(tail).width;
+  var fx = W / 2 - (w1 + w2) / 2;
+  c.textAlign = "left";
+  c.fillStyle = soft;
+  c.fillText(ft1, fx, 380);
+  c.fillStyle = selB;
+  c.fillText(tail, fx + w1, 380);
+  c.textAlign = "center";
+
+  /* 标语与署名 */
+  c.fillStyle = soft;
+  c.font = '400 11px ' + F;
+  c.fillText("一只接一只，烦恼一起消掉", W / 2, 418);
+  c.fillStyle = selB;
+  c.font = '400 9.5px ' + F;
+  c.fillText("@o北极兔o", W / 2, 441);
+  c.textAlign = "left";
+
+  return cv.toDataURL("image/png");
+}
+function openScoreCard(){
+  var url = buildScoreCard();
+  var slot = document.getElementById("cardSlot");
+  if (slot) slot.innerHTML = '<img alt="成绩卡" src="' + url + '">';
+  var save = document.getElementById("cardSave");
+  if (save) save.href = url;
+  var mask = document.getElementById("cardMask");
+  if (mask) mask.hidden = false;
+}
+function closeScoreCard(){
+  var mask = document.getElementById("cardMask");
+  if (mask) mask.hidden = true;
+}
+if (document.getElementById("veilBtn2")){
+  document.getElementById("veilBtn2").addEventListener("click", function(){
+    if (veilSecondFn){ veilSecondFn(); return; }
+    hideVeil();
+    setView("menu");
+    queueToast("点一个模式就开新局");
+  });
+}
+if (document.getElementById("veilBtn3")){
+  document.getElementById("veilBtn3").addEventListener("click", function(){ openScoreCard(); });
+}
+if (document.getElementById("pickClose")){
+  document.getElementById("pickClose").addEventListener("click", closePickMask);
+}
+if (document.getElementById("pickMask")){
+  document.getElementById("pickMask").addEventListener("click", function(e){
+    if (e.target === this){ closePickMask(); }
+  });
+}
+if (document.getElementById("cardClose")){
+  document.getElementById("cardClose").addEventListener("click", closeScoreCard);
+}
+if (document.getElementById("cardMask")){
+  document.getElementById("cardMask").addEventListener("click", function(e){
+    if (e.target === this) closeScoreCard();
+  });
+}
+if (document.getElementById("pickGrid")){
+  document.getElementById("pickGrid").addEventListener("click", function(e){
+    var b = e.target;
+    while (b && b !== this && !(b.getAttribute && b.getAttribute("data-lv"))) b = b.parentNode;
+    if (!b || b === this) return;
+    var lv = Number(b.getAttribute("data-lv"));
+    var openMax = puzzleOpenMax();
+    if (lv > openMax){
+      queueToast("先把第 " + openMax + " 关过了再往下");
+      return;
+    }
+    closePickMask();
+    savePuzzleLevel(lv);
+    if (curView !== "play") setView("play");
+    G.gameMode = "puzzle";
+    G.sprint = false;
+    paintModeButtons();
+    startGame();
+    queueToast("残局 · 第 " + lv + " 关");
+  });
+}
+if (document.getElementById("btnPuzzlePick")){
+  document.getElementById("btnPuzzlePick").addEventListener("click", function(){
+    AudioFX.resume();
+    openPickMask();
+  });
 }
 
 /* 模式切换：无尽 / 冲刺 */
@@ -2409,32 +3804,91 @@ function paintModeButtons(){
   if (modeRowEl){
     var bs = modeRowEl.querySelectorAll("button");
     for (var i = 0; i < bs.length; i++){
-      var want = bs[i].getAttribute("data-mode") === "sprint";
-      bs[i].setAttribute("aria-pressed", (want === !!G.sprint) ? "true" : "false");
+      bs[i].setAttribute("aria-pressed", bs[i].getAttribute("data-mode") === G.gameMode ? "true" : "false");
     }
   }
   var meta = document.getElementById("modeMeta");
-  if (meta) meta.textContent = "当前 · " + (G.sprint ? "冲刺" : "无尽");
+  if (meta){
+    var m = GAME_MODES[G.gameMode] || GAME_MODES.endless;
+    var extra = "";
+    if (G.gameMode === "puzzle") extra = " 第 " + loadPuzzleLevel() + " 关";
+    else if (G.gameMode === "daily"){
+      var rec = loadDaily();
+      if (rec.day === dailyNumber() && rec.done) extra = " 今日已完成";
+    }
+    meta.textContent = "当前 · " + m.label + extra;
+  }
 }
-function setGameMode(sprint){
-  G.sprint = !!sprint;
+function setGameMode(mode){
+  if (!GAME_MODES[mode]) mode = "endless";
+  G.gameMode = mode;
+  G.sprint = (mode === "sprint");
   paintModeButtons();
   startGame();
-  queueToast(G.sprint ? "冲刺模式 · 消满 40 行计时" : "无尽模式 · 一直玩到封顶");
+  var say = GAME_MODES[mode].say;
+  if (mode === "daily"){
+    var rec = loadDaily();
+    if (rec.day === dailyNumber() && rec.done) say = "每日一局 · 今日已达成，再玩只当练习";
+  } else if (mode === "puzzle"){
+    say = "残局挑战 · 第 " + loadPuzzleLevel() + " 关";
+  }
+  queueToast(say);
 }
 function toggleMode(){
-  setGameMode(!G.sprint);
+  setGameMode(G.gameMode === "sprint" ? "endless" : "sprint");
 }
 
 /* 消行时棋盘轻震 */
 /* 切换方块样式：重烘焙棋盘 + 重画预览和贴纸 */
-function setSkin(id){
+var SKIN_UNIT = { lines: "行", doubles: "次", quads: "次", drops: "次", score: "分", level: "级", run: "行", owned: "枚" };
+function showUnlockCard(name, how, prog, anchor){
+  var el = document.getElementById("unlockCard");
+  if (!el) return;
+  var a = document.getElementById("unlockName");
+  var b = document.getElementById("unlockHow");
+  var c = document.getElementById("unlockProg");
+  if (a) a.textContent = "「" + name + "」还没解锁";
+  if (b) b.textContent = how;
+  if (c) c.textContent = prog || "";
+  var vh = window.innerHeight || 800;
+  var ah = el.offsetHeight || 96;
+  var top = vh * 0.5 - ah * 0.5;
+  if (anchor && anchor.getBoundingClientRect){
+    var r = anchor.getBoundingClientRect();
+    top = r.top - ah - 10;
+    if (top < 14) top = r.bottom + 10;
+    if (top + ah > vh - 14) top = Math.max(14, vh - ah - 14);
+  }
+  el.style.top = Math.round(top) + "px";
+  el.classList.add("show");
+  el.setAttribute("aria-hidden", "false");
+}
+function hideUnlockCard(){
+  var el = document.getElementById("unlockCard");
+  if (!el) return;
+  el.classList.remove("show");
+  el.setAttribute("aria-hidden", "true");
+}
+/* 点卡片以外的地方就收起来 */
+document.addEventListener("click", function(e){
+  var el = document.getElementById("unlockCard");
+  if (!el || !el.classList.contains("show")) return;
+  if (el === e.target || el.contains(e.target)) return;
+  hideUnlockCard();
+}, true);
+function setSkin(id, anchor){
   if (!isSkinOpen(id)){
     var ss = skinById(id);
     if (!ss){ queueToast("还没解锁"); return; }
-    if (ss.req){ queueToast("「" + ss.name + "」要" + ss.unlock + "才解锁"); return; }
-    var lack = ss.need - ((S.owned && S.owned.length) ? S.owned.length : 0);
-    queueToast(lack > 0 ? "「" + ss.name + "」还差 " + lack + " 枚贴纸" : "还没解锁");
+    var cur = (S.owned && S.owned.length) ? S.owned.length : 0;
+    if (ss.req){
+      var c2 = (ss.req.k === "owned") ? cur : ((S && typeof S[ss.req.k] === "number") ? S[ss.req.k] : 0);
+      showUnlockCard(ss.name, "解锁方式：" + ss.unlock,
+                     "当前 " + c2 + " / " + ss.req.v + " " + (SKIN_UNIT[ss.req.k] || ""), anchor);
+    } else {
+      showUnlockCard(ss.name, "解锁方式：集满 " + ss.need + " 枚贴纸",
+                     "当前 " + cur + " / " + ss.need + " 枚", anchor);
+    }
     return;
   }
   skinRandom = false;
@@ -2454,8 +3908,27 @@ var stickSkin = function(id){
   paintSkinButtons();
 };
 
+/* 已解锁的排到前面，未解锁的留在后面；顺序稳定不会来回跳 */
+var lastSkinOpenSig = -1;
+function orderSkinRow(){
+  if (!skinRowEl) return;
+  var sig = openSkinCount();
+  if (sig === lastSkinOpenSig) return;
+  lastSkinOpenSig = sig;
+  var arr = [].slice.call(skinRowEl.querySelectorAll("button"));
+  var rnd = null, open = [], lock = [], i;
+  for (i = 0; i < arr.length; i++){
+    var id = arr[i].getAttribute("data-skin");
+    if (id === "random") rnd = arr[i];
+    else if (isSkinOpen(id)) open.push(arr[i]);
+    else lock.push(arr[i]);
+  }
+  var all = (rnd ? [rnd] : []).concat(open, lock);
+  for (i = 0; i < all.length; i++) skinRowEl.appendChild(all[i]);
+}
 function paintSkinButtons(){
   if (!skinRowEl) return;
+  orderSkinRow();
   var btns = skinRowEl.querySelectorAll("button");
   var owned = (S.owned && S.owned.length) ? S.owned.length : 0;
   for (var i = 0; i < btns.length; i++){
@@ -2480,7 +3953,7 @@ function paintSkinButtons(){
 function rollSkin(){
   var pool = [], i;
   for (i = 0; i < SKINS.length; i++) if (isSkinOpen(SKINS[i].id)) pool.push(SKINS[i].id);
-  if (!pool.length) pool = ["animal"];
+  if (!pool.length) pool = ["ink"];
   var pick = skin;
   for (var t = 0; t < 5 && pick === skin && pool.length > 1; t++){
     pick = pool[Math.floor(Math.random() * pool.length)];
@@ -2498,11 +3971,23 @@ function shakeBoard(){
   el.classList.add("shake");
 }
 
+var veilSecondFn = null;
+function veilExtra(show, secondText, secondFn, thirdText){
+  var ex = document.getElementById("veilExtra");
+  var b2 = document.getElementById("veilBtn2");
+  var b3 = document.getElementById("veilBtn3");
+  if (!ex) return;
+  ex.hidden = !show;
+  veilSecondFn = secondFn || null;
+  if (b2){ b2.hidden = !secondText; if (secondText) b2.textContent = secondText; }
+  if (b3){ b3.hidden = !thirdText; if (thirdText) b3.textContent = thirdText; }
+}
 function showVeil(title, text, btn){
   veilTitle.textContent = title;
   veilText.textContent = text;
   veilBtn.textContent = btn;
   veil.hidden = false;
+  veilExtra(false);
   btnPause.setAttribute("aria-pressed", G.mode === "paused" ? "true" : "false");
   btnPause.textContent = G.mode === "paused" ? "继续" : "暂停";
 }
@@ -2545,15 +4030,32 @@ function updateHUD(){
   linesEl.textContent = G.lines;
   hiscoreEl.textContent = fmtScore(Math.max(G.hi, G.score));
   fitNum(hiscoreEl);
-  if (G.sprint){
+  var titleEl = document.getElementById("lvTitle");
+  if (G.gameMode === "daily"){
+    /* 每日：窄栏改成倒计时 + 今日目标进度 */
+    levelEl.textContent = Math.max(0, Math.ceil(G.timeLeft / 1000));
+    fitNum(levelEl);
+    lvBar.style.width = Math.min(100, G.lines / DAILY_GOAL * 100) + "%";
+    lvNeed.textContent = Math.max(0, DAILY_GOAL - G.lines);
+    if (lvLabelEl) lvLabelEl.textContent = "还剩行";
+    if (titleEl) titleEl.textContent = "倒计时";
+  } else if (G.gameMode === "puzzle"){
+    levelEl.textContent = puzzleLevel;
+    lvBar.style.width = (G.puzzleGoal ? Math.min(100, G.puzzleDone / G.puzzleGoal * 100) : 0) + "%";
+    lvNeed.textContent = Math.max(0, G.puzzleGoal - G.puzzleDone);
+    if (lvLabelEl) lvLabelEl.textContent = "还剩行";
+    if (titleEl) titleEl.textContent = "关卡";
+  } else if (G.sprint){
     lvBar.style.width = Math.min(100, G.lines / SPRINT_GOAL * 100) + "%";
     lvNeed.textContent = Math.max(0, SPRINT_GOAL - G.lines);
     if (lvLabelEl) lvLabelEl.textContent = "冲刺进度";
+    if (titleEl) titleEl.textContent = "等级";
   } else {
     var into = G.lines % 10;
     lvBar.style.width = (into / 10 * 100) + "%";
     lvNeed.textContent = 10 - into;
     if (lvLabelEl) lvLabelEl.textContent = "距下一级";
+    if (titleEl) titleEl.textContent = "等级";
   }
 
   paintModeButtons();
@@ -2561,7 +4063,10 @@ function updateHUD(){
 /* ---------- 音效（Web Audio 合成，无外部素材） ---------- */
 var AudioFX = (function(){
   var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  var ac = null, on = !reduce;
+  var ac = null;
+  var savedSnd = null;
+  try { savedSnd = localStorage.getItem("tetris-sound-0417"); } catch (e){}
+  var on = savedSnd === "0" ? false : (savedSnd === "1" ? true : !reduce);
   function get(){
     if (!ac){
       try { ac = new (window.AudioContext || window.webkitAudioContext)(); }
@@ -2599,7 +4104,11 @@ var AudioFX = (function(){
       }
     },
     over: function(){ tone(320, 0.55, "sawtooth", 0.05, 80); },
-    toggle: function(){ on = !on; return on; },
+    toggle: function(){
+      on = !on;
+      try { localStorage.setItem("tetris-sound-0417", on ? "1" : "0"); } catch (e){}
+      return on;
+    },
     enabled: function(){ return on; }
   };
 })();
@@ -2796,8 +4305,1086 @@ function drawGalaxy(c, x, y, s){
   c.restore();
 }
 
+/*__NEWSKIN__*/
+/* ================= 九款画风 · 纯代码绘制 ================= */
+function acol(hex, a){
+  var h = String(hex).replace("#", "");
+  if (h.length === 3) h = h[0] + h[0] + h[1] + h[1] + h[2] + h[2];
+  var r = parseInt(h.substr(0, 2), 16), g = parseInt(h.substr(2, 2), 16), b = parseInt(h.substr(4, 2), 16);
+  if (isNaN(r) || isNaN(g) || isNaN(b)) return String(hex);
+  return "rgba(" + r + "," + g + "," + b + "," + a + ")";
+}
+function mx2(a, b, t){
+  var pa = String(a).replace("#", ""), pb = String(b).replace("#", "");
+  if (pa.length === 3) pa = pa[0] + pa[0] + pa[1] + pa[1] + pa[2] + pa[2];
+  if (pb.length === 3) pb = pb[0] + pb[0] + pb[1] + pb[1] + pb[2] + pb[2];
+  var r1 = parseInt(pa.substr(0, 2), 16), g1 = parseInt(pa.substr(2, 2), 16), b1 = parseInt(pa.substr(4, 2), 16);
+  var r2 = parseInt(pb.substr(0, 2), 16), g2 = parseInt(pb.substr(2, 2), 16), b2 = parseInt(pb.substr(4, 2), 16);
+  if (isNaN(r1) || isNaN(r2)) return String(a);
+  var r = Math.round(r1 + (r2 - r1) * t), g = Math.round(g1 + (g2 - g1) * t), bl = Math.round(b1 + (b2 - b1) * t);
+  var v = (1 << 24) + (r << 16) + (g << 8) + bl;
+  return "#" + v.toString(16).slice(1);
+}
+/* 手绘抖动方框：边缘带弯曲与溢出，模拟落笔不齐 */
+function wetRect(c, x, y, s, seed, out){
+  var o = out || 0, k = s * 0.05;
+  var L = x - o, T = y - o, R = x + s + o, B = y + s + o;
+  function j(n){ return jit(seed, n) * k; }
+  c.beginPath();
+  c.moveTo(L + j(1), T + j(2));
+  c.quadraticCurveTo(L + s * 0.5 + j(3), T + j(4), R + j(5), T + j(6));
+  c.quadraticCurveTo(R + j(7), T + s * 0.5 + j(8), R + j(9), B + j(10));
+  c.quadraticCurveTo(L + s * 0.5 + j(11), B + j(12), L + j(13), B + j(14));
+  c.quadraticCurveTo(L + j(15), T + s * 0.5 + j(16), L + j(1), T + j(2));
+  c.closePath();
+}
+/* 不规则水彩斑：边缘随手一泼的形 */
+function blobPath(c, cx, cy, r, seed, n){
+  c.beginPath();
+  for (var i = 0; i <= n; i++){
+    var a = (i / n) * Math.PI * 2;
+    var rr = r * (0.74 + 0.26 * Math.abs(jit(seed, i * 3 + 1)));
+    var px = cx + Math.cos(a) * rr, py = cy + Math.sin(a) * rr * 0.88;
+    if (i === 0) c.moveTo(px, py); else c.lineTo(px, py);
+  }
+  c.closePath();
+}
+function softRect(c, x, y, s, r){
+  var rr = Math.min(r, s * 0.5);
+  c.beginPath();
+  c.moveTo(x + rr, y);
+  c.lineTo(x + s - rr, y);
+  c.quadraticCurveTo(x + s, y, x + s, y + rr);
+  c.lineTo(x + s, y + s - rr);
+  c.quadraticCurveTo(x + s, y + s, x + s - rr, y + s);
+  c.lineTo(x + rr, y + s);
+  c.quadraticCurveTo(x, y + s, x, y + s - rr);
+  c.lineTo(x, y + rr);
+  c.quadraticCurveTo(x, y, x + rr, y);
+  c.closePath();
+}
+
+/* 1 松散墨水：抖动墨线 + 松散水彩 */
+function drawInk(c, x, y, s, color, seed){
+  c.save();
+  var paper = mx2(color, "#FFFFFF", 0.12);
+  wetRect(c, x, y, s, seed, 0);
+  c.fillStyle = paper;
+  c.fill();
+  c.save();
+  wetRect(c, x, y, s, seed, 0);
+  c.clip();
+  for (var i = 0; i < 3; i++){
+    var cx = x + s * (0.30 + 0.22 * i) + jit(seed, i + 31) * s * 0.12;
+    var cy = y + s * (0.34 + 0.18 * i) + jit(seed, i + 41) * s * 0.10;
+    blobPath(c, cx, cy, s * (0.26 + 0.06 * i), seed + i * 7, 9);
+    c.fillStyle = acol(color, 0.52);
+    c.fill();
+  }
+  blobPath(c, x + s * 0.64, y + s * 0.70, s * 0.32, seed + 29, 9);
+  c.fillStyle = acol(mx2(color, "#3A2C22", 0.35), 0.30);
+  c.fill();
+  blobPath(c, x + s * 0.26, y + s * 0.30, s * 0.22, seed + 41, 8);
+  c.fillStyle = "rgba(255,255,255,.42)";
+  c.fill();
+  c.restore();
+  c.lineCap = "round";
+  c.strokeStyle = "rgba(26,20,16,.96)";
+  c.lineWidth = Math.max(1.8, s * 0.110);
+  wetRect(c, x, y, s, seed + 3, s * 0.010);
+  c.stroke();
+  c.strokeStyle = "rgba(42,34,28,.42)";
+  c.lineWidth = Math.max(0.8, s * 0.030);
+  wetRect(c, x, y, s, seed + 11, s * 0.038);
+  c.stroke();
+  c.strokeStyle = "rgba(42,34,28,.50)";
+  c.lineWidth = Math.max(0.8, s * 0.028);
+  for (var t = 0; t < 2; t++){
+    var sy = y + s * (0.20 + 0.52 * t);
+    c.beginPath();
+    c.moveTo(x - s * 0.05 - jit(seed, t + 51) * s * 0.07, sy);
+    c.lineTo(x + s * (0.24 + jit(seed, t + 61) * 0.08), sy + jit(seed, t + 71) * s * 0.04);
+    c.stroke();
+  }
+  c.restore();
+}
+
+/* 2 红蓝国潮：套印错版 + 网点颗粒 + 回纹 */
+function drawRiso(c, x, y, s, color, seed){
+  var RED = mx2(color, "#E0452B", 0.62);
+  var BLUE = mx2(color, "#1E4A9C", 0.62);
+  c.save();
+  softRect(c, x, y, s, s * 0.06);
+  c.fillStyle = mx2(color, "#FBEFE0", 0.22);
+  c.fill();
+  c.save();
+  softRect(c, x, y, s, s * 0.06);
+  c.clip();
+  c.globalAlpha = 0.42;
+  c.fillStyle = RED;
+  c.beginPath();
+  c.arc(x + s * 0.34, y + s * 0.34, s * 0.32, 0, Math.PI * 2);
+  c.fill();
+  c.fillStyle = BLUE;
+  c.beginPath();
+  c.arc(x + s * 0.66, y + s * 0.68, s * 0.28, 0, Math.PI * 2);
+  c.fill();
+  var step = Math.max(3.2, s * 0.20);
+  c.globalAlpha = 0.50;
+  for (var yy = y + step * 0.5; yy < y + s; yy += step){
+    for (var xx = x + step * 0.5; xx < x + s; xx += step){
+      if (Math.sin(xx * 1.7 + yy * 2.3 + seed) <= -0.05) continue;
+      c.fillStyle = (((xx - x) / step + (yy - y) / step) % 2 < 1) ? acol(RED, 0.55) : acol(BLUE, 0.55);
+      c.beginPath();
+      c.arc(xx, yy, step * 0.30, 0, Math.PI * 2);
+      c.fill();
+    }
+  }
+  c.globalAlpha = 1;
+  c.strokeStyle = acol(BLUE, 0.80);
+  c.lineWidth = Math.max(1, s * 0.040);
+  c.beginPath();
+  c.moveTo(x + s * 0.14, y + s * 0.34);
+  c.lineTo(x + s * 0.14, y + s * 0.14);
+  c.lineTo(x + s * 0.36, y + s * 0.14);
+  c.lineTo(x + s * 0.36, y + s * 0.26);
+  c.lineTo(x + s * 0.24, y + s * 0.26);
+  c.lineTo(x + s * 0.24, y + s * 0.20);
+  c.stroke();
+  c.restore();
+  c.strokeStyle = acol(RED, 0.72);
+  c.lineWidth = Math.max(1, s * 0.045);
+  softRect(c, x + s * 0.035, y + s * 0.030, s * 0.93, s * 0.05);
+  c.stroke();
+  c.strokeStyle = acol(BLUE, 0.55);
+  c.lineWidth = Math.max(0.8, s * 0.030);
+  softRect(c, x + s * 0.005, y + s * 0.060, s * 0.93, s * 0.05);
+  c.stroke();
+  c.restore();
+}
+
+/* 3 立体卡通：径向渐变 + 高光 + 接触阴影 */
+function drawToon3d(c, x, y, s, color, seed){
+  var r = s * 0.24;
+  var light = mx2(color, "#FFFFFF", 0.58);
+  var dark = mx2(color, "#1A1220", 0.42);
+  c.save();
+  softRect(c, x + s * 0.02, y + s * 0.02, s * 0.96, r);
+  var g = c.createRadialGradient(x + s * 0.33, y + s * 0.28, s * 0.04, x + s * 0.52, y + s * 0.58, s * 0.92);
+  g.addColorStop(0, light);
+  g.addColorStop(0.52, color);
+  g.addColorStop(1, dark);
+  c.fillStyle = g;
+  c.fill();
+  c.save();
+  softRect(c, x + s * 0.02, y + s * 0.02, s * 0.96, r);
+  c.clip();
+  var sg = c.createLinearGradient(0, y + s * 0.58, 0, y + s);
+  sg.addColorStop(0, "rgba(0,0,0,0)");
+  sg.addColorStop(1, "rgba(0,0,0,.24)");
+  c.fillStyle = sg;
+  c.fillRect(x, y + s * 0.52, s, s * 0.5);
+  c.globalAlpha = 0.07;
+  c.strokeStyle = "#FFFFFF";
+  c.lineWidth = Math.max(0.6, s * 0.018);
+  for (var i = 0; i < 5; i++){
+    var o = y + s * (0.14 + i * 0.17);
+    c.beginPath();
+    c.moveTo(x, o);
+    c.lineTo(x + s, o - s * 0.10);
+    c.stroke();
+  }
+  c.restore();
+  c.globalAlpha = 0.55;
+  c.fillStyle = "#FFFFFF";
+  c.save();
+  c.translate(x + s * 0.30, y + s * 0.25);
+  c.scale(1, 0.60);
+  c.beginPath();
+  c.arc(0, 0, s * 0.18, 0, Math.PI * 2);
+  c.fill();
+  c.restore();
+  c.globalAlpha = 0.30;
+  c.strokeStyle = "#FFFFFF";
+  c.lineWidth = Math.max(0.8, s * 0.026);
+  c.beginPath();
+  c.arc(x + s * 0.34, y + s * 0.30, s * 0.44, Math.PI * 1.05, Math.PI * 1.55);
+  c.stroke();
+  c.globalAlpha = 1;
+  c.strokeStyle = acol(dark, 0.42);
+  c.lineWidth = Math.max(0.9, s * 0.026);
+  softRect(c, x + s * 0.02, y + s * 0.02, s * 0.96, r);
+  c.stroke();
+  c.restore();
+}
+
+/* 4 透明青春：半透明玻璃 + 流动曲线 */
+function drawGlassy(c, x, y, s, color, seed){
+  c.save();
+  softRect(c, x, y, s, s * 0.20);
+  c.fillStyle = acol(color, 0.70);
+  c.fill();
+  c.save();
+  softRect(c, x, y, s, s * 0.20);
+  c.clip();
+  var lg = c.createLinearGradient(x, y, x + s * 0.3, y + s);
+  lg.addColorStop(0, "rgba(255,255,255,.34)");
+  lg.addColorStop(0.55, "rgba(255,255,255,.06)");
+  lg.addColorStop(1, "rgba(255,255,255,.20)");
+  c.fillStyle = lg;
+  c.fillRect(x, y, s, s);
+  c.strokeStyle = "rgba(255,255,255,.44)";
+  c.lineWidth = Math.max(1, s * 0.032);
+  for (var i = 0; i < 2; i++){
+    var yy = y + s * (0.40 + i * 0.26);
+    c.beginPath();
+    c.moveTo(x, yy + jit(seed, i + 3) * s * 0.06);
+    c.bezierCurveTo(x + s * 0.34, yy - s * 0.22, x + s * 0.66, yy + s * 0.22, x + s, yy + jit(seed, i + 9) * s * 0.06);
+    c.stroke();
+  }
+  c.fillStyle = "rgba(255,255,255,.30)";
+  c.beginPath();
+  c.arc(x + s * 0.70, y + s * 0.24, s * 0.070, 0, Math.PI * 2);
+  c.fill();
+  c.beginPath();
+  c.arc(x + s * 0.26, y + s * 0.74, s * 0.050, 0, Math.PI * 2);
+  c.fill();
+  c.strokeStyle = "rgba(255,255,255,.55)";
+  c.lineWidth = Math.max(1, s * 0.028);
+  c.beginPath();
+  c.moveTo(x + s * 0.07, y + s * 0.24);
+  c.lineTo(x + s * 0.07, y + s * 0.78);
+  c.stroke();
+  c.restore();
+  c.strokeStyle = acol(mx2(color, "#FFFFFF", 0.40), 0.62);
+  c.lineWidth = Math.max(0.8, s * 0.022);
+  softRect(c, x, y, s, s * 0.20);
+  c.stroke();
+  c.restore();
+}
+
+/* 5 儿童蜡笔：粗抖线 + 斜向排线 + 留缺口 */
+function drawCrayon(c, x, y, s, color, seed){
+  c.save();
+  wetRect(c, x, y, s, seed, s * 0.02);
+  c.fillStyle = mx2(color, "#FFFFFF", 0.12);
+  c.fill();
+  c.save();
+  wetRect(c, x, y, s, seed, s * 0.02);
+  c.clip();
+  c.lineCap = "butt";
+  for (var i = 0; i < 7; i++){
+    var off = -s * 0.25 + i * (s * 0.24);
+    c.strokeStyle = (i % 2 === 0) ? "rgba(255,255,255,.22)" : acol(mx2(color, "#3A2C22", 0.55), 0.20);
+    c.lineWidth = s * (0.10 + jit(seed, i) * 0.03);
+    c.beginPath();
+    c.moveTo(x + off, y + s * 1.1);
+    c.lineTo(x + off + s * 1.3, y - s * 0.1);
+    c.stroke();
+  }
+  c.restore();
+  c.lineCap = "round";
+  c.strokeStyle = "rgba(34,26,20,.92)";
+  c.lineWidth = Math.max(1.5, s * 0.100);
+  wetRect(c, x, y, s, seed + 31, s * 0.008);
+  c.stroke();
+  c.strokeStyle = acol(mx2(color, "#3A2C22", 0.45), 0.62);
+  c.lineWidth = Math.max(1, s * 0.050);
+  c.beginPath();
+  c.moveTo(x + s * 0.12, y + s * 0.80);
+  c.lineTo(x + s * 0.34, y + s * 0.86);
+  c.moveTo(x + s * 0.62, y + s * 0.84);
+  c.lineTo(x + s * 0.86, y + s * 0.78);
+  c.stroke();
+  c.restore();
+}
+
+/* 6 角色速写：速写双线 + 简笔五官 + 排线阴影 */
+function drawSketch(c, x, y, s, color, seed){
+  c.save();
+  wetRect(c, x, y, s, seed, 0);
+  c.fillStyle = mx2(color, "#FFFFFF", 0.20);
+  c.fill();
+  c.lineCap = "round";
+  c.strokeStyle = "rgba(26,20,16,.94)";
+  c.lineWidth = Math.max(1.6, s * 0.092);
+  wetRect(c, x, y, s, seed + 5, s * 0.006);
+  c.stroke();
+  c.strokeStyle = "rgba(36,30,26,.38)";
+  c.lineWidth = Math.max(0.7, s * 0.022);
+  wetRect(c, x, y, s, seed + 17, s * 0.036);
+  c.stroke();
+  var cx = x + s * 0.50, cy = y + s * 0.50;
+  c.strokeStyle = "rgba(36,30,26,.85)";
+  c.lineWidth = Math.max(1, s * 0.030);
+  c.beginPath();
+  c.arc(cx - s * 0.17, cy - s * 0.02, s * 0.046, Math.PI * 0.16, Math.PI * 0.88);
+  c.stroke();
+  c.beginPath();
+  c.arc(cx + s * 0.17, cy - s * 0.02, s * 0.046, Math.PI * 0.16, Math.PI * 0.88);
+  c.stroke();
+  c.fillStyle = "rgba(36,30,26,.92)";
+  c.beginPath();
+  c.arc(cx - s * 0.17, cy + s * 0.018, s * 0.021, 0, Math.PI * 2);
+  c.fill();
+  c.beginPath();
+  c.arc(cx + s * 0.17, cy + s * 0.018, s * 0.021, 0, Math.PI * 2);
+  c.fill();
+  c.strokeStyle = "rgba(36,30,26,.70)";
+  c.lineWidth = Math.max(0.8, s * 0.026);
+  c.beginPath();
+  c.moveTo(cx, cy + s * 0.07);
+  c.quadraticCurveTo(cx - s * 0.03, cy + s * 0.18, cx - s * 0.11, cy + s * 0.15);
+  c.stroke();
+  c.fillStyle = acol(color, 0.58);
+  c.beginPath();
+  c.arc(cx - s * 0.29, cy + s * 0.17, s * 0.062, 0, Math.PI * 2);
+  c.fill();
+  c.beginPath();
+  c.arc(cx + s * 0.29, cy + s * 0.17, s * 0.062, 0, Math.PI * 2);
+  c.fill();
+  c.strokeStyle = "rgba(36,30,26,.28)";
+  c.lineWidth = Math.max(0.7, s * 0.020);
+  for (var i = 0; i < 3; i++){
+    var bx = x + s * (0.66 + i * 0.09);
+    c.beginPath();
+    c.moveTo(bx, y + s * 0.80);
+    c.lineTo(bx + s * 0.10, y + s * 0.64);
+    c.stroke();
+  }
+  c.restore();
+}
+
+/* 7 暖水粉彩铅：暖调水粉晕 + 细排线 */
+function drawGouache(c, x, y, s, color, seed){
+  c.save();
+  wetRect(c, x, y, s, seed, s * 0.03);
+  c.fillStyle = mx2(color, "#FFEBD0", 0.12);
+  c.fill();
+  c.save();
+  wetRect(c, x, y, s, seed, s * 0.03);
+  c.clip();
+  var spots = [[0.30, 0.32, 0.36, 0.30], [0.70, 0.62, 0.32, 0.34], [0.44, 0.80, 0.28, 0.24]];
+  for (var i = 0; i < spots.length; i++){
+    var sp = spots[i];
+    var rg = c.createRadialGradient(x + s * sp[0], y + s * sp[1], s * 0.02, x + s * sp[0], y + s * sp[1], s * sp[2]);
+    rg.addColorStop(0, acol(color, sp[3]));
+    rg.addColorStop(1, acol(color, 0));
+    c.fillStyle = rg;
+    c.beginPath();
+    c.arc(x + s * sp[0], y + s * sp[1], s * sp[2], 0, Math.PI * 2);
+    c.fill();
+  }
+  c.strokeStyle = acol(mx2(color, "#5A3A22", 0.40), 0.24);
+  c.lineWidth = Math.max(0.8, s * 0.022);
+  for (var k = 0; k < 7; k++){
+    var xx = x + s * 0.04 + k * s * 0.17;
+    c.beginPath();
+    c.moveTo(xx, y + s * 0.96);
+    c.lineTo(xx + s * 0.18, y + s * 0.04);
+    c.stroke();
+  }
+  c.strokeStyle = acol(mx2(color, "#6B4A2E", 0.35), 0.40);
+  c.lineWidth = Math.max(1.2, s * 0.085);
+  wetRect(c, x + s * 0.05, y + s * 0.05, s * 0.90, seed + 9, s * 0.02);
+  c.stroke();
+  c.restore();
+  c.strokeStyle = "rgba(66,46,32,.58)";
+  c.lineWidth = Math.max(1.3, s * 0.060);
+  wetRect(c, x, y, s, seed + 21, s * 0.020);
+  c.stroke();
+  c.restore();
+}
+
+/* 8 东京街头平面：撞色分块 + 粗描边 + 斜条 */
+function drawStreet(c, x, y, s, color, seed){
+  var ink = "rgba(24,20,26,.88)";
+  c.save();
+  softRect(c, x, y, s, s * 0.05);
+  c.fillStyle = color;
+  c.fill();
+  c.save();
+  softRect(c, x, y, s, s * 0.05);
+  c.clip();
+  c.fillStyle = mx2(color, "#FFFFFF", 0.86);
+  c.beginPath();
+  c.moveTo(x + s * 0.30, y + s);
+  c.lineTo(x + s, y + s * 0.24);
+  c.lineTo(x + s, y + s);
+  c.closePath();
+  c.fill();
+  c.fillStyle = acol(mx2(color, "#E0452B", 0.55), 0.85);
+  c.beginPath();
+  c.moveTo(x, y + s * 0.30);
+  c.lineTo(x + s * 0.40, y);
+  c.lineTo(x + s * 0.40, y + s * 0.30);
+  c.closePath();
+  c.fill();
+  c.save();
+  c.translate(x + s * 0.74, y + s * 0.70);
+  c.rotate(-Math.PI / 4);
+  c.fillStyle = ink;
+  for (var i = 0; i < 3; i++){
+    c.fillRect(-s * 0.24 + i * s * 0.14, -s * 0.26, s * 0.06, s * 0.52);
+  }
+  c.restore();
+  c.restore();
+  c.strokeStyle = ink;
+  c.lineWidth = Math.max(1.4, s * 0.055);
+  softRect(c, x, y, s, s * 0.05);
+  c.stroke();
+  c.fillStyle = ink;
+  c.beginPath();
+  c.arc(x + s * 0.18, y + s * 0.20, s * 0.052, 0, Math.PI * 2);
+  c.fill();
+  c.restore();
+}
+
+/* 9 童趣水彩绘本：水彩积色 + 留白 + 两三笔墨 */
+function drawStory(c, x, y, s, color, seed){
+  c.save();
+  wetRect(c, x, y, s, seed, s * 0.015);
+  c.fillStyle = mx2(color, "#FFFFFF", 0.18);
+  c.fill();
+  c.save();
+  wetRect(c, x, y, s, seed, s * 0.015);
+  c.clip();
+  for (var i = 0; i < 4; i++){
+    var cx = x + s * (0.22 + 0.24 * i) + jit(seed, i + 3) * s * 0.10;
+    var cy = y + s * (0.32 + 0.18 * (i % 2) + 0.10 * (i > 1 ? 1 : 0)) + jit(seed, i + 13) * s * 0.10;
+    blobPath(c, cx, cy, s * (0.24 + 0.05 * i), seed + i * 5, 9);
+    c.fillStyle = acol(mx2(color, "#8A4A38", 0.28), 0.30 + 0.06 * i);
+    c.fill();
+  }
+  c.fillStyle = "rgba(255,255,255,.55)";
+  c.beginPath();
+  c.arc(x + s * 0.72, y + s * 0.28, s * 0.055, 0, Math.PI * 2);
+  c.fill();
+  c.beginPath();
+  c.arc(x + s * 0.28, y + s * 0.74, s * 0.045, 0, Math.PI * 2);
+  c.fill();
+  c.globalAlpha = 0.42;
+  c.strokeStyle = acol(mx2(color, "#7A5A3A", 0.55), 0.55);
+  c.lineWidth = Math.max(1.2, s * 0.09);
+  wetRect(c, x + s * 0.05, y + s * 0.05, s * 0.90, seed + 27, s * 0.02);
+  c.stroke();
+  c.globalAlpha = 1;
+  c.restore();
+  c.strokeStyle = acol(mx2(color, "#4A3A2A", 0.55), 0.62);
+  c.lineWidth = Math.max(1.1, s * 0.048);
+  wetRect(c, x, y, s, seed + 7, s * 0.010);
+  c.stroke();
+  c.fillStyle = "rgba(40,32,26,.55)";
+  c.beginPath();
+  c.arc(x + s * 0.30, y + s * 0.74, s * 0.026, 0, Math.PI * 2);
+  c.fill();
+  c.strokeStyle = "rgba(40,32,26,.45)";
+  c.lineWidth = Math.max(0.7, s * 0.020);
+  c.beginPath();
+  c.moveTo(x + s * 0.70, y + s * 0.30);
+  c.lineTo(x + s * 0.78, y + s * 0.24);
+  c.stroke();
+  c.restore();
+}
+
+/* 10 极繁梦境：大色块 + 涂鸦小物 + 颗粒噪点 */
+function drawMaximal(c, x, y, s, color, seed){
+  var light = mx2(color, "#FFFFFF", 0.50);
+  var dark = mx2(color, "#2E2340", 0.48);
+  c.save();
+  softRect(c, x, y, s, s * 0.10);
+  c.fillStyle = color;
+  c.fill();
+  c.save();
+  softRect(c, x, y, s, s * 0.10);
+  c.clip();
+  c.fillStyle = light;
+  c.beginPath();
+  c.moveTo(x, y);
+  c.lineTo(x + s * 0.66, y);
+  c.lineTo(x + s * 0.28, y + s * 0.58);
+  c.lineTo(x, y + s * 0.58);
+  c.closePath();
+  c.fill();
+  c.fillStyle = dark;
+  c.beginPath();
+  c.moveTo(x + s, y + s * 0.46);
+  c.lineTo(x + s, y + s);
+  c.lineTo(x + s * 0.32, y + s);
+  c.closePath();
+  c.fill();
+  c.fillStyle = "rgba(255,255,255,.62)";
+  c.beginPath();
+  c.arc(x + s * 0.72, y + s * 0.24, s * 0.16, 0, Math.PI * 2);
+  c.fill();
+  c.fillStyle = "rgba(255,255,255,.55)";
+  c.beginPath();
+  c.arc(x + s * 0.30, y + s * 0.26, s * 0.20, 0, Math.PI * 2);
+  c.fill();
+  c.fillStyle = color;
+  c.beginPath();
+  c.arc(x + s * 0.36, y + s * 0.20, s * 0.19, 0, Math.PI * 2);
+  c.fill();
+  var acc = mx2(color, "#FFD8A8", 0.34);
+  for (var i = 0; i < 4; i++){
+    var gx = x + s * (0.10 + 0.80 * Math.abs(jit(seed, i * 6 + 1)));
+    var gy = y + s * (0.10 + 0.80 * Math.abs(jit(seed, i * 6 + 2)));
+    var kind = Math.abs(Math.round(jit(seed, i * 6 + 3) * 2)) % 3;
+    var rr = s * (0.075 + 0.045 * Math.abs(jit(seed, i * 6 + 4)));
+    c.strokeStyle = (i % 2 === 0) ? "rgba(38,28,44,.55)" : "rgba(255,255,255,.75)";
+    c.fillStyle = (i % 3 === 0) ? acol(acc, 0.85) : "rgba(255,255,255,.35)";
+    c.lineCap = "round";
+    c.lineWidth = Math.max(0.8, s * 0.024);
+    if (kind === 0){
+      c.beginPath();
+      c.arc(gx, gy, rr, 0, Math.PI * 2);
+      c.fill();
+      c.stroke();
+    } else if (kind === 1){
+      c.beginPath();
+      c.moveTo(gx - rr, gy);
+      c.lineTo(gx + rr, gy);
+      c.moveTo(gx, gy - rr);
+      c.lineTo(gx, gy + rr);
+      c.stroke();
+      c.beginPath();
+      c.arc(gx, gy, rr * 0.55, 0, Math.PI * 2);
+      c.stroke();
+    } else {
+      c.beginPath();
+      c.moveTo(gx - rr, gy);
+      c.quadraticCurveTo(gx - rr * 0.4, gy - rr, gx, gy);
+      c.quadraticCurveTo(gx + rr * 0.4, gy + rr, gx + rr, gy - rr * 0.3);
+      c.stroke();
+    }
+  }
+  c.fillStyle = "rgba(255,255,255,.18)";
+  for (var k = 0; k < 8; k++){
+    var px = x + s * Math.abs(jit(seed, k * 3 + 71));
+    var py = y + s * Math.abs(jit(seed, k * 3 + 72));
+    c.beginPath();
+    c.arc(px, py, s * 0.012, 0, Math.PI * 2);
+    c.fill();
+  }
+  c.restore();
+  c.strokeStyle = "rgba(255,255,255,.35)";
+  c.lineWidth = Math.max(0.8, s * 0.024);
+  softRect(c, x + s * 0.03, y + s * 0.03, s * 0.94, s * 0.09);
+  c.stroke();
+  c.restore();
+}
+
+/* 11 蓝粉童趣：高饱和底 + 粗黑线 + 简化大图形 */
+function drawBluepink(c, x, y, s, color, seed){
+  var ink = "rgba(22,18,26,.92)";
+  c.save();
+  softRect(c, x, y, s, s * 0.14);
+  c.fillStyle = vivid(color);
+  c.fill();
+  c.save();
+  softRect(c, x, y, s, s * 0.14);
+  c.clip();
+  var kind = Math.abs(Math.round(jit(seed, 9) * 3)) % 3;
+  var acc = (Math.abs(Math.round(jit(seed, 13) * 10)) % 2 === 0) ? "#1E6BEF" : "#FF4E8E";
+  c.globalAlpha = 0.18;
+  c.fillStyle = acc;
+  c.fillRect(x, y, s, s);
+  c.globalAlpha = 1;
+  if (kind === 0){
+    c.fillStyle = "rgba(255,255,255,.78)";
+    c.beginPath();
+    c.arc(x + s * 0.50, y + s * 0.52, s * 0.30, 0, Math.PI * 2);
+    c.fill();
+    c.fillStyle = acol(acc, 0.55);
+    c.beginPath();
+    c.arc(x + s * 0.50, y + s * 0.52, s * 0.16, 0, Math.PI * 2);
+    c.fill();
+  } else if (kind === 1){
+    c.fillStyle = "rgba(255,255,255,.72)";
+    c.beginPath();
+    c.arc(x + s * 0.52, y + s * 0.48, s * 0.30, 0, Math.PI * 2);
+    c.fill();
+    c.fillStyle = vivid(color);
+    c.beginPath();
+    c.arc(x + s * 0.64, y + s * 0.40, s * 0.28, 0, Math.PI * 2);
+    c.fill();
+    c.fillStyle = acol(acc, 0.62);
+    c.beginPath();
+    c.arc(x + s * 0.28, y + s * 0.74, s * 0.12, 0, Math.PI * 2);
+    c.fill();
+  } else {
+    c.fillStyle = "rgba(255,255,255,.70)";
+    c.beginPath();
+    c.moveTo(x + s * 0.14, y + s * 0.72);
+    for (var i = 0; i < 4; i++){
+      c.quadraticCurveTo(x + s * (0.20 + i * 0.22), y + s * (0.42 + (i % 2) * 0.32),
+                         x + s * (0.32 + i * 0.22), y + s * 0.62);
+    }
+    c.closePath();
+    c.fill();
+    c.fillStyle = acol(acc, 0.55);
+    c.beginPath();
+    c.arc(x + s * 0.76, y + s * 0.24, s * 0.13, 0, Math.PI * 2);
+    c.fill();
+  }
+  c.restore();
+  c.strokeStyle = ink;
+  c.lineCap = "round";
+  c.lineWidth = Math.max(2, s * 0.085);
+  softRect(c, x + s * 0.045, y + s * 0.045, s * 0.91, s * 0.11);
+  c.stroke();
+  c.fillStyle = ink;
+  c.beginPath();
+  c.arc(x + s * 0.84, y + s * 0.16, s * 0.035, 0, Math.PI * 2);
+  c.fill();
+  c.restore();
+}
+
+/* 12 拼布刺绣：大块布片 + 粗针脚 + 外漏线头 */
+function vivid(hex){
+  var h = String(hex).trim();
+  var m1 = h.match(/#([0-9a-fA-F]{6})/);
+  var hsl = null;
+  if (m1){
+    var hh = m1[1];
+    if (hh.length === 3) hh = hh[0] + hh[0] + hh[1] + hh[1] + hh[2] + hh[2];
+    hsl = hexToHsl("#" + hh);
+  } else {
+    var m2 = h.match(/hsl[a]?\s*\(\s*(\d+)[^\d]+(\d+)%[^\d]+(\d+)%/i);
+    if (m2) hsl = { h: parseInt(m2[1], 10), s: parseInt(m2[2], 10), l: parseInt(m2[3], 10) };
+  }
+  if (!hsl || isNaN(hsl.h)) return h;
+  var s2 = Math.min(94, Math.round(hsl.s * 1.35 + 26));
+  var l2 = Math.max(42, Math.min(66, Math.round(hsl.l * 0.90)));
+  return "hsl(" + hsl.h + "," + s2 + "%," + l2 + "%)";
+}
+function desat(hex, t){
+  return mx2(hex, "#8B857F", t == null ? 0.34 : t);
+}
+function stitchRun(c, x1, y1, x2, y2, gap, len, wid, col){
+  var dx = x2 - x1, dy = y2 - y1;
+  var dist = Math.sqrt(dx * dx + dy * dy);
+  if (dist < 2) return;
+  var nx = -dy / dist, ny = dx / dist;
+  var n = Math.max(1, Math.floor(dist / gap));
+  c.strokeStyle = col;
+  c.lineWidth = wid;
+  c.lineCap = "butt";
+  for (var i = 0; i < n; i++){
+    var t = (i + 0.5) / n;
+    var px = x1 + dx * t, py = y1 + dy * t;
+    c.beginPath();
+    c.moveTo(px - nx * len * 0.5, py - ny * len * 0.5);
+    c.lineTo(px + nx * len * 0.5, py + ny * len * 0.5);
+    c.stroke();
+  }
+}
+function drawQuilt(c, x, y, s, color, seed){
+  var clothA = desat(color, 0.30);
+  var clothB = mx2(clothA, "#EDE4D4", 0.62);
+  var clothC = "#54525A";
+  var thread = "rgba(44,42,48,.92)";
+  c.save();
+  softRect(c, x, y, s, s * 0.05);
+  c.fillStyle = clothA;
+  c.fill();
+  c.save();
+  softRect(c, x, y, s, s * 0.05);
+  c.clip();
+  c.fillStyle = clothB;
+  c.beginPath();
+  c.moveTo(x + s * 0.50, y);
+  c.lineTo(x + s, y);
+  c.lineTo(x + s, y + s * 0.64);
+  c.lineTo(x + s * 0.44, y + s * 0.28);
+  c.closePath();
+  c.fill();
+  c.fillStyle = acol(clothC, 0.62);
+  c.beginPath();
+  c.moveTo(x, y + s * 0.60);
+  c.lineTo(x + s * 0.40, y + s);
+  c.lineTo(x, y + s);
+  c.closePath();
+  c.fill();
+  c.globalAlpha = 0.10;
+  c.strokeStyle = (Math.round(jit(seed, 3)) % 2 === 0) ? "#FFFFFF" : "#2A2A2E";
+  c.lineWidth = Math.max(0.6, s * 0.016);
+  for (var i = 0; i < 8; i++){
+    var o = y + s * (0.06 + i * 0.12);
+    c.beginPath();
+    c.moveTo(x, o);
+    c.lineTo(x + s, o - s * 0.06);
+    c.stroke();
+  }
+  c.globalAlpha = 1;
+  c.restore();
+  var g = Math.max(5, s * 0.27);
+  var ln = Math.max(4, s * 0.17);
+  var wd = Math.max(1.8, s * 0.075);
+  stitchRun(c, x + s * 0.10, y + s * 0.10, x + s * 0.90, y + s * 0.10, g, ln, wd, thread);
+  stitchRun(c, x + s * 0.90, y + s * 0.10, x + s * 0.90, y + s * 0.90, g, ln, wd, thread);
+  stitchRun(c, x + s * 0.90, y + s * 0.90, x + s * 0.10, y + s * 0.90, g, ln, wd, thread);
+  stitchRun(c, x + s * 0.10, y + s * 0.90, x + s * 0.10, y + s * 0.10, g, ln, wd, thread);
+  stitchRun(c, x + s * 0.48, y + s * 0.06, x + s * 0.44, y + s * 0.92, g * 1.15, ln, wd, thread);
+  c.strokeStyle = thread;
+  c.lineWidth = Math.max(1, s * 0.032);
+  softRect(c, x + s * 0.06, y + s * 0.06, s * 0.88, s * 0.04);
+  c.stroke();
+  c.strokeStyle = "rgba(44,42,48,.75)";
+  c.lineWidth = Math.max(0.7, s * 0.022);
+  c.beginPath();
+  c.moveTo(x + s * 0.86, y + s * 0.10);
+  c.quadraticCurveTo(x + s * 1.02, y + s * 0.02, x + s * 0.96, y + s * 0.14);
+  c.stroke();
+  c.beginPath();
+  c.moveTo(x + s * 0.92, y + s * 0.90);
+  c.quadraticCurveTo(x + s * 1.05, y + s * 0.96, x + s * 0.98, y + s * 0.84);
+  c.stroke();
+  c.restore();
+}
+
+/* 拼豆格子：4×4 小圆豆排在底板上，每一颗都带高光 */
+function drawBeads(c, x, y, s, color, seed){
+  c.save();
+  c.fillStyle = mx2(color, "#FFFFFF", 0.62);
+  blockPath(c, x, y, s, seed * 0.6);
+  c.fill();
+  var n = 4, g = s / n, rr = g * 0.33;
+  for (var r = 0; r < n; r++){
+    for (var q = 0; q < n; q++){
+      var cx = x + g * (q + 0.5);
+      var cy = y + g * (r + 0.5);
+      c.beginPath();
+      c.arc(cx, cy, rr, 0, Math.PI * 2);
+      c.fillStyle = mx2(color, "#FFFFFF", 0.06 + 0.10 * Math.abs(jit(seed, r * 4 + q + 2)));
+      c.fill();
+      c.beginPath();
+      c.arc(cx - rr * 0.30, cy - rr * 0.34, rr * 0.42, 0, Math.PI * 2);
+      c.fillStyle = "rgba(255,255,255,.60)";
+      c.fill();
+      c.beginPath();
+      c.arc(cx + rr * 0.28, cy + rr * 0.30, rr * 0.26, 0, Math.PI * 2);
+      c.fillStyle = "rgba(70,52,34,.10)";
+      c.fill();
+    }
+  }
+  c.strokeStyle = "rgba(52,38,26,.34)";
+  c.lineWidth = Math.max(1.1, s * 0.032);
+  blockPath(c, x, y, s, seed * 0.6);
+  c.stroke();
+  c.restore();
+}
+/* 糖霜奶油：奶油从顶上垂下来，撒三颗糖粒 */
+function drawCream(c, x, y, s, color, seed){
+  c.save();
+  c.fillStyle = mx2(color, "#FFFFFF", 0.10);
+  blockPath(c, x, y, s, seed * 0.7);
+  c.fill();
+  c.fillStyle = "rgba(255,249,238,.95)";
+  c.beginPath();
+  c.moveTo(x, y + s * 0.10);
+  var seg = 3, w = s / seg;
+  for (var i = 0; i < seg; i++){
+    var x0 = x + w * i, x1 = x + w * (i + 1);
+    c.quadraticCurveTo(x0 + w * 0.5, y + s * (0.35 + jit(seed, i + 3) * 0.05), x1, y + s * 0.10);
+  }
+  c.lineTo(x + s, y);
+  c.lineTo(x, y);
+  c.closePath();
+  c.fill();
+  c.strokeStyle = "rgba(255,255,255,.85)";
+  c.lineWidth = Math.max(0.8, s * 0.024);
+  c.beginPath();
+  c.moveTo(x + s * 0.12, y + s * 0.07);
+  c.quadraticCurveTo(x + s * 0.5, y + s * 0.02, x + s * 0.88, y + s * 0.07);
+  c.stroke();
+  var dots = ["#EF5F86", "#78BC63", "#EFC143"];
+  for (var d = 0; d < 3; d++){
+    var dx = x + s * (0.24 + d * 0.26) + jit(seed, d + 7) * s * 0.05;
+    var dy = y + s * (0.17 + (d % 2) * 0.08);
+    c.fillStyle = dots[d];
+    c.beginPath();
+    c.arc(dx, dy, Math.max(1.3, s * 0.050), 0, Math.PI * 2);
+    c.fill();
+  }
+  c.strokeStyle = "rgba(96,64,44,.20)";
+  c.lineWidth = Math.max(0.8, s * 0.028);
+  c.beginPath();
+  c.moveTo(x + s * 0.05, y + s * 0.38);
+  c.quadraticCurveTo(x + s * 0.5, y + s * 0.44, x + s * 0.95, y + s * 0.38);
+  c.stroke();
+  c.strokeStyle = "rgba(70,52,34,.30)";
+  c.lineWidth = Math.max(1, s * 0.035);
+  blockPath(c, x, y, s, seed * 0.7);
+  c.stroke();
+  c.restore();
+}
+/* 原木年轮：横木纹加一圈年轮 */
+function drawWoodGrain(c, x, y, s, color, seed){
+  c.save();
+  c.fillStyle = mx2(color, "#FFF1DC", 0.66);
+  blockPath(c, x, y, s, seed * 0.5);
+  c.fill();
+  c.save();
+  blockPath(c, x, y, s, seed * 0.5);
+  c.clip();
+  c.strokeStyle = acol(mx2(color, "#4A3018", 0.60), 0.52);
+  c.lineWidth = Math.max(0.9, s * 0.028);
+  /* 每块木纹的走向和弯度都不一样，堆起来像拼接的木板 */
+  var tilt = jit(seed, 2) * 0.20;
+  var bow = 0.05 + Math.abs(jit(seed, 4)) * 0.10;
+  var lines = 4 + Math.round(Math.abs(jit(seed, 6)) * 2);
+  for (var i = 1; i <= lines; i++){
+    var yy = y + s * (i / (lines + 1)) + jit(seed, i + 9) * s * 0.03;
+    var sag = (jit(seed, i + 23) > 0 ? 1 : -1) * bow * s;
+    c.beginPath();
+    c.moveTo(x - 1, yy + tilt * s * (i / (lines + 1) - 0.5) * 0.5);
+    c.quadraticCurveTo(x + s * 0.5, yy + sag, x + s + 1, yy - tilt * s * (i / (lines + 1) - 0.5) * 0.5);
+    c.stroke();
+  }
+  /* 顺着木纹的一条浅色反光 */
+  c.strokeStyle = "rgba(255,246,228,.46)";
+  c.lineWidth = Math.max(1, s * 0.030);
+  c.beginPath();
+  c.moveTo(x + s * 0.08, y + s * (0.30 + jit(seed, 31) * 0.10) + tilt * s * 0.2);
+  c.quadraticCurveTo(x + s * 0.5, y + s * 0.40, x + s * 0.92, y + s * (0.30 + jit(seed, 33) * 0.10) - tilt * s * 0.2);
+  c.stroke();
+  c.strokeStyle = "rgba(92,62,36,.20)";
+  c.lineWidth = Math.max(1.2, s * 0.045);
+  c.beginPath();
+  c.ellipse(x + s * (0.40 + Math.abs(jit(seed, 41)) * 0.24), y + s * (0.46 + Math.abs(jit(seed, 43)) * 0.22),
+            s * 0.20, s * (0.10 + Math.abs(jit(seed, 45)) * 0.08), jit(seed, 47) * 0.5, 0, Math.PI * 2);
+  c.stroke();
+  c.restore();
+  c.strokeStyle = "rgba(50,34,20,.52)";
+  c.lineWidth = Math.max(1.1, s * 0.038);
+  blockPath(c, x, y, s, seed * 0.5);
+  c.stroke();
+  c.restore();
+}
+
+/* 马赛克砖：白缝隔开的 4×4 小瓷砖，每片深浅随机 */
+function drawMosaicTile(c, x, y, s, color, seed){
+  c.save();
+  c.fillStyle = "rgba(252,246,236,.96)";
+  blockPath(c, x, y, s, seed * 0.4);
+  c.fill();
+  var n = 4, g = s / n, gap = Math.max(1.1, s * 0.042);
+  for (var r = 0; r < n; r++){
+    for (var q = 0; q < n; q++){
+      var idx = r * n + q;
+      var jt = jit(seed, idx + 5);
+      c.fillStyle = jt > 0
+        ? mx2(color, "#FFFDF6", 0.10 + jt * 0.16)
+        : mx2(color, "#3A2818", -jt * 0.16);
+      c.fillRect(x + q * g + gap / 2, y + r * g + gap / 2, g - gap, g - gap);
+      /* 瓷砖右上一点高光 */
+      c.fillStyle = "rgba(255,255,255,.22)";
+      c.fillRect(x + q * g + gap / 2, y + r * g + gap / 2, g - gap, Math.max(1, (g - gap) * 0.16));
+    }
+  }
+  c.strokeStyle = "rgba(60,44,28,.30)";
+  c.lineWidth = Math.max(1, s * 0.028);
+  blockPath(c, x, y, s, seed * 0.4);
+  c.stroke();
+  c.restore();
+}
+/* 邮票齿边：白纸边 + 一圈齿孔，里面是票面底色和一道邮资线 */
+function drawStampEdge(c, x, y, s, color, seed){
+  c.save();
+  c.fillStyle = "rgba(253,248,238,.97)";
+  blockPath(c, x, y, s, seed * 0.3);
+  c.fill();
+  var inx = s * 0.10;
+  c.fillStyle = mx2(color, "#FFFBF0", 0.05);
+  c.fillRect(x + inx, y + inx, s - inx * 2, s - inx * 2);
+  /* 内框细线 */
+  c.strokeStyle = "rgba(58,40,26,.34)";
+  c.lineWidth = Math.max(0.9, s * 0.022);
+  c.strokeRect(x + inx + 1, y + inx + 1, s - inx * 2 - 2, s - inx * 2 - 2);
+  /* 齿孔：四条边上各打一排小暗点 */
+  var step = s * 0.205, pr = Math.max(1.2, s * 0.050);
+  c.fillStyle = acol(mx2(color, "#2E1C10", 0.80), 0.42);
+  var t, off;
+  for (t = step * 0.55; t < s; t += step){
+    for (off = 0; off < 2; off++){
+      c.beginPath(); c.arc(x + t, y + (off ? s - 1.5 : 1.5), pr, 0, Math.PI * 2); c.fill();
+      c.beginPath(); c.arc(x + (off ? s - 1.5 : 1.5), y + t, pr, 0, Math.PI * 2); c.fill();
+    }
+  }
+  /* 票面：一条斜纹 + 一枚小圆章 */
+  c.strokeStyle = acol(mx2(color, "#3A2618", 0.5), 0.20);
+  c.lineWidth = Math.max(1, s * 0.035);
+  c.beginPath();
+  c.moveTo(x + inx + s * 0.06, y + s * 0.66);
+  c.lineTo(x + s - inx - s * 0.06, y + s * 0.34);
+  c.stroke();
+  c.strokeStyle = "rgba(176,72,52,.42)";
+  c.lineWidth = Math.max(1, s * 0.040);
+  c.beginPath();
+  c.arc(x + s * 0.62, y + s * 0.40, s * 0.13, 0, Math.PI * 2);
+  c.stroke();
+  c.strokeStyle = "rgba(60,44,28,.34)";
+  c.lineWidth = Math.max(1, s * 0.030);
+  blockPath(c, x, y, s, seed * 0.3);
+  c.stroke();
+  c.restore();
+}
+/* 毛线针织：交错 V 字针脚，边上带一点细毛 */
+function drawKnitStitch(c, x, y, s, color, seed){
+  c.save();
+  c.fillStyle = mx2(color, "#FFF8EA", 0.30);
+  blockPath(c, x, y, s, seed * 0.5);
+  c.fill();
+  c.save();
+  blockPath(c, x, y, s, seed * 0.5);
+  c.clip();
+  var rows = 2, cols = 2;
+  for (var row = 0; row < rows; row++){
+    var yy = y + s * (0.30 + row * 0.38);
+    for (var i = 0; i < cols; i++){
+      var xx = x + s * (0.09 + i * 0.44 + (row % 2 ? 0.20 : 0));
+      var wV = s * 0.40, hV = s * 0.26;
+      /* 针脚暗底 */
+      c.strokeStyle = acol(mx2(color, "#33220F", 0.55), 0.46);
+      c.lineWidth = Math.max(1.6, s * 0.095);
+      c.lineJoin = "round";
+      c.beginPath();
+      c.moveTo(xx, yy - hV * 0.5);
+      c.lineTo(xx + wV * 0.5, yy + hV * 0.5);
+      c.lineTo(xx + wV, yy - hV * 0.5);
+      c.stroke();
+      /* 针脚亮面 */
+      c.strokeStyle = mx2(color, "#FFFDF4", 0.66);
+      c.lineWidth = Math.max(1, s * 0.052);
+      c.beginPath();
+      c.moveTo(xx + s * 0.02, yy - hV * 0.56);
+      c.lineTo(xx + wV * 0.5, yy + hV * 0.38);
+      c.lineTo(xx + wV - s * 0.02, yy - hV * 0.56);
+      c.stroke();
+    }
+  }
+  /* 细毛 */
+  c.strokeStyle = "rgba(255,252,242,.28)";
+  c.lineWidth = 1;
+  for (var m = 0; m < 5; m++){
+    var mx0 = x + s * (0.12 + Math.abs(jit(seed, m + 61)) * 0.76);
+    var my0 = y + s * (0.14 + Math.abs(jit(seed, m + 71)) * 0.74);
+    c.beginPath();
+    c.moveTo(mx0, my0);
+    c.lineTo(mx0 + jit(seed, m + 81) * s * 0.07, my0 - s * 0.06);
+    c.stroke();
+  }
+  c.restore();
+  c.strokeStyle = "rgba(56,38,22,.38)";
+  c.lineWidth = Math.max(1, s * 0.032);
+  blockPath(c, x, y, s, seed * 0.5);
+  c.stroke();
+  c.restore();
+}
+
+/* 报纸网点：半调印刷的点阵，顶上一道铅字线 */
+function drawNewsDot(c, x, y, s, color, seed){
+  c.save();
+  c.fillStyle = mx2(color, "#FFFDF3", 0.40);
+  blockPath(c, x, y, s, seed * 0.5);
+  c.fill();
+  c.save();
+  blockPath(c, x, y, s, seed * 0.5);
+  c.clip();
+  var n = 4, g = s / n;
+  var inkDot = acol(mx2(color, "#241A12", 0.70), 0.40);
+  c.fillStyle = inkDot;
+  for (var r = 0; r < n; r++){
+    for (var q = 0; q < n; q++){
+      /* 对角渐变的点大小，像半调网屏 */
+      var wgt = 0.50 + 0.50 * ((q + 1) / n) * ((r + 1) / n);
+      var rad = g * (0.12 + 0.26 * wgt);
+      c.beginPath();
+      c.arc(x + g * (q + 0.5), y + g * (r + 0.5), rad, 0, Math.PI * 2);
+      c.fill();
+    }
+  }
+  /* 顶部铅字线，像报纸栏头 */
+  c.fillStyle = acol(mx2(color, "#241A12", 0.82), 0.30);
+  c.fillRect(x, y + s * 0.045, s, Math.max(1, s * 0.055));
+  c.fillRect(x, y + s * 0.90, s, Math.max(1, s * 0.035));
+  c.restore();
+  c.strokeStyle = "rgba(38,26,16,.36)";
+  c.lineWidth = Math.max(1, s * 0.032);
+  blockPath(c, x, y, s, seed * 0.5);
+  c.stroke();
+  c.restore();
+}
+
+/* 金箔压印：斜向金箔条 + 内压印框，只给集齐贴纸本的人 */
+function drawGoldFoil(c, x, y, s, color, seed){
+  c.save();
+  c.fillStyle = mx2(color, "#FFF6E2", 0.18);
+  blockPath(c, x, y, s, seed * 0.4);
+  c.fill();
+  c.save();
+  blockPath(c, x, y, s, seed * 0.4);
+  c.clip();
+  var gold = "#F5CE74", goldD = "#A8721F";
+  var bandW = s * 0.15;
+  for (var i = -2; i < 6; i++){
+    var off = i * bandW * 1.55 + jit(seed, i + 3) * s * 0.03;
+    c.fillStyle = acol(i % 3 === 0 ? goldD : gold, i % 2 === 0 ? 0.36 : 0.20);
+    c.beginPath();
+    c.moveTo(x + off, y - s);
+    c.lineTo(x + off + bandW, y - s);
+    c.lineTo(x + off + bandW + s * 0.55, y + s * 2);
+    c.lineTo(x + off + s * 0.55, y + s * 2);
+    c.closePath();
+    c.fill();
+  }
+  /* 零星金箔碎片 */
+  for (var k = 0; k < 6; k++){
+    var fx = x + s * (0.10 + Math.abs(jit(seed, k + 11)) * 0.78);
+    var fy = y + s * (0.10 + Math.abs(jit(seed, k + 21)) * 0.78);
+    c.fillStyle = "rgba(255,245,199,.58)";
+    c.fillRect(fx, fy, Math.max(1, s * 0.055), Math.max(1, s * 0.055));
+  }
+  c.restore();
+  /* 压印内框：一亮一暗，做出压进去的感觉 */
+  c.strokeStyle = "rgba(255,244,200,.92)";
+  c.lineWidth = Math.max(1, s * 0.034);
+  c.strokeRect(x + s * 0.15, y + s * 0.15, s * 0.70, s * 0.70);
+  c.strokeStyle = "rgba(116,76,14,.46)";
+  c.strokeRect(x + s * 0.15 + 1.2, y + s * 0.15 + 1.2, s * 0.70, s * 0.70);
+  /* 外框 */
+  c.strokeStyle = "rgba(138,96,24,.55)";
+  c.lineWidth = Math.max(1.3, s * 0.042);
+  blockPath(c, x, y, s, seed * 0.4);
+  c.stroke();
+  c.restore();
+}
+
+var NEW_SKINS = {
+  ink: drawInk, riso: drawRiso, toon3d: drawToon3d, glassy: drawGlassy,
+  crayon: drawCrayon, sketch: drawSketch, gouache: drawGouache,
+  street: drawStreet, story: drawStory,
+  maximal: drawMaximal, bluepink: drawBluepink, quilt: drawQuilt,
+  beads: drawBeads, cream: drawCream, wood: drawWoodGrain,
+  mosaic: drawMosaicTile, stamp: drawStampEdge, knit: drawKnitStitch,
+  newsdot: drawNewsDot, goldfoil: drawGoldFoil
+};
+
 function paintBlock(c, x, y, s, color){
   var seed = Math.round(x * 3.7 + y * 9.1);
+  if (NEW_SKINS[skin]){
+    if (s >= 12){
+      NEW_SKINS[skin](c, x, y, s, color, seed);
+    } else {
+      c.save();
+      blockPath(c, x, y, s, seed);
+      c.fillStyle = color;
+      c.fill();
+      c.restore();
+    }
+    return;
+  }
   c.save();
   blockPath(c, x, y, s, seed);
   c.fillStyle = color;
@@ -3695,6 +6282,48 @@ function draw(){
       }
     }
   }
+
+  paintFloats(ox, oy, cell);
+}
+
+/* 画盘面上的飘字 */
+var FLOAT_FONT = '"PingFang SC","Microsoft YaHei","Noto Sans CJK SC",system-ui,sans-serif';
+function paintFloats(ox, oy, cell){
+  if (!G.floats || !G.floats.length) return;
+  var cx = ox + COLS * cell / 2;
+  var maxW = COLS * cell * 0.9;
+  for (var i = 0; i < G.floats.length; i++){
+    var f = G.floats[i];
+    if (f.t < 0) continue;
+    var p = Math.min(1, f.t / 940);
+    var alpha = p < 0.12 ? p / 0.12 : (p > 0.64 ? Math.max(0, (1 - p) / 0.36) : 1);
+    var lift = 4 + 30 * Math.sqrt(p);
+    var yBase = oy + f.row * cell - lift;
+    var lf = Math.max(11, Math.round(cell * 0.40));
+    var af = Math.max(13, Math.round(cell * 0.52));
+    ctx.save();
+    ctx.globalAlpha = alpha;
+    ctx.textAlign = "center";
+    ctx.lineJoin = "round";
+    ctx.lineCap = "round";
+    /* 小字：四行清 / T-Spin 双行 / 连击 ×3 */
+    ctx.font = '600 ' + lf + 'px ' + FLOAT_FONT;
+    ctx.lineWidth = Math.max(2.4, lf * 0.30);
+    ctx.strokeStyle = "rgba(24,18,20,.55)";
+    ctx.strokeText(f.label, cx, yBase, maxW);
+    ctx.fillStyle = "#FFF6E2";
+    ctx.fillText(f.label, cx, yBase, maxW);
+    /* 大字：本次加了多少分 */
+    if (f.amount){
+      ctx.font = '800 ' + af + 'px ' + FLOAT_FONT;
+      ctx.lineWidth = Math.max(3, af * 0.28);
+      ctx.strokeStyle = "rgba(24,18,20,.58)";
+      ctx.strokeText(f.amount, cx, yBase + af * 0.92, maxW);
+      ctx.fillStyle = f.tone;
+      ctx.fillText(f.amount, cx, yBase + af * 0.92, maxW);
+    }
+    ctx.restore();
+  }
 }
 
 /* ---------- 预览小窗 ---------- */
@@ -3801,7 +6430,7 @@ function layoutBoard(){
   var col = document.querySelector(".board-col");
   var rail = document.querySelector(".rail");
   if (!col) return;
-  if (window.innerWidth > 520){
+  if (window.innerWidth > 860){
     col.style.removeProperty("--bh");
     if (rail) rail.style.removeProperty("height");
     return;
@@ -3813,7 +6442,7 @@ function layoutBoard(){
   var playTop = play.getBoundingClientRect().top + window.scrollY;
   var tabTop = tab.getBoundingClientRect().top + window.scrollY;
   var pad = document.getElementById("pad");
-  var used = (pad ? pad.offsetHeight : 48) + 26 + 12;
+  var used = (pad ? pad.offsetHeight : 48) + 46 + 24;
   var room = tabTop - playTop - used - 34;
   var railW = rail ? rail.offsetWidth : 84;
   var wCap = (window.innerWidth - 22) - railW - 10;
@@ -3843,10 +6472,146 @@ function resizeCanvas(){
   draw();
 }
 
+/* ---------- 落子震动 ---------- */
+var VIBE_KEY = "tetris-vibe-0417";
+var vibeOn = true;
+(function(){ try { if (localStorage.getItem(VIBE_KEY) === "0") vibeOn = false; } catch (e){} })();
+function buzz(ms){
+  if (!vibeOn) return;
+  try { if (navigator.vibrate) navigator.vibrate(ms); } catch (e){}
+}
+
+/* ---------- 背景环境音（极轻的雨声，和音效开关各管一摊） ---------- */
+var Ambience = (function(){
+  var KEY = "tetris-amb-0417";
+  var ac = null, gain = null, playing = false, on = true;
+  try { if (localStorage.getItem(KEY) === "0") on = false; } catch (e){}
+  function ensure(){
+    if (!ac){
+      try { ac = new (window.AudioContext || window.webkitAudioContext)(); } catch (e){ ac = null; }
+    }
+    if (!ac) return false;
+    if (gain) return true;
+    var len = Math.floor(ac.sampleRate * 2), buf = ac.createBuffer(1, len, ac.sampleRate);
+    var d = buf.getChannelData(0), i;
+    for (i = 0; i < len; i++) d[i] = Math.random() * 2 - 1;
+    gain = ac.createGain();
+    gain.gain.value = 0;
+    var hp = ac.createBiquadFilter(); hp.type = "highpass"; hp.frequency.value = 280;
+    var lp = ac.createBiquadFilter(); lp.type = "lowpass"; lp.frequency.value = 1100; lp.Q.value = 0.5;
+    var s1 = ac.createBufferSource(); s1.buffer = buf; s1.loop = true;
+    var s2 = ac.createBufferSource(); s2.buffer = buf; s2.loop = true; s2.playbackRate.value = 0.71;
+    var g2 = ac.createGain(); g2.gain.value = 0.42;
+    s1.connect(hp); hp.connect(lp); lp.connect(gain);
+    s2.connect(g2); g2.connect(lp);
+    gain.connect(ac.destination);
+    s1.start(); s2.start();
+    return true;
+  }
+  function fade(to){
+    if (!gain || !ac) return;
+    var t = ac.currentTime;
+    try { gain.gain.cancelScheduledValues(t); } catch (e){}
+    gain.gain.setValueAtTime(gain.gain.value, t);
+    gain.gain.linearRampToValueAtTime(to, t + 0.7);
+  }
+  return {
+    start: function(){
+      if (!on || playing) return;
+      if (!ensure()) return;
+      try { if (ac.state === "suspended") ac.resume(); } catch (e){}
+      playing = true;
+      fade(0.042);
+    },
+    stop: function(){
+      if (!playing) return;
+      playing = false;
+      fade(0);
+    },
+    toggle: function(){
+      on = !on;
+      try { localStorage.setItem(KEY, on ? "1" : "0"); } catch (e){}
+      if (!on) this.stop();
+      return on;
+    },
+    enabled: function(){ return on; }
+  };
+})();
+/* ---------- 手势：点旋转 / 横滑移动 / 下拉软降 / 快速下滑硬降 / 上滑暂存 ---------- */
+(function(){
+  var cv = document.getElementById("game");
+  if (!cv) return;
+  var sx = 0, sy = 0, lx = 0, ly = 0, t0 = 0, axis = null, dragging = false;
+  function cw(){ return (view && view.cell) ? view.cell : 30; }
+  cv.addEventListener("pointerdown", function(e){
+    if (G.mode !== "playing" || G.clearing) return;
+    sx = lx = e.clientX; sy = ly = e.clientY;
+    t0 = Date.now(); axis = null; dragging = true;
+    try { cv.setPointerCapture(e.pointerId); } catch (er){}
+  });
+  cv.addEventListener("pointermove", function(e){
+    if (!dragging) return;
+    var dx = e.clientX - lx, dy = e.clientY - ly;
+    if (!axis){
+      var totX = Math.abs(e.clientX - sx), totY = Math.abs(e.clientY - sy);
+      if (totX < 12 && totY < 12) return;
+      axis = totX > totY ? "x" : "y";
+    }
+    if (axis === "x"){
+      var cellW = Math.max(18, cw());
+      while (Math.abs(dx) >= cellW){
+        var dir = dx > 0 ? 1 : -1;
+        tryMove(dir);
+        lx += dir * cellW;
+        dx = e.clientX - lx;
+      }
+    } else if (axis === "y" && e.clientY - ly > 16){
+      softStep();
+      ly = e.clientY;
+    }
+  });
+  function end(e, cancel){
+    if (!dragging) return;
+    dragging = false;
+    var dt = Date.now() - t0, dx = e.clientX - sx, dy = e.clientY - sy;
+    if (cancel){ axis = null; return; }
+    if (!axis && Math.abs(dx) < 12 && Math.abs(dy) < 12 && dt < 320){ tryRotate(1); return; }
+    if (axis === "y"){
+      if (dy < -34 && Math.abs(dx) < 60){ doHold(); }
+      else if (dy > 50 && dt < 460){ hardDrop(); }
+    }
+    axis = null;
+  }
+  cv.addEventListener("pointerup", function(e){ end(e, false); });
+  cv.addEventListener("pointercancel", function(e){ end(e, true); });
+})();
+
 /* ---------- 循环 ---------- */
 var lastT = 0, softAcc = 0;
 function update(dt){
+  /* 消行飘字：暂停时定格，结算时走完 */
+  if (G.floats && G.floats.length && G.mode !== "paused"){
+    for (var fi = G.floats.length - 1; fi >= 0; fi--){
+      G.floats[fi].t += dt;
+      if (G.floats[fi].t > 940) G.floats.splice(fi, 1);
+    }
+  }
   if (G.mode !== "playing") return;
+
+  /* 每日一局：三分钟倒计时 */
+  if (G.gameMode === "daily" && G.timeLeft > 0){
+    G.timeLeft -= dt;
+    var secNow = Math.max(0, Math.ceil(G.timeLeft / 1000));
+    if (secNow !== G.shownSec){
+      G.shownSec = secNow;
+      updateHUD();
+    }
+    if (G.timeLeft <= 0){
+      G.timeLeft = 0;
+      finishDaily();
+      return;
+    }
+  }
 
   if (G.clearing){
     G.clearing.t += dt;
@@ -4009,8 +6774,11 @@ if (modeRowEl) modeRowEl.addEventListener("click", function(e){
   while (b && b !== modeRowEl && !(b.getAttribute && b.getAttribute("data-mode"))) b = b.parentNode;
   if (!b || b === modeRowEl) return;
   AudioFX.resume();
-  var want = b.getAttribute("data-mode") === "sprint";
-  if (want === !!G.sprint){ queueToast(want ? "已是冲刺模式" : "已是无尽模式"); return; }
+  var want = b.getAttribute("data-mode");
+  if (!GAME_MODES[want]) return;
+  if (want === G.gameMode){
+    queueToast("已在" + GAME_MODES[want].label + "模式，重开一局");
+  }
   if (curView !== "play") setView("play");
   setGameMode(want);
 });
@@ -4032,7 +6800,7 @@ if (skinRowEl){
       queueToast("开局随机 · 每局换一套");
       return;
     }
-    setSkin(id);
+    setSkin(id, t);
   });
 }
 /* ---------- 全部重开：清空本地存档 ---------- */
@@ -4050,14 +6818,18 @@ function wipeAllSave(){
 
   S.lines = 0; S.doubles = 0; S.quads = 0; S.drops = 0;
   S.level = 1; S.score = 0; S.run = 0; S.owned = [];
+  S.games = 0; S.combo = 0; S.spins = 0; S.achv = []; S.dl = [];
+  try { localStorage.setItem(ST_KEY, JSON.stringify(S)); } catch (e){}
   renderAlbum();
+  paintAchv();
+  paintRecords();
   G.hi = 0;
   hiscoreEl.textContent = "0";
-  skin = "animal";
+  skin = "ink";
   skinRandom = true;
   try { localStorage.setItem("tetris-skin-rand-0417", "1"); } catch (e){}
   paintSkinButtons();
-  applyTheme("warm", true);
+  applyTheme("pink", true);
   if (typeof renderAlbum === "function") renderAlbum();
   queueToast("存档已清空 · 一切从头开始");
   if (curView !== "play") setView("play");
@@ -4262,6 +7034,27 @@ btnSound.addEventListener("click", function(){
   btnSound.textContent = on ? "音效开" : "音效关";
   if (on) AudioFX.move();
 });
+(function(){
+  var ba = document.getElementById("btnAmb");
+  if (!ba) return;
+  ba.addEventListener("click", function(){
+    var on = Ambience.toggle();
+    ba.setAttribute("aria-pressed", on ? "true" : "false");
+    ba.textContent = on ? "环境音开" : "环境音关";
+    if (on && G.mode === "playing") Ambience.start();
+  });
+})();
+(function(){
+  var bv = document.getElementById("btnVibe");
+  if (!bv) return;
+  bv.addEventListener("click", function(){
+    vibeOn = !vibeOn;
+    try { localStorage.setItem(VIBE_KEY, vibeOn ? "1" : "0"); } catch (e){}
+    bv.setAttribute("aria-pressed", vibeOn ? "true" : "false");
+    bv.textContent = vibeOn ? "震动开" : "震动关";
+    if (vibeOn) buzz(12);
+  });
+})();
 
 /* 长按保护：棋盘与按键区域内的长按一律不触发选中、拖拽和系统菜单 */
 (function(){
@@ -4358,6 +7151,9 @@ document.body.setAttribute("data-view", curView);
 requestAnimationFrame(function(){ movePill(); });
 btnSound.setAttribute("aria-pressed", AudioFX.enabled() ? "true" : "false");
 btnSound.textContent = AudioFX.enabled() ? "音效开" : "音效关";
+(function(){ var bv = document.getElementById("btnVibe"); if (bv){ bv.setAttribute("aria-pressed", vibeOn ? "true" : "false"); bv.textContent = vibeOn ? "震动开" : "震动关"; } })();
+(function(){ var ba = document.getElementById("btnAmb"); if (ba){ ba.setAttribute("aria-pressed", Ambience.enabled() ? "true" : "false"); ba.textContent = Ambience.enabled() ? "环境音开" : "环境音关"; } })();
+paintStartLv();
 try { G.hi = parseInt(localStorage.getItem("tetris-hi-0417"), 10) || 0; } catch (e){ G.hi = 0; }
 resetGame();
 G.grid = demoGrid();
@@ -4368,6 +7164,8 @@ resizeCanvas();
 drawNext();
 drawHold();
 showVeil("开始", "点下面的方向键移动和旋转，按 ↓ 直接落底。点“开始游戏”即可开局。", "开始游戏");
+checkAchv(true);
+paintRecords();
 var rzT = null;
 window.addEventListener("resize", function(){
   resizeCanvas();
