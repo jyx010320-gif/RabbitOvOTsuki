@@ -17,69 +17,159 @@
   --ink-3:#7C8F80;
   --line:#BCCBB4;
   --leaf:#6FA35E;
-  --soil:#7C5638;
+  --leaf-2:#59834B;
   --sun:#CE9A38;
-  --tomato:#C7493A;
-  --pumpkin:#D07F2C;
+  --clay:#7C5638;
   --shadow:rgba(30,51,39,.16);
   --tint-a:#F2F7EA;
   --tint-b:#FBF5E4;
+  /* 不随主题变的固定色与别名 */
+  --soil:#7C5638;--tomato:#C7493A;--pumpkin:#D07F2C;--green:var(--leaf);--ink2:var(--ink-2);
 }
 body[data-theme="sakura"]{
-  --paper:#FCEFF1;--paper-2:#FFF8F9;--paper-3:#F2DDE1;
-  --ink:#43302F;--ink-2:#755E5C;--ink-3:#A08C8A;
-  --line:#EBCFD4;--leaf:#C07A8E;--soil:#7C5B52;--sun:#D99B6A;--tomato:#C15A6B;--pumpkin:#CE8A6E;
-  --shadow:rgba(67,48,47,.14);--tint-a:#FBE9EC;--tint-b:#FFF6F7;
+  --paper:#FCEFF1;
+  --paper-2:#FFF8F9;
+  --paper-3:#F2DDE1;
+  --ink:#43302F;
+  --ink-2:#755E5C;
+  --ink-3:#A08C8A;
+  --line:#EBCFD4;
+  --leaf:#C07A8E;
+  --leaf-2:#B05771;
+  --sun:#D99B6A;
+  --clay:#7C5B52;
+  --shadow:rgba(67,48,47,.14);
+  --tint-a:#FBE9EC;
+  --tint-b:#FFF6F7
 }
 body[data-theme="sky"]{
-  --paper:#EAF2F7;--paper-2:#F8FCFE;--paper-3:#D8E7F0;
-  --ink:#24384A;--ink-2:#4B6478;--ink-3:#7C93A4;
-  --line:#C6D9E4;--leaf:#4E93A8;--soil:#6B6357;--sun:#D3A85F;--tomato:#C25A4A;--pumpkin:#C98550;
-  --shadow:rgba(36,56,74,.14);--tint-a:#E3EFF6;--tint-b:#F6FBFD;
+  --paper:#EAF2F7;
+  --paper-2:#F8FCFE;
+  --paper-3:#D8E7F0;
+  --ink:#24384A;
+  --ink-2:#4B6478;
+  --ink-3:#7C93A4;
+  --line:#C6D9E4;
+  --leaf:#4E93A8;
+  --leaf-2:#3E7585;
+  --sun:#D3A85F;
+  --clay:#6B6357;
+  --shadow:rgba(36,56,74,.14);
+  --tint-a:#E3EFF6;
+  --tint-b:#F6FBFD
 }
 body[data-theme="inkblue"]{
-  --paper:#1E2734;--paper-2:#273243;--paper-3:#161E28;
-  --ink:#DCE6F2;--ink-2:#A9B8C9;--ink-3:#7E8EA1;
-  --line:#38465A;--leaf:#7FA6C8;--soil:#5E5245;--sun:#C7A468;--tomato:#C96F5C;--pumpkin:#C9975E;
-  --shadow:rgba(0,0,0,.4);--tint-a:#232E3D;--tint-b:#2A3646;
+  --paper:#1E2734;
+  --paper-2:#273243;
+  --paper-3:#161E28;
+  --ink:#DCE6F2;
+  --ink-2:#A9B8C9;
+  --ink-3:#7E8EA1;
+  --line:#38465A;
+  --leaf:#7FA6C8;
+  --leaf-2:#5B8DB9;
+  --sun:#C7A468;
+  --clay:#5E5245;
+  --shadow:rgba(0,0,0,.4);
+  --tint-a:#232E3D;
+  --tint-b:#2A3646
 }
 body[data-theme="moss"]{
-  --paper:#2A3327;--paper-2:#33402E;--paper-3:#232A20;
-  --ink:#E6EDDD;--ink-2:#B2C0A6;--ink-3:#87977B;
-  --line:#4A5642;--leaf:#A7B96C;--soil:#6A5C42;--sun:#CBA45E;--tomato:#C26A52;--pumpkin:#C79052;
-  --shadow:rgba(0,0,0,.4);--tint-a:#2F3929;--tint-b:#364231;
+  --paper:#2A3327;
+  --paper-2:#33402E;
+  --paper-3:#232A20;
+  --ink:#E6EDDD;
+  --ink-2:#B2C0A6;
+  --ink-3:#87977B;
+  --line:#4A5642;
+  --leaf:#A7B96C;
+  --leaf-2:#90A44E;
+  --sun:#CBA45E;
+  --clay:#6A5C42;
+  --shadow:rgba(0,0,0,.4);
+  --tint-a:#2F3929;
+  --tint-b:#364231
 }
 body[data-theme="sand"]{
-  --paper:#F5F0E4;--paper-2:#FCF8EF;--paper-3:#E7DFCD;
-  --ink:#39342A;--ink-2:#665F50;--ink-3:#948B78;
-  --line:#DDD5C2;--leaf:#8E9760;--soil:#7A5E40;--sun:#C9A25E;--tomato:#B65F46;--pumpkin:#C48A48;
-  --shadow:rgba(57,52,42,.15);--tint-a:#EEE8D8;--tint-b:#FAF6EC;
+  --paper:#F5F0E4;
+  --paper-2:#FCF8EF;
+  --paper-3:#E7DFCD;
+  --ink:#39342A;
+  --ink-2:#665F50;
+  --ink-3:#948B78;
+  --line:#DDD5C2;
+  --leaf:#8E9760;
+  --leaf-2:#71784C;
+  --sun:#C9A25E;
+  --clay:#7A5E40;
+  --shadow:rgba(57,52,42,.15);
+  --tint-a:#EEE8D8;
+  --tint-b:#FAF6EC
 }
 body[data-theme="lilac"]{
-  --paper:#F0EDF7;--paper-2:#F9F7FD;--paper-3:#E0DAEE;
-  --ink:#342C42;--ink-2:#5E5472;--ink-3:#8C83A0;
-  --line:#D6CFE6;--leaf:#8C7FB4;--soil:#6E5C4E;--sun:#C8A06B;--tomato:#B45F86;--pumpkin:#C08A62;
-  --shadow:rgba(52,44,66,.15);--tint-a:#E9E4F3;--tint-b:#F7F4FC;
+  --paper:#F0EDF7;
+  --paper-2:#F9F7FD;
+  --paper-3:#E0DAEE;
+  --ink:#342C42;
+  --ink-2:#5E5472;
+  --ink-3:#8C83A0;
+  --line:#D6CFE6;
+  --leaf:#8C7FB4;
+  --leaf-2:#6F5FA1;
+  --sun:#C8A06B;
+  --clay:#6E5C4E;
+  --shadow:rgba(52,44,66,.15);
+  --tint-a:#E9E4F3;
+  --tint-b:#F7F4FC
 }
 /* ===== 四套纸色（只换本子的颜色，田里四季照旧） ===== */
 body[data-theme="warm"]{
-  --paper:#FCF2E0;--paper-2:#FFFBF1;--paper-3:#F3E4C9;
-  --ink:#3E2E1C;--ink-2:#6E5840;--ink-3:#9A8870;
-  --line:#DFCBAA;--leaf:#8C9B45;--soil:#805633;--sun:#D39437;--tomato:#C2543B;--pumpkin:#D4832F;
-  --shadow:rgba(62,46,28,.16);--tint-a:#F7EDD5;--tint-b:#FDF6E5;
+  --paper:#FCF2E0;
+  --paper-2:#FFFBF1;
+  --paper-3:#F3E4C9;
+  --ink:#3E2E1C;
+  --ink-2:#6E5840;
+  --ink-3:#9A8870;
+  --line:#DFCBAA;
+  --leaf:#8C9B45;
+  --leaf-2:#6C7835;
+  --sun:#D39437;
+  --clay:#805633;
+  --shadow:rgba(62,46,28,.16);
+  --tint-a:#F7EDD5;
+  --tint-b:#FDF6E5
 }
 body[data-theme="cool"]{
-  --paper:#E7F1EE;--paper-2:#F4FBF8;--paper-3:#D7E7E2;
-  --ink:#17393A;--ink-2:#41645F;--ink-3:#75918C;
-  --line:#B6D2CC;--leaf:#4F9B83;--soil:#6F5F46;--sun:#C99A46;--tomato:#C1563C;--pumpkin:#CE8340;
-  --shadow:rgba(23,57,58,.16);--tint-a:#E2F2EC;--tint-b:#F2FAF6;
+  --paper:#E7F1EE;
+  --paper-2:#F4FBF8;
+  --paper-3:#D7E7E2;
+  --ink:#17393A;
+  --ink-2:#41645F;
+  --ink-3:#75918C;
+  --line:#B6D2CC;
+  --leaf:#4F9B83;
+  --leaf-2:#3E7966;
+  --sun:#C99A46;
+  --clay:#6F5F46;
+  --shadow:rgba(23,57,58,.16);
+  --tint-a:#E2F2EC;
+  --tint-b:#F2FAF6
 }
 body[data-theme="dusk"]{
-  --paper:#212B28;--paper-2:#2A352F;--paper-3:#1A2320;
-  --ink:#E7EFE3;--ink-2:#B4C3B6;--ink-3:#8B9C90;
-  --line:#3F4C43;--leaf:#7FB180;--soil:#9C7A55;--sun:#D9B06A;--tomato:#D26E58;--pumpkin:#D18C50;
-  --shadow:rgba(0,0,0,.45);--tint-a:#2F3A32;--tint-b:#35322A;
-  background:radial-gradient(rgba(231,239,227,.05) 1px,transparent 1px) 0 0/18px 18px,var(--paper);
+  --paper:#212B28;
+  --paper-2:#2A352F;
+  --paper-3:#1A2320;
+  --ink:#E7EFE3;
+  --ink-2:#B4C3B6;
+  --ink-3:#8B9C90;
+  --line:#3F4C43;
+  --leaf:#7FB180;
+  --leaf-2:#609D61;
+  --sun:#D9B06A;
+  --clay:#9C7A55;
+  --shadow:rgba(0,0,0,.45);
+  --tint-a:#2F3A32;
+  --tint-b:#35322A
 }
 body[data-theme="dusk"] .stage{background:#26332E}
 body[data-theme="dusk"] .stage-tag{color:rgba(231,239,227,.62)}
@@ -184,8 +274,25 @@ canvas{-webkit-user-select:none;user-select:none}
   overflow:hidden;
 }
 .stage canvas{display:block;width:100%;aspect-ratio:1000/800;touch-action:manipulation}
+.toast{z-index:20}
+.pause-mask{
+  position:absolute;inset:0;z-index:9;
+  display:flex;align-items:center;justify-content:center;
+  background:color-mix(in srgb,var(--paper) 46%,transparent);
+  backdrop-filter:blur(1.6px);
+  -webkit-backdrop-filter:blur(1.6px);
+  opacity:0;visibility:hidden;pointer-events:none;
+  transition:opacity .18s ease,visibility .18s linear;
+}
+.pause-mask.show{opacity:1;visibility:visible}
+.pause-card{
+  background:var(--paper-2);border:1.2px solid var(--line);border-radius:10px;
+  padding:10px 20px;text-align:center;box-shadow:0 6px 16px rgba(26,42,30,.16);
+}
+.pause-card b{display:block;font-size:15px;font-weight:600;letter-spacing:.1em;color:var(--ink)}
+.pause-card em{display:block;margin-top:3px;font-size:11.5px;font-style:normal;letter-spacing:.05em;color:var(--ink-3)}
 .stage-tag{
-  position:absolute;left:12px;top:10px;
+  position:absolute;left:12px;bottom:9px;
   font-size:11px;letter-spacing:.14em;
   color:rgba(30,51,39,.68);
   pointer-events:none;
@@ -265,7 +372,7 @@ canvas{-webkit-user-select:none;user-select:none}
   background:rgba(255,255,255,.62);border:1px solid var(--line);padding:1px}
 .icw.xs{width:16px;height:16px;padding:0;border:0;background:none;display:inline-grid;vertical-align:-3px;margin-right:4px}
 .icw.xxs{width:15px;height:15px;padding:0;border:0;background:none;display:inline-grid;vertical-align:-3px;margin-right:3px}
-.icw.tab{width:19px;height:18px;padding:0;border:0;background:none;pointer-events:none}
+.icw.tab{width:22px;height:22px;padding:0;border:0;background:none;pointer-events:none}
 .p-name .icw{vertical-align:-4px;margin-right:4px;display:inline-grid}
 .cell .icw{width:18px;height:18px;margin:0 auto 2px;display:grid}
 .bk .icw{width:16px;height:16px;margin-right:4px;flex:none;display:grid}
@@ -318,6 +425,12 @@ canvas{-webkit-user-select:none;user-select:none}
 .sw{display:flex;gap:6px;flex:1}
 #artSw{flex-wrap:wrap;gap:6px 5px}
 #artSw button{width:20px;height:20px}
+.pick{position:relative;width:22px;height:22px;border-radius:50%;padding:0;border:1px solid var(--line);background:var(--paper-2);cursor:pointer;overflow:hidden;display:inline-block}
+.pick.on{border-color:var(--sun);box-shadow:0 0 0 2px rgba(0,0,0,.10) inset}
+.pick input{position:absolute;inset:-4px;width:calc(100% + 8px);height:calc(100% + 8px);padding:0;border:0;background:none;cursor:pointer;-webkit-appearance:none;appearance:none}
+.pick input::-webkit-color-swatch-wrapper{padding:0}
+.pick input::-webkit-color-swatch{border:0;border-radius:0}
+.pick input::-moz-color-swatch{border:0}
 .sw button{width:22px;height:22px;padding:0;border-radius:50%;position:relative}
 .sw button.on{box-shadow:0 0 0 2px var(--paper-2),0 0 0 3.5px var(--ink)}
 .sw button i{position:absolute;inset:3px;border-radius:50%;display:block}
@@ -517,14 +630,21 @@ canvas{-webkit-user-select:none;user-select:none}
 .dex-tip{font-size:11px;color:var(--ink-3);line-height:1.5;margin:0 0 10px}
 .dex-sec{margin-bottom:10px}
 .dex-sec h4{font-weight:400;font-size:11px;color:var(--ink-3);letter-spacing:.12em;margin:0 0 5px}
-.dex-cells{display:grid;grid-template-columns:repeat(4,1fr);gap:5px}
-.cell{border:1px solid var(--line);background:var(--paper-2);border-radius:2px;padding:6px 3px;text-align:center;
-  font-size:11px;color:var(--ink);line-height:1.3;position:relative}
-  .cell.off{color:var(--ink-3);background:var(--paper-3);border-style:dashed;border-color:#D8D3C6}
+.dex-cells{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.cell{border:1px solid var(--line);background:var(--paper-2);border-radius:8px;padding:8px 9px;
+  display:grid;grid-template-columns:21px 1fr;column-gap:8px;align-items:center;
+  font-size:11px;color:var(--ink);line-height:1.35;position:relative;min-height:46px}
+.cell.off{color:var(--ink-3);background:var(--paper-3);border-style:dashed;border-color:#D8D3C6}
 .cell.on{background:var(--tint-a);border-color:#C3D5B0}
-.cell b{display:block;font-weight:500;font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.cell span{display:block;font-size:9.5px;color:var(--ink-3);margin-top:1px}
-.cell.on::after{content:"";position:absolute;right:3px;top:3px;width:5px;height:5px;border-radius:50%;background:var(--green)}
+.cell .icw{width:21px;height:21px}
+.cell-txt{min-width:0}
+.dex-cells .cell span.icw{width:21px;height:21px;margin:0;padding:0;background:none;border-radius:0}
+.cell b{display:block;font-weight:500;font-size:12.5px;line-height:1.25;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cell-txt span{display:inline-block;margin-top:3px;padding:1px 6px;border-radius:7px;white-space:nowrap;
+  background:color-mix(in srgb,var(--ink) 8%,transparent);
+  font-size:9.5px;letter-spacing:.03em;color:var(--ink-3)}
+.cell.on .cell-txt span{background:color-mix(in srgb,var(--leaf) 22%,transparent);color:var(--ink-2)}
+.cell.on::after{content:"";position:absolute;right:6px;top:6px;width:5px;height:5px;border-radius:50%;background:var(--green)}
 .achv-list{display:grid;gap:5px}
 .achv{display:flex;align-items:baseline;gap:7px;border:1px solid var(--line);background:var(--paper-2);
   border-radius:2px;padding:6px 8px;font-size:11.5px;color:var(--ink2)}
@@ -600,7 +720,13 @@ canvas{-webkit-user-select:none;user-select:none}
   padding:4px 9px;border:1.5px solid var(--ink);background:var(--paper-2);color:var(--ink);border-radius:2px;
   cursor:pointer;box-shadow:2px 2px 0 var(--shadow);opacity:.92}
 .help-btn:hover{background:var(--paper-3)}
-.home-btn{top:26px}
+.home-btn{position:fixed;right:10px;top:6px;z-index:31}
+.guide-top{position:fixed;right:10px;top:34px;z-index:31}
+.pause-btn{position:fixed;right:10px;top:62px;z-index:31}
+body.is-paused .pause-btn{background:var(--paper-3);border-color:var(--sun)}
+body.is-paused .stage,
+body.is-paused .pages,
+body.is-paused .tool-dock{pointer-events:none;user-select:none}
 @media (min-width:760px){ .head .hud{margin-right:78px} }
 [data-theme="dusk"] .dayend{background:rgba(6,10,8,.62)}
 .order-head span{font-size:12.5px;font-weight:500}
@@ -640,6 +766,12 @@ display:flex;gap:4px;margin-top:6px}
 .refill.sm{font-size:11.5px;padding:8px 9px;line-height:1.2;white-space:nowrap}
 .yard .water-drops{flex:1;min-width:0}
 #addHen{margin-left:auto}
+.mood-wrap{flex:1;min-width:0;display:flex;align-items:center;gap:7px}
+.mood-bar{flex:1;height:6px;border-radius:99px;background:var(--paper-3);overflow:hidden;border:1px solid var(--line)}
+.mood-bar i{display:block;height:100%;width:60%;background:var(--leaf);border-radius:99px;transition:width .3s ease,background .3s}
+.mood-wrap em{font-style:normal;font-size:11.5px;color:var(--ink-3);white-space:nowrap}
+.lg-val{margin-left:auto;font-style:normal;font-size:12px;color:var(--ink);text-align:right}
+.crop-tip{margin:6px 0 0;font-size:11px;color:var(--ink-3);letter-spacing:.02em}
 .yard .buys{margin-top:8px}
 
 /* 置办 */
@@ -722,48 +854,36 @@ footer.pages{display:block}
 .tool-dock.hide{display:none!important}
 .tabbar{
   position:relative;z-index:8;
-  display:grid;grid-template-columns:repeat(6,1fr);gap:5px;
-  margin:10px -2px -2px;padding:8px 6px 7px;
-  background:linear-gradient(180deg,rgba(251,248,238,.78),rgba(238,234,219,.62));
-  -webkit-backdrop-filter:blur(16px) saturate(1.5);backdrop-filter:blur(16px) saturate(1.5);
-  border:1px solid rgba(255,255,255,.55);border-radius:20px;
-  box-shadow:0 8px 20px rgba(26,42,30,.14),inset 0 1px 0 rgba(255,255,255,.85),inset 0 -1px 0 rgba(255,255,255,.4);
-}
-.tabbar::before{
-  content:'';position:absolute;inset:0;border-radius:inherit;pointer-events:none;
-  background:radial-gradient(130% 90% at 18% -30%,rgba(255,255,255,.75),rgba(255,255,255,0) 62%);
-  mix-blend-mode:screen;
+  display:grid;grid-template-columns:repeat(6,1fr);gap:3px;
+  margin:10px -2px -2px;padding:6px 6px 5px;
+  background:var(--paper-2);
+  border-top:1.2px solid var(--line);
+  border-radius:12px;
+  box-shadow:0 8px 22px rgba(26,42,30,.12);
 }
 .tab{
-  font-family:inherit;font-size:12.5px;letter-spacing:.02em;
-  display:flex;flex-direction:column;align-items:center;gap:2px;position:relative;
-  padding:8px 2px 7px;border:1px solid rgba(255,255,255,.5);border-radius:15px;
-  background:rgba(255,255,255,.16);color:var(--ink-2);cursor:pointer;
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.55);
-  transition:background .16s,border-color .16s,color .16s,transform .12s,box-shadow .16s;
+  font-family:inherit;font-size:11.5px;font-weight:500;letter-spacing:.02em;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;position:relative;
+  padding:6px 4px;border:0;border-radius:12px;background:transparent;color:var(--ink-3);cursor:pointer;
+  transition:background .16s ease,color .16s ease;touch-action:manipulation;
 }
-.tab:hover{background:rgba(255,255,255,.38);border-color:rgba(255,255,255,.75)}
-.tab:active{transform:scale(.97)}
-.tab.on{
-  background:linear-gradient(180deg,rgba(44,70,52,.9),rgba(24,42,31,.9));border-color:rgba(255,255,255,.32);color:#F7F3E5;
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.24),0 3px 10px rgba(24,40,28,.24);
-}
+.tab:hover{background:color-mix(in srgb,var(--leaf) 9%,transparent)}
+.tab:active{transform:scale(.98)}
+.tab.on{background:color-mix(in srgb,var(--leaf) 18%,transparent);color:var(--ink)}
+.tab.on .icw{color:var(--leaf)}
+.icw.tab{color:var(--ink-3)}
+.tab.on .icw.tab{color:var(--leaf)}
 .tab-dot.cooknum{background:#B8863B;right:2px}
 /* 深色纸下，底栏用深玻璃，别浅到看不见 */
 body[data-dark="1"] .tabbar{
-  background:linear-gradient(170deg,rgba(52,60,55,.86),rgba(26,32,29,.78));
-  border-color:rgba(255,255,255,.16);
-  box-shadow:0 10px 24px rgba(0,0,0,.34),inset 0 1px 0 rgba(255,255,255,.12);
+  background:var(--paper-2);
+  border-top-color:var(--line);
+  box-shadow:0 -8px 22px rgba(0,0,0,.34);
 }
-body[data-dark="1"] .tab{
-  background:rgba(255,255,255,.07);border-color:rgba(255,255,255,.14);color:#D6DED2;
-  box-shadow:none;
-}
-body[data-dark="1"] .tab:hover{background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.22)}
-body[data-dark="1"] .tab.on{
-  background:linear-gradient(180deg,rgba(126,168,136,.5),rgba(64,96,76,.55));
-  border-color:rgba(255,255,255,.2);color:#F7F4E8;
-}
+body[data-dark="1"] .tab{color:var(--ink-3)}
+body[data-dark="1"] .tab:hover{background:rgba(255,255,255,.06)}
+body[data-dark="1"] .tab.on{background:rgba(255,255,255,.14);color:var(--ink)}
+body[data-dark="1"] .tab.on .icw.tab{color:var(--leaf)}
 .tab-dot{
   position:absolute;top:-5px;right:4px;min-width:15px;height:15px;
   border-radius:8px;background:#C7493A;color:#fff;font-size:9.5px;
@@ -786,8 +906,28 @@ body[data-dark="1"] .tab.on{
 }
 .reset:hover{color:var(--tomato)}
 
-/* 灶台页把悬浮工具条收起来，别挡住底下的菜卡 */
-body[data-tab="stove"] .tool-dock{display:none}
+/* 工具条只在农事页出现，别的页收起来，别挡住卡片 */
+body:not([data-tab="farm"]) .tool-dock{display:none}
+/* 工具条钉在田地左上角 */
+.stage .tool-dock.pinned{
+  position:absolute!important;left:8px!important;top:8px!important;right:auto!important;bottom:auto!important;
+  display:flex;flex-direction:column;gap:5px;z-index:12;touch-action:auto;
+}
+.stage .tool-dock.pinned .dock-grip{display:none!important}
+.stage .tool-dock.pinned .dock-row{flex-direction:row;gap:5px}
+.stage .tool-dock.pinned .dock-btn{
+  width:auto;min-width:44px;padding:4px 6px;border-radius:10px;border-width:1.2px;
+  font-size:10px;gap:2px;box-shadow:0 2px 6px rgba(26,42,30,.16)
+}
+.stage .tool-dock.pinned .dock-btn svg{width:15px;height:15px}
+.stage .tool-dock.pinned .dock-btn b{font-weight:500}
+/* 两个工具同一套纸底：选中只把描边和图标换成叶色 */
+.stage .tool-dock.pinned .dock-btn{background:var(--paper-2);border-color:var(--line);color:var(--ink-3)}
+.stage .tool-dock.pinned .dock-btn svg{color:var(--ink-2)}
+.stage .tool-dock.pinned .dock-btn.on{background:var(--paper-2);border-color:var(--leaf);color:var(--ink);
+  box-shadow:0 0 0 1.5px color-mix(in srgb,var(--leaf) 42%,transparent),0 2px 6px rgba(26,42,30,.14)}
+.stage .tool-dock.pinned .dock-btn.on svg{color:var(--leaf)}
+.stage .tool-dock.pinned .dock-btn.need{background:#E8F2EE;border-color:#5E9FB0;color:#2C5A55}
 /* ===== 提示条 ===== */
 .tips{
   margin-top:16px;
@@ -828,28 +968,15 @@ body[data-tab="stove"] .tool-dock{display:none}
   .dock-btn b{font-weight:500}
   .dock-btn.on{background:var(--ink);border-color:var(--ink);color:var(--paper-2)}
   .tabbar{
-    position:fixed;left:9px;right:9px;bottom:9px;margin:0;z-index:20;
-    padding:9px 8px 8px;border-radius:24px;
-    background:linear-gradient(170deg,rgba(252,250,242,.78),rgba(234,230,214,.52));
-    -webkit-backdrop-filter:blur(14px) saturate(1.5);backdrop-filter:blur(14px) saturate(1.5);
-    border:1px solid rgba(255,255,255,.62);
-    box-shadow:0 14px 34px rgba(22,38,27,.24),0 2px 6px rgba(22,38,27,.10),
-      inset 0 1.5px 0 rgba(255,255,255,.95),inset 0 -1px 2px rgba(255,255,255,.5),
-      inset 0 14px 26px -18px rgba(255,255,255,.9);
+    position:fixed;left:0;right:0;bottom:0;margin:0;z-index:20;
+    padding:6px 12px calc(6px + env(safe-area-inset-bottom));
+    background:var(--paper-2);
+    border-top:1.2px solid var(--line);
+    border-radius:0;
+    box-shadow:0 -8px 22px rgba(34,50,43,.12);
+    -webkit-backdrop-filter:none;backdrop-filter:none;
   }
-  .tabbar::after{
-    content:'';position:absolute;left:6px;right:6px;top:0;height:42%;border-radius:22px 22px 46px 46px;
-    background:linear-gradient(180deg,rgba(255,255,255,.72),rgba(255,255,255,.06) 70%,rgba(255,255,255,0));
-    pointer-events:none;opacity:.7;
-  }
-  @keyframes glassflow{
-    0%,100%{transform:translateX(-3%) scaleX(1.02);opacity:.62}
-    50%{transform:translateX(3%) scaleX(.98);opacity:.78}
-  }
-  .tabbar{
-    overflow:hidden;
-  }
-  body{padding-bottom:142px}
+  body{padding-bottom:96px}
   .stage{box-shadow:4px 4px 0 var(--shadow)}
   .ledger{box-shadow:4px 4px 0 var(--shadow)}
   .hud{width:100%;justify-content:space-between;gap:6px}
@@ -879,6 +1006,12 @@ body[data-tab="stove"] .tool-dock{display:none}
 @media (prefers-reduced-motion:reduce){
   *{transition:none!important;animation:none!important}
 }
+/* 小屏：底栏收一点，六个页签不挤 */
+@media (max-width:374px){
+  body .tabbar{gap:1px;padding:5px 7px 4px}
+  body .tabbar .tab{padding:5px 2px;font-size:11px}
+  body .tabbar .tab .icw.tab{width:20px;height:20px}
+}
 </style>
 </head>
 <body>
@@ -896,8 +1029,9 @@ body[data-tab="stove"] .tool-dock{display:none}
       <div class="hud-item"><label>铜钱</label><b class="num" id="coinBox">120</b></div>
       <div class="hud-item"><label>水缸</label><b class="num" id="waterBox">6 / 6</b></div>
     </div>
-    <button class="help-btn" id="guideBtn" aria-label="怎么玩">玩法</button>
     <button class="help-btn home-btn" id="homeBtn" aria-label="返回主页">返回主页</button>
+    <button class="help-btn guide-top" id="guideBtn" aria-label="怎么玩">玩法</button>
+    <button class="help-btn pause-btn" id="pauseBtn" aria-label="暂停">暂停</button>
   </header>
 
   <div class="tutor" id="tutor" hidden>
@@ -914,6 +1048,9 @@ body[data-tab="stove"] .tool-dock{display:none}
       <div class="stage-tag">小院 · 东南角菜畦</div>
       <div class="toast" id="toast"></div>
       <div class="stove-tag" id="stoveTag">支个灶 · 200</div>
+      <div class="pause-mask" id="pauseMask" aria-hidden="true">
+        <div class="pause-card"><b>已暂停</b><em>点右上角「继续」接着玩</em></div>
+      </div>
     </section>
 
     <aside class="ledger">
@@ -935,23 +1072,13 @@ body[data-tab="stove"] .tool-dock{display:none}
       </div>
       <div class="page on" data-page="farm">
       <div class="block">
-        <div class="block-title"><span>手上的活</span><em id="toolHint">锄头：点荒地开垦</em></div>
+        <div class="block-title"><span>工具升级</span><em id="toolHint">锄头：点荒地开垦</em></div>
         <div class="dry-tip" id="dryTip" hidden></div>
-        <div class="tools">
-          <button class="tool on" data-tool="hoe" id="toolHoe">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 20 15 9"/><path d="M13 5c2-2 6-1 7 1l-4 4c-1-2-2-3-3-5z"/></svg>
-            锄头
-          </button>
-          <button class="tool" data-tool="water" id="toolWater">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M5 9h9v9a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2z"/><path d="M14 11h3l3-3"/><path d="M9 5c0-1 .8-2 1.8-2S12.6 4 12.6 5"/><path d="M6 6h6a2 2 0 0 1 0 3H6z"/></svg>
-            水壶
-          </button>
-        </div>
         <div class="tool-ups" id="toolUps"></div>
       </div>
 
       <div class="block">
-        <div class="block-title"><span>种子袋</span><em id="seedHint">选一袋，去空地种下</em></div>
+        <div class="block-title"><span>种子市场</span><em id="seedHint">挑一袋，去空地种下</em></div>
         <div class="seeds" id="seeds"><!-- 种子按钮由脚本生成 --></div>
       </div>
 
@@ -1020,6 +1147,12 @@ body[data-tab="stove"] .tool-dock{display:none}
           <button class="refill sm" id="addHen">添只鸡 · 160</button>
         </div>
 
+        <div class="yard-line">
+          <span class="yard-label">心情</span>
+          <div class="mood-wrap"><div class="mood-bar"><i id="moodBar"></i></div><em id="moodHint">舒坦</em></div>
+        </div>
+        <div class="look-note">心情好，下蛋快些；下雨会蔫，有狗看着就踏实</div>
+
         <div class="buys" id="buys"></div>
       </div>
       </div>
@@ -1027,7 +1160,7 @@ body[data-tab="stove"] .tool-dock{display:none}
       <div class="page" data-page="house">
       <div class="block">
         <div class="block-title"><span>院里的小人</span><em id="lookHint">男 · 青布 · 草帽</em></div>
-        <div class="buys"><button class="buy wide" id="lookBtn"><b>换个样子</b><span>身板 · 衣裳 · 围裙 · 头上</span></button></div>
+        <div class="buys"><button class="buy wide" id="lookBtn"><b>换装</b><span>身板 · 衣裳 · 围裙 · 头上</span></button></div>
         <div class="look-box" id="lookBox" hidden>
           <div class="dress-row"><span>身板</span><div class="seg" id="sexSeg"></div></div>
           <div class="dress-row"><span>衣裳</span><div class="sw" id="clothSw"></div></div>
@@ -1037,11 +1170,9 @@ body[data-tab="stove"] .tool-dock{display:none}
         </div>
       </div>
       <div class="block">
-        <div class="block-title"><span>本子的颜色</span><em id="themeHint">麦青</em></div>
-        <div class="dress-row"><span>纸色</span><div class="sw" id="themeSw"></div></div>
-        <div class="look-note">纸色只换纸面底色，想连字色、按键一起换，用下面的配色</div>
+        <div class="block-title"><span>界面配色</span><em id="themeHint">麦青</em></div>
         <div class="dress-row"><span>配色</span><div class="sw" id="artSw"></div></div>
-        <div class="look-note">十套配色只换界面的纸、字和按键，田里的配色不动</div>
+        <div class="look-note">十套配色只换界面的纸、字和按键，田里的配色不动；最右的取色器能自选</div>
       </div>
       <div class="block">
         <div class="block-title"><span>宠物</span><em id="petHint">还没养</em></div>
@@ -1063,14 +1194,28 @@ body[data-tab="stove"] .tool-dock{display:none}
 
       <div class="page" data-page="dex">
       <div class="block">
-        <div class="block-title"><span>小院册子</span><em id="dexHint">点亮 0 / 42</em></div>
+        <div class="block-title"><span>小院图鉴</span><em id="dexHint">点亮 0 / 42</em></div>
         <div class="dex-bar"><i id="dexBar"></i></div>
         <p class="dex-tip">种出来、做出来、买回来、赶集得来的都会记上一笔。成就在达成时自动到账。</p>
+        <p class="crop-tip" id="cropTip">田里还没动过土</p>
         <div id="dexBody"></div>
+      </div>
+      <div class="block">
+        <div class="block-title"><span>收成账本</span><em id="ledgerHint">本季 · 春</em></div>
+        <div class="yard-line"><span class="yard-label">收成</span><em class="lg-val" id="lgHarvest">还没下地</em></div>
+        <div class="yard-line"><span class="yard-label">卖菜</span><em class="lg-val" id="lgSell">还没开张</em></div>
+        <div class="yard-line"><span class="yard-label">最赚</span><em class="lg-val" id="lgBest">—</em></div>
+        <div class="yard-line"><span class="yard-label">最勤</span><em class="lg-val" id="lgDay">—</em></div>
+        <div class="look-note">每换一季清零，只记这一季的事</div>
       </div>
       <div class="block">
         <div class="block-title"><span>成就</span><em id="achvHint">0 / 23</em></div>
         <div class="achv-list" id="achvBody"></div>
+      </div>
+      <div class="block">
+        <div class="block-title"><span>声音</span><em id="sfxHint">开着 · 每步一点轻响</em></div>
+        <div class="yard-line"><span class="yard-label">音效</span><div class="seg" id="sfxSeg"><button data-sfx="1" class="on">开</button><button data-sfx="0">关</button></div></div>
+        <div class="look-note">机身合成的轻响与雨声，不载声音文件；关掉也不影响种地</div>
       </div>
       </div>
       </div>
@@ -1081,12 +1226,12 @@ body[data-tab="stove"] .tool-dock{display:none}
       </footer>
 
       <nav class="tabbar" aria-label="分页">
-        <button class="tab on" data-tab="farm"><span class="icw tab" id="tabIcoFarm"></span>菜地</button>
+        <button class="tab on" data-tab="farm"><span class="icw tab" id="tabIcoFarm"></span>农事</button>
         <button class="tab" data-tab="stove"><span class="icw tab" id="tabIcoStove"></span>灶台<span class="tab-dot cooknum" id="tabCook" hidden>0</span></button>
         <button class="tab" data-tab="order"><span class="icw tab" id="tabIcoOrder"></span>订单<span class="tab-dot" id="tabOrders" hidden>0</span></button>
         <button class="tab" data-tab="yard"><span class="icw tab" id="tabIcoYard"></span>小院</button>
         <button class="tab" data-tab="house"><span class="icw tab" id="tabIcoHouse"></span>小屋</button>
-        <button class="tab" data-tab="dex"><span class="icw tab" id="tabIcoDex"></span>册子</button>
+        <button class="tab" data-tab="dex"><span class="icw tab" id="tabIcoDex"></span>图鉴</button>
       </nav>
     </aside>
   </div>
@@ -1613,8 +1758,8 @@ const ACHVS=[
   {g:'经营',id:'c6',n:'声名远扬',d:'名声升到 Lv7 满级',coins:700,rep:0,chk:()=>repLv()>=REP_NEED.length},
   {g:'经营',id:'p1',n:'院里有个伴',d:'养一只猫或狗',coins:120,rep:1,chk:()=>!!(S.pets&&(S.pets.cat||S.pets.dog))},
   {g:'经营',id:'p2',n:'猫狗双全',d:'院子里猫和狗都养上',coins:260,rep:2,chk:()=>!!(S.pets&&S.pets.cat&&S.pets.dog)},
-  {g:'收集',id:'d1',n:'册子过半',d:'图鉴点亮一半',coins:250,rep:0,chk:()=>dexDoneCount()*2>=dexTotal()},
-  {g:'收集',id:'d2',n:'册子集满',d:'图鉴全部点亮',coins:600,rep:3,chk:()=>dexDoneCount()>=dexTotal()},
+  {g:'收集',id:'d1',n:'图鉴过半',d:'图鉴点亮一半',coins:250,rep:0,chk:()=>dexDoneCount()*2>=dexTotal()},
+  {g:'收集',id:'d2',n:'图鉴集满',d:'图鉴全部点亮',coins:600,rep:3,chk:()=>dexDoneCount()>=dexTotal()},
   {g:'收集',id:'d3',n:'腌匠',d:'取满 10 缸腌菜',coins:300,rep:0,chk:()=>(S.pickleDone||0)>=10},
   {g:'收集',id:'d4',n:'院里热闹',d:'小屋装饰买齐 8 件',coins:400,rep:0,chk:()=>(S.house||[]).length>=8},
   {g:'收集',id:'d5',n:'六畜兴旺',d:'牛和猪各养满 2 头',coins:300,rep:0,chk:()=>S.cow>=BEAST_CAP&&S.pig>=BEAST_CAP}
@@ -1664,7 +1809,7 @@ function nearCells(i,lv){
 }
 function upTool(k){
   const lv=S.tools[k]||1, it=TOOL_UP[k][lv-1];
-  if(!it){ showToast('这件家什已经置办齐了'); return; }
+  if(!it){ showToast('这件工具已经置办齐了'); return; }
   if(S.coins<it.cost){ showToast('铜钱不够，要 '+it.cost+' 钱'); return; }
   S.coins-=it.cost; S.tools[k]=lv+1;
   if(k==='water'){ S.waterMax+=3; S.water=Math.min(S.waterMax,S.water+3); }
@@ -1841,9 +1986,11 @@ const el={
   toolUps:$('toolUps'),goalBox:$('goalBox'),goalText:$('goalText'),goalNum:$('goalNum'),
   goalHint:$('goalHint'),goalBar:$('goalBar'),
   dexHint:$('dexHint'), dexBar:$('dexBar'), dexBody:$('dexBody'), achvHint:$('achvHint'), achvBody:$('achvBody'),
+  cropTip:$('cropTip'), ledgerHint:$('ledgerHint'), lgHarvest:$('lgHarvest'), lgSell:$('lgSell'), lgBest:$('lgBest'), lgDay:$('lgDay'),
+  moodBar:$('moodBar'), moodHint:$('moodHint'), sfxSeg:$('sfxSeg'), sfxHint:$('sfxHint'),
   fairBtn:$('fairBtn'), fairName:$('fairName'), fairSub:$('fairSub'), fairHint:$('fairHint'), fairBox:$('fairBox'), fairGrid:$('fairGrid'),
   lookBox:$('lookBox'), sexSeg:$('sexSeg'), clothSw:$('clothSw'), hatSeg:$('hatSeg'), apronSeg:$('apronSeg'),
-  lookBtn:$('lookBtn'), lookHint:$('lookHint'), themeSw:$('themeSw'), artSw:$('artSw'), themeHint:$('themeHint'),
+  lookBtn:$('lookBtn'), lookHint:$('lookHint'), artSw:$('artSw'), themeHint:$('themeHint'),
   petBuys:$('petBuys'), petHint:$('petHint'),
   dayEnd:$('dayEnd'), deDay:$('deDay'), deSeason:$('deSeason'), deCoins:$('deCoins'), deWork:$('deWork'),
   deRep:$('deRep'), deTip:$('deTip'), deOk:$('deOk'), orderHint:$('orderHint'), deTop:$('deTop'),
@@ -1853,11 +2000,11 @@ const el={
   repLv:$('repLv'), repNum:$('repNum'), repBar:$('repBar'), repNote:$('repNote'),
   pickleRow:$('pickleRow'), pickleHint:$('pickleHint'), pickleBody:$('pickleBody'),
   ledgerTitle:$('ledgerTitle'), tabOrders:$('tabOrders'), tabCook:$('tabCook'),
-  toolHoe:$('toolHoe'), toolWater:$('toolWater'), toolHint:$('toolHint'),
+  toolHoe:$('toolHoe'), toolWater:$('toolWater'), toolHint:$('toolHint'), pauseMask:$('pauseMask'),
   seedHint:$('seedHint'), toast:$('toast'), taskLine:$('taskLine'),
   yardHint:$('yardHint'), refill:$('refillBtn'), upgrade:$('upgradeBtn'),
   saveNote:$('saveNote'), reset:$('resetBtn'),
-  guide:$('guide'), guideOk:$('guideOk'), guideBtn:$('guideBtn'), homeBtn:$('homeBtn'),
+  guide:$('guide'), guideOk:$('guideOk'), guideBtn:$('guideBtn'), homeBtn:$('homeBtn'), pauseBtn:$('pauseBtn'),
   eggCount:$('eggCount'), addHen:$('addHen'), stats:$('stats'),
   buys:$('buys'), tipBird:$('tipBird'),
   wishList:$('wishList'), wishHint:$('wishHint'), dryTip:$('dryTip'),
@@ -1865,6 +2012,85 @@ const el={
   ssBody:$('ssBody'), ssClose:$('ssClose'), ssNote:$('ssNote'), pickWood:$('pickWood'), woodNum:$('woodNum'),
   stoveTag:$('stoveTag'), dock:$('toolDock'), dockGrip:$('dockGrip'), dockHoe:$('dockHoe'), dockWater:$('dockWater')
 };
+
+/* ---------- 声音：机身合成的小响动，不载外部音频 ---------- */
+const SFX={ctx:null};
+function sfxTone(f,dur,type,gain,slide){
+  if(S.sfx===false) return;
+  if(!SFX.ctx){
+    const AC=window.AudioContext||window.webkitAudioContext;
+    if(!AC) return;
+    try{ SFX.ctx=new AC(); }catch(e){ return; }
+  }
+  const ctx=SFX.ctx;
+  if(ctx.state==='suspended') ctx.resume();
+  const t0=ctx.currentTime+.006;
+  const o=ctx.createOscillator(), g=ctx.createGain();
+  o.type=type||'sine';
+  o.frequency.setValueAtTime(f,t0);
+  if(slide) o.frequency.exponentialRampToValueAtTime(Math.max(50,f*slide),t0+dur);
+  g.gain.setValueAtTime(.0001,t0);
+  g.gain.linearRampToValueAtTime(gain||.1,t0+.012);
+  g.gain.exponentialRampToValueAtTime(.0005,t0+dur);
+  o.connect(g); g.connect(ctx.destination);
+  o.start(t0); o.stop(t0+dur+.03);
+}
+const AMB={on:false,src:null,gain:null,buf:null};
+function ambience(on){
+  if(!SFX.ctx) return;
+  const ctx=SFX.ctx;
+  if(on&&!AMB.on){
+    if(!AMB.buf){
+      const len=Math.round(ctx.sampleRate*2), b=ctx.createBuffer(1,len,ctx.sampleRate), d=b.getChannelData(0);
+      for(let i=0;i<len;i++) d[i]=(Math.random()*2-1)*.5;
+      AMB.buf=b;
+    }
+    const src=ctx.createBufferSource(); src.buffer=AMB.buf; src.loop=true;
+    const lp=ctx.createBiquadFilter(); lp.type='lowpass'; lp.frequency.value=1050; lp.Q.value=.7;
+    const g=ctx.createGain(); g.gain.value=.0001;
+    src.connect(lp); lp.connect(g); g.connect(ctx.destination);
+    try{ src.start(); }catch(e){ return; }
+    g.gain.setTargetAtTime(.015,ctx.currentTime,.5);
+    AMB.on=true; AMB.src=src; AMB.gain=g;
+  }else if(!on&&AMB.on&&AMB.src){
+    const g=AMB.gain, src=AMB.src;
+    g.gain.setTargetAtTime(.0001,ctx.currentTime,.3);
+    setTimeout(()=>{ try{ src.stop(); }catch(e){} },1000);
+    AMB.on=false; AMB.src=null; AMB.gain=null;
+  }
+}
+function sfx(k){
+  switch(k){
+    case 'tap':    sfxTone(520,.045,'triangle',.05,.9); break;
+    case 'plant':  sfxTone(300,.1,'sine',.075,.65); setTimeout(()=>sfxTone(430,.1,'sine',.05,.82),70); break;
+    case 'water':  sfxTone(720,.15,'sine',.06,.5); break;
+    case 'harvest':sfxTone(640,.09,'triangle',.08,.9); setTimeout(()=>sfxTone(880,.12,'triangle',.055,.96),95); break;
+    case 'coin':   sfxTone(980,.06,'square',.042,.95); setTimeout(()=>sfxTone(1240,.1,'square',.032,1),65); break;
+    case 'egg':    sfxTone(680,.06,'sine',.065,1.25); break;
+    case 'cook':   sfxTone(523,.16,'sine',.07,.96); setTimeout(()=>sfxTone(784,.2,'sine',.055,.98),150); break;
+    case 'nope':   sfxTone(150,.12,'square',.04,.82); break;
+  }
+}
+function ambienceTick(){ ambience(S.sfx!==false&&S.weather==='rain'&&!document.body.classList.contains('is-paused')); }
+function renderSfxUI(){
+  if(!el.sfxSeg) return;
+  const on=S.sfx!==false;
+  el.sfxSeg.querySelectorAll('button').forEach(b=>b.classList.toggle('on',(b.dataset.sfx==='1')===on));
+  if(el.sfxHint) el.sfxHint.textContent=on?'开着 · 每步一点轻响':'关着 · 安安静静';
+}
+if(el.sfxSeg) el.sfxSeg.addEventListener('click',e=>{
+  const b=e.target.closest('button[data-sfx]');
+  if(!b) return;
+  S.sfx=b.dataset.sfx==='1';
+  if(!S.sfx){ ambience(false); if(SFX.ctx&&SFX.ctx.state==='running') SFX.ctx.suspend(); }
+  renderSfxUI(); save();
+  if(S.sfx) sfx('tap');
+  showToast(S.sfx?'声音开了，接着种':'声音关掉了');
+});
+document.addEventListener('pointerdown',e=>{
+  if(S.sfx===false) return;
+  if(e.target.closest('button,.tab,.cell,.buy,.dress-row')) sfx('tap');
+},true);
 
 /* ---------- 状态 ---------- */
 function freshState(){
@@ -1874,6 +2100,7 @@ function freshState(){
     fairGoods:{mill:0,rack:0,well:0,scale:0},fair:{day:0,bought:[]},fairDone:0,
     dex:{},achv:[],careBonus:0,ordersDone:0,twoPots:0,pickleDone:0,fairVisited:0,
     peakCoins:0,seasonDex:{key:'',crops:[]},
+    cropLog:{}, ledger:null, henMood:[60], sfx:true,
     day:1, t:52.5, tfix:1,
     weather:'sunny', weatherIn:60,
     plots:Array.from({length:COLS*ROWS},(_,i)=>({
@@ -1883,7 +2110,7 @@ function freshState(){
     })),
     orders:[], selected:null, tool:'hoe',
     harvests:0, earned:0,
-    hens:2, henTimers:[22,38], eggs:[],
+    hens:1, henTimers:[26], eggs:[],
     pets:{cat:0,dog:0}, petLook:{cat:'orange',dog:'yellow'}, skinPaid:{cat:0,dog:0}, gear:{},
     hot:'cabbage', eggsCollected:0, birdsShooed:0,
     scarecrow:false, waterwheel:false, stall:0, decor:[],
@@ -1912,6 +2139,7 @@ function fmt(n){return String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g,' '
 
 let toastTimer=0;
 function showToast(msg){
+  if(/铜钱不够|钱不够|还差/.test(msg)&&/钱|铜/.test(msg)) sfx('nope');
   el.toast.textContent=msg;
   el.toast.classList.add('on');
   clearTimeout(toastTimer);
@@ -2067,6 +2295,7 @@ function save(){
       orders:S.orders,selected:S.selected,tool:S.tool,
       harvests:S.harvests,earned:S.earned,
       hens:S.hens,henTimers:S.henTimers,eggs:S.eggs,hot:S.hot,
+      cropLog:S.cropLog||{},ledger:S.ledger||null,henMood:S.henMood||[],sfx:S.sfx!==false,
       eggsCollected:S.eggsCollected,birdsShooed:S.birdsShooed,
       scarecrow:S.scarecrow,waterwheel:S.waterwheel,stall:S.stall,decor:S.decor,
       stove:S.stove,stoveLv:S.stoveLv,pots:S.pots,cook:S.cook,cook2:S.cook2,
@@ -2076,7 +2305,7 @@ function save(){
       dex:S.dex||{},achv:S.achv||[],careBonus:S.careBonus||0,ordersDone:S.ordersDone||0,
       twoPots:S.twoPots||0,pickleDone:S.pickleDone||0,fairVisited:S.fairVisited||0,
       peakCoins:S.peakCoins||0,seasonDex:S.seasonDex||null,
-      tools:S.tools||null,today:S.today||null,orderDay:S.orderDay||0,theme:S.theme||'green',
+      tools:S.tools||null,today:S.today||null,orderDay:S.orderDay||0,theme:S.theme||'green',custom:S.custom||null,
       dayEarn0:S.dayEarn0||0,dayRep0:S.dayRep0||0,pets:S.pets||null,
       petLook:S.petLook||null,skinPaid:S.skinPaid||null,gear:S.gear||null,sexSet:S.sexSet?1:0,streetN:S.streetN||0,streetDay:S.streetDay||0,
       wish:S.wish||[],wishP:S.wishP||{},wishUsed:S.wishUsed||[],gifts:S.gifts||[],recipes:S.recipes||[],
@@ -2104,6 +2333,7 @@ function load(){
     S.houseLv=clamp(Math.round(d.houseLv)||1,1,5);
     S.gate=clamp(Math.round(d.gate||0),0,3);
     S.art=ART_STYLES.some(t=>t.id===d.art)?d.art:'green';
+    S.custom=(typeof d.custom==='string'&&/^#[0-9a-fA-F]{6}$/.test(d.custom))?d.custom.toLowerCase():null;
     S.theme=ART_STYLES.some(t=>t.id===d.theme)?d.theme:'green';
     S.tab=['farm','stove','order','yard','house','dex'].includes(d.tab)?d.tab:'farm';
     S.fire=clamp(Math.round(d.fire||0),0,WOOD_CAP);
@@ -2137,6 +2367,12 @@ function load(){
     S.orders=(d.orders||[]).filter(o=>o.kind==='dish'&&DISHES[o.dish])
       .map(o=>Object.assign({},o)).slice(0,8);
     S.hens=clamp(Math.round(d.hens??2),0,5);
+    S.cropLog=(d.cropLog&&typeof d.cropLog==='object')?d.cropLog:{};
+    S.ledger=(d.ledger&&typeof d.ledger==='object'&&d.ledger.key)?d.ledger:null;
+    S.henMood=Array.isArray(d.henMood)?d.henMood.filter(v=>isFinite(v)):[];
+    S.sfx=d.sfx!==false;
+    while(S.henMood.length<S.hens) S.henMood.push(60);
+    S.henMood.length=S.hens;
     if(!Array.isArray(S.henTimers)||S.henTimers.length!==S.hens){
       S.henTimers=Array.from({length:S.hens},()=>20+Math.random()*18);
     }
@@ -2327,8 +2563,18 @@ function renderWish(){
     '</div>';
   }).join('');
 }
+function moodFactor(m){ return m>=78?.88:m>=56?1:m>=34?1.12:1.28; }
+function moodWord(m){ return m>=78?'舒坦':m>=56?'还行':m>=34?'蔫了':'闹脾气'; }
 function renderHens(){
   el.eggCount.textContent=S.eggs.length;
+  if(el.moodBar){
+    S.henMood=S.henMood||[];
+    const n=Math.max(1,S.hens);
+    const avg=S.henMood.length?S.henMood.reduce((a,b)=>a+(b||0),0)/S.henMood.length:60;
+    el.moodBar.style.width=Math.max(6,Math.round(avg))+'%';
+    el.moodBar.style.background=avg>=56?'var(--leaf)':(avg>=34?'var(--sun)':'#C4785E');
+    el.moodHint.textContent=moodWord(avg)+(S.weather==='rain'?' · 淋着雨':'');
+  }
   renderYardHint();
   const hc=henCost();
   el.addHen.style.display=hc===null?'none':'';
@@ -2622,6 +2868,10 @@ function serveDish(slot){
   wishBump('cook',1);
   if(msg.indexOf('交单：')===0) wishBump('order',1);
   tutorTick('serve');
+  ledgerInit();
+  S.ledger.sell++; S.ledger.sellCoins+=pay;
+  if(pay>(S.ledger.bestPay||0)){ S.ledger.bestPay=pay; S.ledger.bestDish=c.dish||''; }
+  sfx('coin');
   S.coins+=pay; S.earned+=pay; S[slot]=null;
   spark(slot==='cook'?846:786,slot==='cook'?328:334,12,'dot','#F2E6B8');
   showToast(msg);
@@ -2664,7 +2914,7 @@ function renderBasket(){
     ? shown.map(k=>'<div class="bk"><span class="icw">'+produceIco(k)+'</span>'+
         '<span class="bk-n">'+basketName(k)+'</span><b>×'+stockOf(k)+'</b></div>').join('')
     : '<div class="bk-empty">仓库还空着：鸡窝捡蛋、牛棚挤奶、猪圈切肉，都往这儿存</div>';
-  el.basketHint.textContent=total?'存着 '+total+' 份 · 做菜用':'菜在种子袋那边看';
+  el.basketHint.textContent=total?'存着 '+total+' 份 · 做菜用':'菜在种子市场那边挑';
   el.basketWorth.textContent=total?'做菜卖，比生卖划算':'蛋、奶、肉，收上来就存这儿';
 }
 function renderFair(){
@@ -2724,7 +2974,7 @@ function renderGoal(){
 }
 function dexCell(on,name,hint,ico){
   return '<div class="cell'+(on?' on':' off')+'">'+(ico?'<span class="icw xxs">'+ico+'</span>':'')+
-    '<b>'+name+'</b>'+(hint?'<span>'+hint+'</span>':'')+'</div>';
+    '<div class="cell-txt"><b>'+name+'</b>'+(hint?'<span>'+hint+'</span>':'')+'</div></div>';
 }
 const SEASON_SHORT={spring:'春',summer:'夏',autumn:'秋',winter:'冬'};
 function renderDex(){
@@ -2732,12 +2982,22 @@ function renderDex(){
   const total=dexTotal(), done=dexDoneCount();
   el.dexHint.textContent='点亮 '+done+' / '+total;
   el.dexBar.style.width=((done/total)*100).toFixed(1)+'%';
+  if(el.cropTip){
+    const log=S.cropLog||{}, keys=Object.keys(log);
+    if(!keys.length) el.cropTip.textContent='田里还没动过土';
+    else{
+      let planted=0,h=0,best=null;
+      keys.forEach(k=>{ const l=log[k]||{}; planted+=l.p||0; h+=l.h||0; if(!best||(l.p||0)>(log[best].p||0)) best=k; });
+      el.cropTip.textContent='田里的事：'+(planted?('种过 '+planted+' 回 · '):'')+'收 '+h+' 筐'+((best&&planted&&CROPS[best])?(' · 最常种 '+CROPS[best].name):'');
+    }
+  }
   let h='';
   h+='<div class="dex-sec"><h4>作物</h4><div class="dex-cells">'+
     SEED_ORDER.map(k=>{
-      const on=dexHas('c:'+k);
+      const on=dexHas('c:'+k), lg=(S.cropLog||{})[k]||{};
       const se=CROPS[k].seasons.map(x=>SEASON_SHORT[x]).join('');
-      return dexCell(on,CROPS[k].name,on?'':se,cropIco(k));
+      const hint=on?('收 '+(lg.h||0)+' 筐'):se;
+      return dexCell(on,CROPS[k].name,hint,cropIco(k));
     }).join('')+'</div></div>';
   h+='<div class="dex-sec"><h4>菜品</h4><div class="dex-cells">'+
     Object.keys(DISHES).map(k=>dexCell(dexHas('d:'+k),DISHES[k].name,dexHas('d:'+k)?'':'未做',dishIco(k))).join('')+'</div></div>';
@@ -2757,6 +3017,21 @@ function renderDex(){
   h+='<div class="dex-sec"><h4>宠物叼回</h4><div class="dex-cells">'+
     PET_FINDS.map(f=>dexCell(dexHas('p:'+f.id),f.n,dexHas('p:'+f.id)?'':'未得',propIco(f.id))).join('')+'</div></div>';
   el.dexBody.innerHTML=h;
+}
+function ledgerInit(){
+  const k=seasonKey();
+  if(!S.ledger||S.ledger.key!==k){
+    S.ledger={key:k,h:0,sell:0,sellCoins:0,bestDish:'',bestPay:0,bestDay:0,bestDayH:0};
+  }
+}
+function renderLedger(){
+  ledgerInit();
+  const L=S.ledger;
+  if(el.ledgerHint) el.ledgerHint.textContent='本季 · '+SEASONS[L.key].name;
+  if(el.lgHarvest) el.lgHarvest.textContent=L.h?('收 '+L.h+' 筐'):'还没下地';
+  if(el.lgSell) el.lgSell.textContent=L.sell?('卖 '+L.sell+' 单 · '+L.sellCoins+' 钱'):'还没开张';
+  if(el.lgBest) el.lgBest.textContent=(L.bestDish&&DISHES[L.bestDish])?(DISHES[L.bestDish].name+' · '+L.bestPay+' 钱'):'—';
+  if(el.lgDay) el.lgDay.textContent=L.bestDayH?('第 '+L.bestDay+' 天 · '+L.bestDayH+' 筐'):'—';
 }
 function renderAchv(){
   if(!el.achvBody) return;
@@ -2832,7 +3107,7 @@ function buyPet(k){
   if(S.pets[k]){ showToast('院里已经有只'+d.n+'了'); return; }
   if(S.coins<d.cost){ showToast('养它要 '+d.cost+' 钱'); return; }
   S.coins-=d.cost; S.pets[k]=1; petRun[k]=petInit(k);
-  showToast(d.n+'住进小院了，去菜地看它');
+  showToast(d.n+'住进小院了，去农事那一页看它');
   save(); syncUI(true); renderPets();
 }
 if(el.petBuys) el.petBuys.addEventListener('click',e=>{
@@ -2919,7 +3194,7 @@ function openDress(){
 function closeDress(){ el.lookBox.hidden=true; syncLookBtn(); }
 function syncLookBtn(){
   if(!el.lookBtn) return;
-  el.lookBtn.innerHTML='<b>'+(el.lookBox.hidden?'给他换个样子':'收起换装')+'</b>'+
+  el.lookBtn.innerHTML='<b>'+(el.lookBox.hidden?'给他换装':'收起换装')+'</b>'+
     '<span>身板 · 衣裳 · 围裙 · 头上</span>';
 }
 let dressShield=0;
@@ -2948,7 +3223,7 @@ function petDailyFind(){
   const had=dexHas('p:lock');
   dexAdd('p:lock');
   S.coins=(S.coins||0)+150; S.earned=(S.earned||0)+150;
-  return who+'叼回一个旧铜锁，卖了 150 钱'+(had?'':'，记进册子');
+  return who+'叼回一个旧铜锁，卖了 150 钱'+(had?'':'，记进图鉴');
 }
 
 /* ---- 打烊小结 ---- */
@@ -2964,6 +3239,12 @@ function closeGuide(){
 if(el.guideOk) el.guideOk.addEventListener('click',closeGuide);
 if(el.guideBtn) el.guideBtn.addEventListener('click',showGuide);
 if(el.homeBtn) el.homeBtn.addEventListener('click',()=>{ window.location.href='https://jyx010320-gif.github.io/RabbitOvOTsuki/'; });
+if(el.pauseBtn) el.pauseBtn.addEventListener('click',togglePause);
+document.addEventListener('click',e=>{
+  if(!paused) return;
+  const t=e.target;
+  if(t.closest('.stage,.pages,.tool-dock')){ e.stopPropagation(); e.preventDefault(); showToast('暂停中 · 点右上角「继续」再动手'); }
+},true);
 if(el.guide) el.guide.addEventListener('click',e=>{ if(e.target===el.guide) closeGuide(); });
 function dayTipText(){
   if(repLv()<2) return '名声到 Lv2，镇上就会有人点名要你家的菜';
@@ -3015,39 +3296,108 @@ if(el.deOk) el.deOk.addEventListener('click',()=>{
   if(pendingDayToast){ showToast(pendingDayToast); pendingDayToast=''; }
 });
 
-/* ---- 本子的纸色 ---- */
-const THEMES=[
-  {id:'green',n:'麦青',a:'#EFF3E6',b:'#6FA35E'},
-  {id:'warm', n:'暖阳',a:'#FCF2E0',b:'#8C9B45'},
-  {id:'cool', n:'春水',a:'#E7F1EE',b:'#4F9B83'},
-  {id:'dusk', n:'暮色',a:'#212B28',b:'#7FB180'}
-];
+/* ---- 界面配色：14 个 CSS 变量 / data-theme 十套 / 取色器派生 ---- */
 const ART_STYLES=[
-  {id:'green',  n:'原野',c:'#9CC27E'},
-  {id:'warm',   n:'麦黄',c:'#E0B76A'},
-  {id:'cool',   n:'青墨',c:'#8F9C9A'},
-  {id:'dusk',   n:'暮色',c:'#6E8A76',dark:1},
-  {id:'sakura', n:'樱粉',c:'#E8B4C0'},
-  {id:'sky',    n:'天青',c:'#8FBCCE'},
-  {id:'inkblue',n:'夜蓝',c:'#5B7392',dark:1},
-  {id:'moss',   n:'苔绿',c:'#7C8F5A',dark:1},
-  {id:'sand',   n:'沙白',c:'#D9CFB6'},
-  {id:'lilac',  n:'紫藤',c:'#B3A6D2'}
+  {id:'green',  n:'麦青',c:'#6FA35E'},
+  {id:'warm',   n:'暖阳',c:'#8C9B45'},
+  {id:'cool',   n:'春水',c:'#4F9B83'},
+  {id:'dusk',   n:'暮色',c:'#7FB180',dark:1},
+  {id:'sakura', n:'樱粉',c:'#C07A8E'},
+  {id:'sky',    n:'天青',c:'#4E93A8'},
+  {id:'inkblue',n:'夜蓝',c:'#7FA6C8',dark:1},
+  {id:'moss',   n:'苔绿',c:'#A7B96C',dark:1},
+  {id:'sand',   n:'沙白',c:'#8E9760'},
+  {id:'lilac',  n:'紫藤',c:'#8C7FB4'}
 ];
+const THEME_VARS=['--paper','--paper-2','--paper-3','--ink','--ink-2','--ink-3','--line',
+  '--leaf','--leaf-2','--sun','--clay','--shadow','--tint-a','--tint-b'];
+function hexToHsl(hex){
+  let h=String(hex||'').replace('#','');
+  if(h.length===3) h=h.split('').map(c=>c+c).join('');
+  if(h.length!==6) return {h:110,s:30,l:50};
+  const r=parseInt(h.slice(0,2),16)/255, g=parseInt(h.slice(2,4),16)/255, b=parseInt(h.slice(4,6),16)/255;
+  const mx=Math.max(r,g,b), mn=Math.min(r,g,b), l=(mx+mn)/2;
+  let hh=0, sat=0;
+  if(mx!==mn){
+    const d=mx-mn;
+    sat=l>.5?d/(2-mx-mn):d/(mx+mn);
+    hh=mx===r?((g-b)/d+(g<b?6:0)):mx===g?((b-r)/d+2):((r-g)/d+4);
+    hh*=60;
+  }
+  return {h:(hh+360)%360,s:sat*100,l:l*100};
+}
+function hsl(h,s,l,a){ h=(h%360+360)%360; s=Math.max(0,Math.min(100,s)); l=Math.max(0,Math.min(100,l));
+  return a==null?'hsl('+h.toFixed(0)+','+s.toFixed(0)+'%,'+l.toFixed(1)+'%)':'hsla('+h.toFixed(0)+','+s.toFixed(0)+'%,'+l.toFixed(1)+'%,'+a+')'; }
+function deriveTheme(hex){
+  const t=hexToHsl(hex), dark=t.l<46, sp=Math.min(t.s,32);
+  if(dark){
+    return {dark:1,vars:{
+      '--paper':hsl(t.h,sp*.85,13),
+      '--paper-2':hsl(t.h,sp*.8,18),
+      '--paper-3':hsl(t.h,sp*.9,10),
+      '--ink':hsl(t.h,14,93),
+      '--ink-2':hsl(t.h,12,74),
+      '--ink-3':hsl(t.h,10,57),
+      '--line':hsl(t.h,14,32),
+      '--leaf':hsl(t.h,Math.max(32,t.s),Math.max(46,t.l)),
+      '--leaf-2':hsl(t.h,Math.max(30,t.s),Math.max(36,t.l-8)),
+      '--sun':hsl(38,56,64),
+      '--clay':hsl(26,22,52),
+      '--shadow':'rgba(0,0,0,.42)',
+      '--tint-a':hsl(t.h,sp*.8,16),
+      '--tint-b':hsl(38,18,17)
+    }};
+  }
+  return {dark:0,vars:{
+    '--paper':hsl(t.h,sp*.35,93.5),
+    '--paper-2':hsl(t.h,sp*.28,97.5),
+    '--paper-3':hsl(t.h,sp*.38,86),
+    '--ink':hsl(t.h,Math.min(34,t.s),16),
+    '--ink-2':hsl(t.h,Math.min(26,t.s),37),
+    '--ink-3':hsl(t.h,Math.min(20,t.s),53),
+    '--line':hsl(t.h,Math.min(24,t.s),78),
+    '--leaf':hsl(t.h,Math.max(30,t.s),Math.min(t.l,46)),
+    '--leaf-2':hsl(t.h,Math.max(28,t.s),Math.max(28,Math.min(t.l,46)-10)),
+    '--sun':hsl(36,58,52),
+    '--clay':hsl(24,26,45),
+    '--shadow':'rgba(30,42,32,.15)',
+    '--tint-a':hsl(t.h,sp*.3+8,95.5),
+    '--tint-b':hsl(40,32,96.5)
+  }};
+}
+function clearCustomVars(){
+  THEME_VARS.forEach(k=>document.body.style.removeProperty(k));
+  document.body.dataset.custom='';
+}
+function applyCustom(hex){
+  S.custom=(/^#[0-9a-fA-F]{6}$/.test(hex||''))?hex.toLowerCase():null;
+  if(!S.custom){ clearCustomVars(); return; }
+  const th=deriveTheme(S.custom);
+  THEME_VARS.forEach(k=>document.body.style.setProperty(k,th.vars[k]));
+  
+  document.body.dataset.dark=th.dark?'1':'';
+  document.body.dataset.custom='1';
+  document.body.dataset.art='custom';
+  if(el.themeHint) el.themeHint.textContent='自选';
+}
 function applyArt(id,syncTheme){
   S.art=(ART_STYLES.some(t=>t.id===id))?id:'green';
   const st=ART_STYLES.filter(t=>t.id===S.art)[0]||ART_STYLES[0];
   const cv=document.getElementById('farm');
   if(cv){ cv.style.filter=''; }        // 田地配色一律不动，只换界面
+  clearCustomVars(); S.custom=null;
   document.body.dataset.art=S.art;
   if(syncTheme) applyTheme(st.id);      // 手点配色时，整页一起换
   renderArt();
 }
 function renderArt(){
   if(!el.artSw) return;
+  if(el.artSw.contains(document.activeElement)) return;   // 取色器拖动时别重建
+  const cur=S.custom?S.custom:(ART_STYLES.filter(t=>t.id===S.art)[0]||ART_STYLES[0]).c;
   el.artSw.innerHTML=ART_STYLES.map(t=>
-    '<button data-art="'+t.id+'" class="'+(S.art===t.id?'on':'')+'" title="'+t.n+'" aria-label="'+t.n+'">'+
-    '<i style="background:'+t.c+'"></i></button>').join('');
+    '<button data-art="'+t.id+'" class="'+(S.custom?'':(S.art===t.id?'on':''))+'" title="'+t.n+'" aria-label="'+t.n+'">'+
+    '<i style="background:'+t.c+'"></i></button>').join('')+
+    '<label class="pick'+(S.custom?' on':'')+'" title="自选配色"><input type="color" id="artPick" value="'+cur+'" aria-label="自选配色"></label>';
 }
 function applyTheme(id){
   S.theme=(ART_STYLES.some(t=>t.id===id))?id:'green';
@@ -3056,27 +3406,27 @@ function applyTheme(id){
   document.body.dataset.dark=st.dark?'1':'';
 }
 function renderTheme(){
-  if(!el.themeSw) return;
-  el.themeSw.innerHTML=THEMES.map(t=>
-    '<button data-theme="'+t.id+'" class="'+(S.theme===t.id?'on':'')+'" title="'+t.n+'" aria-label="'+t.n+'">'+
-    '<i style="background:linear-gradient(150deg,'+t.a+' 0 52%,'+t.b+' 52% 100%)"></i></button>').join('');
   const cur=ART_STYLES.find(t=>t.id===S.theme)||ART_STYLES[0];
-  if(el.themeHint) el.themeHint.textContent=cur.n;
+  if(el.themeHint) el.themeHint.textContent=S.custom?'自选':cur.n;
   renderArt();
 }
 if(el.artSw) el.artSw.addEventListener('click',e=>{
   const b=e.target.closest('button[data-art]');
   if(!b) return;
+  const wasCustom=!!S.custom;
   applyArt(b.dataset.art,true); save(); renderTheme();
-  showToast('田地调成'+((ART_STYLES.find(t=>t.id===S.art)||{}).n||''));
+  const nm=(ART_STYLES.find(t=>t.id===S.art)||{}).n||'';
+  showToast(wasCustom?('自选色已经换掉了 · 现在是「'+nm+'」'):('界面换成'+nm));
 });
-if(el.themeSw) el.themeSw.addEventListener('click',e=>{
-  const b=e.target.closest('button[data-theme]');
-  if(!b) return;
-  applyTheme(b.dataset.theme);
-  if(ART_STYLES.some(t=>t.id===S.theme)){ S.art=S.theme; renderArt(); }
-  save(); renderTheme();
-  showToast('本子换成'+((THEMES.find(t=>t.id===S.theme)||{}).n||''));
+if(el.artSw) el.artSw.addEventListener('input',e=>{
+  if(e.target.id!=='artPick') return;
+  applyCustom(e.target.value);
+  if(el.themeHint) el.themeHint.textContent='自选';
+});
+if(el.artSw) el.artSw.addEventListener('change',e=>{
+  if(e.target.id!=='artPick') return;
+  applyCustom(e.target.value); save(); renderTheme();
+  showToast('界面换成自选 · '+e.target.value.toUpperCase());
 });
 function setLook(k,v){
   S.look=S.look||{sex:'f',cloth:'green',hat:'straw'};
@@ -3210,7 +3560,7 @@ function syncUI(force){
   uiSig=sig;
   el.stoveTag.hidden=S.stove;
   syncHUD(); syncDryTip(); renderTutor(); renderSeeds(); renderWater(); renderBasket(); renderOrders(); renderWish(); renderHens(); renderBuys(); renderHouse(); renderPets(); renderStats();
-  renderStove(); renderWood(); renderPickle(); renderRep(); renderFair(); renderDex(); renderAchv();
+  renderStove(); renderWood(); renderPickle(); renderRep(); renderFair(); renderDex(); renderLedger(); renderAchv(); renderSfxUI(); ambienceTick();
   renderGoal(); renderToolUps(); updateToolHint(); syncDock();
   const pending=S.orders.filter(o=>o.got<o.need).length;
   el.tabOrders.hidden=!pending;
@@ -3222,7 +3572,7 @@ function syncUI(force){
   }
   el.taskLine.textContent=S.tab==='stove'?'两口锅，做好盛盘就能交单':taskText();
 }
-const TAB_NAME={farm:'菜地',stove:'灶台',order:'订单',yard:'小院',house:'小屋',dex:'册子'};
+const TAB_NAME={farm:'农事',stove:'灶台',order:'订单',yard:'小院',house:'小屋',dex:'图鉴'};
 function setTab(t){
   if(!t||!TAB_NAME[t]) return;
   S.tab=t;
@@ -3249,9 +3599,9 @@ function setTab(t){
   setTimeout(alignStage,80);
 }
 function toolHintText(){
-  if(S.tool==='hoe') return '锄头：除草；锁着的点一下按牌上价钱开';
-  if(S.tool==='water') return S.weather==='rain'?'水壶：下雨呢，地自己湿，不用浇':'水壶：点菜苗浇水，地湿长得快';
-  return '播种：点空地埋下种子';
+  if(S.tool==='hoe') return '当前：锄头 · 除草（左上角切换）';
+  if(S.tool==='water') return S.weather==='rain'?'当前：水壶 · 下雨地自己湿（左上角切换）':'当前：水壶 · 点苗浇水（左上角切换）';
+  return '当前：播种 · 点空地种下（左上角切换）';
 }
 function updateToolHint(){ if(el.toolHint) el.toolHint.textContent=toolHintText(); }
 function dryNeed(){
@@ -3262,7 +3612,7 @@ function dryNeed(){
 }
 const TUTOR=[
   {k:'seed',  t:'第一步 · 选一袋种子，点空地种下'},
-  {k:'water', t:'第二步 · 点水壶，给菜苗浇一次水'},
+  {k:'water', t:'第二步 · 点田地左上角的水壶，给菜苗浇一次水'},
   {k:'harvest',t:'第三步 · 菜熟了，点一下收进仓库'},
   {k:'cook',  t:'第四步 · 去灶台，挑一道菜下锅'},
   {k:'serve', t:'第五步 · 菜出锅了点「盛盘」，自动进账'}
@@ -3369,8 +3719,8 @@ function setTool(t){
   S.tool=t;
   if(el.dockHoe){ el.dockHoe.classList.toggle('on',t==='hoe'); el.dockWater.classList.toggle('on',t==='water'); }
   if(t==='seed'&&!S.selected) S.selected='cabbage';
-  el.toolHoe.classList.toggle('on',t==='hoe');
-  el.toolWater.classList.toggle('on',t==='water');
+  if(el.toolHoe) el.toolHoe.classList.toggle('on',t==='hoe');
+  if(el.toolWater) el.toolWater.classList.toggle('on',t==='water');
   updateToolHint();
   renderSeeds();
   save();
@@ -3414,7 +3764,7 @@ function tryUnlock(i){
 }
 let seedFromField=false;
 function jumpToSeeds(){
-  if(S.tab!=='farm') setTab('farm');   // 别在别的页里找看不见的种子袋
+  if(S.tab!=='farm') setTab('farm');   // 别在别的页里找看不见的种子市场
   const sn=el.seeds; if(!sn) return;
   seedFromField=true;
   const y=sn.getBoundingClientRect().top+scrollY-Math.min(140,innerHeight*0.22);
@@ -3467,6 +3817,7 @@ function doAction(i){
     S.water--;
     bumpToday('w');
     spark(c.x,c.y,9,'water','#6FA8B0');
+    sfx('water');
     showToast('浇透了，土色深，菜长得快');
     tutorTick('water');
     save(); syncUI();
@@ -3482,6 +3833,10 @@ function doAction(i){
   S.coins-=sc;
   p.state='crop'; p.crop=key; p.progress=0; p.moist=Math.max(p.moist,.25); p.idle=0;
   spark(c.x,c.y,8,'seed',crop.tint);
+  S.cropLog=S.cropLog||{};
+  const cl=S.cropLog[p.crop]||(S.cropLog[p.crop]={p:0,h:0,best:0});
+  cl.p=(cl.p||0)+1;
+  sfx('plant');
   showToast('种下了 '+crop.name);
   tutorTick('seed');
   bulkSeed(i,key);
@@ -3494,6 +3849,14 @@ function harvest(i,c){
   const bonus=Math.random()<(.06+(p.care||0)*.5);
   S.basket[p.crop]=(S.basket[p.crop]||0)+1+(bonus?1:0);
   S.harvests++;
+  const got=1+(bonus?1:0);
+  S.cropLog=S.cropLog||{};
+  const cl=S.cropLog[p.crop]||(S.cropLog[p.crop]={p:0,h:0,best:0});
+  cl.h=(cl.h||0)+got; cl.best=Math.max(cl.best||0,got);
+  ledgerInit(); S.ledger.h+=got;
+  if(S.ledger.bestDay!==S.day){ S.ledger.bestDay=S.day; S.ledger.bestDayH=0; }
+  S.ledger.bestDayH+=got;
+  sfx('harvest');
   wishBump('crop:'+p.crop, bonus?2:1);
   dexAdd('c:'+p.crop);
   bumpToday('h');
@@ -4874,10 +5237,13 @@ function updateHens(dt){
       h.ty=HEN_ZONE.y0+Math.random()*(HEN_ZONE.y1-HEN_ZONE.y0);
     }
     h.peck=Math.max(0,h.peck-dt);
+    const rain=S.weather==='rain';
+    const target=rain?40:((S.gear&&S.gear.dog)?74:66);
+    S.henMood[i]=clamp((S.henMood[i]||60)+((target-(S.henMood[i]||60))*.05*dt),8,100);
     S.henTimers[i]-=dt;
     if(S.henTimers[i]<=0){
       layEgg(h);
-      S.henTimers[i]=32+Math.random()*24;
+      S.henTimers[i]=(32+Math.random()*24)*moodFactor(S.henMood[i]||60);
     }
   }
 }
@@ -5096,6 +5462,9 @@ function collectEgg(k){
   if(!e) return;
   S.eggs.splice(k,1);
   S.eggStock=(S.eggStock||0)+1; S.eggsCollected++; dexAdd('b:egg'); wishBump('egg',1);
+  S.henMood=S.henMood||[];
+  if(S.henMood.length) S.henMood[0]=Math.min(100,(S.henMood[0]||60)+4);
+  sfx('egg');
   showToast('捡了枚蛋，放进仓库');
   spark(e.x,e.y,9,'coin','#F3E8CE');
   save(); syncUI();
@@ -6594,9 +6963,20 @@ function draw(){
 
 /* ---- 规则推进 ---- */
 let saveAcc=0, uiAcc=0;
+let paused=false;
+function togglePause(){
+  paused=!paused;
+  document.body.classList.toggle('is-paused',paused);
+  if(el.pauseMask) el.pauseMask.classList.toggle('show',paused);
+  ambienceTick();
+  if(el.pauseBtn) el.pauseBtn.textContent=paused?'继续':'暂停';
+  clockSig=''; syncClock();
+  if(paused){ save(); }
+  else showToast('接着走 · 日子又开始过了');
+}
 let achvTick=0;
 function update(dt){
-  if(dayEndOpen||guideOpen) return;   // 打烊小结 / 玩法弹窗看着的时候，日子先不走
+  if(paused||dayEndOpen||guideOpen) return;   // 打烊小结 / 玩法弹窗看着的时候，日子先不走
   if(S.pickle&&S.pickle.left>0){
     S.pickle.left-=dt;
     if(S.pickle.left<=0){ S.pickle.left=0; showToast('腌菜出缸了，去仓库取'); save(); syncUI(true); }
@@ -6734,6 +7114,7 @@ function update(dt){
     c.left=Math.max(0,c.left-dt);
     if(before>0&&c.left<=0){
       spark(k==='cook'?846:786,k==='cook'?330:336,10,'dot','#F2E6B8');
+      sfx('cook');
       showToast(DISHES[c.dish].name+'好了，点灶台盛盘');
       save();
     }
@@ -6832,8 +7213,8 @@ el.toolUps.addEventListener('click',e=>{
   const b=e.target.closest('[data-up]');
   if(b) upTool(b.dataset.up);
 });
-el.toolHoe.addEventListener('click',()=>setTool('hoe'));
-el.toolWater.addEventListener('click',()=>setTool('water'));
+if(el.toolHoe) el.toolHoe.addEventListener('click',()=>setTool('hoe'));
+if(el.toolWater) el.toolWater.addEventListener('click',()=>setTool('water'));
 
 el.seeds.addEventListener('click',e=>{
   const btn=e.target.closest('.pack');
@@ -6868,6 +7249,10 @@ if(el.tutorX) el.tutorX.addEventListener('click',()=>{
   S.tutorOff=1; el.tutor.hidden=true; save(); showToast('那就自己摸索吧，随时点右上角「玩法」');
 });
   dockLoad(); dockDrag();
+  try{
+    const stg=document.querySelector('.stage');
+    if(el.dock&&stg){ stg.appendChild(el.dock); el.dock.classList.add('pinned'); }
+  }catch(e){}
   // 首屏就把工具条抬到菜单栏上方，别压着页签
   try{
     const cs=getComputedStyle(el.dock);
@@ -6924,7 +7309,7 @@ el.addHen.addEventListener('click',()=>{
   const cost=henCost();
   if(cost===null){ showToast('已经五只鸡，够热闹了'); return; }
   if(S.coins<cost){ showToast('铜钱不够，得攒到 '+cost); return; }
-  S.coins-=cost; S.hens++; S.henTimers.push(24);
+  S.coins-=cost; S.hens++; S.henTimers.push(24); S.henMood=S.henMood||[]; S.henMood.push(62);
   syncHens();
   showToast('添了一只鸡，院里更热闹了');
   save(); syncUI(true);
@@ -7029,7 +7414,7 @@ el.buys.addEventListener('click',e=>{
 });
 
 el.reset.addEventListener('click',()=>{
-  if(!confirm('重开一季？菜地、铜钱、鸡和订单都会清空。')) return;
+  if(!confirm('重开一季？农事、铜钱、鸡和订单都会清空。')) return;
   S=freshState(); syncOrders(); wishStart(); P.length=0; syncHens();
   bird=null; birdTimer=52;
   closeStove();
@@ -7051,6 +7436,7 @@ document.addEventListener('keydown',e=>{
 const hadSave=load();
 applyTheme(S.theme||'green');
 applyArt(S.art||'green',false);
+if(S.custom) applyCustom(S.custom);
 renderTheme();
 if(S.pets){ ['cat','dog'].forEach(k=>{ if(S.pets[k]) petRun[k]=petInit(k); }); }
 syncOrders();
