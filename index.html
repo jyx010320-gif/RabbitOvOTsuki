@@ -114,13 +114,13 @@
         .section-title.gap {
             margin-top: 6px;
         }
-        /* 单个项目按钮 */
+        /* 单个项目按钮：左边文字两行，右边箭头 */
         .project-item {
             display: flex;
             justify-content: space-between;
             align-items: center;
             gap: 6px;
-            padding: 12px 10px;
+            padding: 10px 10px 9px;
             background: #fff;
             border: 1px solid #f3c5d2;
             border-radius: 8px;
@@ -140,6 +140,13 @@
         .project-item.wide {
             grid-column: 1 / -1;
         }
+        /* 文字区：主标题 + 类型小字 */
+        .project-text {
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+            min-width: 0;
+        }
         .project-name {
             display: flex;
             align-items: center;
@@ -148,6 +155,16 @@
             font-size: 14px;
             line-height: 1.3;
             min-width: 0;
+        }
+        /* 类型小字：浅一号的粉灰，字号小、字距略松 */
+        .project-type {
+            font-size: 11px;
+            line-height: 1.2;
+            color: #b09a9e;
+            letter-spacing: 1px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
         .arrow {
             color: #d17b8e;
@@ -208,15 +225,21 @@
 
             <!-- 工具 1：日记本（雪原日记） -->
             <a href="diary.html" class="project-item">
-                <div class="project-name">
-                    📖 雪原日记
+                <div class="project-text">
+                    <div class="project-name">
+                        📖 雪原日记
+                    </div>
+                    <div class="project-type">日记记录</div>
                 </div>
                 <div class="arrow">➔</div>
             </a>
             <!-- 工具 2：API 测试（兔耳当天线） -->
             <a href="myapi.html" class="project-item">
-                <div class="project-name">
-                    🔌 兔耳天线
+                <div class="project-text">
+                    <div class="project-name">
+                        🔌 兔耳天线
+                    </div>
+                    <div class="project-type">接口测试</div>
                 </div>
                 <div class="arrow">➔</div>
             </a>
@@ -226,50 +249,71 @@
 
             <!-- 游戏 1：节奏音游（长耳跟着鼓点抖） -->
             <a href="BeatRabbit.html" class="project-item">
-                <div class="project-name">
-                    🎵 长耳节拍
+                <div class="project-text">
+                    <div class="project-name">
+                        🎵 长耳节拍
+                    </div>
+                    <div class="project-type">节奏音游</div>
                 </div>
                 <div class="arrow">➔</div>
             </a>
             <!-- 游戏 2：俄罗斯方块（雪砖垒窝） -->
             <a href="ClassicBlocks.html" class="project-item">
-                <div class="project-name">
-                    🧱 兔窝方块
+                <div class="project-text">
+                    <div class="project-name">
+                        🧱 兔窝方块
+                    </div>
+                    <div class="project-type">方块消除</div>
                 </div>
                 <div class="arrow">➔</div>
             </a>
             <!-- 游戏 3：花卉合成（兔爪合花） -->
             <a href="FlowerMerge.html" class="project-item">
-                <div class="project-name">
-                    🌸 兔爪合花
+                <div class="project-text">
+                    <div class="project-name">
+                        🌸 兔爪合花
+                    </div>
+                    <div class="project-type">花卉合成</div>
                 </div>
                 <div class="arrow">➔</div>
             </a>
             <!-- 游戏 4：果园连连看（长耳牵藤连果） -->
             <a href="FruitLink.html" class="project-item">
-                <div class="project-name">
-                    🍉 长耳连连果
+                <div class="project-text">
+                    <div class="project-name">
+                        🍉 长耳连连果
+                    </div>
+                    <div class="project-type">果园连连看</div>
                 </div>
                 <div class="arrow">➔</div>
             </a>
             <!-- 游戏 5：农场种田（种胡萝卜） -->
             <a href="farm.html" class="project-item">
-                <div class="project-name">
-                    🌾 胡萝卜农场
+                <div class="project-text">
+                    <div class="project-name">
+                        🌾 胡萝卜农场
+                    </div>
+                    <div class="project-type">农场经营</div>
                 </div>
                 <div class="arrow">➔</div>
             </a>
             <!-- 游戏 6：扫雷（兔爪在冻土里探雷） -->
             <a href="Minesweeper.html" class="project-item">
-                <div class="project-name">
-                    🐾 兔爪扫雷
+                <div class="project-text">
+                    <div class="project-name">
+                        🐾 兔爪扫雷
+                    </div>
+                    <div class="project-type">逻辑扫雷</div>
                 </div>
                 <div class="arrow">➔</div>
             </a>
             <!-- 游戏 7：三消（BerryYard，兔爪把三颗一样的浆果按到一起） -->
             <a href="BerryYard.html" class="project-item wide">
-                <div class="project-name">
-                    🍬 兔爪三消
+                <div class="project-text">
+                    <div class="project-name">
+                        🍬 兔爪三消
+                    </div>
+                    <div class="project-type">浆果三消</div>
                 </div>
                 <div class="arrow">➔</div>
             </a>
