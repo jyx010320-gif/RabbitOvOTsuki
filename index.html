@@ -3,21 +3,156 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="app-version" content="2026-11-24.1">
-    <title>我的游戏小站</title>
+    <meta name="app-version" content="2026-11-24.5">
+    <title>冻土游乐场</title>
     <style>
-        /* 基础设置：粉色系背景和字体 */
+        /* ===== 十套配色：默认樱花粉，切换主题只换这里的变量 ===== */
+        :root {
+            --bg: #fff0f5;
+            --pattern: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 38.5c-1-1-9.5-8-9.5-14 0-3.5 2.5-5.5 5.5-5.5 2 0 3.5 1 4 2 0.5-1 2-2 4-2 3 0 5.5 2 5.5 5.5 0 6-8.5 13-9.5 14z' fill='%23ffb6c1' fill-opacity='0.3'/%3E%3C/svg%3E");
+            --line: #f3c5d2;
+            --line-strong: #e3a8b8;
+            --accent: #d17b8e;
+            --accent-deep: #c9738a;
+            --ink: #5a4a4d;
+            --ink-strong: #3d2f31;
+            --muted: #8c7a7e;
+            --muted-light: #b09a9e;
+            --soft: #ffe4e8;
+            --soft-bg: #fff0f3;
+            --placeholder-bg: rgba(255, 240, 243, 0.85);
+            --glow: rgba(243, 197, 210, 0.4);
+        }
+        /* 1 糖霜粉：粉色底 + 灰色小圆点 */
+        body.theme-sugar {
+            --bg: #fff5f7;
+            --pattern: url("data:image/svg+xml,%3Csvg width='18' height='18' viewBox='0 0 18 18' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='9' cy='9' r='2' fill='%23bfbfbf' fill-opacity='0.45'/%3E%3C/svg%3E");
+            --line: #f5dbe2;
+            --line-strong: #e3b4c2;
+            --accent: #d17b8e;
+            --accent-deep: #c9738a;
+            --soft: #ffe9ef;
+            --soft-bg: #fff7f9;
+            --placeholder-bg: rgba(255, 247, 249, 0.85);
+            --glow: rgba(243, 197, 210, 0.35);
+        }
+        /* 2 幸运绿：浅绿底 + 四叶草 */
+        body.theme-clover {
+            --bg: #f1fbf3;
+            --pattern: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%239ed8a8' fill-opacity='0.4'%3E%3Ccircle cx='20' cy='13' r='5'/%3E%3Ccircle cx='20' cy='27' r='5'/%3E%3Ccircle cx='13' cy='20' r='5'/%3E%3Ccircle cx='27' cy='20' r='5'/%3E%3C/g%3E%3C/svg%3E");
+            --line: #cde9d4;
+            --line-strong: #a8d8b6;
+            --accent: #6fbf8e;
+            --accent-deep: #5aa87b;
+            --soft: #e3f7e9;
+            --soft-bg: #f4fcf6;
+            --placeholder-bg: rgba(244, 252, 246, 0.85);
+            --glow: rgba(158, 216, 168, 0.4);
+        }
+        /* 3 游鱼蓝：浅蓝底 + 小鱼 */
+        body.theme-fish {
+            --bg: #f0f8ff;
+            --pattern: url("data:image/svg+xml,%3Csvg width='40' height='30' viewBox='0 0 40 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23a9ccf5' fill-opacity='0.5'%3E%3Cellipse cx='14' cy='15' rx='8' ry='5'/%3E%3Cpath d='M22 15l7-5v10z'/%3E%3C/g%3E%3C/svg%3E");
+            --line: #cfe2f7;
+            --line-strong: #a9c8e8;
+            --accent: #77a8d8;
+            --accent-deep: #6798c9;
+            --soft: #e4f0fd;
+            --soft-bg: #f5faff;
+            --placeholder-bg: rgba(245, 250, 255, 0.85);
+            --glow: rgba(169, 204, 245, 0.4);
+        }
+        /* 4 蛋奶黄：浅黄底 + 小蓝点 */
+        body.theme-custard {
+            --bg: #fffcee;
+            --pattern: url("data:image/svg+xml,%3Csvg width='16' height='16' viewBox='0 0 16 16' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='8' cy='8' r='2.2' fill='%23a9c8f2' fill-opacity='0.55'/%3E%3C/svg%3E");
+            --line: #f4e5c3;
+            --line-strong: #e4cf9a;
+            --accent: #d4a95f;
+            --accent-deep: #c49a4f;
+            --soft: #fdf5dd;
+            --soft-bg: #fffdf4;
+            --placeholder-bg: rgba(255, 253, 244, 0.85);
+            --glow: rgba(238, 220, 170, 0.45);
+        }
+        /* 5 薄荷棕：薄荷绿底 + 棕色小点 */
+        body.theme-mint {
+            --bg: #f0fbf8;
+            --pattern: url("data:image/svg+xml,%3Csvg width='16' height='16' viewBox='0 0 16 16' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='8' cy='8' r='2.2' fill='%23b08a6a' fill-opacity='0.5'/%3E%3C/svg%3E");
+            --line: #cdeae1;
+            --line-strong: #a6d6c8;
+            --accent: #58ab93;
+            --accent-deep: #4a9a83;
+            --soft: #e3f7f2;
+            --soft-bg: #f5fcfa;
+            --placeholder-bg: rgba(245, 252, 250, 0.85);
+            --glow: rgba(166, 214, 200, 0.4);
+        }
+        /* 6 蝴蝶粉：粉白竖条纹 + 粉色蝴蝶结 */
+        body.theme-bow {
+            --bg: #fff2f6;
+            --pattern: url("data:image/svg+xml,%3Csvg width='48' height='48' viewBox='0 0 48 48' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffd9e2' fill-opacity='0.55'%3E%3Crect x='0' y='0' width='12' height='48'/%3E%3Crect x='24' y='0' width='12' height='48'/%3E%3C/g%3E%3Cg fill='%23f2a3bb' fill-opacity='0.7'%3E%3Cellipse cx='19' cy='24' rx='6' ry='3.6' transform='rotate(-25 19 24)'/%3E%3Cellipse cx='29' cy='24' rx='6' ry='3.6' transform='rotate(25 29 24)'/%3E%3Ccircle cx='24' cy='24' r='2.4'/%3E%3C/g%3E%3C/svg%3E");
+            --line: #f5d3dd;
+            --line-strong: #e9b2c2;
+            --accent: #d97d97;
+            --accent-deep: #c76d87;
+            --soft: #ffe3ea;
+            --soft-bg: #fff7f9;
+            --placeholder-bg: rgba(255, 247, 249, 0.85);
+            --glow: rgba(244, 178, 196, 0.4);
+        }
+        /* 7 海魂蓝：蓝白条纹交叉 */
+        body.theme-sailor {
+            --bg: #f7fafe;
+            --pattern: repeating-linear-gradient(0deg, rgba(169, 200, 238, 0.4) 0px, rgba(169, 200, 238, 0.4) 8px, transparent 8px, transparent 16px), repeating-linear-gradient(90deg, rgba(169, 200, 238, 0.4) 0px, rgba(169, 200, 238, 0.4) 8px, transparent 8px, transparent 16px);
+            --line: #dbe7f6;
+            --line-strong: #b9cde6;
+            --accent: #5f86b8;
+            --accent-deep: #527aa9;
+            --soft: #eaf1fb;
+            --soft-bg: #f9fbff;
+            --placeholder-bg: rgba(249, 251, 255, 0.85);
+            --glow: rgba(185, 205, 230, 0.4);
+        }
+        /* 8 星砂米：米白底 + 大小不一的米棕星星 */
+        body.theme-star {
+            --bg: #faf6ef;
+            --pattern: url("data:image/svg+xml,%3Csvg width='48' height='48' viewBox='0 0 48 48' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23d8c3a5' fill-opacity='0.55'%3E%3Cpath d='M16 6L18.5 13.5L26 16L18.5 18.5L16 26L13.5 18.5L6 16L13.5 13.5Z'/%3E%3Cpath d='M38 29L39.2 33L43 34L39.2 35L38 39L36.8 35L33 34L36.8 33Z'/%3E%3Cpath d='M34 4L34.8 6.4L37 7L34.8 7.8L34 10L33.2 7.8L31 7L33.2 6.4Z'/%3E%3C/g%3E%3C/svg%3E");
+            --line: #e9ddca;
+            --line-strong: #d3bfa4;
+            --accent: #c2a887;
+            --accent-deep: #b29876;
+            --soft: #f3ecdf;
+            --soft-bg: #fbf8f1;
+            --placeholder-bg: rgba(251, 248, 241, 0.85);
+            --glow: rgba(216, 195, 165, 0.4);
+        }
+        /* 9 猫爪棕：牛皮质感 + 棕色猫爪 */
+        body.theme-paw {
+            --bg: #f7efe6;
+            --pattern: url("data:image/svg+xml,%3Csvg width='48' height='48' viewBox='0 0 48 48' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23d9bfa6' fill-opacity='0.22'%3E%3Ccircle cx='6' cy='6' r='2'/%3E%3Ccircle cx='42' cy='11' r='1.6'/%3E%3Ccircle cx='11' cy='43' r='1.8'/%3E%3Ccircle cx='38' cy='40' r='2.2'/%3E%3C/g%3E%3Cg fill='%23c8a382' fill-opacity='0.5'%3E%3Cellipse cx='24' cy='32' rx='8' ry='6'/%3E%3Ccircle cx='14' cy='21' r='3'/%3E%3Ccircle cx='20' cy='18' r='3'/%3E%3Ccircle cx='28' cy='18' r='3'/%3E%3Ccircle cx='34' cy='21' r='3'/%3E%3C/g%3E%3C/svg%3E");
+            --line: #ecdcc9;
+            --line-strong: #d6bfa5;
+            --accent: #b08a63;
+            --accent-deep: #9e7a55;
+            --soft: #f4eadd;
+            --soft-bg: #faf5ee;
+            --placeholder-bg: rgba(250, 245, 238, 0.85);
+            --glow: rgba(200, 163, 130, 0.4);
+        }
+
+        /* 基础设置：背景和字体 */
         body {
             margin: 0;
             padding: 20px 10px;
-            /* 使用 SVG 生成无缝拼接的小爱心背景 */
-            background-color: #fff0f5;
-            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 38.5c-1-1-9.5-8-9.5-14 0-3.5 2.5-5.5 5.5-5.5 2 0 3.5 1 4 2 0.5-1 2-2 4-2 3 0 5.5 2 5.5 5.5 0 6-8.5 13-9.5 14z' fill='%23ffb6c1' fill-opacity='0.3'/%3E%3C/svg%3E");
+            background-color: var(--bg);
+            background-image: var(--pattern);
             background-attachment: fixed;
             font-family: "PingFang SC", "Microsoft YaHei", sans-serif;
-            color: #5a4a4d;
+            color: var(--ink);
             display: flex;
             justify-content: center;
+            transition: background-color 0.35s ease, color 0.35s ease;
         }
         /* 主容器 */
         .container {
@@ -27,40 +162,43 @@
             flex-direction: column;
             gap: 20px;
         }
-        /* 统一的卡片样式（虚线边框，半透明白底能看到背景的爱心） */
+        /* 统一的卡片样式（虚线边框，半透明白底能看到背景图案） */
         .card {
-            background: rgba(255, 255, 255, 0.85);
-            border: 2px dashed #f3c5d2;
+            background: rgba(255, 255, 255, 0.86);
+            border: 2px dashed var(--line);
             border-radius: 12px;
             padding: 20px;
-            box-shadow: 0 4px 15px rgba(243, 197, 210, 0.3);
+            box-shadow: 0 4px 15px var(--glow);
             position: relative;
             backdrop-filter: blur(4px);
+            transition: border-color 0.35s ease, box-shadow 0.35s ease;
         }
-        /* 顶部个人信息卡片（右侧留出刷新按钮的位置） */
+        /* 顶部个人信息卡片（右侧留出按钮的位置） */
         .profile-card {
             display: flex;
             align-items: center;
             gap: 15px;
             padding-right: 48px;
+            z-index: 10;
         }
         /* 头像 */
         .avatar {
             width: 80px;
             height: 80px;
             border-radius: 50%;
-            border: 2px solid #f3c5d2;
-            background: #ffe4e8;
+            border: 2px solid var(--line);
+            background: var(--soft);
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 35px;
-            box-shadow: 0 2px 8px rgba(243, 197, 210, 0.5);
+            box-shadow: 0 2px 8px var(--glow);
+            transition: border-color 0.35s ease, background 0.35s ease;
         }
         .info h1 {
             margin: 0 0 5px 0;
             font-size: 22px;
-            color: #3d2f31;
+            color: var(--ink-strong);
             display: flex;
             align-items: center;
             gap: 10px;
@@ -68,11 +206,11 @@
         .info p {
             margin: 0 0 5px 0;
             font-size: 14px;
-            color: #8c7a7e;
+            color: var(--muted);
         }
         .info .subtitle {
             font-size: 13px;
-            color: #b09a9e;
+            color: var(--muted-light);
             display: flex;
             align-items: center;
             gap: 5px;
@@ -84,10 +222,10 @@
             gap: 8px;
             font-size: 16px;
             font-weight: bold;
-            color: #d17b8e;
+            color: var(--accent);
             margin-bottom: 15px;
             padding-bottom: 10px;
-            border-bottom: 1px dashed #f3c5d2;
+            border-bottom: 1px dashed var(--line);
         }
         /* 项目列表：一行两个（两列网格） */
         .project-list {
@@ -104,13 +242,13 @@
             font-size: 13px;
             font-weight: 600;
             letter-spacing: 1px;
-            color: #c9738a;
+            color: var(--accent-deep);
         }
         .section-title::after {
             content: "";
             flex: 1;
             height: 1px;
-            background: linear-gradient(to right, #f3c5d2, rgba(243, 197, 210, 0));
+            background: linear-gradient(to right, var(--line), transparent);
         }
         /* 第二个分类标题上方留一点空，和上一组项目分开 */
         .section-title.gap {
@@ -124,19 +262,19 @@
             gap: 6px;
             padding: 10px 10px 9px;
             background: #fff;
-            border: 1px solid #f3c5d2;
+            border: 1px solid var(--line);
             border-radius: 8px;
             text-decoration: none;
-            color: #5a4a4d;
+            color: var(--ink);
             transition: all 0.3s ease;
             box-shadow: 0 2px 5px rgba(0,0,0,0.02);
             min-width: 0;
         }
         .project-item:hover {
-            background: #fff0f3;
-            border-color: #e3a8b8;
+            background: var(--soft-bg);
+            border-color: var(--line-strong);
             transform: translateY(-3px);
-            box-shadow: 0 4px 8px rgba(243, 197, 210, 0.4);
+            box-shadow: 0 4px 8px var(--glow);
         }
         /* 项目数量为奇数时，最后单独一项通栏铺满，避免留空格子 */
         .project-item.wide {
@@ -158,18 +296,18 @@
             line-height: 1.3;
             min-width: 0;
         }
-        /* 类型小字：浅一号的粉灰，字号小、字距略松 */
+        /* 类型小字：浅一号的灰，字号小、字距略松 */
         .project-type {
             font-size: 11px;
             line-height: 1.2;
-            color: #b09a9e;
+            color: var(--muted-light);
             letter-spacing: 1px;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
         }
         .arrow {
-            color: #d17b8e;
+            color: var(--accent);
             font-weight: bold;
             flex-shrink: 0;
         }
@@ -179,10 +317,10 @@
             text-align: center;
             padding: 15px;
             font-size: 14px;
-            color: #b09a9e;
-            border: 1px dashed #f3c5d2;
+            color: var(--muted-light);
+            border: 1px dashed var(--line);
             border-radius: 8px;
-            background: rgba(255, 240, 243, 0.8);
+            background: var(--placeholder-bg);
         }
 
         /* 更新提示条：固定在顶部，默认藏在视口上方 */
@@ -196,13 +334,13 @@
             align-items: center;
             gap: 10px;
             padding: 10px 16px;
-            background: linear-gradient(90deg, #ffe4e8, #ffd6e0);
-            border-bottom: 1px solid #f3c5d2;
-            box-shadow: 0 4px 12px rgba(243, 197, 210, 0.5);
+            background: var(--soft);
+            border-bottom: 1px solid var(--line);
+            box-shadow: 0 4px 12px var(--glow);
             font-size: 13px;
-            color: #8c5a68;
+            color: var(--accent-deep);
             transform: translateY(-110%);
-            transition: transform 0.35s ease;
+            transition: transform 0.35s ease, background 0.35s ease;
         }
         .update-banner.show {
             transform: translateY(0);
@@ -216,7 +354,7 @@
             border: none;
             border-radius: 999px;
             padding: 6px 14px;
-            background: #e3a8b8;
+            background: var(--line-strong);
             color: #fff;
             font-size: 12px;
             font-weight: 600;
@@ -225,23 +363,23 @@
             transition: background 0.25s ease;
         }
         .update-banner .refresh-btn:hover {
-            background: #d17b8e;
+            background: var(--accent);
         }
         .update-banner .close-btn {
             flex-shrink: 0;
             border: none;
             background: transparent;
-            color: #b09a9e;
+            color: var(--muted-light);
             font-size: 15px;
             line-height: 1;
             cursor: pointer;
             padding: 2px 4px;
         }
 
-        /* 刷新按钮：贴在“我的游戏小站”卡片的右上角，做小一号 */
-        .refresh-fab {
+        /* 卡片右上角的两个小圆钮：刷新在上，配色在下 */
+        .refresh-fab,
+        .palette-fab {
             position: absolute;
-            top: 10px;
             right: 10px;
             z-index: 2;
             width: 30px;
@@ -250,28 +388,145 @@
             align-items: center;
             justify-content: center;
             border-radius: 50%;
-            border: 1px solid #f3c5d2;
+            border: 1px solid var(--line);
             background: rgba(255, 255, 255, 0.9);
-            color: #d17b8e;
+            color: var(--accent);
             font-size: 15px;
             line-height: 1;
             cursor: pointer;
             font-family: inherit;
-            box-shadow: 0 2px 8px rgba(243, 197, 210, 0.4);
+            box-shadow: 0 2px 8px var(--glow);
             -webkit-backdrop-filter: blur(6px);
             backdrop-filter: blur(6px);
-            transition: background 0.25s ease, transform 0.5s ease, box-shadow 0.25s ease;
+            transition: background 0.25s ease, transform 0.5s ease, box-shadow 0.25s ease, border-color 0.35s ease;
+        }
+        .refresh-fab {
+            top: 10px;
+        }
+        .palette-fab {
+            top: 46px;
+            font-size: 14px;
         }
         .refresh-fab:hover {
-            background: #fff0f3;
+            background: var(--soft-bg);
             transform: rotate(180deg);
-            box-shadow: 0 4px 10px rgba(243, 197, 210, 0.55);
+            box-shadow: 0 4px 10px var(--glow);
         }
         .refresh-fab:active {
             transform: scale(0.92);
         }
+        .palette-fab:hover {
+            background: var(--soft-bg);
+            transform: scale(1.08);
+            box-shadow: 0 4px 10px var(--glow);
+        }
+        .palette-fab:active {
+            transform: scale(0.92);
+        }
 
-        /* 刷新时间悬浮框：固定在屏幕最顶上，默认隐藏 */
+        /* 配色选择面板：点配色按钮后从按钮下方弹出 */
+        .palette-panel {
+            position: absolute;
+            top: 78px;
+            right: 10px;
+            z-index: 20;
+            width: 208px;
+            padding: 12px;
+            border-radius: 12px;
+            border: 1px solid var(--line);
+            background: rgba(255, 255, 255, 0.97);
+            box-shadow: 0 8px 22px var(--glow);
+            opacity: 0;
+            transform: translateY(-8px) scale(0.97);
+            transform-origin: top right;
+            pointer-events: none;
+            transition: opacity 0.25s ease, transform 0.25s ease;
+        }
+        .palette-panel.show {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+            pointer-events: auto;
+        }
+        .palette-title {
+            font-size: 11px;
+            color: var(--muted-light);
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+        }
+        .palette-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 7px;
+        }
+        .palette-option {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            padding: 6px 6px;
+            border-radius: 8px;
+            border: 1px solid var(--line);
+            background: #fff;
+            color: var(--ink);
+            font-size: 11.5px;
+            font-family: inherit;
+            line-height: 1;
+            cursor: pointer;
+            transition: background 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+        .palette-option:hover {
+            background: var(--soft-bg);
+            border-color: var(--line-strong);
+        }
+        .palette-option.active {
+            border-color: var(--line-strong);
+            background: var(--soft-bg);
+            box-shadow: inset 0 0 0 1px var(--line-strong);
+            font-weight: 600;
+        }
+        .palette-option .dots {
+            display: flex;
+            gap: 2px;
+            flex-shrink: 0;
+        }
+        .palette-option .dots i {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            display: block;
+        }
+        /* 十套配色各自的三个小色点 */
+        .palette-option[data-theme="sugar"] .dots i:nth-child(1) { background: #f5dbe2; }
+        .palette-option[data-theme="sugar"] .dots i:nth-child(2) { background: #bfbfbf; }
+        .palette-option[data-theme="sugar"] .dots i:nth-child(3) { background: #d17b8e; }
+        .palette-option[data-theme="clover"] .dots i:nth-child(1) { background: #cde9d4; }
+        .palette-option[data-theme="clover"] .dots i:nth-child(2) { background: #9ed8a8; }
+        .palette-option[data-theme="clover"] .dots i:nth-child(3) { background: #6fbf8e; }
+        .palette-option[data-theme="fish"] .dots i:nth-child(1) { background: #cfe2f7; }
+        .palette-option[data-theme="fish"] .dots i:nth-child(2) { background: #a9ccf5; }
+        .palette-option[data-theme="fish"] .dots i:nth-child(3) { background: #77a8d8; }
+        .palette-option[data-theme="custard"] .dots i:nth-child(1) { background: #f4e5c3; }
+        .palette-option[data-theme="custard"] .dots i:nth-child(2) { background: #a9c8f2; }
+        .palette-option[data-theme="custard"] .dots i:nth-child(3) { background: #d4a95f; }
+        .palette-option[data-theme="mint"] .dots i:nth-child(1) { background: #cdeae1; }
+        .palette-option[data-theme="mint"] .dots i:nth-child(2) { background: #b08a6a; }
+        .palette-option[data-theme="mint"] .dots i:nth-child(3) { background: #58ab93; }
+        .palette-option[data-theme="bow"] .dots i:nth-child(1) { background: #ffd9e2; }
+        .palette-option[data-theme="bow"] .dots i:nth-child(2) { background: #f2a3bb; }
+        .palette-option[data-theme="bow"] .dots i:nth-child(3) { background: #d97d97; }
+        .palette-option[data-theme="sailor"] .dots i:nth-child(1) { background: #eaf1fb; }
+        .palette-option[data-theme="sailor"] .dots i:nth-child(2) { background: #a9c8ee; }
+        .palette-option[data-theme="sailor"] .dots i:nth-child(3) { background: #5f86b8; }
+        .palette-option[data-theme="star"] .dots i:nth-child(1) { background: #f3ecdf; }
+        .palette-option[data-theme="star"] .dots i:nth-child(2) { background: #d8c3a5; }
+        .palette-option[data-theme="star"] .dots i:nth-child(3) { background: #c2a887; }
+        .palette-option[data-theme="paw"] .dots i:nth-child(1) { background: #ecdcc9; }
+        .palette-option[data-theme="paw"] .dots i:nth-child(2) { background: #c8a382; }
+        .palette-option[data-theme="paw"] .dots i:nth-child(3) { background: #b08a63; }
+        .palette-option[data-theme="sakura"] .dots i:nth-child(1) { background: #ffb6c1; }
+        .palette-option[data-theme="sakura"] .dots i:nth-child(2) { background: #f3c5d2; }
+        .palette-option[data-theme="sakura"] .dots i:nth-child(3) { background: #d17b8e; }
+
+        /* 顶部悬浮框：显示刷新时间 / 切换配色结果 */
         .refresh-toast {
             position: fixed;
             top: 12px;
@@ -282,10 +537,10 @@
             gap: 6px;
             padding: 8px 16px;
             border-radius: 999px;
-            border: 1px solid #f3c5d2;
+            border: 1px solid var(--line);
             background: rgba(255, 255, 255, 0.96);
-            box-shadow: 0 4px 14px rgba(243, 197, 210, 0.45);
-            color: #8c5a68;
+            box-shadow: 0 4px 14px var(--glow);
+            color: var(--accent-deep);
             font-size: 12.5px;
             letter-spacing: 0.5px;
             white-space: nowrap;
@@ -315,9 +570,9 @@
         }
     </style>
 </head>
-<body>
+<body class="theme-sakura">
 
-<!-- 刷新时间悬浮框 -->
+<!-- 顶部悬浮框 -->
 <div class="refresh-toast" id="refresh-toast">
     <span id="refresh-time-text">已刷新</span>
 </div>
@@ -335,12 +590,50 @@
     <div class="card profile-card">
         <div class="avatar">🐰</div>
         <div class="info">
-            <h1>我的游戏小站</h1>
+            <h1>冻土游乐场</h1>
             <p>@jyx010320-gif</p>
             <div class="subtitle">✨ o北极兔o</div>
         </div>
-        <!-- 刷新按钮：贴在个人信息卡右侧 -->
+        <!-- 刷新按钮（上） -->
         <button class="refresh-fab" id="refresh-fab" title="刷新页面" aria-label="刷新页面">↻</button>
+        <!-- 修改配色按钮（下） -->
+        <button class="palette-fab" id="palette-fab" title="修改配色" aria-label="修改配色">🎨</button>
+        <!-- 配色面板 -->
+        <div class="palette-panel" id="palette-panel">
+            <div class="palette-title">🖌 选一套配色</div>
+            <div class="palette-grid">
+                <button class="palette-option" data-theme="sugar">
+                    <span class="dots"><i></i><i></i><i></i></span>糖霜粉
+                </button>
+                <button class="palette-option" data-theme="clover">
+                    <span class="dots"><i></i><i></i><i></i></span>幸运绿
+                </button>
+                <button class="palette-option" data-theme="fish">
+                    <span class="dots"><i></i><i></i><i></i></span>游鱼蓝
+                </button>
+                <button class="palette-option" data-theme="custard">
+                    <span class="dots"><i></i><i></i><i></i></span>蛋奶黄
+                </button>
+                <button class="palette-option" data-theme="mint">
+                    <span class="dots"><i></i><i></i><i></i></span>薄荷棕
+                </button>
+                <button class="palette-option" data-theme="bow">
+                    <span class="dots"><i></i><i></i><i></i></span>蝴蝶粉
+                </button>
+                <button class="palette-option" data-theme="sailor">
+                    <span class="dots"><i></i><i></i><i></i></span>海魂蓝
+                </button>
+                <button class="palette-option" data-theme="star">
+                    <span class="dots"><i></i><i></i><i></i></span>星砂米
+                </button>
+                <button class="palette-option" data-theme="paw">
+                    <span class="dots"><i></i><i></i><i></i></span>猫爪棕
+                </button>
+                <button class="palette-option" data-theme="sakura">
+                    <span class="dots"><i></i><i></i><i></i></span>樱花粉
+                </button>
+            </div>
+        </div>
     </div>
     <!-- 2. 项目列表区 -->
     <div class="card">
@@ -466,10 +759,28 @@
         var refreshBtn = document.getElementById('refresh-btn');
         var closeBtn = document.getElementById('close-btn');
         var refreshFab = document.getElementById('refresh-fab');
+        var paletteFab = document.getElementById('palette-fab');
+        var palettePanel = document.getElementById('palette-panel');
+        var paletteOptions = document.querySelectorAll('.palette-option');
         var toast = document.getElementById('refresh-toast');
         var toastText = document.getElementById('refresh-time-text');
         var toastTimer = null;
         var shown = false;
+
+        /* 十套配色 */
+        var THEMES = [
+            { key: 'sugar', name: '糖霜粉' },
+            { key: 'clover', name: '幸运绿' },
+            { key: 'fish', name: '游鱼蓝' },
+            { key: 'custard', name: '蛋奶黄' },
+            { key: 'mint', name: '薄荷棕' },
+            { key: 'bow', name: '蝴蝶粉' },
+            { key: 'sailor', name: '海魂蓝' },
+            { key: 'star', name: '星砂米' },
+            { key: 'paw', name: '猫爪棕' },
+            { key: 'sakura', name: '樱花粉' }
+        ];
+        var THEME_KEY = 'site-theme';
 
         /* 时间格式化成 14:32:05 */
         function formatTime(ts) {
@@ -478,15 +789,71 @@
             return pad(d.getHours()) + ':' + pad(d.getMinutes()) + ':' + pad(d.getSeconds());
         }
 
-        /* 顶部悬浮框显示刷新时间，3 秒后自动收起 */
-        function showRefreshToast(ts) {
-            toastText.textContent = '🔄 已刷新 · ' + formatTime(ts);
+        /* 顶部悬浮框，3 秒后自动收起 */
+        function showToast(text) {
+            toastText.textContent = text;
             toast.classList.add('show');
             clearTimeout(toastTimer);
             toastTimer = setTimeout(function () {
                 toast.classList.remove('show');
             }, 3000);
         }
+
+        /* 面板里高亮当前配色 */
+        function syncActiveOption(key) {
+            for (var i = 0; i < paletteOptions.length; i++) {
+                var isActive = paletteOptions[i].getAttribute('data-theme') === key;
+                paletteOptions[i].classList.toggle('active', isActive);
+            }
+        }
+
+        /* 应用配色主题 */
+        function applyTheme(key) {
+            THEMES.forEach(function (t) {
+                document.body.classList.remove('theme-' + t.key);
+            });
+            document.body.classList.add('theme-' + key);
+            syncActiveOption(key);
+        }
+
+        /* 启动时恢复上次选的配色 */
+        var savedTheme = null;
+        try { savedTheme = localStorage.getItem(THEME_KEY); } catch (e) {}
+        var themeIndex = 0;
+        THEMES.forEach(function (t, i) {
+            if (t.key === savedTheme) { themeIndex = i; }
+        });
+        applyTheme(THEMES[themeIndex].key);
+
+        /* 配色按钮：点一下打开 / 收起配色面板 */
+        if (paletteFab) {
+            paletteFab.addEventListener('click', function (e) {
+                e.stopPropagation();
+                palettePanel.classList.toggle('show');
+            });
+        }
+
+        /* 点某一块配色：切换并记住，然后收起面板 */
+        for (var oi = 0; oi < paletteOptions.length; oi++) {
+            paletteOptions[oi].addEventListener('click', function () {
+                var key = this.getAttribute('data-theme');
+                THEMES.forEach(function (t, i) {
+                    if (t.key === key) { themeIndex = i; }
+                });
+                applyTheme(key);
+                try { localStorage.setItem(THEME_KEY, key); } catch (e) {}
+                showToast('🎨 已切换 · ' + THEMES[themeIndex].name);
+                palettePanel.classList.remove('show');
+            });
+        }
+
+        /* 点面板以外的地方自动收起 */
+        document.addEventListener('click', function (e) {
+            if (!palettePanel.classList.contains('show')) { return; }
+            if (palettePanel.contains(e.target)) { return; }
+            if (paletteFab && paletteFab.contains(e.target)) { return; }
+            palettePanel.classList.remove('show');
+        });
 
         /* 刷新按钮：把点击时间写进地址，重载后读出来显示 */
         if (refreshFab) {
@@ -503,7 +870,7 @@
             if (!r) { return; }
             var ts = Number(r);
             if (!ts || Date.now() - ts > 15000) { return; }
-            showRefreshToast(ts);
+            showToast('🔄 已刷新 · ' + formatTime(ts));
         })();
 
         /* 本地双击打开（file://）时浏览器不允许读 json，直接跳过检测 */
