@@ -271,6 +271,34 @@
             transform: scale(0.92);
         }
 
+        /* 刷新时间悬浮框：固定在屏幕最顶上，默认隐藏 */
+        .refresh-toast {
+            position: fixed;
+            top: 12px;
+            left: 50%;
+            z-index: 1001;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 16px;
+            border-radius: 999px;
+            border: 1px solid #f3c5d2;
+            background: rgba(255, 255, 255, 0.96);
+            box-shadow: 0 4px 14px rgba(243, 197, 210, 0.45);
+            color: #8c5a68;
+            font-size: 12.5px;
+            letter-spacing: 0.5px;
+            white-space: nowrap;
+            pointer-events: none;
+            opacity: 0;
+            transform: translate(-50%, -16px);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+        .refresh-toast.show {
+            opacity: 1;
+            transform: translate(-50%, 0);
+        }
+
         /* 手机窄屏时退回到一行一个，避免名字挤成一团 */
         @media (max-width: 380px) {
             .project-list {
@@ -289,6 +317,11 @@
 </head>
 <body>
 
+<!-- 刷新时间悬浮框 -->
+<div class="refresh-toast" id="refresh-toast">
+    <span id="refresh-time-text">已刷新</span>
+</div>
+
 <!-- 更新提示条 -->
 <div class="update-banner" id="update-banner">
     <span class="banner-text" id="banner-text">小站有新版本啦</span>
@@ -306,7 +339,7 @@
             <p>@jyx010320-gif</p>
             <div class="subtitle">✨ o北极兔o</div>
         </div>
-        <!-- 刷新按钮：贴在个人信息卡右上角 -->
+        <!-- 刷新按钮：贴在个人信息卡右侧 -->
         <button class="refresh-fab" id="refresh-fab" title="刷新页面" aria-label="刷新页面">↻</button>
     </div>
     <!-- 2. 项目列表区 -->
@@ -433,9 +466,29 @@
         var refreshBtn = document.getElementById('refresh-btn');
         var closeBtn = document.getElementById('close-btn');
         var refreshFab = document.getElementById('refresh-fab');
+        var toast = document.getElementById('refresh-toast');
+        var toastText = document.getElementById('refresh-time-text');
+        var toastTimer = null;
         var shown = false;
 
-        /* 刷新按钮：任何时候都可用（包括本地双击打开） */
+        /* 时间格式化成 14:32:05 */
+        function formatTime(ts) {
+            var d = new Date(ts);
+            function pad(n) { return n < 10 ? '0' + n : '' + n; }
+            return pad(d.getHours()) + ':' + pad(d.getMinutes()) + ':' + pad(d.getSeconds());
+        }
+
+        /* 顶部悬浮框显示刷新时间，3 秒后自动收起 */
+        function showRefreshToast(ts) {
+            toastText.textContent = '🔄 已刷新 · ' + formatTime(ts);
+            toast.classList.add('show');
+            clearTimeout(toastTimer);
+            toastTimer = setTimeout(function () {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        /* 刷新按钮：把点击时间写进地址，重载后读出来显示 */
         if (refreshFab) {
             refreshFab.addEventListener('click', function () {
                 var url = new URL(location.href);
@@ -444,15 +497,24 @@
             });
         }
 
+        /* 刚点过刷新（15 秒内）的话，进页面就把时间弹出来 */
+        (function () {
+            var r = new URL(location.href).searchParams.get('r');
+            if (!r) { return; }
+            var ts = Number(r);
+            if (!ts || Date.now() - ts > 15000) { return; }
+            showRefreshToast(ts);
+        })();
+
         /* 本地双击打开（file://）时浏览器不允许读 json，直接跳过检测 */
         if (!current || location.protocol === 'file:') {
             return;
         }
 
-        /* 点击刷新：带上时间戳，绕过页面缓存 */
+        /* 更新提示条里的刷新：同样记录时间，重载后弹时间框 */
         refreshBtn.addEventListener('click', function () {
             var url = new URL(location.href);
-            url.searchParams.set('v', Date.now());
+            url.searchParams.set('r', Date.now());
             location.href = url.toString();
         });
 
