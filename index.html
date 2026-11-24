@@ -5,9 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>我的游戏小站</title>
     <style>
+        /* 基础设置：粉色系背景和字体 */
         body {
             margin: 0;
             padding: 20px 10px;
+            /* 使用 SVG 生成无缝拼接的小爱心背景 */
             background-color: #fff0f5;
             background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 38.5c-1-1-9.5-8-9.5-14 0-3.5 2.5-5.5 5.5-5.5 2 0 3.5 1 4 2 0.5-1 2-2 4-2 3 0 5.5 2 5.5 5.5 0 6-8.5 13-9.5 14z' fill='%23ffb6c1' fill-opacity='0.3'/%3E%3C/svg%3E");
             background-attachment: fixed;
@@ -16,26 +18,174 @@
             display: flex;
             justify-content: center;
         }
-        .container { width: 100%; max-width: 500px; display: flex; flex-direction: column; gap: 20px; }
-        .card { background: rgba(255, 255, 255, 0.85); border: 2px dashed #f3c5d2; border-radius: 12px; padding: 20px; box-shadow: 0 4px 15px rgba(243, 197, 210, 0.3); position: relative; backdrop-filter: blur(4px); }
-        .profile-card { display: flex; align-items: center; gap: 15px; }
-        .avatar { width: 80px; height: 80px; border-radius: 50%; border: 2px solid #f3c5d2; background: #ffe4e8; display: flex; align-items: center; justify-content: center; font-size: 35px; box-shadow: 0 2px 8px rgba(243, 197, 210, 0.5); }
-        .info h1 { margin: 0 0 5px 0; font-size: 22px; color: #3d2f31; display: flex; align-items: center; gap: 10px; }
-        .info p { margin: 0 0 5px 0; font-size: 14px; color: #8c7a7e; }
-        .info .subtitle { font-size: 13px; color: #b09a9e; display: flex; align-items: center; gap: 5px; }
-        .card-header { display: flex; align-items: center; gap: 8px; font-size: 16px; font-weight: bold; color: #d17b8e; margin-bottom: 15px; padding-bottom: 10px; border-bottom: 1px dashed #f3c5d2; }
-        .project-list { display: flex; flex-direction: column; gap: 12px; }
-        .project-item { display: flex; justify-content: space-between; align-items: center; padding: 12px 15px; background: #fff; border: 1px solid #f3c5d2; border-radius: 8px; text-decoration: none; color: #5a4a4d; transition: all 0.3s ease; box-shadow: 0 2px 5px rgba(0,0,0,0.02); }
-        .project-item:hover { background: #fff0f3; border-color: #e3a8b8; transform: translateX(5px); box-shadow: 0 4px 8px rgba(243, 197, 210, 0.4); }
-        .project-name { display: flex; align-items: center; gap: 10px; font-weight: 500; }
-        .arrow { color: #d17b8e; font-weight: bold; }
-        .placeholder-card { text-align: center; padding: 15px; font-size: 14px; color: #b09a9e; border: 1px dashed #f3c5d2; border-radius: 8px; background: rgba(255, 240, 243, 0.8); margin-top: 10px; }
-        .deco-icon { position: absolute; top: 15px; right: 15px; font-size: 20px; }
+        /* 主容器 */
+        .container {
+            width: 100%;
+            max-width: 500px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        /* 统一的卡片样式（虚线边框，半透明白底能看到背景的爱心） */
+        .card {
+            background: rgba(255, 255, 255, 0.85);
+            border: 2px dashed #f3c5d2;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 15px rgba(243, 197, 210, 0.3);
+            position: relative;
+            backdrop-filter: blur(4px);
+        }
+        /* 顶部个人信息卡片 */
+        .profile-card {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        /* 头像 */
+        .avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            border: 2px solid #f3c5d2;
+            background: #ffe4e8;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 35px;
+            box-shadow: 0 2px 8px rgba(243, 197, 210, 0.5);
+        }
+        .info h1 {
+            margin: 0 0 5px 0;
+            font-size: 22px;
+            color: #3d2f31;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .info p {
+            margin: 0 0 5px 0;
+            font-size: 14px;
+            color: #8c7a7e;
+        }
+        .info .subtitle {
+            font-size: 13px;
+            color: #b09a9e;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        /* 项目列表卡片头部 */
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            color: #d17b8e;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px dashed #f3c5d2;
+        }
+        /* 项目列表：一行两个（两列网格） */
+        .project-list {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+        /* 分类小标题：横跨两列，右侧拖一条渐隐虚线 */
+        .section-title {
+            grid-column: 1 / -1;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            color: #c9738a;
+        }
+        .section-title::after {
+            content: "";
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(to right, #f3c5d2, rgba(243, 197, 210, 0));
+        }
+        /* 第二个分类标题上方留一点空，和上一组项目分开 */
+        .section-title.gap {
+            margin-top: 6px;
+        }
+        /* 单个项目按钮 */
+        .project-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 6px;
+            padding: 12px 10px;
+            background: #fff;
+            border: 1px solid #f3c5d2;
+            border-radius: 8px;
+            text-decoration: none;
+            color: #5a4a4d;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+            min-width: 0;
+        }
+        .project-item:hover {
+            background: #fff0f3;
+            border-color: #e3a8b8;
+            transform: translateY(-3px);
+            box-shadow: 0 4px 8px rgba(243, 197, 210, 0.4);
+        }
+        /* 项目数量为奇数时，最后单独一项通栏铺满，避免留空格子 */
+        .project-item.wide {
+            grid-column: 1 / -1;
+        }
+        .project-name {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-weight: 500;
+            font-size: 14px;
+            line-height: 1.3;
+            min-width: 0;
+        }
+        .arrow {
+            color: #d17b8e;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+        /* 占位提示卡片：通栏顶两个格子，单独占满一行放在最底下 */
+        .placeholder-card {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 15px;
+            font-size: 14px;
+            color: #b09a9e;
+            border: 1px dashed #f3c5d2;
+            border-radius: 8px;
+            background: rgba(255, 240, 243, 0.8);
+        }
+
+        /* 手机窄屏时退回到一行一个，避免名字挤成一团 */
+        @media (max-width: 380px) {
+            .project-list {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* 装饰性小图标 */
+        .deco-icon {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 20px;
+        }
     </style>
 </head>
 <body>
-
 <div class="container">
+
+    <!-- 1. 顶部个人信息区 -->
     <div class="card profile-card">
         <div class="avatar">🐰</div>
         <div class="info">
@@ -44,56 +194,85 @@
             <div class="subtitle">✨ o北极兔o</div>
         </div>
     </div>
-
+    <!-- 2. 项目列表区 -->
     <div class="card">
         <div class="deco-icon">🎀</div>
         <div class="card-header">
             <span>⚙️</span> ✨ 兔兔的奇妙口袋 ✨
         </div>
-        
+
         <div class="project-list">
-            <a href="BeatRabbit.html" class="project-item">
-                <div class="project-name">🎵 节奏感应兔</div>
-                <div class="arrow">➔</div>
-            </a>
 
-            <!-- 确认无空格：ClassicBlocks.html -->
-            <a href="ClassicBlocks.html" class="project-item">
-                <div class="project-name">🧱 经典俄罗斯方块</div>
-                <div class="arrow">➔</div>
-            </a>
+            <!-- ===== 分类：工具 ===== -->
+            <div class="section-title">🧰 工具</div>
 
-            <!-- 确认无空格：FlowerMerge.html -->
-            <a href="FlowerMerge.html" class="project-item">
-                <div class="project-name">🌸 花卉合成</div>
-                <div class="arrow">➔</div>
-            </a>
-
-            <!-- 确认无空格：FruitLink.html -->
-            <a href="FruitLink.html" class="project-item">
-                <div class="project-name">🍉 果园连连看</div>
-                <div class="arrow">➔</div>
-            </a>
-
-            <a href="farm.html" class="project-item">
-                <div class="project-name">🌾 农场小游戏</div>
-                <div class="arrow">➔</div>
-            </a>
-
+            <!-- 工具 1：日记本（雪原日记） -->
             <a href="diary.html" class="project-item">
-                <div class="project-name">📖 日记本</div>
+                <div class="project-name">
+                    📖 雪原日记
+                </div>
                 <div class="arrow">➔</div>
             </a>
-
+            <!-- 工具 2：API 测试（兔耳当天线） -->
             <a href="myapi.html" class="project-item">
-                <div class="project-name">🔌 我的 API 测试</div>
+                <div class="project-name">
+                    🔌 兔耳天线
+                </div>
                 <div class="arrow">➔</div>
             </a>
-        </div>
 
-        <div class="placeholder-card">♡ 更多项目开发中，尽情期待 ♡</div>
+            <!-- ===== 分类：游戏 ===== -->
+            <div class="section-title gap">🎮 游戏</div>
+
+            <!-- 游戏 1：节奏音游（长耳跟着鼓点抖） -->
+            <a href="BeatRabbit.html" class="project-item">
+                <div class="project-name">
+                    🎵 长耳节拍
+                </div>
+                <div class="arrow">➔</div>
+            </a>
+            <!-- 游戏 2：俄罗斯方块（雪砖垒窝） -->
+            <a href="ClassicBlocks.html" class="project-item">
+                <div class="project-name">
+                    🧱 兔窝方块
+                </div>
+                <div class="arrow">➔</div>
+            </a>
+            <!-- 游戏 3：花卉合成（兔爪合花） -->
+            <a href="FlowerMerge.html" class="project-item">
+                <div class="project-name">
+                    🌸 兔爪合花
+                </div>
+                <div class="arrow">➔</div>
+            </a>
+            <!-- 游戏 4：果园连连看（长耳牵藤连果） -->
+            <a href="FruitLink.html" class="project-item">
+                <div class="project-name">
+                    🍉 长耳连连果
+                </div>
+                <div class="arrow">➔</div>
+            </a>
+            <!-- 游戏 5：农场种田（种胡萝卜） -->
+            <a href="farm.html" class="project-item">
+                <div class="project-name">
+                    🌾 胡萝卜农场
+                </div>
+                <div class="arrow">➔</div>
+            </a>
+            <!-- 游戏 6：扫雷（兔爪在冻土里探雷） -->
+            <a href="MineSweeper.html" class="project-item">
+                <div class="project-name">
+                    🐾 兔爪扫雷
+                </div>
+                <div class="arrow">➔</div>
+            </a>
+
+            <!-- 以后的预留位置：横跨两列，永远落在所有项目最下面 -->
+            <div class="placeholder-card">
+                ♡ 更多项目开发中，尽情期待 ♡
+            </div>
+        </div>
     </div>
 </div>
-
 </body>
 </html>
