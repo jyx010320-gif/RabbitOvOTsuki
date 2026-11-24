@@ -274,16 +274,17 @@ input,textarea{font-family:inherit;color:var(--text);}
 
 /* ============ 底部 Tab（液态玻璃） ============ */
 .tab-bar{
-  position:fixed;bottom:22px;left:50%;transform:translateX(-50%);
-  width:min(92%,560px);
-  display:flex;gap:6px;padding:10px 12px;
-  border-radius:30px;
+  position:fixed;bottom:0;left:50%;transform:translateX(-50%);
+  width:min(100%,560px);
+  display:flex;gap:6px;padding:11px 12px calc(11px + env(safe-area-inset-bottom));
+  border-radius:26px 26px 0 0;
   background:rgba(255,255,255,.5);
   backdrop-filter:blur(22px) saturate(1.6);
   -webkit-backdrop-filter:blur(22px) saturate(1.6);
   border:1px solid rgba(255,255,255,.75);
+  border-bottom:none;
   box-shadow:
-    0 12px 32px rgba(214,138,168,.22),
+    0 -10px 30px rgba(214,138,168,.20),
     inset 0 1px 0 rgba(255,255,255,.85),
     inset 0 -1px 0 rgba(243,185,207,.35);
   z-index:40;
