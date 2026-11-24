@@ -2736,11 +2736,39 @@ function openPrint(scope) {
 }
 
 const BOOK_MAX = 20;
+const BOOK_MAX_PHOTO = 8;      // 含配图时降到的上限
+const PHOTO_BLOCK_H = 320;     // 长图里每篇配图占的高度
 
-function buildBookPoster(list, title) {
-  const W = POSTER_W, PAD = POSTER_PAD, inner = W - PAD * 2, scale = 2;
+function hasPhoto(d) { return !!(d && Array.isArray(d.images) && d.images.length); }
+function loadPhotoImg(src) {
+  return new Promise(resolve => {
+    const img = new Image();
+    img.onload = () => resolve(img);
+    img.onerror = () => resolve(null);
+    img.src = src;
+  });
+}
+function coverRect(img, w, h) {
+  const iw = img.naturalWidth || img.width, ih = img.naturalHeight || img.height;
+  const ir = iw / ih, br = w / h;
+  let sw = iw, sh = ih, sx = 0, sy = 0;
+  if (ir > br) { sw = ih * br; sx = (iw - sw) / 2; }
+  else { sh = iw / br; sy = (ih - sh) / 2; }
+  return { sx, sy, sw, sh };
+}
+function bookCap() {
+  for (const id of selectedIds) {
+    const d = diaries.find(x => x.id === id);
+    if (d && hasPhoto(d)) return BOOK_MAX_PHOTO;
+  }
+  return BOOK_MAX;
+}
+
+async function buildBookPoster(list, title) {
+  const W = POSTER_W, PAD = POSTER_PAD, inner = W - PAD * 2;
+  const photos = await Promise.all(list.map(d => hasPhoto(d) ? loadPhotoImg(d.images[0]) : Promise.resolve(null)));
   const probe = document.createElement("canvas").getContext("2d");
-  const items = list.map(d => {
+  const items = list.map((d, i) => {
     const mood = moodOf(d.mood), weather = weatherOf(d.weather);
     probe.font = "700 23px " + POSTER_FONT;
     const tl = wrapLines(probe, d.title || "未命名", inner - 10);
@@ -2750,19 +2778,21 @@ function buildBookPoster(list, title) {
     if (mood) bits.push(mood.key);
     if (weather) bits.push(weather.key);
     (d.tags || []).forEach(t => bits.push("#" + t));
-    return { d, tl, bl, bits };
+    return { d, tl, bl, bits, img: photos[i] || null };
   });
 
   // 先算整张高度
   let h = PAD + 24 + 40 + 30 + 40;
   items.forEach((it, i) => {
-    h += (i ? 30 : 0) + 24 + it.tl.length * 33 + 24 + (it.bits.length ? 24 : 0) + 8 + it.bl.length * 28 + 26;
+    h += (i ? 30 : 0) + 24 + it.tl.length * 33 + 24 + (it.bits.length ? 24 : 0) + 8 + it.bl.length * 28
+       + (it.img ? PHOTO_BLOCK_H + 18 : 0) + 26;
   });
   h += 56;
 
+  const scale = h > 4200 ? 1.5 : 2;   // 带配图的长图更高，降分辨率防止超出 canvas 上限
   const cvs = document.createElement("canvas");
-  cvs.width = W * scale;
-  cvs.height = Math.round(h) * scale;
+  cvs.width = Math.round(W * scale);
+  cvs.height = Math.round(h * scale);
   const ctx = cvs.getContext("2d");
   ctx.scale(scale, scale);
 
@@ -2823,6 +2853,34 @@ function buildBookPoster(list, title) {
     ctx.fillStyle = cssVar("--text") || "#42303A";
     ctx.font = "400 17px " + POSTER_FONT;
     it.bl.forEach(line => { ctx.fillText(line, PAD + 2, y); y += 28; });
+
+    if (it.img) {
+      y += 6;
+      const ph = PHOTO_BLOCK_H;
+      ctx.save();
+      ctx.fillStyle = "#FFFFFF";
+      if (ctx.roundRect) { ctx.beginPath(); ctx.roundRect(PAD, y, inner, ph, 18); ctx.fill(); }
+      else { ctx.fillRect(PAD, y, inner, ph); }
+      const r = coverRect(it.img, inner, ph);
+      if (ctx.roundRect) { ctx.beginPath(); ctx.roundRect(PAD, y, inner, ph, 18); ctx.clip(); }
+      ctx.drawImage(it.img, r.sx, r.sy, r.sw, r.sh, PAD, y, inner, ph);
+      ctx.restore();
+      ctx.save();
+      ctx.strokeStyle = cssVar("--pink-200") || "#F2B4CB";
+      ctx.lineWidth = 1.6;
+      if (ctx.roundRect) { ctx.beginPath(); ctx.roundRect(PAD, y, inner, ph, 18); ctx.stroke(); }
+      ctx.restore();
+      if (it.d.images.length > 1) {
+        ctx.font = "400 12px " + POSTER_FONT;
+        const label = "共 " + it.d.images.length + " 张 · 长图只放第一张";
+        const tw = ctx.measureText(label).width + 20;
+        ctx.fillStyle = "rgba(40,30,32,.66)";
+        ctx.fillRect(PAD + 12, y + ph - 32, tw, 23);
+        ctx.fillStyle = "#FFFFFF";
+        ctx.fillText(label, PAD + 22, y + ph - 16);
+      }
+      y += ph + 18;
+    }
     y += 26;
   });
 
@@ -2832,9 +2890,9 @@ function buildBookPoster(list, title) {
   return cvs;
 }
 
-function renderBookPoster(list, title, truncated) {
+async function renderBookPoster(list, title, truncated) {
   if (!list.length) { toast("还没有选日记"); return; }
-  const cvs = buildBookPoster(list, title);
+  const cvs = await buildBookPoster(list, title);
   cvs.toBlob(blob => {
     if (!blob) { toast("图太大了，先生成月份的吧"); return; }
     posterBlob = blob;
@@ -2850,7 +2908,7 @@ function renderBookPoster(list, title, truncated) {
       tip.textContent = "会下载到「文件」；直接长按图片也能存进相册";
     }
     $("cardSheet").hidden = false;
-    if (truncated) toast("篇数较多，长图只放了最近 20 篇");
+    if (truncated) toast("含配图的长图最多 " + BOOK_MAX_PHOTO + " 篇，只放了最近 " + list.length + " 篇");
   }, "image/png");
 }
 
@@ -2859,8 +2917,13 @@ function openBookPoster(scope) {
   let list = diaries.filter(d => scope === "month" ? String(d.date).slice(0, 7) === monthKey : true);
   list = list.slice().sort((a, b) => String(a.date).localeCompare(String(b.date)) || (a.createdAt || 0) - (b.createdAt || 0));
   if (!list.length) { toast("这段时间还没有日记"); return; }
+  let truncated = false;
+  if (list.some(hasPhoto) && list.length > BOOK_MAX_PHOTO) {
+    list = list.slice(-BOOK_MAX_PHOTO);
+    truncated = true;
+  }
   const title = scope === "month" ? monthKey.replace("-", " 年 ") + " 月小册子" : "我的日记小册子";
-  renderBookPoster(list, title, false);
+  renderBookPoster(list, title, truncated);
 }
 
 /* 自选日记做小册子 */
@@ -2883,10 +2946,14 @@ function renderSelectList() {
         '</span><span class="sel-date">' + escapeHtml(d.date) + "</span></span></button>";
     }).join("");
   }
-  $("selectCount").textContent = "已选 " + selectedIds.size + " 篇（最多 " + BOOK_MAX + " 篇）";
+  const cap = bookCap();
+  $("selectCount").textContent = "已选 " + selectedIds.size + " 篇（最多 " + cap + " 篇" + (cap === BOOK_MAX_PHOTO ? "，含配图" : "") + "）";
 }
 function openSelectSheet() {
-  selectedIds = new Set(diaries.slice().sort(sortDesc).slice(0, BOOK_MAX).map(d => d.id));
+  const recent = diaries.slice().sort(sortDesc);
+  const first = recent.slice(0, BOOK_MAX);
+  const cap0 = first.some(hasPhoto) ? BOOK_MAX_PHOTO : BOOK_MAX;
+  selectedIds = new Set(first.slice(0, cap0).map(d => d.id));
   renderSelectList();
   $("selectSheet").hidden = false;
 }
@@ -2900,23 +2967,36 @@ $("selectList").addEventListener("click", e => {
   const id = item.dataset.id;
   if (selectedIds.has(id)) selectedIds.delete(id);
   else {
-    if (selectedIds.size >= BOOK_MAX) { toast("最多选 " + BOOK_MAX + " 篇，先取消几篇"); return; }
+    const cand = diaries.find(x => x.id === id);
+    const cap = (selectedIds.size && bookCap() === BOOK_MAX_PHOTO) || hasPhoto(cand) ? BOOK_MAX_PHOTO : BOOK_MAX;
+    if (selectedIds.size + 1 > cap) {
+      toast("含配图最多选 " + BOOK_MAX_PHOTO + " 篇，先取消几篇");
+      return;
+    }
     selectedIds.add(id);
   }
   renderSelectList();
 });
 $("selectAll").addEventListener("click", () => {
-  selectedIds = new Set(diaries.slice().sort(sortDesc).slice(0, BOOK_MAX).map(d => d.id));
+  const recent = diaries.slice().sort(sortDesc);
+  const first = recent.slice(0, BOOK_MAX);
+  const cap = first.some(hasPhoto) ? BOOK_MAX_PHOTO : BOOK_MAX;
+  selectedIds = new Set(first.slice(0, cap).map(d => d.id));
   renderSelectList();
-  if (diaries.length > BOOK_MAX) toast("最多选 " + BOOK_MAX + " 篇，已选最近的");
+  if (diaries.length > cap) toast("最多选 " + cap + " 篇，已选最近的");
 });
 $("selectNone").addEventListener("click", () => { selectedIds.clear(); renderSelectList(); });
 $("selectGo").addEventListener("click", () => {
   if (!selectedIds.size) { toast("先选至少一篇"); return; }
-  const list = diaries.filter(d => selectedIds.has(d.id))
+  let list = diaries.filter(d => selectedIds.has(d.id))
     .sort((a, b) => String(a.date).localeCompare(String(b.date)) || (a.createdAt || 0) - (b.createdAt || 0));
+  let truncated = false;
+  if (list.some(hasPhoto) && list.length > BOOK_MAX_PHOTO) {
+    list = list.slice(-BOOK_MAX_PHOTO);
+    truncated = true;
+  }
   closeSelectSheet();
-  renderBookPoster(list, "我的日记小册子", false);
+  renderBookPoster(list, "我的日记小册子", truncated);
 });
 
 $("setPrintMonth").addEventListener("click", () => openBookPoster("month"));
