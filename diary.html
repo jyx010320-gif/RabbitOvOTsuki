@@ -745,6 +745,23 @@ input,textarea{font-family:inherit;color:var(--text);}
 }
 .memory[hidden]{display:none;}
 .empty-write{margin-top:14px;padding:9px 22px;font-size:13px;}
+.photo-badge svg{width:12px;height:12px;fill:currentColor;opacity:.85;margin-right:3px;vertical-align:-1px;}
+.photo-badge{display:inline-flex;align-items:center;}
+.photo-count{font-size:10.5px;color:var(--text-soft);font-weight:400;letter-spacing:0;}
+.photo-grid{display:flex;flex-wrap:wrap;gap:8px;}
+.photo-item{position:relative;width:78px;height:78px;border-radius:12px;overflow:hidden;border:1.5px solid var(--pink-200);background:var(--gray-bg);}
+.photo-item img{width:100%;height:100%;object-fit:cover;display:block;}
+.photo-del{position:absolute;top:3px;right:3px;width:19px;height:19px;border-radius:50%;border:none;background:rgba(40,30,36,.55);color:#fff;font-size:12px;line-height:19px;text-align:center;padding:0;cursor:pointer;}
+.photo-add{width:78px;height:78px;border-radius:12px;border:1.5px dashed var(--pink-300);background:var(--card);color:var(--pink-500);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;font-size:11px;cursor:pointer;}
+.photo-add svg{width:17px;height:17px;fill:currentColor;opacity:.9;}
+.photo-add:active{background:var(--pink-100);}
+.photo-tip{font-size:11px;color:var(--text-soft);margin-top:7px;line-height:1.6;}
+.card-photos{display:flex;gap:6px;flex-wrap:wrap;margin-top:9px;}
+.card-photo{width:66px;height:66px;border-radius:10px;object-fit:cover;border:1px solid var(--pink-200);display:block;}
+.photo-view{position:fixed;inset:0;z-index:120;background:rgba(24,18,22,.88);display:flex;align-items:center;justify-content:center;padding:18px;}
+.photo-view[hidden]{display:none;}
+.photo-view img{max-width:100%;max-height:78vh;border-radius:14px;box-shadow:0 14px 40px rgba(0,0,0,.4);}
+.pv-close{position:absolute;top:calc(14px + env(safe-area-inset-top));right:16px;width:36px;height:36px;border-radius:50%;border:none;background:rgba(255,255,255,.18);color:#fff;font-size:19px;line-height:36px;padding:0;cursor:pointer;}
 .maker-line{display:flex;align-items:center;gap:7px;margin-top:11px;padding-top:11px;border-top:1px dashed var(--pink-200);font-size:11px;color:var(--text-soft);letter-spacing:.6px;}
 .maker-bunny{width:15px;height:15px;flex:none;}
 .sign-home{text-align:center;margin:26px 0 6px;font-size:11px;color:var(--text-soft);letter-spacing:.4px;opacity:.75;}
@@ -1121,6 +1138,13 @@ input,textarea{font-family:inherit;color:var(--text);}
       <textarea id="fContent" rows="9" placeholder="今天发生了什么呢……"></textarea>
     </div>
 
+    <div class="field">
+      <span class="field-label">配图 <span class="photo-count" id="photoCount">0 / 4</span></span>
+      <div class="photo-grid" id="photoGrid"></div>
+      <input type="file" id="photoInput" accept="image/*" multiple hidden>
+      <div class="photo-tip" id="photoTip">图片会自动压到 900px 内，最多 4 张；浏览器存储只有 5MB</div>
+    </div>
+
     <div class="modal-foot" style="justify-content:space-between;">
       <button class="btn" id="modalCancel">返回主页</button>
       <button class="btn primary" id="modalSave">保存生效</button>
@@ -1217,6 +1241,11 @@ input,textarea{font-family:inherit;color:var(--text);}
     </div>
     <p class="preview-tip" id="cardTip">手机上如果没弹出下载，长按图片保存</p>
   </div>
+</div>
+
+<div class="photo-view" id="photoView" hidden>
+  <img id="photoViewImg" alt="查看配图">
+  <button type="button" class="pv-close" id="photoViewClose" aria-label="关闭">×</button>
 </div>
 
 <div id="toast"></div>
@@ -1550,9 +1579,11 @@ function buildCard(d) {
       <span class="badge">${escapeHtml(d.date)}</span>
       ${mood ? `<span class="badge mood">${moodFace(mood, 15, "face sm")}${escapeHtml(mood.key)}</span>` : ""}
       ${weather ? `<span class="badge weather"><span class="dot" style="background:${weather.color}"></span>${escapeHtml(weather.key)}</span>` : ""}
+      ${(d.images && d.images.length) ? `<span class="badge photo-badge"><svg viewBox="0 0 24 24"><path d="M4 5h16a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1zm1 12h14l-4.5-6-3.5 4.5-2.5-3L5 17z"/></svg>${d.images.length}</span>` : ""}
     </div>
     <div class="card-body">
       <div class="card-content">${escapeHtml(d.content)}</div>
+      ${(d.images && d.images.length) ? `<div class="card-photos">${d.images.map((src, i) => `<img class="card-photo" data-photo="${i}" src="${src}" alt="配图 ${i + 1}">`).join("")}</div>` : ""}
       <div class="card-meta">
         <svg viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.8 9.94l-3.75-3.75L3 17.25zM20.7 7.04a1 1 0 0 0 0-1.41l-2.34-2.34a1 1 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
         ${tagsHtml || `<span>暂无标签</span>`}
@@ -1584,6 +1615,13 @@ function buildCard(d) {
         </button>
       </div>
     </div>`;
+
+  card.querySelectorAll(".card-photo").forEach(img => {
+    img.addEventListener("click", e => {
+      e.stopPropagation();
+      openPhotoView(img.getAttribute("src"));
+    });
+  });
 
   card.querySelectorAll("[data-act]").forEach(btn => {
     btn.addEventListener("click", e => {
@@ -1634,11 +1672,139 @@ function buildChips(groupId, options, selected, onPick, useFace = false) {
   });
 }
 
+/* ============ 配图：本地压缩后随日记一起存 ============ */
+const PHOTO_MAX = 4;
+const PHOTO_EDGE = 900;
+const PHOTO_BYTES = 120000;
+let pendingPhotos = [];
+
+function compressPhoto(file) {
+  return new Promise((resolve, reject) => {
+    if (!file || !/^image\//.test(file.type || "")) { reject(new Error("type")); return; }
+    const reader = new FileReader();
+    reader.onload = () => {
+      const img = new Image();
+      img.onload = () => {
+        try {
+          const long = Math.max(img.naturalWidth, img.naturalHeight) || 1;
+          let edge = PHOTO_EDGE, out = "";
+          for (let pass = 0; pass < 2; pass++) {
+            const scale = Math.min(1, edge / long);
+            const w = Math.max(1, Math.round(img.naturalWidth * scale));
+            const h = Math.max(1, Math.round(img.naturalHeight * scale));
+            const cv = document.createElement("canvas");
+            cv.width = w; cv.height = h;
+            const ctx = cv.getContext("2d");
+            ctx.fillStyle = "#FFFFFF";
+            ctx.fillRect(0, 0, w, h);
+            ctx.drawImage(img, 0, 0, w, h);
+            let q = 0.68;
+            out = cv.toDataURL("image/jpeg", q);
+            while (out.length > PHOTO_BYTES && q > 0.32) {
+              q -= 0.06;
+              out = cv.toDataURL("image/jpeg", q);
+            }
+            if (out.length <= PHOTO_BYTES) break;
+            edge = 620;
+          }
+          resolve(out);
+        } catch (e) { reject(e); }
+      };
+      img.onerror = () => reject(new Error("decode"));
+      img.src = reader.result;
+    };
+    reader.onerror = () => reject(new Error("read"));
+    reader.readAsDataURL(file);
+  });
+}
+
+function renderPhotoGrid() {
+  const grid = $("photoGrid");
+  if (!grid) return;
+  grid.innerHTML = "";
+  pendingPhotos.forEach((src, i) => {
+    const box = document.createElement("div");
+    box.className = "photo-item";
+    const img = document.createElement("img");
+    img.src = src;
+    img.alt = "配图 " + (i + 1);
+    img.addEventListener("click", () => openPhotoView(src));
+    box.appendChild(img);
+    const del = document.createElement("button");
+    del.type = "button";
+    del.className = "photo-del";
+    del.setAttribute("aria-label", "删除这张配图");
+    del.textContent = "×";
+    del.addEventListener("click", () => { pendingPhotos.splice(i, 1); renderPhotoGrid(); });
+    box.appendChild(del);
+    grid.appendChild(box);
+  });
+  if (pendingPhotos.length < PHOTO_MAX) {
+    const add = document.createElement("button");
+    add.type = "button";
+    add.className = "photo-add";
+    add.id = "photoAdd";
+    add.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11 5h2v6h6v2h-6v6h-2v-6H5v-2h6z"/></svg><span>加图</span>';
+    add.addEventListener("click", () => { const inp = $("photoInput"); if (inp) { inp.value = ""; inp.click(); } });
+    grid.appendChild(add);
+  }
+  const cnt = $("photoCount");
+  if (cnt) cnt.textContent = pendingPhotos.length + " / " + PHOTO_MAX;
+  const tip = $("photoTip");
+  if (tip) {
+    if (!pendingPhotos.length) tip.textContent = "图片会自动压到 900px 内，最多 " + PHOTO_MAX + " 张；浏览器存储只有 5MB";
+    else {
+      const kb = Math.round(pendingPhotos.reduce((a, b) => a + b.length, 0) / 1024);
+      tip.textContent = "已放 " + pendingPhotos.length + " 张，约占 " + kb + " KB";
+    }
+  }
+}
+
+function addPhotoFiles(files) {
+  const list = Array.prototype.slice.call(files || []);
+  if (!list.length) return;
+  const room = PHOTO_MAX - pendingPhotos.length;
+  if (room <= 0) { toast("最多 " + PHOTO_MAX + " 张，先删掉一张再加"); return; }
+  if (list.length > room) toast("一次最多加 " + room + " 张，多出的没加进来");
+  const use = list.slice(0, room);
+  let pending = use.length, failed = 0;
+  use.forEach(file => {
+    compressPhoto(file).then(url => {
+      pendingPhotos.push(url);
+      renderPhotoGrid();
+    }).catch(() => {
+      failed++;
+      toast("这张图读不出来，换一张试试（HEIC 请先转 JPG）");
+    }).then(() => {
+      pending--;
+      if (pending === 0 && !failed) renderPhotoGrid();
+      queueDraft();
+    });
+  });
+}
+
+function openPhotoView(src) {
+  const view = $("photoView"), img = $("photoViewImg");
+  if (!view || !img) return;
+  img.src = src;
+  view.hidden = false;
+  document.body.style.overflow = "hidden";
+}
+function closePhotoView() {
+  const view = $("photoView"), img = $("photoViewImg");
+  if (view) view.hidden = true;
+  if (img) img.src = "";
+  document.body.style.overflow = "";
+}
+
 function openModal(d, presetDate) {
   editingId = d ? d.id : null;
   const errBox = $("writeErr"); if (errBox) errBox.hidden = true;
   $("writeTitle").childNodes[0].nodeValue = (d ? "编辑日记" : "写日记") + " ";
   $("writeSubtitle").textContent = d ? "修改这篇日记的内容" : "记录下今天的心情与小事";
+
+  pendingPhotos = (d && Array.isArray(d.images)) ? d.images.slice() : [];
+  renderPhotoGrid();
 
   if (d) {
     fTitle.value = d.title || "";
@@ -1658,7 +1824,9 @@ function openModal(d, presetDate) {
       fContent.value = draft.content || "";
       selectedMood = draft.mood || "";
       selectedWeather = draft.weather || "";
+      pendingPhotos = Array.isArray(draft.photos) ? draft.photos.slice() : [];
       refreshChips();
+      renderPhotoGrid();
       toast("已恢复上次的草稿");
     } else {
       fTitle.value = ""; fDate.value = initDate; fTags.value = ""; fContent.value = "";
@@ -1687,14 +1855,16 @@ function saveModal() {
   let msg = "日记已保存";
   if (editingId) {
     const d = diaries.find(x => x.id === editingId);
-    Object.assign(d, { title, content, date, tags, mood: selectedMood, weather: selectedWeather });
+    Object.assign(d, { title, content, date, tags, mood: selectedMood, weather: selectedWeather, images: pendingPhotos.slice() });
     msg = "日记已更新";
   } else {
-    diaries.push({ id: uid(), title, content, date, tags, mood: selectedMood, weather: selectedWeather, pinned: false, createdAt: Date.now() });
+    diaries.push({ id: uid(), title, content, date, tags, mood: selectedMood, weather: selectedWeather, images: pendingPhotos.slice(), pinned: false, createdAt: Date.now() });
   }
   if (!save()) {
     diaries = JSON.parse(snapshot);
-    const warn = "手机存储写满了，这篇还没存上。先导出备份，再删掉一些旧日记腾出空间吧。";
+    const warn = pendingPhotos.length
+      ? "手机存储写满了，这篇还没存上。这篇带了 " + pendingPhotos.length + " 张图，先删掉一两张图试试，或者导出备份后清掉旧日记。"
+      : "手机存储写满了，这篇还没存上。先导出备份，再删掉一些旧日记腾出空间吧。";
     showBackupTip(warn);
     const errBox = $("writeErr");
     if (errBox) { errBox.textContent = warn; errBox.hidden = false; }
@@ -1732,11 +1902,17 @@ function saveDraftNow() {
     content: fContent.value,
     mood: selectedMood,
     weather: selectedWeather,
+    photos: pendingPhotos.slice(),
     savedAt: Date.now()
   };
   const empty = !draft.title.trim() && !draft.content.trim();
   if (empty) { localStorage.removeItem(DRAFT_KEY); }
-  else { localStorage.setItem(DRAFT_KEY, JSON.stringify(draft)); }
+  else {
+    try { localStorage.setItem(DRAFT_KEY, JSON.stringify(draft)); }
+    catch (e) {
+      try { localStorage.setItem(DRAFT_KEY, JSON.stringify({ title: draft.title, date: draft.date, tags: draft.tags, content: draft.content, mood: draft.mood, weather: draft.weather, photos: [], savedAt: draft.savedAt })); } catch (e2) {}
+    }
+  }
   updateDraftHint();
 }
 function clearDraft() {
@@ -2494,6 +2670,14 @@ $("quoteList").addEventListener("click", e => {
   toast("已收进摘抄本");
 });
 $("setQuotes").addEventListener("click", () => { switchTab("quotes"); renderQuotes(); });
+$("photoInput").addEventListener("change", e => {
+  addPhotoFiles(e.target.files);
+});
+$("photoViewClose").addEventListener("click", closePhotoView);
+$("photoView").addEventListener("click", e => {
+  if (e.target === $("photoView")) closePhotoView();
+});
+
 $("setHome").addEventListener("click", () => {
   window.location.href = "https://jyx010320-gif.github.io/RabbitOvOTsuki/";
 });
