@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="app-version" content="2026-11-24.1">
     <title>我的游戏小站</title>
     <style>
         /* 基础设置：粉色系背景和字体 */
@@ -183,6 +184,59 @@
             background: rgba(255, 240, 243, 0.8);
         }
 
+        /* 更新提示条：固定在顶部，默认藏在视口上方 */
+        .update-banner {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 999;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 16px;
+            background: linear-gradient(90deg, #ffe4e8, #ffd6e0);
+            border-bottom: 1px solid #f3c5d2;
+            box-shadow: 0 4px 12px rgba(243, 197, 210, 0.5);
+            font-size: 13px;
+            color: #8c5a68;
+            transform: translateY(-110%);
+            transition: transform 0.35s ease;
+        }
+        .update-banner.show {
+            transform: translateY(0);
+        }
+        .update-banner .banner-text {
+            flex: 1;
+            min-width: 0;
+        }
+        .update-banner .refresh-btn {
+            flex-shrink: 0;
+            border: none;
+            border-radius: 999px;
+            padding: 6px 14px;
+            background: #e3a8b8;
+            color: #fff;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            font-family: inherit;
+            transition: background 0.25s ease;
+        }
+        .update-banner .refresh-btn:hover {
+            background: #d17b8e;
+        }
+        .update-banner .close-btn {
+            flex-shrink: 0;
+            border: none;
+            background: transparent;
+            color: #b09a9e;
+            font-size: 15px;
+            line-height: 1;
+            cursor: pointer;
+            padding: 2px 4px;
+        }
+
         /* 手机窄屏时退回到一行一个，避免名字挤成一团 */
         @media (max-width: 380px) {
             .project-list {
@@ -200,6 +254,14 @@
     </style>
 </head>
 <body>
+
+<!-- 更新提示条 -->
+<div class="update-banner" id="update-banner">
+    <span class="banner-text" id="banner-text">小站有新版本啦</span>
+    <button class="refresh-btn" id="refresh-btn">点击刷新</button>
+    <button class="close-btn" id="close-btn" aria-label="关闭">✕</button>
+</div>
+
 <div class="container">
 
     <!-- 1. 顶部个人信息区 -->
@@ -325,5 +387,61 @@
         </div>
     </div>
 </div>
+
+<script>
+    (function () {
+        var meta = document.querySelector('meta[name="app-version"]');
+        var current = meta ? meta.getAttribute('content') : '';
+        var banner = document.getElementById('update-banner');
+        var bannerText = document.getElementById('banner-text');
+        var refreshBtn = document.getElementById('refresh-btn');
+        var closeBtn = document.getElementById('close-btn');
+        var shown = false;
+
+        /* 本地双击打开（file://）时浏览器不允许读 json，直接跳过检测 */
+        if (!current || location.protocol === 'file:') {
+            return;
+        }
+
+        /* 点击刷新：带上时间戳，绕过页面缓存 */
+        refreshBtn.addEventListener('click', function () {
+            var url = new URL(location.href);
+            url.searchParams.set('v', Date.now());
+            location.href = url.toString();
+        });
+
+        /* 关闭提示条 */
+        closeBtn.addEventListener('click', function () {
+            banner.classList.remove('show');
+        });
+
+        /* 拉取 version.json，比对版本号 */
+        function checkUpdate() {
+            fetch('version.json?t=' + Date.now(), { cache: 'no-store' })
+                .then(function (res) {
+                    if (!res.ok) { throw new Error('no version.json'); }
+                    return res.json();
+                })
+                .then(function (data) {
+                    if (shown || !data || !data.version) { return; }
+                    if (data.version !== current) {
+                        shown = true;
+                        bannerText.textContent = '小站更新到 ' + data.version + ' 啦，刷新看新版';
+                        banner.classList.add('show');
+                    }
+                })
+                .catch(function () {
+                    /* 没上传 version.json 或网络失败时静默忽略 */
+                });
+        }
+
+        /* 进页面先查一次，之后每 60 秒查一次，切回标签页时再查一次 */
+        checkUpdate();
+        setInterval(checkUpdate, 60000);
+        document.addEventListener('visibilitychange', function () {
+            if (!document.hidden) { checkUpdate(); }
+        });
+    })();
+</script>
 </body>
 </html>
