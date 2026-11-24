@@ -37,11 +37,12 @@
             position: relative;
             backdrop-filter: blur(4px);
         }
-        /* 顶部个人信息卡片 */
+        /* 顶部个人信息卡片（右侧留出刷新按钮的位置） */
         .profile-card {
             display: flex;
             align-items: center;
             gap: 15px;
+            padding-right: 48px;
         }
         /* 头像 */
         .avatar {
@@ -237,6 +238,39 @@
             padding: 2px 4px;
         }
 
+        /* 刷新按钮：贴在“我的游戏小站”卡片的右上角，做小一号 */
+        .refresh-fab {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            z-index: 2;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            border: 1px solid #f3c5d2;
+            background: rgba(255, 255, 255, 0.9);
+            color: #d17b8e;
+            font-size: 15px;
+            line-height: 1;
+            cursor: pointer;
+            font-family: inherit;
+            box-shadow: 0 2px 8px rgba(243, 197, 210, 0.4);
+            -webkit-backdrop-filter: blur(6px);
+            backdrop-filter: blur(6px);
+            transition: background 0.25s ease, transform 0.5s ease, box-shadow 0.25s ease;
+        }
+        .refresh-fab:hover {
+            background: #fff0f3;
+            transform: rotate(180deg);
+            box-shadow: 0 4px 10px rgba(243, 197, 210, 0.55);
+        }
+        .refresh-fab:active {
+            transform: scale(0.92);
+        }
+
         /* 手机窄屏时退回到一行一个，避免名字挤成一团 */
         @media (max-width: 380px) {
             .project-list {
@@ -272,6 +306,8 @@
             <p>@jyx010320-gif</p>
             <div class="subtitle">✨ o北极兔o</div>
         </div>
+        <!-- 刷新按钮：贴在个人信息卡右上角 -->
+        <button class="refresh-fab" id="refresh-fab" title="刷新页面" aria-label="刷新页面">↻</button>
     </div>
     <!-- 2. 项目列表区 -->
     <div class="card">
@@ -396,7 +432,17 @@
         var bannerText = document.getElementById('banner-text');
         var refreshBtn = document.getElementById('refresh-btn');
         var closeBtn = document.getElementById('close-btn');
+        var refreshFab = document.getElementById('refresh-fab');
         var shown = false;
+
+        /* 刷新按钮：任何时候都可用（包括本地双击打开） */
+        if (refreshFab) {
+            refreshFab.addEventListener('click', function () {
+                var url = new URL(location.href);
+                url.searchParams.set('r', Date.now());
+                location.replace(url.toString());
+            });
+        }
 
         /* 本地双击打开（file://）时浏览器不允许读 json，直接跳过检测 */
         if (!current || location.protocol === 'file:') {
