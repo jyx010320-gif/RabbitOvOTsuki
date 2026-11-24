@@ -231,6 +231,30 @@ button{font-family:inherit}
   width:fit-content;max-width:100%;
   touch-action:manipulation;
 }
+/* 暂停：半透明遮罩盖住棋盘，点「继续连线」回来 */
+.pause-veil{
+  position:absolute;inset:0;z-index:6;
+  display:none;align-items:center;justify-content:center;
+  border-radius:inherit;
+  background:color-mix(in srgb, var(--paper) 54%, transparent);
+  -webkit-backdrop-filter:blur(4px) saturate(.92);
+  backdrop-filter:blur(4px) saturate(.92);
+}
+.pause-veil.on{display:flex}
+.pause-card{
+  display:flex;flex-direction:column;align-items:center;gap:9px;
+  padding:20px 30px 18px;
+  border-radius:16px;
+  background-color:var(--surface);
+  background-image:var(--grain);
+  background-size:140px 140px;
+  background-blend-mode:multiply;
+  border:1.5px solid color-mix(in srgb, var(--ink) 22%, var(--surface));
+  box-shadow:0 3px 0 color-mix(in srgb, var(--ink) 16%, var(--surface)), 0 20px 42px -20px rgba(70,44,18,.5);
+}
+.pause-card .k{font-family:'ZCOOL KuaiLe','Noto Sans SC',sans-serif;font-size:20px;color:var(--green-d);letter-spacing:.04em}
+.pause-card .t{font-size:12.5px;color:var(--ink2)}
+.pause-card .btn{margin-top:4px;min-width:132px}
 .board{
   --cols:10;
   --cell:58px;
@@ -257,6 +281,7 @@ button{font-family:inherit}
   border:1.5px solid color-mix(in srgb, var(--ink) 22%, var(--surface));
   border-radius:0;
   cursor:pointer;
+  touch-action:manipulation;
   -webkit-tap-highlight-color:transparent;
   background-color:var(--surface);
   background-image:var(--grain);
@@ -950,6 +975,13 @@ body[data-page="set"] #viewSet{display:flex}
       <div class="board" id="board"></div>
       <canvas id="fx"></canvas>
       <div class="combo" id="combo">连击 ×2</div>
+      <div class="pause-veil" id="pauseVeil" aria-hidden="true">
+        <div class="pause-card">
+          <p class="k">已暂停</p>
+          <p class="t">时间停在原地 · 还剩 <b id="pauseLeft">0</b> 对没连</p>
+          <button class="btn primary" id="resumeBtn" type="button">继续连线</button>
+        </div>
+      </div>
     </div>
   </main>
 
@@ -1244,6 +1276,7 @@ body[data-page="set"] #viewSet{display:flex}
   /* ============ DOM ============ */
   const $ = function(id){ return document.getElementById(id); };
   const boardEl = $('board'), trayEl = $('tray'), fx = $('fx');
+  const pauseVeilEl = $('pauseVeil');
   const ctx = fx.getContext('2d');
   const overlayEl = $('overlay'), panelEl = $('panel'), comboEl = $('combo');
 
@@ -1436,6 +1469,7 @@ body[data-page="set"] #viewSet{display:flex}
     rnd.textContent = '随机切换';
     rnd.title = '从 ' + TILE_SKINS.length + ' 套棋子样式里随机挑一套';
     rnd.addEventListener('click', function(){
+      skinRandom = true;
       previewMasked = true;
       applyTileSkin(rollSkin(), false);
       toast('开盲盒 · 画法已打码，猜猜是哪套');
@@ -1453,6 +1487,7 @@ body[data-page="set"] #viewSet{display:flex}
       b.className = 'skin-chip';
       b.textContent = sk.name;
       b.addEventListener('click', function(){
+        skinRandom = false;
         previewMasked = false;
         applyTileSkin(sk.id, true);
         b.classList.remove('hit');
@@ -1820,13 +1855,12 @@ body[data-page="set"] #viewSet{display:flex}
     if(!index) statRound();
     if(tickHandle){ clearInterval(tickHandle); tickHandle = null; }
     S.running = false; S.paused = false; S.locked = false;
+    if(pauseVeilEl) pauseVeilEl.classList.remove('on');
 
-    if(!index){
-      /* 开局开盲盒：每局随机换一套棋子画法，列表与预览都不暴露是哪一套 */
+    if(skinRandom){
+      /* 盲盒模式：每关开局都随机换一套棋子画法，列表与预览都不暴露是哪一套 */
       previewMasked = true;
-      tileSkin = rollSkin();
-      document.documentElement.setAttribute('data-tile-skin', tileSkin);
-      document.documentElement.style.setProperty('--ff', SKIN_FILTER[tileSkin] || SKIN_FILTER.ink);
+      applyTileSkin(rollSkin(), false);
       paintSkinButtons();
     }
 
@@ -3418,6 +3452,7 @@ function drawQuilt(c, x, y, s, color, seed){
     { id:'flat',    name:'素面纸卡', note:'干净纸卡 + 柔和投影',      draw:function(c,x,y,sz,col,seed){ drawFlat(c,x,y,sz,col,seed); } }
   ];
   let tileSkin = 'ink';
+  let skinRandom = true;   /* true=盲盒：每关开局随机换画法；手动点样式名后固定 */
   function paintCards(){
     if(!tiles || !tiles.size) return;
     const dpr = Math.min(window.devicePixelRatio || 1, 2);
@@ -3967,18 +4002,15 @@ function drawQuilt(c, x, y, s, color, seed){
     S.paused = true;
     S.lastStamp = Date.now();
     paintPaused(true);
-    showPanel({
-      title:'先歇一会儿',
-      desc:'时间停在这里了。等你回来，方块还在原地。',
-      meta:[{k:'剩余', v:S.remainingPairs + ' 对'},{k:'得分', v:S.score}],
-      acts:[{label:'继续连线', kind:'primary', fn:resumeGame}],
-      tips:'按 Esc 也可以暂停或继续'
-    });
+    const left = $('pauseLeft');
+    if(left) left.textContent = S.remainingPairs;
+    if(pauseVeilEl) pauseVeilEl.classList.add('on');
   }
   function resumeGame(){
     S.paused = false;
     S.lastStamp = Date.now();
     paintPaused(false);
+    if(pauseVeilEl) pauseVeilEl.classList.remove('on');
   }
 
   /* ============ 结算 ============ */
@@ -4134,12 +4166,40 @@ function drawQuilt(c, x, y, s, color, seed){
   // 双击不放大、不选词
   document.addEventListener('dblclick', function(e){ e.preventDefault(); }, { passive:false });
 
-  boardEl.addEventListener('click', function(e){
-    const node = e.target.closest ? e.target.closest('.tile') : null;
+  /* 触屏点击：按下即响应；点在缝里也按最近格子算，别让手指白点 */
+  let lastTap = { t:0, r:'', c:'' };
+  function tileAtPoint(x, y){
+    if(!boardEl || !S.cols || !S.rows) return null;
+    const b = boardEl.getBoundingClientRect();
+    const gap = parseFloat(getComputedStyle(boardEl).gap) || 0;
+    if(!b.width || !b.height) return null;
+    const step = (b.width - gap * (S.cols - 1)) / S.cols;
+    if(step <= 0) return null;
+    const col = Math.floor((x - b.left) / (step + gap)) + 1;
+    const row = Math.floor((y - b.top) / (step + gap)) + 1;
+    if(col < 1 || col > S.cols || row < 1 || row > S.rows) return null;
+    return tiles.get(row + ',' + col) || null;
+  }
+  function tapTile(node){
     if(!node) return;
     if(!S.running || S.paused || S.locked) return;
     pick(+node.dataset.r, +node.dataset.c);
+  }
+  boardEl.addEventListener('pointerdown', function(e){
+    if(e.pointerType === 'mouse' && e.button !== 0) return;
+    const node = tileAtPoint(e.clientX, e.clientY);
+    if(!node) return;
+    lastTap = { t:Date.now(), r:node.dataset.r, c:node.dataset.c };
+    tapTile(node);
+  }, { passive:true });
+  /* 键盘回车等没有 pointerdown 的激活走这里；触屏那一下不重复处理 */
+  boardEl.addEventListener('click', function(e){
+    const node = e.target.closest ? e.target.closest('.tile') : null;
+    if(!node) return;
+    if(lastTap.t && Date.now() - lastTap.t < 800 && lastTap.r === node.dataset.r && lastTap.c === node.dataset.c) return;
+    tapTile(node);
   });
+  if($('resumeBtn')) $('resumeBtn').addEventListener('click', function(){ resumeGame(); sfx('pick'); });
 
   $('hintBtn').addEventListener('click', doHint);
   $('shuffleBtn').addEventListener('click', doShuffle);
@@ -4180,6 +4240,8 @@ function drawQuilt(c, x, y, s, color, seed){
       if($('themePop').classList.contains('on')){ closeThemePop(); return; }
       if(overlayEl.classList.contains('on')){
         if(S.paused && S.running){ hidePanel(); resumeGame(); }
+      } else if(S.paused){
+        resumeGame();
       } else if(S.running){
         pauseGame();
       }
@@ -4314,55 +4376,8 @@ function drawQuilt(c, x, y, s, color, seed){
     }
   }
   function navGo(page){
-    if(page !== 'game'){ closeThemePop(); closePickPop(); }
-    document.body.setAttribute('data-page', page);
-    const tabs = document.querySelectorAll('.tab');
-    for(let i=0;i<tabs.length;i++){
-      const on = tabs[i].getAttribute('data-page') === page;
-      tabs[i].setAttribute('aria-selected', on ? 'true' : 'false');
-    }
-    if(page === 'dex') renderDex();
-    if(page === 'theme'){
-      paintThemeButtons(themeId);
-      syncPagePick();
-      paintSkinButtons();
-      paintSkinPreview();
-      refreshSkinThumbs();
-      requestAnimationFrame(function(){ if(typeof sizeAllSkinRandoms === 'function') sizeAllSkinRandoms(); });
-    }
-    if(page === 'set') syncSetPage();
-  }
-  if($('tabbar')){
-    $('tabbar').addEventListener('click', function(e){
-      const t = e.target.closest ? e.target.closest('.tab') : null;
-      if(t) navGo(t.getAttribute('data-page'));
-    });
-  }
-  if($('setSound')) $('setSound').addEventListener('click', function(){
-    setMuted(!muted);
-    if(!muted) sfx('pick');
-    toast(muted ? '已静音' : '声音打开');
-  });
-  if($('setHome')) $('setHome').addEventListener('click', function(){
-    window.location.href = 'https://jyx010320-gif.github.io/RabbitOvOTsuki/';
-  });
-  if($('setRestart')) $('setRestart').addEventListener('click', function(){
-    stopTimer();
-    hidePanel();
-    S.score = 0; S.baseScore = 0; S.levelIndex = 0;
-    buildLevel(rollConfig(null, true), 0);
-    startTimer();
-    navGo('game');
-    toast('重新开局，从第一块地开始');
-  });
-  function syncSetPage(){
-    const sw = $('setSound');
-    if(sw){
-      sw.setAttribute('aria-pressed', muted ? 'false' : 'true');
-      sw.textContent = muted ? '已关闭' : '已打开';
-    }
-  }
-  function navGo(page){
+    /* 切去别的页就先暂停，回来点「继续连线」 */
+    if(page !== 'game' && S.running && !S.paused) pauseGame();
     if(page !== 'game'){ closeThemePop(); closePickPop(); }
     document.body.setAttribute('data-page', page);
     const tabs = document.querySelectorAll('.tab');
