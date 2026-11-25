@@ -1579,7 +1579,7 @@ button{border-radius:2px!important;clip-path:none!important}
     </div>
     <span class="stk stk-chip"><div class="sub-chip">灯油 <b id="setOil">0</b></div></span>
   </div>
-  <p class="sub-lede">声音、重开、配色和回主页，都在这一页。</p>
+  <p class="sub-lede">重开、玩法、音效、配色和主页，都在这一页。</p>
   <p class="set-kicker">操作</p>
   <div class="set-panel" id="setPanel"></div>
   <p class="set-kicker">说明</p>
@@ -1678,147 +1678,174 @@ button{border-radius:2px!important;clip-path:none!important}
 
   /* ============================================================
      棋子美术（全部内联 SVG，无外部图片）
-     样式：水果贴纸 · 带皮香蕉（蜜桃 / 香蕉 / 梨 / 柠檬 / 蓝莓 / 葡萄）
+     样式：奶油贴纸 · 12 种果子统一奶白描边、圆润造型与极简表情
      ============================================================ */
   const PIECES = {
+    // 蜜桃
     peach: `
-      <path d="M52 20 L71 3 L85 15 L66 26 Z" fill="#8FCBA3" stroke="#FFF3DC" stroke-width="2" stroke-linejoin="round"/>
-      <path d="M66 7 L70 22" stroke="#5F9E76" stroke-width="1.3" opacity=".35" stroke-linecap="round"/>
-      <path d="M49 16 L53 16 L56 32 L52 32 Z" fill="#5F9E76"/>
-      <path d="M50 36 L41 23 L30 26 L22 37 L20 52 L24 66 L33 76 L46 82 L58 82 L70 77 L78 67 L80 53 L78 39 L69 27 L59 24 Z"
-        fill="#F2847C" stroke="#FFF3DC" stroke-width="2.2" stroke-linejoin="round"/>
-      <path d="M58 82 L70 77 L78 67 L80 53 L68 57 L58 71 L52 79 Z" fill="#E2716E"/>
-      <path d="M30 27 L40 22 L44 30 L32 37 Z" fill="#F9A69B" opacity=".9"/>
-      <path d="M50 36 Q47 48 44 59" stroke="#C6544D" stroke-width="2.6" opacity=".4" fill="none" stroke-linecap="round"/>
+      <g transform="translate(-7.38 -3.79) scale(1.793)">
+<g stroke="#FFF3DC" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round">
+<path d="M32 20c-8-5-16 1-16 12 0 10 7 18 16 18s16-8 16-18c0-11-8-17-16-12Z" fill="#EFA18E"/>
+<path d="M32 22c-2 8-2 20 0 26" fill="none" stroke="#D57F72" stroke-width="1.2"/>
+<path d="M33 19c2-6 7-8 12-6-1 5-5 8-12 7Z" fill="#9DBE8B"/>
+<path d="M33 18c0-4-1-6-3-8" fill="none" stroke="#8A6B50" stroke-width="1.3"/>
+<ellipse cx="24.5" cy="29" rx="3.2" ry="2.3" fill="#FFF8EC" opacity=".65" stroke="none"/>
+<circle cx="27.5" cy="35" r="1.5" fill="#5D4A3B" stroke="none"/><circle cx="37.5" cy="35" r="1.5" fill="#5D4A3B" stroke="none"/>
+<path d="M30 39q2 1.7 4 0" fill="none" stroke="#5D4A3B" stroke-width="1.1"/>
+</g>
+      </g>
     `,
     // 梨
     leaf: `
-      <path d="M53 12 L63 5 L77 9 L70 19 L56 21 Z" fill="#8FCBA3" stroke="#FFF3DC" stroke-width="2" stroke-linejoin="round"/>
-      <path d="M64 8 L68 16" stroke="#5F9E76" stroke-width="1.3" opacity=".35" stroke-linecap="round"/>
-      <path d="M50 6 L50 22" stroke="#7B6242" stroke-width="3.4" stroke-linecap="round"/>
-      <path d="M50 20 L57 25 L64 33 L71 43 L75 55 L74 67 L68 78 L57 86 L50 88 L43 86 L32 78 L26 67 L25 55 L29 43 L36 33 L43 25 Z"
-        fill="#93D6A6" stroke="#FFF3DC" stroke-width="2.2" stroke-linejoin="round"/>
-      <path d="M50 21 L57 26 L64 34 L70 44 L73 56 L72 66 L66 76 L56 83 L50 85 L50 61 L50 35 Z" fill="#6CB98C" opacity=".42"/>
-      <path d="M40 37 L33 46 L29 57" stroke="#DBF7E0" stroke-width="2.6" opacity=".8" fill="none" stroke-linecap="round"/>
-      <circle cx="59" cy="62" r="1.8" fill="#5C9C74" opacity=".55"/>
-      <circle cx="46" cy="72" r="1.5" fill="#5C9C74" opacity=".55"/>
-      <circle cx="62" cy="48" r="1.3" fill="#5C9C74" opacity=".45"/>
+      <g transform="translate(-5.71 -4.86) scale(1.714)">
+<g stroke="#FFF3DC" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round">
+<path d="M32 16c-4 8-11 11-11 22 0 9 5 15 11 15s11-6 11-15c0-11-7-14-11-22Z" fill="#B9CE85"/>
+<path d="M32 19c0-5 2-7 4-8" fill="none" stroke="#8A6B50" stroke-width="1.4"/>
+<path d="M33 19c3-5 8-6 11-4-2 4-6 6-11 6Z" fill="#8FB68B"/>
+<ellipse cx="25" cy="31" rx="2.6" ry="4.2" fill="#FFF8EC" opacity=".45" stroke="none"/>
+<circle cx="28" cy="37" r="1.5" fill="#5D4A3B" stroke="none"/><circle cx="36" cy="37" r="1.5" fill="#5D4A3B" stroke="none"/>
+<path d="M30.5 40.5q1.5 1.4 3 0" fill="none" stroke="#5D4A3B" stroke-width="1.1"/>
+</g>
+      </g>
     `,
-    // 香蕉（带皮）
+    // 香蕉
     flower: `
-      <path d="M16 30 L26 20 L41 18 L57 26 L71 39 L81 53 L84 64 L75 71 L64 69 L50 58 L35 45 L23 39 Z"
-        fill="#F2D274" stroke="#FFF3DC" stroke-width="2.2" stroke-linejoin="round"/>
-      <path d="M36 46 L50 58 L63 68 L57 73 L43 61 L30 49 Z" fill="#D9B54C" opacity=".8"/>
-      <path d="M26 27 L38 24 L51 31 L44 35 L31 34 Z" fill="#FCE9A9" opacity=".85"/>
-      <path d="M13 29 L23 18 L29 23 L18 34 Z" fill="#7C8B4E"/>
-      <path d="M84 64 L75 71 L68 65 L80 57 Z" fill="#A98546"/>
-      <path d="M32 35 L49 50 L66 61" stroke="#C9A64A" stroke-width="1.4" opacity=".5" fill="none"/>
-      <path d="M38 41 L54 55 L69 65" stroke="#FFF9D9" stroke-width="1.8" opacity=".6" fill="none"/>
+      <g transform="translate(5.05 17.61) scale(1.322)">
+<g stroke="#FFF3DC" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round">
+<path d="M22 17C22 32 32 44 49 44" fill="none" stroke="#FFF3DC" stroke-width="20" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M22 17C22 32 32 44 49 44" fill="none" stroke="#EBC46B" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M27 20C28 31 36 39 46 39" fill="none" stroke="#CE9F47" stroke-width="1.2"/>
+<path d="M27 22C28 31 34 36 41 37" fill="none" stroke="#FFF3CF" stroke-width="1.1" opacity=".65"/>
+<path d="M19 9c1-4 5-5 7-3-1 4-4 5-7 3Z" fill="#8FB58A"/>
+</g>
+      </g>
     `,
     // 柠檬
     star: `
-      <path d="M34 31 L46 24 L58 24 L70 31 L78 39 L81 50 L78 61 L70 69 L58 76 L46 76 L34 69 L26 61 L23 50 L26 39 Z"
-        fill="#EDAA30" stroke="#FFF3DC" stroke-width="2.2" stroke-linejoin="round"/>
-      <path d="M23 46 L17 50 L23 54 Z" fill="#D99A28" stroke="#FFF3DC" stroke-width="1.5" stroke-linejoin="round"/>
-      <path d="M81 46 L87 50 L81 54 Z" fill="#D99A28" stroke="#FFF3DC" stroke-width="1.5" stroke-linejoin="round"/>
-      <path d="M36 33 L46 26 L58 26 L54 42 L40 47 L30 43 Z" fill="#FFD285"/>
-      <path d="M70 31 L78 39 L81 50 L78 61 L70 69 L58 76 L62 58 L64 38 Z" fill="#CE8C1E" opacity=".42"/>
-      <circle cx="48" cy="40" r="1.4" fill="#B87A18" opacity=".5"/>
-      <circle cx="60" cy="52" r="1.2" fill="#B87A18" opacity=".5"/>
-      <circle cx="44" cy="58" r="1.2" fill="#B87A18" opacity=".45"/>
+      <g transform="translate(-14.43 -9.51) scale(2.010)">
+<g stroke="#FFF3DC" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round">
+<path d="M15 34c-3-9 5-17 17-17 12 0 20 8 17 17-2 8-9 13-17 13s-15-5-17-13Z" fill="#F0D06C"/>
+<path d="M17 34c4 6 9 9 15 9s11-3 15-9" fill="none" stroke="#D5A943" stroke-width="1.2"/>
+<path d="M31 17c1-4 5-6 9-4-1 4-4 6-9 5Z" fill="#97BE8A"/>
+<ellipse cx="25" cy="30" rx="3" ry="2" fill="#FFF8EC" opacity=".55" stroke="none"/>
+<circle cx="29" cy="37" r="1.4" fill="#5D4A3B" stroke="none"/><circle cx="37" cy="37" r="1.4" fill="#5D4A3B" stroke="none"/>
+<path d="M31 40q1.4 1.3 3 0" fill="none" stroke="#5D4A3B" stroke-width="1.05"/>
+</g>
+      </g>
     `,
     // 蓝莓
     gem: `
-      <path d="M50 24 L62 28 L73 36 L79 47 L77 60 L69 71 L57 79 L43 79 L31 71 L23 60 L21 47 L27 36 L38 28 Z"
-        fill="#6FA9D8" stroke="#FFF3DC" stroke-width="2.2" stroke-linejoin="round"/>
-      <path d="M50 24 L38 28 L28 37 L23 50 L28 47 L37 37 L50 32 Z" fill="#A9D5F0" opacity=".85"/>
-      <path d="M50 24 L62 28 L73 36 L79 47 L79 58 L69 53 L66 38 L56 30 Z" fill="#4E8CBB" opacity=".28"/>
-      <path d="M40 31 L45 23 L48 30 L51 21 L54 30 L58 23 L63 31 L56 36 L47 36 Z" fill="#35709D" stroke="#FFF3DC" stroke-width="1.4" stroke-linejoin="round"/>
-      <path d="M34 58 L38 52 L42 58 L38 63 Z" fill="#A9D5F0" opacity=".55"/>
+      <g transform="translate(-13.19 -9.73) scale(1.975)">
+<g stroke="#FFF3DC" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round">
+<circle cx="23" cy="36" r="9" fill="#91A7CE"/>
+<circle cx="41" cy="36" r="9" fill="#8CA2C9"/>
+<circle cx="32" cy="24" r="8.5" fill="#9BB1D8"/>
+<path d="M32 17v3M29 18.5l2 1.5M35 18.5l-2 1.5" fill="none" stroke="#6F5B4A" stroke-width="1"/>
+<circle cx="20" cy="33" r="1.4" fill="#5D4A3B" stroke="none"/><circle cx="26" cy="33" r="1.4" fill="#5D4A3B" stroke="none"/>
+<circle cx="38" cy="33" r="1.4" fill="#5D4A3B" stroke="none"/><circle cx="44" cy="33" r="1.4" fill="#5D4A3B" stroke="none"/>
+<path d="M21 38q2 1.6 4 0M39 38q2 1.6 4 0" fill="none" stroke="#5D4A3B" stroke-width="1.1"/>
+<path d="M29 44c-5 0-8-3-8-7M35 44c5 0 8-3 8-7" fill="none" stroke="#7189B3" stroke-width="1.1"/>
+</g>
+      </g>
     `,
     // 葡萄
     heart: `
-      <path d="M50 12 L52 12 L55 27 L50 31 L45 27 L47 12 Z" fill="#8B6A4B"/>
-      <path d="M53 20 L64 12 L77 16 L71 27 L58 30 Z" fill="#8FCBA3" stroke="#FFF3DC" stroke-width="1.8" stroke-linejoin="round"/>
-      <path d="M36 32 L47 28 L56 34 L57 45 L49 54 L38 53 L31 44 L31 37 Z" fill="#A98BD6" stroke="#FFF3DC" stroke-width="2" stroke-linejoin="round"/>
-      <path d="M60 30 L70 34 L74 44 L70 54 L60 57 L51 50 L51 39 L54 33 Z" fill="#A98BD6" stroke="#FFF3DC" stroke-width="2" stroke-linejoin="round"/>
-      <path d="M48 49 L59 53 L63 64 L57 74 L46 77 L36 72 L31 61 L36 52 Z" fill="#A98BD6" stroke="#FFF3DC" stroke-width="2" stroke-linejoin="round"/>
-      <path d="M33 69 L41 72 L43 80 L38 87 L30 88 L25 81 L26 73 Z" fill="#9C7DCB" stroke="#FFF3DC" stroke-width="1.9" stroke-linejoin="round"/>
-      <path d="M38 34 L46 31 L48 37 L40 41 Z" fill="#CDB6EF" opacity=".9"/>
-      <path d="M61 33 L68 37 L67 42 L61 38 Z" fill="#CDB6EF" opacity=".85"/>
-      <path d="M37 55 L44 58 L42 63 L35 61 Z" fill="#CDB6EF" opacity=".8"/>
+      <g transform="translate(1.53 0.02) scale(1.515)">
+<g stroke="#FFF3DC" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round">
+<path d="M30 18c-5-4-10-3-13 0 3 4 8 5 13 3Z" fill="#9DBE8B"/>
+<path d="M33 15c0-3-1-5-3-6" fill="none" stroke="#8A6B50" stroke-width="1.3"/>
+<circle cx="24" cy="27" r="7" fill="#A795CD"/><circle cx="40" cy="27" r="7" fill="#B4A2D8"/>
+<circle cx="16" cy="39" r="7" fill="#B4A2D8"/><circle cx="32" cy="39" r="7" fill="#9A87C3"/><circle cx="48" cy="39" r="7" fill="#A795CD"/>
+<circle cx="24" cy="50" r="7" fill="#9A87C3"/><circle cx="40" cy="50" r="7" fill="#B4A2D8"/>
+<circle cx="22" cy="32" r="1.3" fill="#5D4A3B" stroke="none"/><circle cx="27" cy="32" r="1.3" fill="#5D4A3B" stroke="none"/>
+<circle cx="30" cy="44" r="1.3" fill="#5D4A3B" stroke="none"/><circle cx="35" cy="44" r="1.3" fill="#5D4A3B" stroke="none"/>
+</g>
+      </g>
     `,
     // 橙子
     orange: `
-      <path d="M50 18 L62 7 L79 10 L72 24 L55 25 Z" fill="#8FCBA3" stroke="#FFF3DC" stroke-width="2" stroke-linejoin="round"/>
-      <path d="M62 11 L68 20" stroke="#5F9E76" stroke-width="1.3" opacity=".35" stroke-linecap="round"/>
-      <path d="M50 21 L50 32" stroke="#7B6242" stroke-width="3.4" stroke-linecap="round"/>
-      <path d="M50 31 C70 27 84 43 83 60 C82 77 68 89 50 89 C32 89 18 77 17 60 C16 43 30 27 50 31 Z"
-        fill="#F19A49" stroke="#FFF3DC" stroke-width="2.2" stroke-linejoin="round"/>
-      <path d="M50 31 C70 27 84 43 83 60 C83 67 81 74 77 79 L72 53 Z" fill="#D98132" opacity=".35"/>
-      <path d="M26 63 C27 50 35 40 46 35 C38 44 35 54 36 65 Z" fill="#FBD1A0" opacity=".8"/>
-      <circle cx="49" cy="53" r="2.2" fill="#D98132" opacity=".35"/>
-      <circle cx="49" cy="62" r="1.2" fill="#D98132" opacity=".3"/>
+      <g transform="translate(-4.86 -3.14) scale(1.714)">
+<g stroke="#FFF3DC" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round">
+<circle cx="32" cy="35" r="17" fill="#EDA05B"/>
+<path d="M32 19c0-5 2-7 4-9" fill="none" stroke="#8A6B50" stroke-width="1.3"/>
+<path d="M33 20c4-6 10-7 13-4-2 4-6 7-12 7Z" fill="#93B98A"/>
+<path d="M18 30c3-3 7-4 11-4" fill="none" stroke="#FFD29D" stroke-width="1.4" opacity=".8"/>
+<circle cx="27" cy="37" r="1.5" fill="#5D4A3B" stroke="none"/><circle cx="37" cy="37" r="1.5" fill="#5D4A3B" stroke="none"/>
+<path d="M29.5 41q2.5 2 5 0" fill="none" stroke="#5D4A3B" stroke-width="1.1"/>
+<path d="M32 27v4M30 29h4" fill="none" stroke="#FFE0B2" stroke-width="1.1" opacity=".75"/>
+</g>
+      </g>
     `,
     // 草莓
     straw: `
-      <path d="M50 31 C41 19 26 22 23 35 C19 56 35 74 50 87 C65 74 81 56 77 35 C74 22 59 19 50 31 Z"
-        fill="#E75F78" stroke="#FFF3DC" stroke-width="2.2" stroke-linejoin="round"/>
-      <path d="M50 32 L35 20 L43 31 L31 29 L40 40 L50 36 L60 40 L69 29 L57 31 L65 20 Z"
-        fill="#7FBF83" stroke="#FFF3DC" stroke-width="1.9" stroke-linejoin="round"/>
-      <path d="M50 36 L44 27 L50 20 L56 27 Z" fill="#5F9E76"/>
-      <path d="M50 31 C64 26 76 39 78 50 L72 45 Z" fill="#C94663" opacity=".28"/>
-      <path d="M27 42 C31 31 41 25 50 27 C44 35 39 46 38 57 Z" fill="#F39AA9" opacity=".75"/>
-      <circle cx="40" cy="52" r="1.3" fill="#FFE6B0"/>
-      <circle cx="52" cy="46" r="1.3" fill="#FFE6B0"/>
-      <circle cx="62" cy="53" r="1.3" fill="#FFE6B0"/>
-      <circle cx="44" cy="65" r="1.3" fill="#FFE6B0"/>
-      <circle cx="56" cy="70" r="1.3" fill="#FFE6B0"/>
-      <circle cx="50" cy="58" r="1.2" fill="#FFE6B0"/>
+      <g transform="translate(-0.42 -3.58) scale(1.576)">
+<g stroke="#FFF3DC" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round">
+<path d="M32 18c8 0 14 5 15 12 1 10-7 21-15 27-8-6-16-17-15-27 1-7 7-12 15-12Z" fill="#EA8E82"/>
+<path d="M18 20c2-5 6-8 11-8 1 0 2 0 3 1 1-1 2-1 3-1 5 0 9 3 11 8-4-2-8-3-14-3s-10 1-14 3Z" fill="#8FB38A"/>
+<path d="M24 18l-2-5 5 4M32 17V11M40 18l2-5-5 4" fill="none" stroke="#719A6E" stroke-width="1.3"/>
+<ellipse cx="26" cy="31" rx="1.2" ry="1.8" fill="#FFF3DF" stroke="none" transform="rotate(-18 26 31)"/>
+<ellipse cx="39" cy="31" rx="1.2" ry="1.8" fill="#FFF3DF" stroke="none" transform="rotate(18 39 31)"/>
+<ellipse cx="31" cy="38" rx="1.2" ry="1.8" fill="#FFF3DF" stroke="none" transform="rotate(-14 31 38)"/>
+<ellipse cx="42" cy="40" rx="1.2" ry="1.8" fill="#FFF3DF" stroke="none" transform="rotate(20 42 40)"/>
+<ellipse cx="23" cy="41" rx="1.2" ry="1.8" fill="#FFF3DF" stroke="none" transform="rotate(-20 23 41)"/>
+<circle cx="29" cy="35" r="1.3" fill="#5D4A3B" stroke="none"/><circle cx="35" cy="35" r="1.3" fill="#5D4A3B" stroke="none"/>
+</g>
+      </g>
     `,
     // 西瓜
     melon: `
-      <path d="M50 20 C67 18 82 34 84 52 C86 70 72 86 50 87 C28 88 14 72 16 53 C18 34 33 18 50 20 Z"
-        fill="#6DBA7D" stroke="#FFF3DC" stroke-width="2.2" stroke-linejoin="round"/>
-      <path d="M24 42 C34 32 48 27 60 30 C74 33 81 43 83 55 L77 56 C74 45 65 38 54 36 C42 34 32 40 28 50 Z"
-        fill="#A7DDB0" opacity=".9"/>
-      <path d="M50 21 C52 34 50 48 50 63 C50 76 46 84 40 87" stroke="#3E8C5E" stroke-width="4" fill="none" stroke-linecap="round" opacity=".5"/>
-      <path d="M29 31 C36 51 34 70 27 82M70 27 C64 48 66 68 74 82" stroke="#3E8C5E" stroke-width="3.4" fill="none" stroke-linecap="round" opacity=".42"/>
-      <path d="M50 20 L50 29" stroke="#5E8C47" stroke-width="3.2" stroke-linecap="round"/>
-      <path d="M52 22 L70 12 L79 18 L62 28 Z" fill="#8FCBA3" stroke="#FFF3DC" stroke-width="1.8" stroke-linejoin="round"/>
+      <g transform="translate(-7.38 -11.86) scale(1.793)">
+<g stroke="#FFF3DC" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round">
+<path d="M12 20h40c0 18-9 29-20 29S12 38 12 20Z" fill="#EE9A88"/>
+<path d="M12 42c5 5 12 7 20 7s15-2 20-7" fill="none" stroke="#86AA7D" stroke-width="4.5"/>
+<path d="M17 25c5-2 10-3 15-3s10 1 15 3" fill="none" stroke="#FFD2C7" stroke-width="1.2" opacity=".8"/>
+<ellipse cx="24" cy="31" rx="1.1" ry="1.9" fill="#5D4A3B" stroke="none" transform="rotate(-22 24 31)"/>
+<ellipse cx="36" cy="31" rx="1.1" ry="1.9" fill="#5D4A3B" stroke="none" transform="rotate(22 36 31)"/>
+<ellipse cx="30" cy="40" rx="1.1" ry="1.9" fill="#5D4A3B" stroke="none" transform="rotate(-8 30 40)"/>
+<circle cx="28" cy="36" r="1.3" fill="#5D4A3B" stroke="none"/><circle cx="34" cy="36" r="1.3" fill="#5D4A3B" stroke="none"/>
+</g>
+      </g>
     `,
     // 樱桃
     cherry: `
-      <path d="M50 22 C43 35 39 48 38 62M50 22 C58 36 63 51 65 68" stroke="#7B6242" stroke-width="3" fill="none" stroke-linecap="round"/>
-      <path d="M50 22 C56 13 69 10 81 15 C77 27 64 31 54 24 Z" fill="#8FCBA3" stroke="#FFF3DC" stroke-width="1.9" stroke-linejoin="round"/>
-      <path d="M50 20 L50 32" stroke="#7B6242" stroke-width="3" stroke-linecap="round"/>
-      <circle cx="35" cy="68" r="19" fill="#D5526B" stroke="#FFF3DC" stroke-width="2.2"/>
-      <circle cx="67" cy="72" r="17" fill="#C94F63" stroke="#FFF3DC" stroke-width="2.2"/>
-      <path d="M24 61 C27 53 34 49 42 51 L42 57 L31 67 Z" fill="#F29AA9" opacity=".9"/>
-      <circle cx="29" cy="74" r="1.3" fill="#FBD1A0" opacity=".65"/>
-      <circle cx="63" cy="80" r="1.2" fill="#FBD1A0" opacity=".55"/>
+      <g transform="translate(-6.97 -8.54) scale(1.753)">
+<g stroke="#FFF3DC" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round">
+<path d="M29 18c-2 9-8 16-13 23M37 18c2 9 7 15 11 22" fill="none" stroke="#7E9A6A" stroke-width="1.8"/>
+<path d="M33 17c5-4 11-2 13 2-4 3-9 3-13-2Z" fill="#8FB38A"/>
+<circle cx="21" cy="43" r="9" fill="#DD7D77"/><circle cx="44" cy="43" r="9" fill="#E38C81"/>
+<ellipse cx="18" cy="39" rx="2.4" ry="1.6" fill="#FFD9CE" opacity=".55" stroke="none"/>
+<ellipse cx="41" cy="39" rx="2.4" ry="1.6" fill="#FFD9CE" opacity=".55" stroke="none"/>
+<circle cx="18" cy="44" r="1.2" fill="#5D4A3B" stroke="none"/><circle cx="24" cy="44" r="1.2" fill="#5D4A3B" stroke="none"/>
+<circle cx="41" cy="44" r="1.2" fill="#5D4A3B" stroke="none"/><circle cx="47" cy="44" r="1.2" fill="#5D4A3B" stroke="none"/>
+</g>
+      </g>
     `,
     // 猕猴桃
     kiwi: `
-      <circle cx="50" cy="53" r="34" fill="#9C7A4B" stroke="#FFF3DC" stroke-width="2.2"/>
-      <circle cx="50" cy="53" r="28.5" fill="#93C95C" stroke="#FFF3DC" stroke-width="1.6"/>
-      <circle cx="50" cy="53" r="10.5" fill="#F2E6B8"/>
-      <path d="M50 43 L50 63M40 48 L60 58M40 58 L60 48M44 39 L56 67M56 39 L44 67" stroke="#5E7E38" stroke-width="1.2" opacity=".55"/>
-      <circle cx="44" cy="49" r="1.2" fill="#4D5E34"/><circle cx="54" cy="45" r="1.2" fill="#4D5E34"/>
-      <circle cx="61" cy="52" r="1.2" fill="#4D5E34"/><circle cx="57" cy="61" r="1.2" fill="#4D5E34"/>
-      <circle cx="46" cy="62" r="1.2" fill="#4D5E34"/><circle cx="39" cy="56" r="1.2" fill="#4D5E34"/>
-      <path d="M25 37 C33 25 44 21 54 23 C41 28 32 37 27 49 Z" fill="#C4DE8D" opacity=".9"/>
+      <g transform="translate(-2.55 -15.68) scale(1.642)">
+<g stroke="#FFF3DC" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round">
+<ellipse cx="32" cy="34" rx="18" ry="22" fill="#B89270"/>
+<ellipse cx="32" cy="34" rx="15.5" ry="19" fill="#9DBE79"/>
+<ellipse cx="32" cy="34" rx="5" ry="7" fill="#F6E7B6"/>
+<g fill="#5D4A3B" stroke="none"><circle cx="32" cy="15.5" r="1"/><circle cx="25" cy="17" r="1"/><circle cx="39" cy="17" r="1"/><circle cx="20" cy="22" r="1"/><circle cx="44" cy="22" r="1"/><circle cx="17" cy="29" r="1"/><circle cx="47" cy="29" r="1"/><circle cx="18" cy="37" r="1"/><circle cx="46" cy="37" r="1"/><circle cx="21" cy="45" r="1"/><circle cx="43" cy="45" r="1"/><circle cx="27" cy="49" r="1"/><circle cx="37" cy="49" r="1"/></g>
+<path d="M32 28v12M26 34h12" fill="none" stroke="#F9EBC2" stroke-width="1" opacity=".8"/>
+<ellipse cx="25" cy="29" rx="3" ry="2" fill="#CBE0A6" opacity=".55" stroke="none"/>
+</g>
+      </g>
     `,
     // 菠萝
     pine: `
-      <path d="M36 34 L41 11 L47 24 L50 5 L54 24 L62 10 L64 34 Z" fill="#7FBF83" stroke="#FFF3DC" stroke-width="1.9" stroke-linejoin="round"/>
-      <path d="M50 27 L50 9" stroke="#5F9E76" stroke-width="1.2" opacity=".4"/>
-      <path d="M38 30 C30 45 26 62 33 78 C41 91 59 91 67 78 C74 62 70 45 62 30 C55 22 45 22 38 30 Z"
-        fill="#E8B94E" stroke="#FFF3DC" stroke-width="2.2" stroke-linejoin="round"/>
-      <path d="M38 34 C49 42 59 52 66 66M62 32 C53 42 44 52 35 66M31 51 C43 55 58 56 70 51M30 65 C43 68 59 68 71 64M35 79 C46 76 57 75 66 78"
-        stroke="#C58E34" stroke-width="1.4" fill="none" opacity=".55"/>
-      <path d="M38 31 C45 24 55 24 62 31 C52 28 45 28 38 31 Z" fill="#F6D98D" opacity=".9"/>
-      <path d="M34 48 C34 63 38 75 45 84" stroke="#F8D98D" stroke-width="2" fill="none" opacity=".55"/>
+      <g transform="translate(5.82 10.65) scale(1.381)">
+<g stroke="#FFF3DC" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round">
+<path d="M32 20l-5-13 4 1 3-6 3 6 5-1-4 13Z" fill="#7FAF7B"/>
+<path d="M32 10v11M27 12l2 8M37 12l-2 8" fill="none" stroke="#5D8C68" stroke-width="1"/>
+<ellipse cx="32" cy="39" rx="14" ry="16" fill="#E8B95A"/>
+<path d="M20 33l24 14M22 45l20-12M27 24l-4 29M37 24l4 29M20 40h24" fill="none" stroke="#C6913D" stroke-width="1.15" opacity=".7"/>
+<ellipse cx="26" cy="31" rx="2.4" ry="1.6" fill="#FFE6A8" opacity=".55" stroke="none"/>
+<circle cx="27" cy="38" r="1.3" fill="#5D4A3B" stroke="none"/><circle cx="37" cy="38" r="1.3" fill="#5D4A3B" stroke="none"/>
+<path d="M30 42q2 1.7 4 0" fill="none" stroke="#5D4A3B" stroke-width="1.1"/>
+</g>
+      </g>
     `,
     rainbow: `
       <path d="M83 52 L73 75 L50 85 L27 75 L17 52 L27 29 L50 19 L73 29 Z"
@@ -1923,6 +1950,20 @@ button{border-radius:2px!important;clip-path:none!important}
 
   const WEEK_KEY = 'xiaoyuan-match3-week';
   const GUIDE_KEY = 'xiaoyuan-match3-guide';
+  const GUIDE_STEPS = [
+    {
+      title: '先换两颗',
+      body: '点一颗，再点它上下左右挨着的另一颗，两颗会交换位置。\n\n按住拖动也可以。'
+    },
+    {
+      title: '凑成三颗',
+      body: '三颗相同果子横着或竖着连成一线，就会一起消掉。\n\n一次连成四颗出炸弹，五颗出彩虹。'
+    },
+    {
+      title: '看目标和灯',
+      body: '上方是过关目标，右侧是剩余步数；步数用完前完成目标就过关。\n\n每消 3 次，门廊灯亮一盏；三盏齐亮会收走场上最多的一种果子。'
+    }
+  ];
   const STORY_KEY = 'xiaoyuan-match3-story';
   const SCORE_BEST_KEY = 'xiaoyuan-match3-score-best';
   const CLEAR_BEST_KEY = 'xiaoyuan-match3-clear-best';
@@ -3595,19 +3636,29 @@ button{border-radius:2px!important;clip-path:none!important}
     overlay.querySelector('.sheet').setAttribute('tabindex', '-1');
   }
 
+  function showGuideStep(step, replay) {
+    if (step > GUIDE_STEPS.length) return;
+    const data = GUIDE_STEPS[step - 1];
+    const last = step === GUIDE_STEPS.length;
+    openSheet({
+      kicker: (replay ? '玩法回顾' : '玩法引导') + ' · ' + step + '/' + GUIDE_STEPS.length,
+      title: data.title,
+      body: data.body,
+      btn: last ? (replay ? '知道了' : '开始摘果') : '下一步',
+      hideStats: true,
+      kind: 'guide',
+      action: last ? () => {
+        if (!replay) setTimeout(() => toast('先交换两颗相邻的果子试试'), 260);
+      } : () => showGuideStep(step + 1, replay)
+    });
+  }
+
   function maybeShowGuide() {
     if (readStore(GUIDE_KEY, false)) return;
-    writeStore(GUIDE_KEY, true);
     setTimeout(() => {
       if (state.page || !overlay.hidden) return;
-      openSheet({
-        kicker: '第一次来小院',
-        title: '三步学会摘果',
-        body: '① 点选或拖动相邻两颗，横竖凑成三个。\n② 完成上方目标就过关；余步≥4 得 2★，分数达标得 3★。\n③ 门廊灯每 3 次消除亮一盏，三盏齐亮会收走场上最多的一种果子。',
-        btn: '开始摘果',
-        hideStats: true,
-        kind: 'guide'
-      });
+      writeStore(GUIDE_KEY, true);
+      showGuideStep(1, false);
     }, 550);
   }
 
@@ -4534,6 +4585,8 @@ button{border-radius:2px!important;clip-path:none!important}
     setPanelEl.innerHTML = '<div class="set-list">'
       + '<div class="set-row"><div class="st"><b>重开本关</b><span>当前这一局从头再来</span></div>'
       + '<button class="set-btn" type="button" data-act="restart">重开</button></div>'
+      + '<div class="set-row"><div class="st"><b>玩法引导</b><span>新手游玩教程</span></div>'
+      + '<button class="set-btn" type="button" data-act="guide">查看</button></div>'
       + '<div class="set-row"><div class="st"><b>音效</b><span>摘果、点灯的合成声</span></div>'
       + '<button class="set-btn" type="button" data-act="sound">' + (state.muted ? '已静音' : '开着') + '</button></div>'
       + '<div class="set-row"><div class="st"><b>换色</b><span>十套预设，也能自己调一个</span></div>'
@@ -4673,6 +4726,7 @@ button{border-radius:2px!important;clip-path:none!important}
     if (!btn) return;
     const act = btn.dataset.act;
     if (act === 'sound') toggleSound();
+    else if (act === 'guide') { showGuideStep(1, true); }
     else if (act === 'restart') { closePage(); doRestart(); }
     else if (act === 'home') {
       window.location.href = 'https://jyx010320-gif.github.io/RabbitOvOTsuki/';
