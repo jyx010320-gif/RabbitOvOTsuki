@@ -1,919 +1,2469 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>api-sites.html</title>
-    <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
-    <style>
-        :root {
-            --bg-color: #f3f5f7;
-            --card-bg: #ffffff;
-            --text-color: #222;
-            --text-secondary: #607d8b;
-            --primary-color: #009688;
-            --border-color: #eee;
-            --tag-bg: #f0f2f5;
-            --shadow: 0 2px 10px rgba(0,0,0,0.06);
-        }
-        /* 主题定义 */
-        .theme-cloud {
-            --bg-color: #f3f5f7;
-            --card-bg: #ffffff;
-            --text-color: #222;
-            --text-secondary: #607d8b;
-            --primary-color: #009688;
-            --border-color: #eee;
-            --tag-bg: #f0f2f5;
-        }
-        .theme-night {
-            --bg-color: #1a1c20;
-            --card-bg: #272a30;
-            --text-color: #e8e8e8;
-            --text-secondary: #a1a7b3;
-            --primary-color: #4db6ac;
-            --border-color: #383c44;
-            --tag-bg: #343840;
-        }
-        .theme-island {
-            --bg-color: #f7f2e4;
-            --card-bg: #fffbf0;
-            --text-color: #5a5545;
-            --text-secondary: #8c8672;
-            --primary-color: #63b966;
-            --border-color: #e9e2cd;
-            --tag-bg: #ede7d5;
-        }
-        .theme-sakura {
-            --bg-color: #fcf0f4;
-            --card-bg: #fff7fa;
-            --text-color: #443438;
-            --text-secondary: #94777f;
-            --primary-color: #e88ea8;
-            --border-color: #f4d8e0;
-            --tag-bg: #f7e2e8;
-        }
-        .theme-sea {
-            --bg-color: #edf6fb;
-            --card-bg: #f6fbfe;
-            --text-color: #2c3b44;
-            --text-secondary: #738b99;
-            --primary-color: #59a9d6;
-            --border-color: #d8eaf4;
-            --tag-bg: #e3f0f8;
-        }
-        .theme-mint {
-            --bg-color: #eff9f4;
-            --card-bg: #f6fdf9;
-            --text-color: #2d443a;
-            --text-secondary: #749987;
-            --primary-color: #56c596;
-            --border-color: #d7efe3;
-            --tag-bg: #e2f3ec;
-        }
-        .theme-purple {
-            --bg-color: #251e38;
-            --card-bg: #34294d;
-            --text-color: #e7e2f4;
-            --text-secondary: #b0a4cc;
-            --primary-color: #b185db;
-            --border-color: #483b66;
-            --tag-bg: #41345c;
-        }
-        .theme-orange {
-            --bg-color: #fff3e8;
-            --card-bg: #fff9f2;
-            --text-color: #4b3a2b;
-            --text-secondary: #a07f60;
-            --primary-color: #f2994a;
-            --border-color: #f9e2cc;
-            --tag-bg: #fae9d8;
-        }
-        .theme-cocoa {
-            --bg-color: #f4ede6;
-            --card-bg: #faf6f2;
-            --text-color: #473b32;
-            --text-secondary: #8c796a;
-            --primary-color: #a17c5d;
-            --border-color: #e3d6cb;
-            --tag-bg: #eae0d6;
-        }
-        .theme-goldnight {
-            --bg-color: #121212;
-            --card-bg: #1f1f1f;
-            --text-color: #f0e6c2;
-            --text-secondary: #b8aa80;
-            --primary-color: #d4af37;
-            --border-color: #333;
-            --tag-bg: #2c2c2c;
-        }
-        .theme-purplecloud {
-            --bg-color: #f3edf9;
-            --card-bg: #f9f5fd;
-            --text-color: #423552;
-            --text-secondary: #907ca8;
-            --primary-color: #b490d8;
-            --border-color: #e2d5f0;
-            --tag-bg: #e9e0f3;
-        }
-        .theme-cherry {
-            --bg-color: #fef0f0;
-            --card-bg: #fff6f6;
-            --text-color: #4c2c2c;
-            --text-secondary: #a87070;
-            --primary-color: #e65c5c;
-            --border-color: #f8d4d4;
-            --tag-bg: #f9e2e2;
-        }
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            -webkit-user-select: none;
-            user-select: none;
-            touch-action: manipulation;
-        }
-        input, textarea, select {
-            -webkit-user-select: text;
-            user-select: text;
-        }
-        body {
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            padding-bottom: 90px;
-            transition: background 0.3s, color 0.3s;
-        }
-        .page {
-            display: none;
-            padding: 20px;
-        }
-        .page.active {
-            display: block;
-        }
-        .header-title {
-            font-size: 32px;
-            font-weight: 700;
-            margin-bottom: 8px;
-            color: var(--text-color);
-        }
-        .header-desc {
-            font-size: 17px;
-            color: var(--text-secondary);
-            margin-bottom: 24px;
-            line-height: 1.5;
-        }
-        .stat-card {
-            background: var(--card-bg);
-            border-radius: 18px;
-            padding: 22px;
-            box-shadow: var(--shadow);
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-        .stat-num {
-            font-size: 42px;
-            font-weight: 700;
-            color: var(--primary-color);
-        }
-        .stat-text {
-            font-size: 16px;
-            color: var(--text-secondary);
-        }
-        .search-wrap {
-            position: relative;
-            margin-bottom: 18px;
-        }
-        .search-wrap input {
-            width: 100%;
-            border: none;
-            background: var(--card-bg);
-            padding: 14px 16px 14px 44px;
-            border-radius: 16px;
-            font-size: 16px;
-            box-shadow: var(--shadow);
-            color: var(--text-color);
-        }
-        .search-wrap svg {
-            position: absolute;
-            left: 14px;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 20px;
-            height: 20px;
-            fill: var(--text-secondary);
-        }
-        .filter-tabs {
-            display: flex;
-            gap: 10px;
-            overflow-x: auto;
-            padding-bottom: 6px;
-            margin-bottom: 16px;
-        }
-        .filter-tabs::-webkit-scrollbar {
-            display: none;
-        }
-        .filter-tab {
-            flex-shrink: 0;
-            padding: 10px 20px;
-            background: var(--card-bg);
-            border-radius: 999px;
-            font-size: 16px;
-            border: 1px solid var(--border-color);
-            color: var(--text-secondary);
-        }
-        .filter-tab.active {
-            background: var(--tag-bg);
-            color: var(--primary-color);
-            border-color: var(--primary-color);
-        }
-        .site-card {
-            background: var(--card-bg);
-            border-radius: 18px;
-            box-shadow: var(--shadow);
-            padding: 20px;
-            margin-bottom: 10px;
-        }
-        .card-head {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 12px;
-        }
-        .card-name-row {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .site-name {
-            font-size: 24px;
-            font-weight: 700;
-        }
-        .edit-btn-inline {
-            color: var(--primary-color);
-            font-size: 16px;
-        }
-        .cat-tag {
-            padding: 6px 14px;
-            background: var(--tag-bg);
-            color: var(--primary-color);
-            border-radius: 999px;
-            font-size: 15px;
-        }
-        .tag-group {
-            display: flex;
-            gap: 8px;
-            margin-bottom: 10px;
-        }
-        .tag-item {
-            padding: 5px 12px;
-            background: var(--tag-bg);
-            color: var(--text-secondary);
-            border-radius: 8px;
-            font-size: 14px;
-        }
-        .card-note {
-            color: var(--text-secondary);
-            font-size: 16px;
-            margin-bottom: 14px;
-        }
-        .collapse-btn {
-            text-align: right;
-            color: var(--text-secondary);
-        }
-        .collapse-content {
-            margin-top: 14px;
-            display: none;
-            border-top: 1px solid var(--border-color);
-            padding-top: 14px;
-        }
-        .collapse-content.open {
-            display: block;
-        }
-        .info-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 10px;
-            font-size: 16px;
-        }
-        .info-label {
-            color: var(--text-secondary);
-        }
-        .info-value {
-            color: var(--text-color);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .copy-btn {
-            color: var(--primary-color);
-            font-size: 14px;
-        }
-        .link-text {
-            color: var(--primary-color);
-        }
-        .btn-row {
-            display: flex;
-            gap: 10px;
-            margin-top:16px;
-            justify-content: flex-end;
-        }
-        .mini-btn {
-            padding:7px 14px;
-            font-size:14px;
-            border-radius:12px;
-            border:none;
-            background:var(--tag-bg);
-            color:var(--primary-color);
-        }
-        .form-group {
-            margin-bottom: 16px;
-        }
-        .form-group label {
-            display: block;
-            margin-bottom: 6px;
-            color: var(--text-secondary);
-            font-size:15px;
-        }
-        .form-group input, .form-group textarea, .form-group select {
-            width: 100%;
-            border: 1px solid var(--border-color);
-            border-radius:12px;
-            padding:12px 14px;
-            font-size:16px;
-            background:var(--card-bg);
-            color:var(--text-color);
-        }
-        .form-group textarea {
-            min-height:80px;
-            resize:vertical;
-        }
-        .form-btn-wrap {
-            display:flex;
-            gap:12px;
-            margin-top:20px;
-        }
-        .form-btn {
-            flex:1;
-            padding:14px;
-            border-radius:12px;
-            border:none;
-            font-size:17px;
-        }
-        .form-btn.primary {
-            background:var(--primary-color);
-            color:#fff;
-        }
-        .form-btn.gray {
-            background:var(--tag-bg);
-            color:var(--text-color);
-        }
-        .tab-bar {
-            position:fixed;
-            bottom:0;
-            left:0;
-            width:100%;
-            background:var(--card-bg);
-            display:flex;
-            align-items:center;
-            justify-content:space-around;
-            padding:10px 0;
-            box-shadow:0 -1px 10px rgba(0,0,0,0.05);
-        }
-        .tab-item {
-            text-align:center;
-            color:var(--text-secondary);
-            font-size:15px;
-        }
-        .tab-item.active {
-            color:var(--primary-color);
-        }
-        .add-fab {
-            width:76px;
-            height:76px;
-            border-radius:50%;
-            background:var(--primary-color);
-            color:#fff;
-            font-size:36px;
-            display:flex;
-            align-items:center;
-            justify-content:center;
-            border:none;
-            position:fixed;
-            bottom:50px;
-            left:50%;
-            transform:translateX(-50%);
-            box-shadow:0 4px 16px rgba(0,0,0,0.35);
-        }
-        .setting-item {
-            background:var(--card-bg);
-            border-radius:14px;
-            padding:16px;
-            margin-bottom:10px;
-            display:flex;
-            justify-content:space-between;
-            align-items:center;
-        }
-        .cat-list-item {
-            display:flex;
-            align-items:center;
-            justify-content:space-between;
-            background:var(--card-bg);
-            padding:14px;
-            border-radius:14px;
-            margin-bottom:8px;
-        }
-        .cat-input-row {
-            display:flex;
-            gap:8px;
-            margin-top:16px;
-        }
-        .cat-input-row input {
-            flex:1;
-            padding:12px;
-            border:1px solid var(--border-color);
-            border-radius:12px;
-            font-size:16px;
-            background:var(--card-bg);
-            color:var(--text-color);
-        }
-        .cat-add-btn {
-            padding:0 16px;
-            background:var(--primary-color);
-            color:#fff;
-            border:none;
-            border-radius:12px;
-        }
-        .toast {
-            position:fixed;
-            top:40%;
-            left:50%;
-            transform:translate(-50%,-50%);
-            background:rgba(0,0,0,0.75);
-            color:#fff;
-            padding:12px 22px;
-            border-radius:10px;
-            display:none;
-            z-index:9999;
-        }
-        .theme-collapse-content{
-            display:none;
-            padding:0 8px 12px 8px;
-            gap:8px;
-            flex-wrap:wrap;
-        }
-        .theme-collapse-content.open{
-            display:flex;
-        }
-        .theme-option-btn{
-            padding:8px 12px;
-            border-radius:10px;
-            border:1px solid var(--border-color);
-            background:var(--card-bg);
-            color:var(--text-color);
-            font-size:12px;
-        }
-        .theme-option-btn.active{
-            border-color:var(--primary-color);
-            background:var(--tag-bg);
-            color:var(--primary-color);
-        }
-        .arrow{
-            transition: transform 0.25s;
-        }
-        .arrow.rotate{
-            transform: rotate(180deg);
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>我的 API 站点</title>
+<style>
+  :root {
+    --bg: #f4f6f7;
+    --card: #ffffff;
+    --text: #1f2d30;
+    --text-sub: #5c7074;
+    --line: #e3e9ea;
+    --primary: #0e8a80;
+    --primary-soft: #e6f4f2;
+    --green: #1f9d6b;
+    --yellow: #c98a12;
+    --gray: #7a8a8d;
+    --gray-soft: #eceff0;
+    --shadow: 0 2px 10px rgba(31, 45, 48, 0.08);
+    --radius: 14px;
+  }
+
+  /* 深色主题 */
+  body.dark {
+    --bg: #151a1b;
+    --card: #22292b;
+    --text: #e8eeee;
+    --text-sub: #9db0b3;
+    --line: #333c3e;
+    --primary: #2bb8a9;
+    --primary-soft: #1d3a37;
+    --green: #3ecf96;
+    --yellow: #e0a93f;
+    --gray: #8a9a9d;
+    --gray-soft: #2c3335;
+    --shadow: 0 2px 10px rgba(0, 0, 0, 0.35);
+  }
+
+  /* 动森主题：Nook Phone 奶油米白 + 海水蓝 + 棕榈绿 */
+  body.acnh {
+    --bg: #f3ecd7;
+    --card: #fffaf0;
+    --text: #5f5636;
+    --text-sub: #978c68;
+    --line: #e9dfc2;
+    --primary: #57a53c;
+    --primary-soft: #e5f0d5;
+    --green: #4c9636;
+    --yellow: #e9b95a;
+    --gray: #9a9070;
+    --gray-soft: #eee5cd;
+    --sea: #8fc6c9;
+    --shadow: 0 2px 10px rgba(150, 130, 80, 0.14);
+  }
+
+  /* 樱花粉 */
+  body.sakura {
+    --bg: #fdf3f5;
+    --card: #ffffff;
+    --text: #5a3a44;
+    --text-sub: #9c7480;
+    --line: #f3dbe1;
+    --primary: #e07a96;
+    --primary-soft: #fbe7ec;
+    --green: #7fb56a;
+    --yellow: #e8b04a;
+    --gray: #9c8a90;
+    --gray-soft: #f6e8ec;
+    --shadow: 0 2px 10px rgba(180, 100, 120, 0.1);
+  }
+
+  /* 海盐蓝 */
+  body.ocean {
+    --bg: #eef5f8;
+    --card: #ffffff;
+    --text: #2f4650;
+    --text-sub: #66828d;
+    --line: #d8e7ec;
+    --primary: #3d93b5;
+    --primary-soft: #e2f1f6;
+    --green: #5da37a;
+    --yellow: #e0a93f;
+    --gray: #7d959d;
+    --gray-soft: #e7eff2;
+    --shadow: 0 2px 10px rgba(60, 110, 130, 0.1);
+  }
+
+  /* 薄荷绿 */
+  body.mint {
+    --bg: #eef7f1;
+    --card: #ffffff;
+    --text: #2f4a3c;
+    --text-sub: #6b8a78;
+    --line: #d8ecdf;
+    --primary: #4aa878;
+    --primary-soft: #e2f3e9;
+    --green: #3e9c66;
+    --yellow: #e2b04a;
+    --gray: #7d9588;
+    --gray-soft: #e7f1ea;
+    --shadow: 0 2px 10px rgba(60, 130, 90, 0.1);
+  }
+
+  /* 暗夜紫 */
+  body.purple {
+    --bg: #1e1a28;
+    --card: #2a2438;
+    --text: #ece6f5;
+    --text-sub: #a496bd;
+    --line: #3a3248;
+    --primary: #a98bd8;
+    --primary-soft: #3d3354;
+    --green: #7ec98f;
+    --yellow: #e0b35f;
+    --gray: #9488a8;
+    --gray-soft: #332c42;
+    --shadow: 0 2px 10px rgba(0, 0, 0, 0.35);
+  }
+
+  /* 暖阳橙 */
+  body.orange {
+    --bg: #fdf4ea;
+    --card: #ffffff;
+    --text: #5a4330;
+    --text-sub: #9c8064;
+    --line: #f3e2cf;
+    --primary: #e08a3c;
+    --primary-soft: #fbeedd;
+    --green: #7fb05a;
+    --yellow: #e8a02a;
+    --gray: #9c8a78;
+    --gray-soft: #f6eadd;
+    --shadow: 0 2px 10px rgba(180, 120, 60, 0.1);
+  }
+
+  /* 原木棕 */
+  body.wood {
+    --bg: #f4ede2;
+    --card: #fdf8f0;
+    --text: #4e3f30;
+    --text-sub: #8a7660;
+    --line: #e6d8c4;
+    --primary: #9c7446;
+    --primary-soft: #f0e4d2;
+    --green: #7f9a5a;
+    --yellow: #c99a3c;
+    --gray: #8a7a68;
+    --gray-soft: #ece1cf;
+    --shadow: 0 2px 10px rgba(120, 90, 50, 0.12);
+  }
+
+  /* 暗夜金 */
+  body.gold {
+    --bg: #171512;
+    --card: #242019;
+    --text: #f0e7d6;
+    --text-sub: #b3a684;
+    --line: #3a3327;
+    --primary: #d9a94e;
+    --primary-soft: #3a3120;
+    --green: #8fbf6a;
+    --yellow: #e8b95a;
+    --gray: #9c8f72;
+    --gray-soft: #2e281e;
+    --shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+  }
+
+  /* 芋泥浅紫 */
+  body.lavender {
+    --bg: #f3f0fa;
+    --card: #ffffff;
+    --text: #463a5c;
+    --text-sub: #8678a0;
+    --line: #e3dbf0;
+    --primary: #8e74c9;
+    --primary-soft: #ece4f7;
+    --green: #7fb58a;
+    --yellow: #d9a95f;
+    --gray: #8a7d9e;
+    --gray-soft: #ece6f2;
+    --shadow: 0 2px 10px rgba(120, 100, 160, 0.1);
+  }
+
+  /* 樱桃红 */
+  body.cherry {
+    --bg: #fdf1f0;
+    --card: #ffffff;
+    --text: #5c3232;
+    --text-sub: #9c6b6b;
+    --line: #f3d9d7;
+    --primary: #d9534f;
+    --primary-soft: #fbe7e6;
+    --green: #7fb56a;
+    --yellow: #e8a03c;
+    --gray: #9c7878;
+    --gray-soft: #f6e8e7;
+    --shadow: 0 2px 10px rgba(180, 90, 90, 0.1);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC",
+      "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    min-height: 100vh;
+    padding-bottom: 90px;
+    /* 禁止双击缩放、长按缩放手势 */
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+    /* 禁止长按选中文字与系统识别菜单 */
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+    -webkit-touch-callout: none;
+  }
+
+  /* 输入框内允许选择文字，方便填写和修改 */
+  input, select, textarea {
+    -webkit-user-select: text;
+    -moz-user-select: text;
+    user-select: text;
+    -webkit-touch-callout: default;
+  }
+
+  .container {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 32px 20px 60px;
+  }
+
+  /* ===== 头部 ===== */
+  header.page-header { margin-bottom: 28px; }
+
+  header.page-header h1 {
+    font-size: 28px;
+    letter-spacing: 0.5px;
+    margin-bottom: 6px;
+  }
+
+  header.page-header p {
+    color: var(--text-sub);
+    font-size: 15px;
+  }
+
+  /* ===== 统计概览 ===== */
+  .stats {
+    display: flex;
+    gap: 14px;
+    margin: 24px 0 30px;
+  }
+
+  .stat-box {
+    flex: 1;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 16px 18px;
+    box-shadow: var(--shadow);
+  }
+
+  .stat-box .num { font-size: 26px; font-weight: 700; }
+
+  .stat-box .label {
+    font-size: 13px;
+    color: var(--text-sub);
+  }
+
+  .stat-box.total .num { color: var(--primary); }
+  .stat-box.cat .num   { color: var(--green); }
+
+  /* ===== 搜索框 ===== */
+  .search-wrap {
+    position: relative;
+    margin-bottom: 16px;
+  }
+
+  .search-wrap input {
+    width: 100%;
+    padding: 11px 14px 11px 40px;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    background: var(--card);
+    font-size: 14px;
+    font-family: inherit;
+    color: var(--text);
+  }
+
+  .search-wrap input:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px var(--primary-soft);
+  }
+
+  .search-wrap::before {
+    content: "🔍";
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 15px;
+    pointer-events: none;
+  }
+
+  /* ===== 分类标签栏：横向平行滑动 ===== */
+  .tags-bar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 22px;
+    position: relative;
+  }
+
+  /* 滑动区域：只放分类标签，独立横向滚动 */
+  .tags-scroll {
+    flex: 1;
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 10px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .tags-scroll::-webkit-scrollbar { display: none; }
+
+  .tags-bar span {
+    flex-shrink: 0;
+    white-space: nowrap;
+    font-size: 13px;
+    padding: 6px 14px;
+    border-radius: 999px;
+    background: var(--card);
+    border: 1px solid var(--line);
+    color: var(--text-sub);
+    cursor: pointer;
+  }
+
+  /* “全部”固定在栏位最左侧，不在滑动区域内，不可拖动 */
+  .tags-bar span.fixed {
+    position: relative;
+    z-index: 2;
+    box-shadow: 10px 0 12px -10px rgba(31, 45, 48, 0.3);
+  }
+
+  .tags-bar span.active {
+    background: var(--primary-soft);
+    border-color: var(--primary);
+    color: var(--primary);
+    font-weight: 600;
+  }
+
+  /* 卡片允许上下翻页，标签允许左右滑动；长按激活拖拽后由脚本接管 */
+  .site-card { touch-action: pan-y; }
+  .tags-bar span { touch-action: pan-x; }
+
+  /* ===== 站点卡片网格 ===== */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    width: 100%;
+  }
+
+  .site-card {
+    width: 100%;
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 16px;
+    box-shadow: var(--shadow);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+
+  .site-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 18px rgba(31, 45, 48, 0.12);
+  }
+
+  /* 拖拽进行中：关闭其它卡片/标签的悬停反应，避免经过时跳动 */
+  body.dragging .site-card:hover,
+  body.dragging .tags-bar span:hover {
+    transform: none;
+    box-shadow: var(--shadow);
+  }
+
+  /* 长按拖拽排序 */
+  .drag-src {
+    opacity: 0.35;
+    -webkit-user-select: none;
+    user-select: none;
+  }
+
+  .drag-ghost {
+    position: fixed;
+    z-index: 999;
+    pointer-events: none;
+    opacity: 0.96;
+    margin: 0;
+    box-shadow: 0 10px 24px rgba(31, 45, 48, 0.25);
+    border-radius: var(--radius);
+  }
+
+  .card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .site-name {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 17px;
+    font-weight: 700;
+  }
+
+  .btn-edit-card {
+    flex-shrink: 0;
+    border: none;
+    background: none;
+    color: var(--primary);
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: inherit;
+    padding: 2px 4px;
+  }
+
+  .site-name a {
+    color: var(--text);
+    text-decoration: none;
+  }
+
+  .site-name a:hover { color: var(--primary); }
+
+  /* 分类徽章 */
+  .cat-badge {
+    flex-shrink: 0;
+    font-size: 12px;
+    color: var(--primary);
+    background: var(--primary-soft);
+    padding: 3px 10px;
+    border-radius: 999px;
+    font-weight: 600;
+  }
+
+  /* 卡片内标签 */
+  .tag-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .tag-list .tag {
+    font-size: 12px;
+    color: var(--text-sub);
+    background: var(--gray-soft);
+    padding: 2px 10px;
+    border-radius: 6px;
+  }
+
+  .site-desc {
+    font-size: 14px;
+    color: var(--text-sub);
+    flex-grow: 1;
+  }
+
+  /* ===== 折叠卡片 ===== */
+  .card-head {
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .card-note {
+    font-size: 13px;
+    color: var(--text-sub);
+    word-break: break-all;
+  }
+
+  .fold-arrow {
+    align-self: flex-end;
+    font-size: 14px;
+    color: var(--text-sub);
+    transition: transform 0.2s ease;
+    line-height: 1;
+  }
+
+  .site-card:not(.collapsed) .fold-arrow { transform: rotate(180deg); }
+
+  /* 展开后才显示的详细信息 */
+  .card-detail {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    border-top: 1px dashed var(--line);
+    padding-top: 12px;
+    font-size: 13px;
+    color: var(--text-sub);
+  }
+
+  .site-card.collapsed .card-detail { display: none; }
+
+  /* 卡片底部信息 */
+  .card-meta {
+    border-top: 1px dashed var(--line);
+    padding-top: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    font-size: 13px;
+    color: var(--text-sub);
+  }
+
+  .card-meta .row {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+  }
+
+  .card-meta a {
+    color: var(--primary);
+    text-decoration: none;
+    word-break: break-all;
+  }
+
+  .card-meta a:hover { text-decoration: underline; }
+
+  .meta-key { flex-shrink: 0; }
+
+  .meta-val {
+    text-align: right;
+    word-break: break-all;
+  }
+
+  .meta-val.key {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 12px;
+  }
+
+  .key-right { display: flex; align-items: center; gap: 8px; }
+  .copy-right { display: flex; align-items: center; gap: 8px; }
+  .copy-btn {
+    flex-shrink: 0;
+    border: none;
+    background: none;
+    color: var(--primary);
+    font-size: 12px;
+    cursor: pointer;
+    font-family: inherit;
+    padding: 0 2px;
+  }
+  .key-eye {
+    flex-shrink: 0;
+    border: none;
+    background: none;
+    color: var(--primary);
+    font-size: 12px;
+    cursor: pointer;
+    font-family: inherit;
+    padding: 0 2px;
+  }
+
+  /* 链接小按钮 */
+  .link-btn {
+    display: inline-block;
+    padding: 5px 12px;
+    border-radius: 8px;
+    background: var(--primary-soft);
+    color: var(--primary);
+    font-size: 12px;
+    font-weight: 600;
+    text-decoration: none;
+    word-break: keep-all;
+  }
+
+  .link-btn:hover { background: var(--primary); color: #fff; }
+
+  .btn-group {
+    display: inline-flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: flex-end;
+  }
+
+  .btn-group .link-btn {
+    padding: 4px 10px;
+    font-size: 11px;
+    border-radius: 6px;
+  }
+
+  button.link-btn {
+    border: none;
+    font-family: inherit;
+    cursor: pointer;
+  }
+
+  /* ===== 详情弹窗 ===== */
+  .detail-modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 110;
+    padding: 20px;
+  }
+
+  .detail-modal.open { display: flex; }
+
+  .detail-box {
+    background: var(--card);
+    border-radius: var(--radius);
+    width: 100%;
+    max-width: 480px;
+    max-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  .detail-header {
+    flex-shrink: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px 20px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .detail-header h3 { font-size: 18px; }
+
+  .detail-close {
+    border: none;
+    background: var(--gray-soft);
+    color: var(--text-sub);
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    font-size: 18px;
+    cursor: pointer;
+    line-height: 1;
+  }
+
+  .detail-body {
+    overflow-y: auto;
+    padding: 18px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .detail-footer {
+    flex-shrink: 0;
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    padding: 14px 20px;
+    border-top: 1px solid var(--line);
+  }
+
+  .btn-edit { border: none; font-family: inherit; cursor: pointer; }
+
+  .detail-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    font-size: 14px;
+  }
+
+  .detail-row .meta-key { color: var(--text-sub); flex-shrink: 0; }
+
+  .detail-row .meta-val {
+    text-align: right;
+    word-break: break-all;
+  }
+
+  .detail-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    justify-content: flex-end;
+  }
+
+  /* 模型价格列表 */
+  .model-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    min-width: 180px;
+  }
+
+  .model-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .model-name { flex: 0 0 auto; }
+
+  .model-chip {
+    flex: 0 0 auto;
+    font-size: 11px;
+    padding: 2px 8px;
+    border-radius: 999px;
+    background: var(--primary-soft);
+    color: var(--primary);
+  }
+
+  .model-mode {
+    flex: 0 0 auto;
+    font-size: 11px;
+    padding: 2px 8px;
+    border-radius: 999px;
+    background: var(--gray-soft);
+    color: var(--text-sub);
+  }
+
+  .model-cat-picks {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 8px;
+  }
+
+  .model-cat-scroll {
+    flex: 1;
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 8px;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .model-cat-scroll::-webkit-scrollbar { display: none; }
+
+  .model-cat-item {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .model-cat-pick {
+    font-size: 12px;
+    padding: 5px 12px;
+    border-radius: 999px;
+    background: var(--primary-soft);
+    color: var(--primary);
+    border: 1px solid var(--line);
+    cursor: pointer;
+    font-family: inherit;
+    white-space: nowrap;
+  }
+
+  .model-cat-pick.disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+  }
+
+  .model-cat-del {
+    flex-shrink: 0;
+    width: 18px;
+    height: 18px;
+    border: none;
+    border-radius: 50%;
+    background: var(--gray-soft);
+    color: var(--text-sub);
+    font-size: 12px;
+    line-height: 1;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: inherit;
+  }
+
+  .model-cat-add {
+    flex-shrink: 0;
+    border-radius: 0;
+  }
+
+  .model-price {
+    margin-left: auto;
+    color: var(--green);
+    font-weight: 600;
+  }
+
+  /* 充值档位卡片 */
+  .plan-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    min-width: 200px;
+  }
+
+  .plan-card {
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 12px;
+  }
+
+  .plan-name {
+    font-size: 14px;
+    margin-bottom: 8px;
+  }
+
+  .plan-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+  }
+
+  .plan-price {
+    color: #e05252;
+    font-weight: 700;
+  }
+
+  /* ===== 页脚 ===== */
+  footer {
+    margin-top: 40px;
+    text-align: center;
+    font-size: 13px;
+    color: var(--text-sub);
+  }
+
+  /* ===== 底部固定 Tab 栏（不随页面滚动） ===== */
+  .bottom-tab {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 64px;
+    background: var(--card);
+    border-top: 1px solid var(--line);
+    box-shadow: 0 -2px 12px rgba(31, 45, 48, 0.08);
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    z-index: 90;
+  }
+
+  .tab-item,
+  .tab-add-btn {
+    flex: 1;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    color: var(--text-sub);
+    cursor: pointer;
+  }
+
+  .tab-add-btn {
+    flex: 0 0 auto;
+    border: none;
+    background: var(--primary);
+    color: #fff;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    font-size: 26px;
+    line-height: 1;
+    cursor: pointer;
+    transition: background 0.15s ease, transform 0.15s ease;
+  }
+
+  .tab-add-btn:hover {
+    background: #0b7269;
+    transform: scale(1.06);
+  }
+
+  /* 设置页打开时，底部 Tab 栏浮在面板之上 */
+  body.tab-visible .bottom-tab { z-index: 110; }
+  body.tab-visible #settingPanel .panel-body { padding-bottom: 84px; }
+
+  /* ===== 全屏新建表单页面 ===== */
+  .panel {
+    position: fixed;
+    inset: 0;
+    background: var(--bg);
+    display: none;
+    flex-direction: column;
+    z-index: 100;
+  }
+
+  .panel.open { display: flex; }
+
+  .panel-header {
+    flex-shrink: 0;
+    background: var(--card);
+    border-bottom: 1px solid var(--line);
+    padding: 18px 20px;
+    text-align: center;
+  }
+
+  .panel-header h2 { font-size: 19px; }
+
+  .setting-header {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .back-btn {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: none;
+    background: var(--gray-soft);
+    color: var(--text);
+    font-size: 22px;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+  }
+
+  .panel-body {
+    flex: 1;
+    overflow-y: auto;
+    padding: 24px 20px 40px;
+  }
+
+  .form-inner {
+    max-width: 640px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+
+  .field-group {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+
+  .hidden { display: none !important; }
+
+  .form-item label {
+    display: block;
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+
+  .form-item label .req { color: var(--yellow); }
+
+  .form-item .hint {
+    font-size: 12px;
+    color: var(--text-sub);
+    margin-top: 6px;
+  }
+
+  .form-item input,
+  .form-item select,
+  .form-item textarea {
+    width: 100%;
+    padding: 11px 12px;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    background: var(--card);
+    font-size: 14px;
+    font-family: inherit;
+    color: var(--text);
+  }
+
+  .form-item textarea {
+    resize: vertical;
+    min-height: 76px;
+  }
+
+  .form-item input:focus,
+  .form-item select:focus,
+  .form-item textarea:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px var(--primary-soft);
+  }
+
+  /* 底部固定操作栏 */
+  .panel-footer {
+    flex-shrink: 0;
+    background: var(--card);
+    border-top: 1px solid var(--line);
+    padding: 14px 20px calc(14px + env(safe-area-inset-bottom));
+    display: flex;
+    gap: 12px;
+    max-width: 640px;
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  .panel-footer button {
+    flex: 1;
+    padding: 12px;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    border: 1px solid transparent;
+  }
+
+  .btn-cancel { background: var(--gray-soft); color: var(--text-sub); }
+  .btn-save   { background: var(--primary); color: #fff; }
+  .btn-save:hover { background: #0b7269; }
+
+  /* ===== 设置页 ===== */
+  .setting-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .setting-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    width: 100%;
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 16px 18px;
+    font-size: 15px;
+    color: var(--text);
+    cursor: pointer;
+    font-family: inherit;
+    text-align: left;
+  }
+
+  .setting-row:hover { border-color: var(--primary); }
+
+  .setting-row .setting-arrow {
+    color: var(--text-sub);
+    font-size: 18px;
+  }
+
+  .setting-row .row-right {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--text-sub);
+    font-size: 13px;
+  }
+
+  .manage-group { display: flex; flex-direction: column; gap: 12px; }
+
+  .manage-title {
+    font-size: 13px;
+    color: var(--text-sub);
+    padding-left: 4px;
+  }
+
+  .theme-options { display: flex; gap: 10px; flex-wrap: wrap; }
+  .theme-group { display: flex; flex-direction: column; gap: 10px; }
+  .theme-group .setting-arrow { transition: transform 0.2s ease; }
+  .theme-group.open .setting-arrow { transform: rotate(90deg); }
+  .theme-opt {
+    flex: 1;
+    min-width: 80px;
+    padding: 11px 12px;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    background: var(--card);
+    color: var(--text);
+    font-size: 12px;
+    font-family: inherit;
+    cursor: pointer;
+  }
+  .theme-opt.active {
+    background: var(--primary-soft);
+    border-color: var(--primary);
+    color: var(--primary);
+    font-weight: 600;
+  }
+
+  .manage-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 12px 14px;
+  }
+
+  .manage-old {
+    flex: 0 0 auto;
+    max-width: 84px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: var(--text-sub);
+    font-size: 13px;
+  }
+
+  .manage-input {
+    flex: 1;
+    min-width: 0;
+    background: var(--bg);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 9px 12px;
+    font-size: 14px;
+    color: var(--text);
+    font-family: inherit;
+  }
+
+  .manage-input:focus { outline: none; border-color: var(--primary); }
+
+  .manage-save { flex: 0 0 auto; }
+
+  .manage-del {
+    flex: 0 0 auto;
+    border: none;
+    background: #fdecec;
+    color: #e05252;
+    border-radius: 10px;
+    padding: 8px 12px;
+    font-size: 13px;
+    cursor: pointer;
+    font-family: inherit;
+  }
+
+  /* ===== 响应式 ===== */
+  @media (max-width: 900px) {
+    .grid { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  @media (max-width: 600px) {
+    .grid  { grid-template-columns: 1fr; }
+    header.page-header h1 { font-size: 23px; }
+  }
+</style>
 </head>
 <body>
-    <div class="toast" id="toast"></div>
+<div class="container">
 
-    <!--首页-->
-    <div class="page active" id="page-home">
-        <h1 class="header-title">我的 API 站点记录</h1>
-        <p class="header-desc">整理并记录我正在使用或收藏的 API 站点，方便随时查看与调用。</p>
-        <div class="stat-card">
-            <div class="stat-num" id="stat-total">0</div>
-            <div class="stat-text">站点总数</div>
+  <header class="page-header">
+    <h1>我的 API 站点</h1>
+    <p>o北极兔o</p>
+  </header>
+
+  <div class="search-wrap">
+    <input type="text" id="searchInput" placeholder="搜索站点名称、主机、备注、标签…">
+  </div>
+
+  <nav class="tags-bar">
+    <span class="active fixed" data-filter="all">全部</span>
+    <div class="tags-scroll" id="tagsScroll"></div>
+  </nav>
+
+  <!-- 站点卡片列表 -->
+  <section class="grid" id="cardList">
+
+
+  </section>
+
+  <footer id="footerText">
+    共收录 3 个 API 站点 · 页面可直接在浏览器打开使用
+  </footer>
+
+</div>
+
+<!-- 底部固定 Tab 栏：首页 | 新建 | 设置 -->
+<nav class="bottom-tab">
+  <div class="tab-item" id="tabHome">首页</div>
+  <button class="tab-add-btn" id="openPanel" aria-label="新建站点">+</button>
+  <div class="tab-item" id="tabSetting">设置</div>
+</nav>
+
+<!-- 全屏新建表单页面 -->
+<div class="panel" id="panel">
+  <div class="panel-header">
+    <h2 id="panelTitle">新增 API 站点</h2>
+  </div>
+
+  <div class="panel-body">
+    <div class="form-inner">
+      <!-- 基础信息：新建时填写 -->
+      <div class="field-group base-fields" id="baseFields">
+        <div class="form-item">
+          <label>名称 <span class="req">*</span></label>
+          <input type="text" id="fName" placeholder="例如：示例天气 API">
         </div>
-        <div class="search-wrap">
-            <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
-            <input type="text" id="search-input" placeholder="搜索站点名称、主机、备注、标签...">
+
+        <div class="form-item">
+          <label>密钥</label>
+          <input type="text" id="fKey" placeholder="例如 sk-xxxxxxxx，没有可留空">
         </div>
-        <div class="filter-tabs" id="filter-tabs"></div>
-        <div id="site-list"></div>
+
+        <div class="form-item">
+          <label>API 主机</label>
+          <input type="text" id="fHost" placeholder="例如 api.example.com">
+        </div>
+
+        <div class="form-item">
+          <label>分类</label>
+          <select id="fCat">
+            <option value="天气">天气</option>
+            <option value="翻译">翻译</option>
+            <option value="图床">图床</option>
+            <option value="数据查询">数据查询</option>
+            <option value="其他">其他</option>
+          </select>
+        </div>
+
+        <div class="form-item">
+          <label>标签</label>
+          <input type="text" id="fTags" placeholder="多个标签用逗号分隔，如：免费, 不限频">
+          <div class="hint">支持中文逗号或英文逗号分隔</div>
+        </div>
+
+        <div class="form-item">
+          <label>备注</label>
+          <textarea id="fNote" placeholder="注册要求、额度限制、使用注意事项等"></textarea>
+        </div>
+
+        <div class="form-item">
+          <label>网页链接</label>
+          <input type="text" id="fWeb" placeholder="https://example.com">
+        </div>
+
+        <div class="form-item">
+          <label>群聊链接</label>
+          <input type="text" id="fGroup" placeholder="QQ / 微信群或频道链接，没有可留空">
+        </div>
+
+        <div class="form-item">
+          <label>QQ 群号</label>
+          <input type="text" id="fGroupId" placeholder="QQ 群 ID / 群号，没有可留空">
+        </div>
+      </div>
+
+      <!-- 充值信息：编辑时填写 -->
+      <div class="field-group recharge-fields hidden" id="rechargeFields">
+        <div class="form-item">
+          <label>套餐价格</label>
+          <input type="text" id="fPrice" placeholder="例如：免费 / ¥9.9 每月 / 按调用量计费">
+        </div>
+
+        <div class="form-item">
+          <label>充值额度</label>
+          <input type="text" id="fQuota" placeholder="例如：每日 1000 次调用 / 1G 流量">
+        </div>
+
+        <div class="form-item">
+          <label>折扣说明</label>
+          <textarea id="fDiscount" placeholder="例如：新用户首充 8 折、包月套餐立减 5 元等，没有可留空"></textarea>
+        </div>
+
+        <div class="form-item">
+          <label>充值档位（额度 | 价格）</label>
+          <textarea id="fPlans" rows="3" placeholder="一行一个，格式：额度 | 价格&#10;例如：100 额度 | ¥100&#10;50 额度 | ¥50"></textarea>
+        </div>
+
+        <div class="form-item">
+          <label>模型价格列表（分类 | 模型名 | 价格 | 计费方式）</label>
+          <textarea id="fModels" rows="3" placeholder="一行一个，分类可自定义填写；计费方式填按次或按量&#10;例如：通用 | gpt-3.5 | 0.0005 元/千token | 按量&#10;识图 | gpt-4o | 0.002 元/千token | 按量"></textarea>
+          <div class="model-cat-picks">
+            <button type="button" class="model-cat-pick model-cat-add" id="btnAddModelCatPick">设置</button>
+            <div class="model-cat-scroll" id="modelCatScroll"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-item">
+        <label>充值链接</label>
+        <input type="text" id="fRecharge" placeholder="余额充值 / 套餐购买页面链接，没有可留空">
+      </div>
     </div>
+  </div>
 
-    <!--新增/编辑表单页-->
-    <div class="page" id="page-form">
-        <h2 style="margin-bottom:20px;" id="form-title">新增站点</h2>
-        <input type="hidden" id="edit-id">
-        <div class="form-group">
-            <label>站点名称</label>
-            <input type="text" id="f-name">
-        </div>
-        <div class="form-group">
-            <label>分类</label>
-            <select id="f-cat"></select>
-        </div>
-        <div class="form-group">
-            <label>标签（逗号分隔）</label>
-            <input type="text" id="f-tags">
-        </div>
-        <div class="form-group">
-            <label>备注</label>
-            <textarea id="f-note"></textarea>
-        </div>
-        <div class="form-group">
-            <label>API主机</label>
-            <input type="text" id="f-host">
-        </div>
-        <div class="form-group">
-            <label>密钥 Key</label>
-            <input type="text" id="f-key">
-        </div>
-        <div class="form-group">
-            <label>网页链接</label>
-            <input type="text" id="f-link">
-        </div>
-        <div class="form-group">
-            <label>群聊链接</label>
-            <input type="text" id="f-group-link">
-        </div>
-        <div class="form-group">
-            <label>充值链接</label>
-            <input type="text" id="f-recharge-link">
-        </div>
-        <div class="form-btn-wrap">
-            <button class="form-btn gray" onclick="closeForm()">取消</button>
-            <button class="form-btn primary" onclick="saveSite()">保存</button>
-        </div>
+  <div class="panel-footer">
+    <button class="btn-cancel" id="btnCancel">取消</button>
+    <button class="btn-save" id="btnSave">保存</button>
+  </div>
+</div>
+
+<!-- 站点详情弹窗 -->
+<div class="detail-modal" id="detailModal">
+  <div class="detail-box">
+    <div class="detail-header">
+      <h3 id="dmTitle">站点详情</h3>
+      <button class="detail-close" id="dmClose" aria-label="关闭">×</button>
     </div>
-
-    <!--设置页-->
-    <div class="page" id="page-setting">
-        <h2 style="margin-bottom:20px;">设置</h2>
-        <div class="setting-item" onclick="window.location.href = 'https://jyx010320-gif.github.io/RabbitOvOTsuki/'">返回主页 <span>></span></div>
-        <div class="setting-item" onclick="openCatManage()">分类修改 <span>></span></div>
-        <div class="setting-item" id="theme-toggle-wrap">
-            主题外观
-            <span class="arrow">▼</span>
-        </div>
-        <div class="theme-collapse-content" id="theme-panel">
-            <button class="theme-option-btn" data-theme="theme-cloud">云朵奶白</button>
-            <button class="theme-option-btn" data-theme="theme-night">夜幕星河</button>
-            <button class="theme-option-btn" data-theme="theme-island">椰林小岛</button>
-            <button class="theme-option-btn" data-theme="theme-sakura">粉樱团子</button>
-            <button class="theme-option-btn" data-theme="theme-sea">海盐汽水</button>
-            <button class="theme-option-btn" data-theme="theme-mint">薄荷奶冻</button>
-            <button class="theme-option-btn" data-theme="theme-purple">紫薯芋泥</button>
-            <button class="theme-option-btn" data-theme="theme-orange">蜜桔暖阳</button>
-            <button class="theme-option-btn" data-theme="theme-cocoa">可可木色</button>
-            <button class="theme-option-btn" data-theme="theme-goldnight">鎏金夜色</button>
-            <button class="theme-option-btn" data-theme="theme-purplecloud">芋泥紫霞</button>
-            <button class="theme-option-btn" data-theme="theme-cherry">樱桃气泡</button>
-        </div>
-        <div class="setting-item" onclick="exportData()">导出备份 <span>></span></div>
-        <div class="setting-item" onclick="importData()">导入数据 <span>></span></div>
-        <div class="setting-item" onclick="clearAll()">清空全部数据 <span>></span></div>
+    <div class="detail-body" id="dmBody"></div>
+    <div class="detail-footer">
+      <button type="button" class="link-btn btn-edit" id="dmEdit">编辑</button>
     </div>
+  </div>
+</div>
 
-    <!--分类管理页-->
-    <div class="page" id="page-cat-manage">
-        <h2 style="margin-bottom:20px;">分类管理</h2>
-        <div id="cat-list-wrap"></div>
-        <div class="cat-input-row">
-            <input type="text" id="new-cat-name" placeholder="输入新分类名称">
-            <button class="cat-add-btn" onclick="addCategory()">添加</button>
+<!-- 设置页（全屏） -->
+<div class="panel" id="settingPanel">
+  <div class="panel-header setting-header">
+    <h2>设置</h2>
+  </div>
+  <div class="panel-body">
+    <div class="form-inner">
+      <div class="setting-list">
+        <button class="setting-row" id="btnHome">
+          <span>返回主页</span>
+          <span class="setting-arrow">›</span>
+        </button>
+
+        <button class="setting-row" id="btnTags">
+          <span>分类修改</span>
+          <span class="setting-arrow">›</span>
+        </button>
+
+        <button class="setting-row" id="btnModelCats">
+          <span>模型分类</span>
+          <span class="setting-arrow">›</span>
+        </button>
+
+        <div class="theme-group" id="themeGroup">
+          <button type="button" class="setting-row" id="themeHead">
+            <span>主题外观</span>
+            <span class="setting-arrow">›</span>
+          </button>
+          <div class="theme-options hidden" id="themeOptions">
+            <button type="button" class="theme-opt" data-theme="light">云朵奶白</button>
+            <button type="button" class="theme-opt" data-theme="dark">夜幕星河</button>
+            <button type="button" class="theme-opt" data-theme="acnh">椰林小岛</button>
+            <button type="button" class="theme-opt" data-theme="sakura">粉樱团子</button>
+            <button type="button" class="theme-opt" data-theme="ocean">海盐汽水</button>
+            <button type="button" class="theme-opt" data-theme="mint">薄荷奶冻</button>
+            <button type="button" class="theme-opt" data-theme="purple">紫薯芋泥</button>
+            <button type="button" class="theme-opt" data-theme="orange">蜜桔暖阳</button>
+            <button type="button" class="theme-opt" data-theme="wood">可可木色</button>
+            <button type="button" class="theme-opt" data-theme="gold">鎏金夜色</button>
+            <button type="button" class="theme-opt" data-theme="lavender">芋泥紫霞</button>
+            <button type="button" class="theme-opt" data-theme="cherry">樱桃气泡</button>
+          </div>
         </div>
-        <div style="margin-top:20px;">
-            <button class="form-btn gray" onclick="closeCatManage()">返回</button>
+
+        <button class="setting-row" id="btnImport">
+          <span>导入数据</span>
+          <span class="setting-arrow">›</span>
+        </button>
+
+        <button class="setting-row" id="btnExport">
+          <span>导出备份</span>
+          <span class="setting-arrow">›</span>
+        </button>
+      </div>
+      <input type="file" id="fileInput" accept="application/json,.json" hidden>
+    </div>
+  </div>
+</div>
+
+<!-- 分类修改页（全屏） -->
+<div class="panel" id="tagPanel">
+  <div class="panel-header setting-header">
+    <button type="button" class="back-btn" id="btnTagBack" aria-label="返回设置">‹</button>
+    <h2>分类修改</h2>
+  </div>
+  <div class="panel-body">
+    <div class="form-inner">
+      <div class="manage-group">
+        <div class="manage-title">分类（可改名、删除、长按拖动排序）</div>
+        <div class="setting-list" id="catManage"></div>
+      </div>
+      <div class="manage-group">
+        <div class="manage-title">新增分类</div>
+        <div class="manage-row">
+          <input type="text" class="manage-input" id="newCat" placeholder="输入新的站点分类名称">
+          <button type="button" class="link-btn manage-save" id="btnAddCat">添加</button>
         </div>
+      </div>
     </div>
+  </div>
+</div>
 
-    <button class="add-fab" onclick="openForm()">+</button>
-
-    <div class="tab-bar">
-        <div class="tab-item active" data-page="home">首页</div>
-        <div class="tab-item"></div>
-        <div class="tab-item" data-page="setting">设置</div>
+<!-- 模型分类管理页（全屏） -->
+<div class="panel" id="modelCatPanel">
+  <div class="panel-header setting-header">
+    <button type="button" class="back-btn" id="btnModelCatBack" aria-label="返回设置">‹</button>
+    <h2>模型分类</h2>
+  </div>
+  <div class="panel-body">
+    <div class="form-inner">
+      <div class="manage-group">
+        <div class="manage-title">现有分类（可改名、删除、长按拖动排序）</div>
+        <div class="setting-list" id="modelCatManage"></div>
+      </div>
+      <div class="manage-group">
+        <div class="manage-title">新增分类</div>
+        <div class="manage-row">
+          <input type="text" class="manage-input" id="newModelCat" placeholder="输入新的模型分类名称">
+          <button type="button" class="link-btn manage-save" id="btnAddModelCat">添加</button>
+        </div>
+      </div>
     </div>
+  </div>
+</div>
 
-    <script>
-        let sites = JSON.parse(localStorage.getItem("apiSites")) || [];
-        let categories = JSON.parse(localStorage.getItem("apiCats")) || ["全部","天气","翻译","图床"];
-        let currentFilter = "全部";
-        let sortableCat = null;
-        let currentTheme = localStorage.getItem("siteTheme") || "theme-cloud";
+<script>
+  const panel     = document.getElementById('panel');
 
-        function applyTheme(){
-            document.body.className = currentTheme;
-            document.querySelectorAll(".theme-option-btn").forEach(btn=>{
-                btn.classList.remove("active");
-                if(btn.dataset.theme === currentTheme) btn.classList.add("active");
-            })
-        }
-        applyTheme();
-        document.getElementById("theme-toggle-wrap").onclick = function(){
-            const panel = document.getElementById("theme-panel");
-            const arrow = this.querySelector(".arrow");
-            panel.classList.toggle("open");
-            arrow.classList.toggle("rotate");
-        }
-        document.querySelectorAll(".theme-option-btn").forEach(btn=>{
-            btn.onclick = function(e){
-                e.stopPropagation();
-                currentTheme = this.dataset.theme;
-                localStorage.setItem("siteTheme",currentTheme);
-                applyTheme();
-            }
-        })
+  // 禁止双击触发默认放大行为
+  document.addEventListener('dblclick', e => e.preventDefault());
+  document.addEventListener('gesturestart', e => e.preventDefault());
+  document.addEventListener('contextmenu', e => {
+    const t = e.target;
+    if (t.closest('input, textarea, select')) return;
+    e.preventDefault();
+  });
+  const openBtn   = document.getElementById('openPanel');
+  const btnCancel = document.getElementById('btnCancel');
+  const btnSave   = document.getElementById('btnSave');
+  const cardList  = document.getElementById('cardList');
+  const baseFields     = document.getElementById('baseFields');
+  const rechargeFields = document.getElementById('rechargeFields');
 
-        function saveStorage(){
-            localStorage.setItem("apiSites",JSON.stringify(sites));
-            localStorage.setItem("apiCats",JSON.stringify(categories));
-        }
-        function showToast(txt){
-            const t = document.getElementById("toast");
-            t.innerText = txt;
-            t.style.display="block";
-            setTimeout(()=>t.style.display="none",1200);
-        }
-        function switchPage(pageId){
-            document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
-            document.getElementById(pageId).classList.add("active");
-            if(pageId === "page-home") renderHome();
-            if(pageId === "page-setting") {}
-        }
-        document.querySelectorAll(".tab-item[data-page]").forEach(tab=>{
-            tab.onclick = ()=>{
-                document.querySelectorAll(".tab-item").forEach(i=>i.classList.remove("active"));
-                tab.classList.add("active");
-                switchPage("page-"+tab.dataset.page);
-            }
-        })
+  // ===== 本地存储 =====
+  const STORAGE_KEY = 'api_sites';
+  const THEME_KEY   = 'api_theme';
+  let sites = [];
+  let editingId = null;
 
-        function renderHome(){
-            document.getElementById("stat-total").innerText = sites.length;
-            renderFilterTabs();
-            renderSiteCards();
-        }
-        function renderFilterTabs(){
-            const wrap = document.getElementById("filter-tabs");
-            wrap.innerHTML = "";
-            categories.forEach(cat=>{
-                const el = document.createElement("div");
-                el.className = "filter-tab" + (cat===currentFilter?" active":"");
-                el.innerText = cat;
-                el.onclick = ()=>{
-                    currentFilter = cat;
-                    renderHome();
-                }
-                wrap.appendChild(el);
-            })
-        }
-        function renderSiteCards(){
-            const wrap = document.getElementById("site-list");
-            wrap.innerHTML = "";
-            const kw = document.getElementById("search-input").value.trim().toLowerCase();
-            let list = [...sites];
-            if(currentFilter !== "全部") list = list.filter(s=>s.category === currentFilter);
-            if(kw){
-                list = list.filter(s=>{
-                    const txt = (s.name + " " + s.host + " " + s.note + " " + s.tags.join(",")).toLowerCase();
-                    return txt.includes(kw);
-                })
-            }
-            list.forEach(site=>{
-                const div = document.createElement("div");
-                div.className = "site-card";
-                const tagsHtml = site.tags.map(t=>`<span class="tag-item">${t}</span>`).join("");
-                div.innerHTML = `
-                    <div class="card-head">
-                        <div class="card-name-row">
-                            <div class="site-name">${site.name}</div>
-                            <span class="edit-btn-inline" onclick="openForm('${site.id}')">编辑</span>
-                        </div>
-                        <div class="cat-tag">${site.category}</div>
-                    </div>
-                    <div class="tag-group">${tagsHtml}</div>
-                    <div class="card-note">备注：${site.note || "无"}</div>
-                    <div class="collapse-btn" onclick="toggleCollapse('${site.id}')">▼</div>
-                    <div class="collapse-content" id="collapse-${site.id}">
-                        <div class="info-row">
-                            <span class="info-label">API主机</span>
-                            <span class="info-value">${site.host||"-"} <span class="copy-btn" onclick="copyText('${site.host}')">复制</span></span>
-                        </div>
-                        <div class="info-row">
-                            <span class="info-label">密钥</span>
-                            <span class="info-value">${site.key||"-"} <span class="copy-btn" onclick="copyText('${site.key}')">复制</span></span>
-                        </div>
-                        <div class="info-row">
-                            <span class="info-label">网页链接</span>
-                            <span class="info-value">${site.link?`<a class="link-text" href="${site.link}" target="_blank">打开</a>`:"-"}</span>
-                        </div>
-                        <div class="info-row">
-                            <span class="info-label">群聊链接</span>
-                            <span class="info-value">${site.groupLink?`<a class="link-text" href="${site.groupLink}" target="_blank">加入交流群</a>`:"-"}</span>
-                        </div>
-                        <div class="btn-row">
-                            ${site.rechargeLink?`<button class="mini-btn" onclick="window.open('${site.rechargeLink}')">前往充值</button>`:""}
-                            <button class="mini-btn" onclick="showDetail('${site.id}')">详情</button>
-                        </div>
-                    </div>
-                `;
-                wrap.appendChild(div);
-            })
-        }
-        function toggleCollapse(id){
-            const el = document.getElementById("collapse-"+id);
-            el.classList.toggle("open");
-        }
-        function copyText(txt){
-            if(!txt) return showToast("内容为空");
-            navigator.clipboard.writeText(txt).then(()=>showToast("已复制"));
-        }
-        function showDetail(id){
-            const site = sites.find(x=>x.id === id);
-            if(!site) return;
-            let msg = "充值详情：\n";
-            msg += `套餐价格：${site.price || "无"}\n`;
-            msg += `充值额度：${site.quota || "无"}\n`;
-            msg += `折扣说明：${site.discount || "无"}`;
-            showToast(msg);
-        }
-        function openForm(editId=null){
-            switchPage("page-form");
-            if(!editId){
-                document.getElementById("form-title").innerText="新增站点";
-                document.getElementById("edit-id").value="";
-                document.getElementById("f-name").value="";
-                document.getElementById("f-note").value="";
-                document.getElementById("f-host").value="";
-                document.getElementById("f-key").value="";
-                document.getElementById("f-link").value="";
-                document.getElementById("f-group-link").value="";
-                document.getElementById("f-tags").value="";
-                document.getElementById("f-recharge-link").value="";
-            }else{
-                document.getElementById("form-title").innerText="编辑站点";
-                const s = sites.find(x=>x.id === editId);
-                if(!s) return;
-                document.getElementById("edit-id").value = editId;
-                document.getElementById("f-name").value = s.name;
-                document.getElementById("f-note").value = s.note;
-                document.getElementById("f-host").value = s.host;
-                document.getElementById("f-key").value = s.key;
-                document.getElementById("f-link").value = s.link;
-                document.getElementById("f-group-link").value = s.groupLink;
-                document.getElementById("f-tags").value = s.tags.join(",");
-                document.getElementById("f-recharge-link").value = s.rechargeLink;
-            }
-            renderCatSelect();
-        }
-        function closeForm(){
-            switchPage("page-home");
-        }
-        function renderCatSelect(){
-            const sel = document.getElementById("f-cat");
-            sel.innerHTML = "";
-            categories.forEach(c=>{
-                const opt = document.createElement("option");
-                opt.innerText = c;
-                opt.value = c;
-                sel.appendChild(opt);
-            })
-        }
-        function saveSite(){
-            const editId = document.getElementById("edit-id").value;
-            const name = document.getElementById("f-name").value.trim();
-            if(!name) return showToast("站点名称不能为空");
-            const tags = document.getElementById("f-tags").value.split(",").map(x=>x.trim()).filter(x=>x);
-            const data = {
-                id: editId || Date.now().toString(),
-                name,
-                category: document.getElementById("f-cat").value,
-                note: document.getElementById("f-note").value.trim(),
-                host: document.getElementById("f-host").value.trim(),
-                key: document.getElementById("f-key").value.trim(),
-                link: document.getElementById("f-link").value.trim(),
-                groupLink: document.getElementById("f-group-link").value.trim(),
-                tags,
-                price: "",
-                quota: "",
-                discount: "",
-                rechargeLink: document.getElementById("f-recharge-link").value.trim()
-            };
-            if(editId){
-                const idx = sites.findIndex(x=>x.id === editId);
-                sites[idx] = data;
-            }else{
-                sites.push(data);
-            }
-            saveStorage();
-            showToast("保存成功");
-            closeForm();
-        }
+  const settingPanel  = document.getElementById('settingPanel');
+  const tabHome        = document.getElementById('tabHome');
+  const tabSetting     = document.getElementById('tabSetting');
+  const themeOptions   = document.getElementById('themeOptions');
+  const themeHead      = document.getElementById('themeHead');
+  const btnImport      = document.getElementById('btnImport');
+  const btnExport      = document.getElementById('btnExport');
+  const fileInput      = document.getElementById('fileInput');
+  const tagPanel       = document.getElementById('tagPanel');
+  const btnTags        = document.getElementById('btnTags');
+  const btnTagBack     = document.getElementById('btnTagBack');
+  const catManage      = document.getElementById('catManage');
+  const tagsScroll     = document.getElementById('tagsScroll');
+  const modelCatPanel  = document.getElementById('modelCatPanel');
+  const btnModelCats   = document.getElementById('btnModelCats');
+  const btnModelCatBack = document.getElementById('btnModelCatBack');
+  const modelCatManage = document.getElementById('modelCatManage');
+  const newModelCat    = document.getElementById('newModelCat');
+  const btnAddModelCat = document.getElementById('btnAddModelCat');
+  const modelCatScroll  = document.getElementById('modelCatScroll');
+  const btnAddModelCatPick = document.getElementById('btnAddModelCatPick');
 
-        function openCatManage(){
-            switchPage("page-cat-manage");
-            renderCatManageList();
+  function uid() {
+    return Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
+  }
+
+  function normalizeSite(d) {
+    d = d || {};
+    return {
+      id:       d.id || uid(),
+      name:     d.name || '',
+      key:      d.key || '',
+      host:     d.host || '',
+      cat:      d.cat || '其他',
+      tags:     Array.isArray(d.tags) ? d.tags : [],
+      note:     d.note || '',
+      web:      d.web || '',
+      group:    d.group || '',
+      groupId:  d.groupId || '',
+      price:    d.price || '',
+      quota:    d.quota || '',
+      discount: d.discount || '',
+      recharge: d.recharge || '',
+      models:   parseModels(d.models),
+      plans:    parsePlans(d.plans)
+    };
+  }
+
+  function saveStorage() {
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(sites)); } catch (e) {}
+  }
+
+  function loadStorage() {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (raw) return JSON.parse(raw);
+    } catch (e) {}
+    return null;
+  }
+
+  const CAT_ORDER_KEY = 'api_cat_order';
+
+  function loadCatOrder() {
+    try {
+      const raw = localStorage.getItem(CAT_ORDER_KEY);
+      if (raw) return JSON.parse(raw) || [];
+    } catch (e) {}
+    return [];
+  }
+
+  function saveCatOrder(order) {
+    try { localStorage.setItem(CAT_ORDER_KEY, JSON.stringify(order)); } catch (e) {}
+  }
+
+  const MODEL_CAT_KEY = 'api_model_cats';
+  const DEFAULT_MODEL_CATS = ['通用', '识图', '长文本', '推理', '多模态'];
+
+  function loadModelCats() {
+    try {
+      const raw = localStorage.getItem(MODEL_CAT_KEY);
+      if (raw) return JSON.parse(raw) || [];
+    } catch (e) {}
+    return [...DEFAULT_MODEL_CATS];
+  }
+
+  function saveModelCats(cats) {
+    try { localStorage.setItem(MODEL_CAT_KEY, JSON.stringify(cats)); } catch (e) {}
+  }
+
+  function setMode(mode) {
+    const isEdit = mode === 'edit';
+    baseFields.classList.remove('hidden');
+    rechargeFields.classList.toggle('hidden', !isEdit);
+    document.getElementById('panelTitle').textContent = isEdit ? '编辑 API 站点' : '新增 API 站点';
+  }
+
+  openBtn.addEventListener('click', () => { setMode('add'); panel.classList.add('open'); });
+  btnCancel.addEventListener('click', closePanel);
+
+  function closePanel() {
+    panel.classList.remove('open');
+    resetForm();
+    editingId = null;
+    setMode('add');
+  }
+
+  function resetForm() {
+    ['fName', 'fKey', 'fHost', 'fTags', 'fNote', 'fWeb', 'fGroup', 'fGroupId', 'fPrice', 'fQuota', 'fDiscount', 'fRecharge', 'fModels', 'fPlans']
+      .forEach(id => document.getElementById(id).value = '');
+    document.getElementById('fCat').value = '天气';
+  }
+
+  // 拆分标签，兼容中英文逗号
+  function splitTags(str) {
+    return str.split(/[,，、]/).map(s => s.trim()).filter(Boolean);
+  }
+
+  // 解析模型列表：支持数组 {name,tag,price} 或文本“模型名 | 标签 | 价格”每行一个
+  function parseModels(input) {
+    if (Array.isArray(input)) {
+      return input.map(m => ({
+        name:  (m && m.name)  || '',
+        tag:   (m && m.tag)   || '',
+        price: (m && m.price) || '',
+        mode:  (m && m.mode)  || ''
+      })).filter(m => m.name);
+    }
+    // 文本格式：分类 | 模型名 | 价格 | 计费方式（按次/按量）
+    return String(input || '').split(/\n/).map(line => {
+      const p = line.split('|').map(x => x.trim());
+      return { tag: p[0] || '', name: p[1] || '', price: p[2] || '', mode: p[3] || '' };
+    }).filter(m => m.name);
+  }
+
+  function modelsToText(models) {
+    return (models || []).map(m => [m.tag, m.name, m.price, m.mode].join(' | ')).join('\n');
+  }
+
+  // 解析充值档位：数组 {name,price,stock} 或文本“额度 | 价格 | 状态”每行一个
+  function parsePlans(input) {
+    if (Array.isArray(input)) {
+      return input.map(p => ({
+        name:  (p && p.name)  || '',
+        price: (p && p.price) || '',
+        stock: (p && p.stock) || ''
+      })).filter(p => p.name);
+    }
+    return String(input || '').split(/\n/).map(line => {
+      const p = line.split('|').map(x => x.trim());
+      return { name: p[0] || '', price: p[1] || '', stock: p[2] || '' };
+    }).filter(p => p.name);
+  }
+
+  function plansToText(plans) {
+    return (plans || []).map(p => [p.name, p.price].join(' | ')).join('\n');
+  }
+
+  function readForm() {
+    return {
+      name:     document.getElementById('fName').value.trim(),
+      key:      document.getElementById('fKey').value.trim(),
+      host:     document.getElementById('fHost').value.trim(),
+      cat:      document.getElementById('fCat').value,
+      tags:     splitTags(document.getElementById('fTags').value),
+      note:     document.getElementById('fNote').value.trim(),
+      web:      document.getElementById('fWeb').value.trim(),
+      group:    document.getElementById('fGroup').value.trim(),
+      groupId:  document.getElementById('fGroupId').value.trim(),
+      price:    document.getElementById('fPrice').value.trim(),
+      quota:    document.getElementById('fQuota').value.trim(),
+      discount: document.getElementById('fDiscount').value.trim(),
+      recharge: document.getElementById('fRecharge').value.trim(),
+      models:   parseModels(document.getElementById('fModels').value),
+      plans:    parsePlans(document.getElementById('fPlans').value)
+    };
+  }
+
+  function buildCard(d) {
+    const tagHtml = d.tags.length
+      ? d.tags.map(t => `<span class="tag">${t}</span>`).join('')
+      : '';
+    const card = document.createElement('article');
+    card.className = 'site-card collapsed';
+    card.dataset.cat = d.cat;
+    card.dataset.id = d.id;
+    card.innerHTML = `
+      <div class="card-head">
+        <div class="card-top">
+          <div class="site-name"><a href="${d.web || '#'}" target="_blank" rel="noopener">${d.name}</a><button type="button" class="btn-edit-card">编辑</button></div>
+          <span class="cat-badge">${d.cat}</span>
+        </div>
+        ${tagHtml ? `<div class="tag-list">${tagHtml}</div>` : ''}
+        <p class="card-note">备注：${d.note || '无'}</p>
+        <span class="fold-arrow">▾</span>
+      </div>
+      <div class="card-detail card-meta">
+        <div class="row">
+          <span class="meta-key">API 主机</span>
+          ${d.host
+            ? `<span class="copy-right">
+                 <span class="meta-val">${escapeHtml(d.host)}</span>
+                 <button type="button" class="copy-btn" data-copy="${escapeHtml(d.host)}">复制</button>
+               </span>`
+            : `<span class="meta-val">未填写</span>`}
+        </div>
+        <div class="row">
+          <span class="meta-key">密钥</span>
+          ${d.key
+            ? `<span class="key-right">
+                 <span class="meta-val key" data-key="${escapeHtml(d.key)}">••••••••</span>
+                 <button type="button" class="copy-btn" data-copy="${escapeHtml(d.key)}">复制</button>
+                 <button type="button" class="key-eye">显示</button>
+               </span>`
+            : `<span class="meta-val">无</span>`}
+        </div>
+        <div class="row">
+          <span class="meta-key">网页链接</span>
+          ${d.web
+            ? `<a class="meta-val" href="${d.web}" target="_blank" rel="noopener">${d.web}</a>`
+            : `<span class="meta-val">未填写</span>`}
+        </div>
+        <div class="row">
+          <span class="meta-key">群聊链接</span>
+          ${d.group
+            ? `<a class="meta-val" href="${d.group}" target="_blank" rel="noopener">${d.group}</a>`
+            : `<span class="meta-val">未填写</span>`}
+        </div>
+        ${d.groupId ? `
+        <div class="row">
+          <span class="meta-key">QQ 群号</span>
+          <span class="copy-right">
+            <span class="meta-val">${escapeHtml(d.groupId)}</span>
+            <button type="button" class="copy-btn" data-copy="${escapeHtml(d.groupId)}">复制</button>
+          </span>
+        </div>` : ''}
+        <div class="row">
+          <span class="meta-key">套餐价格</span>
+          <span class="meta-val">${d.price || '未填写'}</span>
+        </div>
+        <div class="row">
+          <span class="meta-key">充值额度</span>
+          <span class="meta-val">${d.quota || '未填写'}</span>
+        </div>
+        <div class="row">
+          <span class="meta-key">折扣说明</span>
+          <span class="meta-val">${d.discount || '未填写'}</span>
+        </div>
+        <div class="row">
+          <span class="meta-key">充值链接</span>
+          <span class="meta-val btn-group">
+            ${d.recharge
+              ? `<a class="link-btn" href="${d.recharge}" target="_blank" rel="noopener">前往充值</a>`
+              : ''}
+            <button type="button" class="link-btn btn-detail">详情</button>
+          </span>
+        </div>
+      </div>`;
+    return card;
+  }
+
+  function parseCard(card) {
+    const rows = {};
+    card.querySelectorAll('.card-detail .row').forEach(r => {
+      const key = r.querySelector('.meta-key')?.textContent.trim();
+      const valEl = r.querySelector('.meta-val');
+      let val = '';
+      const a = valEl?.querySelector('a');
+      if (a) val = a.href;
+      else if (valEl) val = valEl.dataset.key ? valEl.dataset.key : valEl.textContent.trim();
+      rows[key] = val;
+    });
+    return {
+      name:     card.querySelector('.site-name a')?.textContent.trim() || '',
+      key:      rows['密钥'] || '',
+      host:     rows['API 主机'] || '',
+      cat:      card.querySelector('.cat-badge')?.textContent.trim() || '',
+      tags:     [...card.querySelectorAll('.tag-list .tag')].map(t => t.textContent.trim()),
+      note:     (card.querySelector('.card-note')?.textContent || '').replace(/^备注：/, '').trim(),
+      web:      rows['网页链接'] || '',
+      group:    rows['群聊链接'] || '',
+      groupId:  rows['QQ 群号'] || '',
+      price:    rows['套餐价格'] || '',
+      quota:    rows['充值额度'] || '',
+      discount: rows['折扣说明'] || '',
+      recharge: rows['充值链接'] || ''
+    };
+  }
+
+  function fillForm(d) {
+    document.getElementById('fName').value     = d.name;
+    document.getElementById('fKey').value      = d.key;
+    document.getElementById('fHost').value      = d.host;
+    document.getElementById('fCat').value       = d.cat || '天气';
+    document.getElementById('fTags').value      = d.tags.join(', ');
+    document.getElementById('fNote').value      = d.note;
+    document.getElementById('fWeb').value       = d.web;
+    document.getElementById('fGroup').value    = d.group;
+    document.getElementById('fGroupId').value  = d.groupId || '';
+    document.getElementById('fPrice').value     = d.price;
+    document.getElementById('fQuota').value     = d.quota;
+    document.getElementById('fDiscount').value  = d.discount;
+    document.getElementById('fRecharge').value = d.recharge;
+    document.getElementById('fModels').value  = modelsToText(d.models);
+    document.getElementById('fPlans').value   = plansToText(d.plans);
+  }
+
+  function startEdit(card) {
+    editingId = card.dataset.id;
+    const d = sites.find(s => s.id === editingId) || parseCard(card);
+    fillForm(d);
+    setMode('edit');
+    panel.classList.add('open');
+  }
+
+  btnSave.addEventListener('click', () => {
+    const d = normalizeSite(readForm());
+    if (!d.name) {
+      alert('请填写站点名称');
+      return;
+    }
+    if (editingId) {
+      const idx = sites.findIndex(s => s.id === editingId);
+      if (idx > -1) {
+        d.id = editingId;
+        sites[idx] = d;
+      }
+    } else {
+      sites.push(d);
+    }
+    saveStorage();
+    renderAll();
+    closePanel();
+  });
+
+  // 重新渲染全部卡片
+  function renderAll() {
+    cardList.innerHTML = '';
+    sites.forEach(d => cardList.appendChild(buildCard(d)));
+    renderChips();
+    updateStats();
+    applyFilter();
+  }
+
+  // 分类 + 关键词叠加筛选
+  let activeFilter = 'all';
+  let keyword = '';
+
+  function applyFilter() {
+    document.querySelectorAll('.site-card').forEach(card => {
+      const matchCat = activeFilter === 'all' || card.dataset.cat === activeFilter;
+      const matchKw = !keyword || card.innerText.toLowerCase().includes(keyword);
+      card.style.display = (matchCat && matchKw) ? '' : 'none';
+    });
+  }
+
+  // 动态生成顶部分类标签（"全部"固定在左侧）
+  function renderChips() {
+    const catOrder = loadCatOrder();
+    const cats = [...new Set(sites.map(s => s.cat).filter(Boolean))];
+    cats.sort((a, b) => {
+      const ia = catOrder.indexOf(a), ib = catOrder.indexOf(b);
+      return (ia === -1 ? 999 : ia) - (ib === -1 ? 999 : ib);
+    });
+    const valid = activeFilter === 'all' || cats.includes(activeFilter);
+    if (!valid) activeFilter = 'all';
+
+    tagsScroll.innerHTML = '';
+    cats.forEach(c => {
+      const span = document.createElement('span');
+      span.dataset.filter = c;
+      span.textContent = c;
+      if (c === activeFilter) span.classList.add('active');
+      tagsScroll.appendChild(span);
+    });
+
+    document.querySelectorAll('.tags-bar span').forEach(tab => {
+      tab.classList.toggle('active', tab.dataset.filter === activeFilter);
+    });
+    bindChips();
+  }
+
+  function bindChips() {
+    document.querySelectorAll('.tags-bar span').forEach(tab => {
+      tab.onclick = () => {
+        document.querySelectorAll('.tags-bar span').forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        activeFilter = tab.dataset.filter;
+        applyFilter();
+      };
+    });
+  }
+
+  document.getElementById('searchInput').addEventListener('input', e => {
+    keyword = e.target.value.trim().toLowerCase();
+    applyFilter();
+  });
+
+  // ===== 长按拖拽排序 =====
+  function reorderSites() {
+    const order = [...cardList.querySelectorAll('.site-card')].map(c => c.dataset.id);
+    sites.sort((a, b) => order.indexOf(a.id) - order.indexOf(b.id));
+    saveStorage();
+  }
+
+  function reorderCats() {
+    const order = [...tagsScroll.querySelectorAll('span')].map(s => s.dataset.filter);
+    saveCatOrder(order);
+  }
+
+  function bindLongPressSort(container, axis, onEnd) {
+    let timer = null, ghost = null, src = null;
+    let startX = 0, startY = 0, dragging = false, suppress = false, gw = 0, gh = 0;
+    let usingTouch = false;
+
+    function clearTimer() { if (timer) { clearTimeout(timer); timer = null; } }
+
+    function pt(e) {
+      const t = e.touches ? (e.touches[0] || e.changedTouches[0]) : e;
+      return { x: t.clientX, y: t.clientY };
+    }
+
+    function onDown(e) {
+      const isTouch = !!e.touches;
+      if (isTouch) usingTouch = true;
+      else if (usingTouch) return;
+      const child = [...container.children].find(c => c.contains(e.target));
+      if (!child) return;
+      src = child;
+      const p = pt(e);
+      startX = p.x;
+      startY = p.y;
+      dragging = false;
+      suppress = false;
+      src.style.userSelect = 'none';
+      clearTimer();
+      timer = setTimeout(startDrag, 160);
+    }
+
+    function startDrag() {
+      dragging = true;
+      const r = src.getBoundingClientRect();
+      gw = r.width;
+      gh = r.height;
+      ghost = src.cloneNode(true);
+      ghost.classList.add('drag-ghost');
+      ghost.style.width = gw + 'px';
+      ghost.style.height = gh + 'px';
+      ghost.style.left = r.left + 'px';
+      ghost.style.top = r.top + 'px';
+      document.body.appendChild(ghost);
+      src.classList.add('drag-src');
+      document.body.classList.add('dragging');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function onMove(e) {
+      if (!src) return;
+      const p = pt(e);
+      if (!dragging) {
+        if (Math.abs(p.x - startX) > 14 || Math.abs(p.y - startY) > 14) clearTimer();
+        return;
+      }
+      if (usingTouch) e.preventDefault();
+      ghost.style.left = (p.x - gw / 2) + 'px';
+      ghost.style.top = (p.y - gh / 2) + 'px';
+      const others = [...container.children].filter(c => c !== src && c.offsetParent !== null);
+      let anchor = null;
+      for (const c of others) {
+        const cr = c.getBoundingClientRect();
+        const before = axis === 'x'
+          ? p.x < cr.left + cr.width / 2
+          : p.y < cr.top + cr.height / 2;
+        if (before) { anchor = c; break; }
+      }
+      if (anchor) container.insertBefore(src, anchor);
+      else container.appendChild(src);
+    }
+
+    function end() {
+      if (dragging) {
+        if (ghost) { ghost.remove(); ghost = null; }
+        src && src.classList.remove('drag-src');
+        document.body.classList.remove('dragging');
+        document.body.style.overflow = '';
+        suppress = true;
+        onEnd && onEnd();
+      }
+      clearTimer();
+      if (src) src.style.userSelect = '';
+      src = null;
+      ghost = null;
+      dragging = false;
+      usingTouch = false;
+    }
+
+    container.addEventListener('touchstart', onDown, { passive: true });
+    container.addEventListener('touchmove', onMove, { passive: false });
+    container.addEventListener('touchend', end);
+    container.addEventListener('touchcancel', end);
+    container.addEventListener('pointerdown', onDown);
+    document.addEventListener('pointermove', onMove);
+    document.addEventListener('pointerup', end);
+    document.addEventListener('pointercancel', end);
+
+    container.addEventListener('click', e => {
+      if (suppress) { e.stopPropagation(); e.preventDefault(); suppress = false; }
+    }, true);
+  }
+
+  bindLongPressSort(cardList, 'y', reorderSites);
+  bindLongPressSort(tagsScroll, 'x', reorderCats);
+  bindLongPressSort(modelCatScroll, 'x', reorderModelCats);
+  bindLongPressSort(modelCatManage, 'y', reorderManageCats);
+  bindLongPressSort(catManage, 'y', reorderManageSiteCats);
+
+  // ===== 站点详情弹窗 =====
+  const dm       = document.getElementById('detailModal');
+  const dmTitle  = document.getElementById('dmTitle');
+  const dmBody   = document.getElementById('dmBody');
+  const dmClose  = document.getElementById('dmClose');
+  const dmEdit   = document.getElementById('dmEdit');
+  let currentCard = null;
+
+  function escapeHtml(s) {
+    return String(s).replace(/[&<>"']/g, c => ({
+      '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+    }[c]));
+  }
+
+  function copyText(text, btn) {
+    if (!text) return;
+    const flash = () => {
+      const old = btn.textContent;
+      btn.textContent = '已复制';
+      setTimeout(() => { btn.textContent = old; }, 1200);
+    };
+    const fallback = () => {
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      ta.style.position = 'fixed';
+      ta.style.opacity = '0';
+      document.body.appendChild(ta);
+      ta.select();
+      try { document.execCommand('copy'); flash(); }
+      catch (err) { alert('复制失败，请长按手动复制'); }
+      document.body.removeChild(ta);
+    };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(flash).catch(fallback);
+    } else {
+      fallback();
+    }
+  }
+
+  function detailRow(key, valHtml) {
+    return `<div class="detail-row"><span class="meta-key">${escapeHtml(key)}</span><span class="meta-val">${valHtml}</span></div>`;
+  }
+
+  function openDetail(card) {
+    currentCard = card;
+    const d = sites.find(s => s.id === card.dataset.id);
+    const name = card.querySelector('.site-name a')?.textContent.trim() || '未命名站点';
+    const note = (card.querySelector('.card-note')?.textContent || '').replace(/^备注：/, '').trim() || '无';
+    const allowed = ['套餐价格', '充值额度', '折扣说明', '充值链接'];
+
+    let html = '';
+
+    if (d && d.cat) {
+      html += detailRow('分类', escapeHtml(d.cat));
+    }
+
+    // 充值详情：只列出套餐价格、充值额度、折扣说明、充值链接
+    card.querySelectorAll('.card-detail .row').forEach(r => {
+      const key = r.querySelector('.meta-key')?.textContent.trim() || '';
+      if (!allowed.includes(key)) return;
+      const valEl = r.querySelector('.meta-val');
+      let valHtml = '未填写';
+      if (valEl) {
+        const a = valEl.querySelector('a');
+        const btn = valEl.querySelector('button');
+        if (a) {
+          valHtml = `<a class="meta-val" href="${a.href}" target="_blank" rel="noopener">${escapeHtml(a.textContent.trim())}</a>`;
+        } else if (!btn) {
+          valHtml = escapeHtml(valEl.textContent.trim());
         }
-        function closeCatManage(){
-            switchPage("page-setting");
+      }
+      html += detailRow(key, valHtml);
+    });
+
+    // 充值档位：额度 + 价格，两列卡片
+    if (d && d.plans && d.plans.length) {
+      const cards = d.plans.map(p => {
+        return `<div class="plan-card"><div class="plan-name">${escapeHtml(p.name)}</div><div class="plan-bottom"><span class="plan-price">${escapeHtml(p.price || '—')}</span></div></div>`;
+      }).join('');
+      html += detailRow('充值档位', `<div class="plan-grid">${cards}</div>`);
+    }
+
+    // 模型价格列表：分类小标签在前，相同分类排在一起，模型名 + 价格
+    if (d && d.models && d.models.length) {
+      const sorted = [...d.models].sort((a, b) => {
+        const ta = a.tag || '', tb = b.tag || '';
+        if (ta === tb) return 0;
+        if (!ta) return 1;
+        if (!tb) return -1;
+        return ta.localeCompare(tb, 'zh');
+      });
+      const rows = sorted.map(m => {
+        const chip = m.tag ? `<span class="model-chip">${escapeHtml(m.tag)}</span>` : '';
+        const mode = m.mode ? `<span class="model-mode">${escapeHtml(m.mode)}</span>` : '';
+        const price = m.price ? escapeHtml(m.price) : '—';
+        return `<div class="model-item">${chip}<span class="model-name">${escapeHtml(m.name)}</span>${mode}<span class="model-price">${price}</span></div>`;
+      }).join('');
+      html += detailRow('模型价格', `<div class="model-list">${rows}</div>`);
+    }
+
+    html += detailRow('备注', escapeHtml(note));
+
+    dmTitle.textContent = `${name} · 充值详情`;
+    dmBody.innerHTML = html;
+    dm.classList.add('open');
+  }
+
+  dmClose.addEventListener('click', () => dm.classList.remove('open'));
+  dm.addEventListener('click', e => { if (e.target === dm) dm.classList.remove('open'); });
+
+  dmEdit.addEventListener('click', () => {
+    if (!currentCard) return;
+    dm.classList.remove('open');
+    startEdit(currentCard);
+  });
+
+  // 卡片折叠 / 展开：点击头部切换；详情按钮打开弹窗；头部内链接点击不触发折叠
+  cardList.addEventListener('click', e => {
+    const copyBtn = e.target.closest('.copy-btn');
+    if (copyBtn) {
+      e.stopPropagation();
+      copyText(copyBtn.dataset.copy, copyBtn);
+      return;
+    }
+    const eye = e.target.closest('.key-eye');
+    if (eye) {
+      e.stopPropagation();
+      const val = eye.closest('.row').querySelector('.meta-val.key');
+      const show = eye.textContent === '显示';
+      val.textContent = show ? val.dataset.key : '••••••••';
+      eye.textContent = show ? '隐藏' : '显示';
+      return;
+    }
+    const detailBtn = e.target.closest('.btn-detail');
+    if (detailBtn) {
+      e.stopPropagation();
+      openDetail(detailBtn.closest('.site-card'));
+      return;
+    }
+    const editBtn = e.target.closest('.btn-edit-card');
+    if (editBtn) {
+      e.stopPropagation();
+      startEdit(editBtn.closest('.site-card'));
+      return;
+    }
+    if (e.target.closest('a')) return;
+    const head = e.target.closest('.card-head');
+    if (head) head.closest('.site-card').classList.toggle('collapsed');
+  });
+
+  // 统计：站点数
+  function updateStats() {
+    const cards = document.querySelectorAll('.site-card');
+
+    document.getElementById('footerText').innerText =
+      `共收录 ${cards.length} 个 API 站点 · 页面可直接在浏览器打开使用`;
+  }
+
+  // ===== 主题切换 =====
+  const THEME_LIST = ['light', 'dark', 'acnh', 'sakura', 'ocean', 'mint', 'purple', 'orange', 'wood', 'gold', 'lavender', 'cherry'];
+  function applyTheme(theme) {
+    THEME_LIST.forEach(t => {
+      if (t !== 'light') document.body.classList.toggle(t, theme === t);
+    });
+    themeOptions.querySelectorAll('.theme-opt').forEach(btn => {
+      btn.classList.toggle('active', btn.dataset.theme === theme);
+    });
+  }
+
+  let savedTheme = localStorage.getItem(THEME_KEY);
+  let theme = THEME_LIST.includes(savedTheme) ? savedTheme : 'light';
+  applyTheme(theme);
+
+  themeOptions.addEventListener('click', e => {
+    const btn = e.target.closest('.theme-opt');
+    if (!btn) return;
+    theme = btn.dataset.theme;
+    localStorage.setItem(THEME_KEY, theme);
+    applyTheme(theme);
+  });
+
+  themeHead.addEventListener('click', () => {
+    const group = themeHead.closest('.theme-group');
+    themeOptions.classList.toggle('hidden');
+    group.classList.toggle('open');
+  });
+
+  // ===== 设置页：返回主页 / 导入 / 导出 =====
+  function syncTab() {
+    document.body.classList.toggle('tab-visible', settingPanel.classList.contains('open'));
+  }
+  tabSetting.addEventListener('click', () => { settingPanel.classList.add('open'); syncTab(); });
+  tabHome.addEventListener('click', () => { settingPanel.classList.remove('open'); syncTab(); });
+  document.getElementById('btnHome').addEventListener('click', () => {
+    window.location.href = 'https://jyx010320-gif.github.io/RabbitOvOTsuki/';
+  });
+
+  // ===== 分类修改：分类重命名 =====
+  function removeSiteCat(cat) {
+    if (!confirm(`确定删除分类「${cat}」吗？\n使用该分类的站点将归到「其他」。`)) return;
+    saveCatOrder(loadCatOrder().filter(c => c !== cat));
+    sites.forEach(s => { if (s.cat === cat) s.cat = '其他'; });
+    saveStorage();
+    renderAll();
+    renderManage();
+  }
+
+  function fillManage(container, names) {
+    container.innerHTML = '';
+    if (!names.length) {
+      const empty = document.createElement('div');
+      empty.style.color = 'var(--text-sub)';
+      empty.style.fontSize = '13px';
+      empty.textContent = '暂无';
+      container.appendChild(empty);
+      return;
+    }
+    names.forEach(old => {
+      const row = document.createElement('div');
+      row.className = 'manage-row';
+      row.dataset.cat = old;
+
+      const input = document.createElement('input');
+      input.className = 'manage-input';
+      input.value = old;
+
+      const save = document.createElement('button');
+      save.type = 'button';
+      save.className = 'link-btn manage-save';
+      save.textContent = '保存';
+      save.addEventListener('click', () => {
+        const next = input.value.trim();
+        if (!next) { alert('名称不能为空'); return; }
+        if (next === old) return;
+        sites.forEach(s => {
+          if (s.cat === old) s.cat = next;
+        });
+        const order = loadCatOrder();
+        const oi = order.indexOf(old);
+        if (oi > -1) {
+          if (!order.includes(next)) order[oi] = next;
+          else order.splice(oi, 1);
+          saveCatOrder(order);
         }
-        function renderCatManageList(){
-            const wrap = document.getElementById("cat-list-wrap");
-            wrap.innerHTML = "";
-            categories.forEach((cat,idx)=>{
-                const div = document.createElement("div");
-                div.className = "cat-list-item";
-                div.innerText = cat;
-                const delBtn = document.createElement("button");
-                delBtn.innerText="删除";
-                delBtn.style.color="#f44336";
-                delBtn.style.border="none";
-                delBtn.style.background="transparent";
-                delBtn.onclick = ()=>{
-                    if(confirm(`确定删除【${cat}】？使用该分类的站点会归入【其他】`)){
-                        sites.forEach(s=>{
-                            if(s.category === cat) s.category = "其他";
-                        })
-                        categories.splice(idx,1);
-                        saveStorage();
-                        renderCatManageList();
-                    }
-                }
-                div.appendChild(delBtn);
-                wrap.appendChild(div);
-            })
-            if(sortableCat) sortableCat.destroy();
-            sortableCat = new Sortable(wrap,{
-                animation:150,
-                onEnd:()=>{
-                    const newOrder = [];
-                    wrap.querySelectorAll(".cat-list-item").forEach(el=>newOrder.push(el.firstChild.textContent.trim()));
-                    categories = newOrder;
-                    saveStorage();
-                }
-            })
+        saveStorage();
+        renderAll();
+        renderManage();
+      });
+
+      const del = document.createElement('button');
+      del.type = 'button';
+      del.className = 'manage-del';
+      del.textContent = '删除';
+      del.addEventListener('click', () => removeSiteCat(old));
+
+      row.append(input, save, del);
+      container.appendChild(row);
+    });
+  }
+
+  function renderManage() {
+    const order = loadCatOrder();
+    const used = [...new Set(sites.map(s => s.cat).filter(Boolean))];
+    const cats = [...new Set([...order, ...used])];
+    fillManage(catManage, cats);
+  }
+
+  btnTags.addEventListener('click', () => {
+    renderManage();
+    settingPanel.classList.remove('open');
+    syncTab();
+    tagPanel.classList.add('open');
+  });
+
+  btnTagBack.addEventListener('click', () => {
+    tagPanel.classList.remove('open');
+    settingPanel.classList.add('open');
+    syncTab();
+  });
+
+  const newCat = document.getElementById('newCat');
+  const btnAddCat = document.getElementById('btnAddCat');
+  btnAddCat.addEventListener('click', () => {
+    const name = newCat.value.trim();
+    if (!name) return;
+    const order = loadCatOrder();
+    const used = sites.some(s => s.cat === name);
+    if (order.includes(name) || used) { alert('该分类已存在'); return; }
+    order.push(name);
+    saveCatOrder(order);
+    newCat.value = '';
+    renderManage();
+    renderChips();
+  });
+
+  // ===== 模型分类管理：新增 / 改名 / 删除，同步到所有模型 =====
+  function appendModelLine(cat) {
+    const ta = document.getElementById('fModels');
+    const line = `${cat} | 模型名 | 价格 | 按量`;
+    ta.value = ta.value.trim() ? ta.value.replace(/\s*$/, '') + '\n' + line : line;
+    ta.focus();
+  }
+
+  function removeModelCat(cat) {
+    if (!confirm(`确定删除模型分类「${cat}」吗？\n用到该分类的模型会清空分类标签。`)) return;
+    const list = loadModelCats().filter(c => c !== cat);
+    sites.forEach(s => {
+      s.models = s.models.map(m => m.tag === cat ? { ...m, tag: '' } : m);
+    });
+    saveModelCats(list);
+    saveStorage();
+    renderAll();
+    renderModelCatPicks();
+    renderModelCats();
+  }
+
+  function reorderModelCats() {
+    const order = [...modelCatScroll.querySelectorAll('.model-cat-item')]
+      .map(i => i.dataset.cat)
+      .filter(Boolean);
+    const list = loadModelCats();
+    const kept = order.filter(c => list.includes(c));
+    const rest = list.filter(c => !kept.includes(c));
+    saveModelCats([...kept, ...rest]);
+  }
+
+  function reorderManageCats() {
+    const order = [...modelCatManage.querySelectorAll('.manage-row')]
+      .map(r => r.dataset.cat)
+      .filter(Boolean);
+    const list = loadModelCats();
+    const kept = order.filter(c => list.includes(c));
+    const rest = list.filter(c => !kept.includes(c));
+    saveModelCats([...kept, ...rest]);
+  }
+
+  function reorderManageSiteCats() {
+    const order = [...catManage.querySelectorAll('.manage-row')]
+      .map(r => r.dataset.cat)
+      .filter(Boolean);
+    const list = loadCatOrder();
+    const kept = order.filter(c => list.includes(c));
+    const rest = list.filter(c => !kept.includes(c));
+    saveCatOrder([...kept, ...rest]);
+  }
+
+  function renderModelCatPicks() {
+    modelCatScroll.innerHTML = '';
+    const cats = loadModelCats();
+
+    // 已添加的分类：可点击选择；删除在设置弹窗内操作
+    cats.forEach(cat => {
+      const item = document.createElement('div');
+      item.className = 'model-cat-item';
+      item.dataset.cat = cat;
+
+      const chip = document.createElement('button');
+      chip.type = 'button';
+      chip.className = 'model-cat-pick';
+      chip.textContent = cat;
+      chip.addEventListener('click', () => appendModelLine(cat));
+      item.appendChild(chip);
+      modelCatScroll.appendChild(item);
+    });
+
+    // 模型里已使用、但不在清单的分类：不可点击，仅展示
+    const used = [...new Set(sites.flatMap(s => s.models.map(m => m.tag)).filter(t => t && !cats.includes(t)))];
+    used.forEach(cat => {
+      const item = document.createElement('div');
+      item.className = 'model-cat-item';
+      const b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'model-cat-pick disabled';
+      b.textContent = cat;
+      b.disabled = true;
+      item.appendChild(b);
+      modelCatScroll.appendChild(item);
+    });
+  }
+
+  btnAddModelCatPick.addEventListener('click', () => {
+    renderModelCats();
+    modelCatPanel.classList.add('open');
+  });
+
+  function renderModelCats() {
+    const cats = loadModelCats();
+    modelCatManage.innerHTML = '';
+    if (!cats.length) {
+      const empty = document.createElement('div');
+      empty.style.color = 'var(--text-sub)';
+      empty.style.fontSize = '13px';
+      empty.textContent = '暂无分类，可在下方新增';
+      modelCatManage.appendChild(empty);
+      return;
+    }
+    cats.forEach(old => {
+      const row = document.createElement('div');
+      row.className = 'manage-row';
+      row.dataset.cat = old;
+
+      const input = document.createElement('input');
+      input.className = 'manage-input';
+      input.value = old;
+
+      const save = document.createElement('button');
+      save.type = 'button';
+      save.className = 'link-btn manage-save';
+      save.textContent = '保存';
+      save.addEventListener('click', () => {
+        const next = input.value.trim();
+        if (!next) { alert('分类名不能为空'); return; }
+        if (next === old) return;
+        const list = loadModelCats();
+        const i = list.indexOf(old);
+        if (i > -1) {
+          if (list.includes(next)) list.splice(i, 1);
+          else list[i] = next;
         }
-        function addCategory(){
-            const name = document.getElementById("new-cat-name").value.trim();
-            if(!name) return showToast("请输入分类名称");
-            if(categories.includes(name)) return showToast("分类已存在");
-            categories.push(name);
-            saveStorage();
-            document.getElementById("new-cat-name").value="";
-            renderCatManageList();
-        }
-        function exportData(){
-            const blob = new Blob([JSON.stringify({sites,categories},null,2)],{type:"application/json"});
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement("a");
-            a.href = url;
-            a.download = "api-sites-backup.json";
-            a.click();
-            URL.revokeObjectURL(url);
-        }
-        function importData(){
-            const input = document.createElement("input");
-            input.type="file";
-            input.accept=".json";
-            input.onchange = e=>{
-                const f = e.target.files[0];
-                const r = new FileReader();
-                r.onload = ev=>{
-                    try{
-                        const d = JSON.parse(ev.target.result);
-                        sites = d.sites || [];
-                        categories = d.categories || [];
-                        saveStorage();
-                        showToast("导入成功");
-                        renderHome();
-                    }catch(err){
-                        showToast("文件解析失败");
-                    }
-                }
-                r.readAsText(f);
-            }
-            input.click();
-        }
-        function clearAll(){
-            if(confirm("确定清空所有站点和分类数据？不可恢复！")){
-                sites = [];
-                categories = ["全部"];
-                saveStorage();
-                renderHome();
-                showToast("已清空");
-            }
-        }
-        document.getElementById("search-input").oninput = renderHome;
-        renderHome();
-    </script>
+        sites.forEach(s => {
+          s.models = s.models.map(m => m.tag === old ? { ...m, tag: next } : m);
+        });
+        saveModelCats(list);
+        saveStorage();
+        renderAll();
+        renderModelCats();
+      });
+
+      const del = document.createElement('button');
+      del.type = 'button';
+      del.className = 'manage-del';
+      del.textContent = '删除';
+      del.addEventListener('click', () => removeModelCat(old));
+
+      row.append(input, save, del);
+      modelCatManage.appendChild(row);
+    });
+    renderModelCatPicks();
+  }
+
+  btnModelCats.addEventListener('click', () => {
+    renderModelCats();
+    settingPanel.classList.remove('open');
+    syncTab();
+    modelCatPanel.classList.add('open');
+  });
+
+  btnModelCatBack.addEventListener('click', () => {
+    modelCatPanel.classList.remove('open');
+  });
+
+  btnAddModelCat.addEventListener('click', () => {
+    const name = newModelCat.value.trim();
+    if (!name) return;
+    const list = loadModelCats();
+    if (list.includes(name)) { alert('该分类已存在'); return; }
+    list.push(name);
+    saveModelCats(list);
+    newModelCat.value = '';
+    renderModelCats();
+  });
+
+  btnExport.addEventListener('click', () => {
+    const payload = { sites, modelCats: loadModelCats(), exportedAt: new Date().toISOString() };
+    const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `api-sites-backup-${new Date().toISOString().slice(0, 10)}.json`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  });
+
+  btnImport.addEventListener('click', () => fileInput.click());
+
+  fileInput.addEventListener('change', () => {
+    const file = fileInput.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = () => {
+      try {
+        const data = JSON.parse(reader.result);
+        const arr = Array.isArray(data) ? data : (data.sites || []);
+        if (!Array.isArray(arr)) throw new Error('bad format');
+        sites = arr.map(normalizeSite);
+        if (Array.isArray(data.modelCats)) saveModelCats(data.modelCats);
+        saveStorage();
+        renderAll();
+        renderModelCatPicks();
+        alert(`导入成功，共 ${sites.length} 个站点`);
+      } catch (err) {
+        alert('导入失败：备份文件格式不正确');
+      }
+      fileInput.value = '';
+    };
+    reader.readAsText(file);
+  });
+
+  // ===== 首次加载：从本地存储恢复已保存的站点 =====
+  const saved = loadStorage();
+  sites = Array.isArray(saved) ? saved.map(normalizeSite) : [];
+  renderAll();
+  renderModelCatPicks();
+</script>
 </body>
 </html>
