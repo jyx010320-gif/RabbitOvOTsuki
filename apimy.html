@@ -836,16 +836,16 @@
 
   /* 充值档位卡片 */
   .plan-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
     min-width: 200px;
   }
 
   .plan-card {
-    border: 1px solid var(--line);
-    border-radius: 12px;
-    padding: 12px;
+    border: none;
+    border-radius: 0;
+    padding: 4px 0;
   }
 
   .plan-name {
@@ -2184,7 +2184,7 @@
     // 充值档位：额度 + 价格，两列卡片
     if (d && d.plans && d.plans.length) {
       const cards = d.plans.map(p => {
-        return `<div class="plan-card"><div class="plan-name">${escapeHtml(p.name)}</div><div class="plan-bottom"><span class="plan-price">${escapeHtml(p.price || '—')}</span></div></div>`;
+        return `<div class="plan-card"><div class="plan-name">${escapeHtml(p.name)}</div><div class="plan-bottom">${p.price ? `<span class="plan-price">${escapeHtml(p.price)}</span>` : ''}</div></div>`;
       }).join('');
       html += detailRow('充值档位', `<div class="plan-grid">${cards}</div>`);
     }
