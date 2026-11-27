@@ -424,6 +424,7 @@
     gap: 8px;
     font-size: 17px;
     font-weight: 700;
+    min-width: 0;
   }
 
   .btn-edit-card {
@@ -441,6 +442,10 @@
   .site-name a {
     color: var(--text);
     text-decoration: none;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    min-width: 0;
   }
 
   .site-name a:hover { color: var(--primary); }
@@ -528,13 +533,18 @@
   .card-meta .row {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     gap: 10px;
+    min-width: 0;
   }
 
   .card-meta a {
     color: var(--primary);
     text-decoration: none;
-    word-break: break-all;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    min-width: 0;
   }
 
   .card-meta a:hover { text-decoration: underline; }
@@ -543,7 +553,10 @@
 
   .meta-val {
     text-align: right;
-    word-break: break-all;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    min-width: 0;
   }
 
   .meta-val.key {
@@ -551,8 +564,8 @@
     font-size: 12px;
   }
 
-  .key-right { display: flex; align-items: center; gap: 8px; }
-  .copy-right { display: flex; align-items: center; gap: 8px; }
+  .key-right { display: flex; align-items: center; gap: 8px; min-width: 0; }
+  .copy-right { display: flex; align-items: center; gap: 8px; min-width: 0; }
   .copy-btn {
     flex-shrink: 0;
     border: none;
@@ -1002,6 +1015,15 @@
     min-height: 76px;
   }
 
+  .cat-edit-row {
+    display: flex;
+    gap: 8px;
+    margin-top: 8px;
+    align-items: center;
+  }
+  .cat-edit-row input { flex: 1; min-width: 0; }
+  .cat-edit-row .link-btn { flex-shrink: 0; }
+
   .form-item input:focus,
   .form-item select:focus,
   .form-item textarea:focus {
@@ -1276,6 +1298,10 @@
         <div class="form-item">
           <label>分类</label>
           <select id="fCat"></select>
+          <div class="cat-edit-row">
+            <input type="text" id="fNewCat" placeholder="输入新分类名，快速新建分类">
+            <button type="button" class="link-btn" id="btnAddCatForm">新建</button>
+          </div>
         </div>
 
         <div class="form-item">
@@ -1308,23 +1334,18 @@
       <!-- 充值信息：编辑时填写 -->
       <div class="field-group recharge-fields hidden" id="rechargeFields">
         <div class="form-item">
-          <label>套餐价格</label>
-          <input type="text" id="fPrice" placeholder="例如：免费 / ¥9.9 每月 / 按调用量计费">
-        </div>
-
-        <div class="form-item">
-          <label>充值额度</label>
-          <input type="text" id="fQuota" placeholder="例如：每日 1000 次调用 / 1G 流量">
-        </div>
-
-        <div class="form-item">
-          <label>折扣说明</label>
-          <textarea id="fDiscount" placeholder="例如：新用户首充 8 折、包月套餐立减 5 元等，没有可留空"></textarea>
+          <label>充值链接</label>
+          <input type="text" id="fRecharge" placeholder="余额充值 / 套餐购买页面链接，没有可留空">
         </div>
 
         <div class="form-item">
           <label>充值档位（额度 | 价格）</label>
           <textarea id="fPlans" rows="3" placeholder="一行一个，格式：额度 | 价格&#10;例如：100 额度 | ¥100&#10;50 额度 | ¥50"></textarea>
+        </div>
+
+        <div class="form-item">
+          <label>折扣说明</label>
+          <textarea id="fDiscount" placeholder="例如：新用户首充 8 折、包月套餐立减 5 元等，没有可留空"></textarea>
         </div>
 
         <div class="form-item">
@@ -1335,11 +1356,6 @@
             <div class="model-cat-scroll" id="modelCatScroll"></div>
           </div>
         </div>
-      </div>
-
-      <div class="form-item">
-        <label>充值链接</label>
-        <input type="text" id="fRecharge" placeholder="余额充值 / 套餐购买页面链接，没有可留空">
       </div>
     </div>
   </div>
@@ -1631,7 +1647,12 @@
     document.getElementById('panelTitle').textContent = isEdit ? '编辑 API 站点' : '新增 API 站点';
   }
 
-  openBtn.addEventListener('click', () => { fillCatSelect(''); setMode('add'); panel.classList.add('open'); });
+  openBtn.addEventListener('click', () => {
+    fillCatSelect('');
+    setMode('add');
+    panel.classList.add('open');
+    panel.querySelector('.panel-body').scrollTop = 0;
+  });
   btnCancel.addEventListener('click', closePanel);
 
   function closePanel() {
@@ -1642,7 +1663,7 @@
   }
 
   function resetForm() {
-    ['fName', 'fKey', 'fHost', 'fTags', 'fNote', 'fWeb', 'fGroup', 'fCheckin', 'fPrice', 'fQuota', 'fDiscount', 'fRecharge', 'fModels', 'fPlans']
+    ['fName', 'fKey', 'fHost', 'fTags', 'fNote', 'fWeb', 'fGroup', 'fCheckin', 'fNewCat', 'fDiscount', 'fRecharge', 'fModels', 'fPlans']
       .forEach(id => document.getElementById(id).value = '');
   }
 
@@ -1702,8 +1723,6 @@
       web:      document.getElementById('fWeb').value.trim(),
       group:    document.getElementById('fGroup').value.trim(),
       checkin:  document.getElementById('fCheckin').value.trim(),
-      price:    document.getElementById('fPrice').value.trim(),
-      quota:    document.getElementById('fQuota').value.trim(),
       discount: document.getElementById('fDiscount').value.trim(),
       recharge: document.getElementById('fRecharge').value.trim(),
       models:   parseModels(document.getElementById('fModels').value),
@@ -1821,8 +1840,6 @@
     document.getElementById('fWeb').value       = d.web;
     document.getElementById('fGroup').value    = d.group || d.groupId || '';
     document.getElementById('fCheckin').value  = d.checkin || '';
-    document.getElementById('fPrice').value     = d.price;
-    document.getElementById('fQuota').value     = d.quota;
     document.getElementById('fDiscount').value  = d.discount;
     document.getElementById('fRecharge').value = d.recharge;
     document.getElementById('fModels').value  = modelsToText(d.models);
@@ -1836,6 +1853,7 @@
     fillForm(d);
     setMode('edit');
     panel.classList.add('open');
+    panel.querySelector('.panel-body').scrollTop = 0;
   }
 
   btnSave.addEventListener('click', () => {
@@ -1848,6 +1866,8 @@
       const idx = sites.findIndex(s => s.id === editingId);
       if (idx > -1) {
         d.id = editingId;
+        d.price = sites[idx].price;
+        d.quota = sites[idx].quota;
         sites[idx] = d;
       }
     } else {
@@ -2087,7 +2107,7 @@
     const d = sites.find(s => s.id === card.dataset.id);
     const name = card.querySelector('.site-name a')?.textContent.trim() || '未命名站点';
     const note = (card.querySelector('.card-note')?.textContent || '').replace(/^备注：/, '').trim() || '无';
-    const allowed = ['套餐价格', '充值额度', '折扣说明', '充值链接'];
+    const allowed = ['折扣说明', '充值链接'];
 
     let html = '';
 
@@ -2095,7 +2115,7 @@
       html += detailRow('分类', escapeHtml(d.cat));
     }
 
-    // 充值详情：只列出套餐价格、充值额度、折扣说明、充值链接
+    // 充值详情：只列出折扣说明、充值链接
     card.querySelectorAll('.card-detail .row').forEach(r => {
       const key = r.querySelector('.meta-key')?.textContent.trim() || '';
       if (!allowed.includes(key)) return;
@@ -2237,6 +2257,22 @@
   });
 
   // ===== 分类修改：分类重命名 =====
+  function renameSiteCat(old, next) {
+    if (!next) { alert('名称不能为空'); return false; }
+    if (next === old) return false;
+    sites.forEach(s => { if (s.cat === old) s.cat = next; });
+    const order = loadCatOrder();
+    const oi = order.indexOf(old);
+    if (oi > -1) {
+      if (!order.includes(next)) order[oi] = next;
+      else order.splice(oi, 1);
+      saveCatOrder(order);
+    }
+    saveStorage();
+    renderAll();
+    return true;
+  }
+
   function removeSiteCat(cat) {
     if (!confirm(`确定删除分类「${cat}」吗？\n使用该分类的站点将归到「其他」。`)) return;
     saveCatOrder(loadCatOrder().filter(c => c !== cat));
@@ -2273,18 +2309,7 @@
         const next = input.value.trim();
         if (!next) { alert('名称不能为空'); return; }
         if (next === old) return;
-        sites.forEach(s => {
-          if (s.cat === old) s.cat = next;
-        });
-        const order = loadCatOrder();
-        const oi = order.indexOf(old);
-        if (oi > -1) {
-          if (!order.includes(next)) order[oi] = next;
-          else order.splice(oi, 1);
-          saveCatOrder(order);
-        }
-        saveStorage();
-        renderAll();
+        renameSiteCat(old, next);
         renderManage();
       });
 
@@ -2331,6 +2356,24 @@
     saveCatOrder(order);
     newCat.value = '';
     renderManage();
+    renderChips();
+  });
+
+  // ===== 表单内直接新建 / 重命名站点分类 =====
+  const fNewCat = document.getElementById('fNewCat');
+  const btnAddCatForm = document.getElementById('btnAddCatForm');
+
+  btnAddCatForm.addEventListener('click', () => {
+    const name = fNewCat.value.trim();
+    if (!name) { alert('请输入分类名称'); return; }
+    const order = loadCatOrder();
+    const used = sites.some(s => s.cat === name);
+    if (!(order.includes(name) || used)) {
+      order.push(name);
+      saveCatOrder(order);
+    }
+    fNewCat.value = '';
+    fillCatSelect(name);
     renderChips();
   });
 
