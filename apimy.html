@@ -957,6 +957,8 @@
 
   .panel.open { display: flex; }
 
+  #modelCatPanel { z-index: 120; }
+
   .panel-header {
     flex-shrink: 0;
     background: var(--card);
@@ -1448,6 +1450,10 @@
       <div class="form-item">
         <label>模型价格列表（分类 | 模型名 | 价格 | 计费方式）</label>
         <textarea id="mModels" rows="8" placeholder="一行一个，分类可自定义填写；计费方式填按次或按量&#10;例如：通用 | gpt-3.5 | 0.0005 元/千token | 按次&#10;识图 | gpt-4o | 0.002 元/千token | 按次"></textarea>
+        <div class="model-cat-picks">
+          <button type="button" class="model-cat-pick model-cat-add" id="mcAddCatPick">设置</button>
+          <div class="model-cat-scroll" id="mcCatScroll"></div>
+        </div>
       </div>
     </div>
     <div class="detail-footer panel-footer">
@@ -1625,6 +1631,8 @@
   const btnAddModelCat = document.getElementById('btnAddModelCat');
   const modelCatScroll  = document.getElementById('modelCatScroll');
   const btnAddModelCatPick = document.getElementById('btnAddModelCatPick');
+  const mcCatScroll    = document.getElementById('mcCatScroll');
+  const mcAddCatPick   = document.getElementById('mcAddCatPick');
 
   function uid() {
     return Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
@@ -2519,8 +2527,9 @@
   });
 
   // ===== 模型分类管理：新增 / 改名 / 删除，同步到所有模型 =====
-  function appendModelLine(cat) {
-    const ta = document.getElementById('fModels');
+  function appendModelLine(cat, targetId) {
+    const ta = document.getElementById(targetId || 'fModels');
+    if (!ta) return;
     const line = `${cat} | 模型名 | 价格 | 按次`;
     ta.value = ta.value.trim() ? ta.value.replace(/\s*$/, '') + '\n' + line : line;
     ta.focus();
@@ -2570,7 +2579,13 @@
   }
 
   function renderModelCatPicks() {
-    modelCatScroll.innerHTML = '';
+    fillModelCatPicks(modelCatScroll, 'fModels');
+    fillModelCatPicks(mcCatScroll, 'mModels');
+  }
+
+  function fillModelCatPicks(scroll, targetId) {
+    if (!scroll) return;
+    scroll.innerHTML = '';
     const cats = loadModelCats();
 
     // 已添加的分类：可点击选择；删除在设置弹窗内操作
@@ -2583,9 +2598,9 @@
       chip.type = 'button';
       chip.className = 'model-cat-pick';
       chip.textContent = cat;
-      chip.addEventListener('click', () => appendModelLine(cat));
+      chip.addEventListener('click', () => appendModelLine(cat, targetId));
       item.appendChild(chip);
-      modelCatScroll.appendChild(item);
+      scroll.appendChild(item);
     });
 
     // 模型里已使用、但不在清单的分类：不可点击，仅展示
@@ -2599,11 +2614,16 @@
       b.textContent = cat;
       b.disabled = true;
       item.appendChild(b);
-      modelCatScroll.appendChild(item);
+      scroll.appendChild(item);
     });
   }
 
   btnAddModelCatPick.addEventListener('click', () => {
+    renderModelCats();
+    modelCatPanel.classList.add('open');
+  });
+
+  mcAddCatPick.addEventListener('click', () => {
     renderModelCats();
     modelCatPanel.classList.add('open');
   });
