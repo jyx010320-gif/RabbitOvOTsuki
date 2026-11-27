@@ -1155,6 +1155,29 @@
     .grid  { grid-template-columns: 1fr; }
     header.page-header h1 { font-size: 23px; }
   }
+
+  /* ===== 点击飘心特效 ===== */
+  .heart-fly {
+    position: fixed;
+    left: 0;
+    top: 0;
+    pointer-events: none;
+    z-index: 9999;
+    color: var(--primary);
+    line-height: 1;
+    will-change: transform, opacity;
+    animation: heartFly ease-out forwards;
+  }
+  @keyframes heartFly {
+    0% {
+      transform: translate(-50%, -50%) scale(var(--s, 1));
+      opacity: var(--o, 0.8);
+    }
+    100% {
+      transform: translate(calc(-50% + var(--ex, 0px)), calc(-50% + var(--ey, 0px))) scale(calc(var(--s, 1) * 0.6));
+      opacity: 0;
+    }
+  }
 </style>
 </head>
 <body>
@@ -2464,6 +2487,33 @@
   sites = Array.isArray(saved) ? saved.map(normalizeSite) : [];
   renderAll();
   renderModelCatPicks();
+
+  // ===== 点击飘心特效：大小/透明度不一，颜色跟随主题色 =====
+  document.addEventListener('pointerdown', (e) => {
+    const count = 6 + Math.floor(Math.random() * 3); // 6~8 个
+    for (let i = 0; i < count; i++) {
+      const heart = document.createElement('span');
+      heart.className = 'heart-fly';
+      heart.textContent = '♥';
+      const size = 12 + Math.random() * 14;          // 12~26px
+      const opacity = 0.45 + Math.random() * 0.55;    // 0.45~1
+      const angle = (i / count) * Math.PI * 2 + (Math.random() - 0.5) * 0.6; // 环形均分+抖动
+      const radius = 40 + Math.random() * 30;        // 散开半径 40~70px
+      const ex = Math.cos(angle) * radius;
+      const ey = Math.sin(angle) * radius;
+      const dur = 0.5 + Math.random() * 0.3;          // 0.5~0.8s
+      heart.style.left = e.clientX + 'px';
+      heart.style.top = e.clientY + 'px';
+      heart.style.fontSize = size + 'px';
+      heart.style.setProperty('--s', (size / 20).toFixed(2));
+      heart.style.setProperty('--o', opacity.toFixed(2));
+      heart.style.setProperty('--ex', ex.toFixed(0) + 'px');
+      heart.style.setProperty('--ey', ey.toFixed(0) + 'px');
+      heart.style.animationDuration = dur + 's';
+      document.body.appendChild(heart);
+      heart.addEventListener('animationend', () => heart.remove());
+    }
+  });
 </script>
 </body>
 </html>
