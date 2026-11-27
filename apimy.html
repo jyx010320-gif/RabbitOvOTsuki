@@ -588,6 +588,7 @@
   }
 
   .link-btn:hover { background: var(--primary); color: #fff; }
+  .link-btn:active { background: var(--primary); filter: brightness(0.92); color: #fff; }
 
   .btn-group {
     display: inline-flex;
@@ -884,8 +885,14 @@
   }
 
   .tab-add-btn:hover {
-    background: #0b7269;
+    background: var(--primary);
+    filter: brightness(0.92);
     transform: scale(1.06);
+  }
+  .tab-add-btn:active {
+    background: var(--primary);
+    filter: brightness(0.88);
+    transform: scale(0.98);
   }
 
   /* 设置页打开时，底部 Tab 栏浮在面板之上 */
@@ -1028,7 +1035,8 @@
 
   .btn-cancel { background: var(--gray-soft); color: var(--text-sub); }
   .btn-save   { background: var(--primary); color: #fff; }
-  .btn-save:hover { background: #0b7269; }
+  .btn-save:hover { background: var(--primary); filter: brightness(0.92); }
+  .btn-save:active { background: var(--primary); filter: brightness(0.88); }
 
   /* ===== 设置页 ===== */
   .setting-list {
@@ -1287,13 +1295,13 @@
         </div>
 
         <div class="form-item">
-          <label>群聊链接</label>
-          <input type="text" id="fGroup" placeholder="QQ / 微信群或频道链接，没有可留空">
+          <label>群聊 / QQ 群号</label>
+          <input type="text" id="fGroup" placeholder="群聊链接或 QQ 群号，没有可留空">
         </div>
 
         <div class="form-item">
-          <label>QQ 群号</label>
-          <input type="text" id="fGroupId" placeholder="QQ 群 ID / 群号，没有可留空">
+          <label>签到链接</label>
+          <input type="text" id="fCheckin" placeholder="签到 / 每日领取链接，没有可填无">
         </div>
       </div>
 
@@ -1540,8 +1548,8 @@
       tags:     Array.isArray(d.tags) ? d.tags : [],
       note:     d.note || '',
       web:      d.web || '',
-      group:    d.group || '',
-      groupId:  d.groupId || '',
+      group:    d.group || d.groupId || '',
+      checkin:  d.checkin || '',
       price:    d.price || '',
       quota:    d.quota || '',
       discount: d.discount || '',
@@ -1634,7 +1642,7 @@
   }
 
   function resetForm() {
-    ['fName', 'fKey', 'fHost', 'fTags', 'fNote', 'fWeb', 'fGroup', 'fGroupId', 'fPrice', 'fQuota', 'fDiscount', 'fRecharge', 'fModels', 'fPlans']
+    ['fName', 'fKey', 'fHost', 'fTags', 'fNote', 'fWeb', 'fGroup', 'fCheckin', 'fPrice', 'fQuota', 'fDiscount', 'fRecharge', 'fModels', 'fPlans']
       .forEach(id => document.getElementById(id).value = '');
   }
 
@@ -1693,7 +1701,7 @@
       note:     document.getElementById('fNote').value.trim(),
       web:      document.getElementById('fWeb').value.trim(),
       group:    document.getElementById('fGroup').value.trim(),
-      groupId:  document.getElementById('fGroupId').value.trim(),
+      checkin:  document.getElementById('fCheckin').value.trim(),
       price:    document.getElementById('fPrice').value.trim(),
       quota:    document.getElementById('fQuota').value.trim(),
       discount: document.getElementById('fDiscount').value.trim(),
@@ -1707,6 +1715,7 @@
     const tagHtml = d.tags.length
       ? d.tags.map(t => `<span class="tag">${t}</span>`).join('')
       : '';
+    const groupVal = d.group || d.groupId || '';
     const card = document.createElement('article');
     card.className = 'site-card collapsed';
     card.dataset.cat = d.cat;
@@ -1748,30 +1757,18 @@
             : `<span class="meta-val">未填写</span>`}
         </div>
         <div class="row">
-          <span class="meta-key">群聊链接</span>
-          ${d.group
-            ? `<a class="meta-val" href="${d.group}" target="_blank" rel="noopener">${d.group}</a>`
+          <span class="meta-key">群聊 / 群号</span>
+          ${groupVal
+            ? ( /^https?:\/\//.test(groupVal)
+                ? `<a class="meta-val" href="${groupVal}" target="_blank" rel="noopener">${groupVal}</a>`
+                : `<span class="copy-right"><span class="meta-val">${escapeHtml(groupVal)}</span><button type="button" class="copy-btn" data-copy="${escapeHtml(groupVal)}">复制</button></span>`)
             : `<span class="meta-val">未填写</span>`}
         </div>
-        ${d.groupId ? `
         <div class="row">
-          <span class="meta-key">QQ 群号</span>
-          <span class="copy-right">
-            <span class="meta-val">${escapeHtml(d.groupId)}</span>
-            <button type="button" class="copy-btn" data-copy="${escapeHtml(d.groupId)}">复制</button>
-          </span>
-        </div>` : ''}
-        <div class="row">
-          <span class="meta-key">套餐价格</span>
-          <span class="meta-val">${d.price || '未填写'}</span>
-        </div>
-        <div class="row">
-          <span class="meta-key">充值额度</span>
-          <span class="meta-val">${d.quota || '未填写'}</span>
-        </div>
-        <div class="row">
-          <span class="meta-key">折扣说明</span>
-          <span class="meta-val">${d.discount || '未填写'}</span>
+          <span class="meta-key">签到链接</span>
+          ${d.checkin && d.checkin !== '无'
+            ? `<a class="meta-val" href="${d.checkin}" target="_blank" rel="noopener">${d.checkin}</a>`
+            : `<span class="meta-val">无</span>`}
         </div>
         <div class="row">
           <span class="meta-key">充值链接</span>
@@ -1805,8 +1802,8 @@
       tags:     [...card.querySelectorAll('.tag-list .tag')].map(t => t.textContent.trim()),
       note:     (card.querySelector('.card-note')?.textContent || '').replace(/^备注：/, '').trim(),
       web:      rows['网页链接'] || '',
-      group:    rows['群聊链接'] || '',
-      groupId:  rows['QQ 群号'] || '',
+      group:    rows['群聊 / 群号'] || rows['群聊链接'] || rows['QQ 群号'] || '',
+      checkin:  rows['签到链接'] || '',
       price:    rows['套餐价格'] || '',
       quota:    rows['充值额度'] || '',
       discount: rows['折扣说明'] || '',
@@ -1822,8 +1819,8 @@
     document.getElementById('fTags').value      = d.tags.join(', ');
     document.getElementById('fNote').value      = d.note;
     document.getElementById('fWeb').value       = d.web;
-    document.getElementById('fGroup').value    = d.group;
-    document.getElementById('fGroupId').value  = d.groupId || '';
+    document.getElementById('fGroup').value    = d.group || d.groupId || '';
+    document.getElementById('fCheckin').value  = d.checkin || '';
     document.getElementById('fPrice').value     = d.price;
     document.getElementById('fQuota').value     = d.quota;
     document.getElementById('fDiscount').value  = d.discount;
