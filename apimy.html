@@ -1,0 +1,919 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>api-sites.html</title>
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
+    <style>
+        :root {
+            --bg-color: #f3f5f7;
+            --card-bg: #ffffff;
+            --text-color: #222;
+            --text-secondary: #607d8b;
+            --primary-color: #009688;
+            --border-color: #eee;
+            --tag-bg: #f0f2f5;
+            --shadow: 0 2px 10px rgba(0,0,0,0.06);
+        }
+        /* 主题定义 */
+        .theme-cloud {
+            --bg-color: #f3f5f7;
+            --card-bg: #ffffff;
+            --text-color: #222;
+            --text-secondary: #607d8b;
+            --primary-color: #009688;
+            --border-color: #eee;
+            --tag-bg: #f0f2f5;
+        }
+        .theme-night {
+            --bg-color: #1a1c20;
+            --card-bg: #272a30;
+            --text-color: #e8e8e8;
+            --text-secondary: #a1a7b3;
+            --primary-color: #4db6ac;
+            --border-color: #383c44;
+            --tag-bg: #343840;
+        }
+        .theme-island {
+            --bg-color: #f7f2e4;
+            --card-bg: #fffbf0;
+            --text-color: #5a5545;
+            --text-secondary: #8c8672;
+            --primary-color: #63b966;
+            --border-color: #e9e2cd;
+            --tag-bg: #ede7d5;
+        }
+        .theme-sakura {
+            --bg-color: #fcf0f4;
+            --card-bg: #fff7fa;
+            --text-color: #443438;
+            --text-secondary: #94777f;
+            --primary-color: #e88ea8;
+            --border-color: #f4d8e0;
+            --tag-bg: #f7e2e8;
+        }
+        .theme-sea {
+            --bg-color: #edf6fb;
+            --card-bg: #f6fbfe;
+            --text-color: #2c3b44;
+            --text-secondary: #738b99;
+            --primary-color: #59a9d6;
+            --border-color: #d8eaf4;
+            --tag-bg: #e3f0f8;
+        }
+        .theme-mint {
+            --bg-color: #eff9f4;
+            --card-bg: #f6fdf9;
+            --text-color: #2d443a;
+            --text-secondary: #749987;
+            --primary-color: #56c596;
+            --border-color: #d7efe3;
+            --tag-bg: #e2f3ec;
+        }
+        .theme-purple {
+            --bg-color: #251e38;
+            --card-bg: #34294d;
+            --text-color: #e7e2f4;
+            --text-secondary: #b0a4cc;
+            --primary-color: #b185db;
+            --border-color: #483b66;
+            --tag-bg: #41345c;
+        }
+        .theme-orange {
+            --bg-color: #fff3e8;
+            --card-bg: #fff9f2;
+            --text-color: #4b3a2b;
+            --text-secondary: #a07f60;
+            --primary-color: #f2994a;
+            --border-color: #f9e2cc;
+            --tag-bg: #fae9d8;
+        }
+        .theme-cocoa {
+            --bg-color: #f4ede6;
+            --card-bg: #faf6f2;
+            --text-color: #473b32;
+            --text-secondary: #8c796a;
+            --primary-color: #a17c5d;
+            --border-color: #e3d6cb;
+            --tag-bg: #eae0d6;
+        }
+        .theme-goldnight {
+            --bg-color: #121212;
+            --card-bg: #1f1f1f;
+            --text-color: #f0e6c2;
+            --text-secondary: #b8aa80;
+            --primary-color: #d4af37;
+            --border-color: #333;
+            --tag-bg: #2c2c2c;
+        }
+        .theme-purplecloud {
+            --bg-color: #f3edf9;
+            --card-bg: #f9f5fd;
+            --text-color: #423552;
+            --text-secondary: #907ca8;
+            --primary-color: #b490d8;
+            --border-color: #e2d5f0;
+            --tag-bg: #e9e0f3;
+        }
+        .theme-cherry {
+            --bg-color: #fef0f0;
+            --card-bg: #fff6f6;
+            --text-color: #4c2c2c;
+            --text-secondary: #a87070;
+            --primary-color: #e65c5c;
+            --border-color: #f8d4d4;
+            --tag-bg: #f9e2e2;
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            -webkit-user-select: none;
+            user-select: none;
+            touch-action: manipulation;
+        }
+        input, textarea, select {
+            -webkit-user-select: text;
+            user-select: text;
+        }
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            padding-bottom: 90px;
+            transition: background 0.3s, color 0.3s;
+        }
+        .page {
+            display: none;
+            padding: 20px;
+        }
+        .page.active {
+            display: block;
+        }
+        .header-title {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: var(--text-color);
+        }
+        .header-desc {
+            font-size: 17px;
+            color: var(--text-secondary);
+            margin-bottom: 24px;
+            line-height: 1.5;
+        }
+        .stat-card {
+            background: var(--card-bg);
+            border-radius: 18px;
+            padding: 22px;
+            box-shadow: var(--shadow);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .stat-num {
+            font-size: 42px;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+        .stat-text {
+            font-size: 16px;
+            color: var(--text-secondary);
+        }
+        .search-wrap {
+            position: relative;
+            margin-bottom: 18px;
+        }
+        .search-wrap input {
+            width: 100%;
+            border: none;
+            background: var(--card-bg);
+            padding: 14px 16px 14px 44px;
+            border-radius: 16px;
+            font-size: 16px;
+            box-shadow: var(--shadow);
+            color: var(--text-color);
+        }
+        .search-wrap svg {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 20px;
+            height: 20px;
+            fill: var(--text-secondary);
+        }
+        .filter-tabs {
+            display: flex;
+            gap: 10px;
+            overflow-x: auto;
+            padding-bottom: 6px;
+            margin-bottom: 16px;
+        }
+        .filter-tabs::-webkit-scrollbar {
+            display: none;
+        }
+        .filter-tab {
+            flex-shrink: 0;
+            padding: 10px 20px;
+            background: var(--card-bg);
+            border-radius: 999px;
+            font-size: 16px;
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+        }
+        .filter-tab.active {
+            background: var(--tag-bg);
+            color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+        .site-card {
+            background: var(--card-bg);
+            border-radius: 18px;
+            box-shadow: var(--shadow);
+            padding: 20px;
+            margin-bottom: 10px;
+        }
+        .card-head {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 12px;
+        }
+        .card-name-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .site-name {
+            font-size: 24px;
+            font-weight: 700;
+        }
+        .edit-btn-inline {
+            color: var(--primary-color);
+            font-size: 16px;
+        }
+        .cat-tag {
+            padding: 6px 14px;
+            background: var(--tag-bg);
+            color: var(--primary-color);
+            border-radius: 999px;
+            font-size: 15px;
+        }
+        .tag-group {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 10px;
+        }
+        .tag-item {
+            padding: 5px 12px;
+            background: var(--tag-bg);
+            color: var(--text-secondary);
+            border-radius: 8px;
+            font-size: 14px;
+        }
+        .card-note {
+            color: var(--text-secondary);
+            font-size: 16px;
+            margin-bottom: 14px;
+        }
+        .collapse-btn {
+            text-align: right;
+            color: var(--text-secondary);
+        }
+        .collapse-content {
+            margin-top: 14px;
+            display: none;
+            border-top: 1px solid var(--border-color);
+            padding-top: 14px;
+        }
+        .collapse-content.open {
+            display: block;
+        }
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+        .info-label {
+            color: var(--text-secondary);
+        }
+        .info-value {
+            color: var(--text-color);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .copy-btn {
+            color: var(--primary-color);
+            font-size: 14px;
+        }
+        .link-text {
+            color: var(--primary-color);
+        }
+        .btn-row {
+            display: flex;
+            gap: 10px;
+            margin-top:16px;
+            justify-content: flex-end;
+        }
+        .mini-btn {
+            padding:7px 14px;
+            font-size:14px;
+            border-radius:12px;
+            border:none;
+            background:var(--tag-bg);
+            color:var(--primary-color);
+        }
+        .form-group {
+            margin-bottom: 16px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 6px;
+            color: var(--text-secondary);
+            font-size:15px;
+        }
+        .form-group input, .form-group textarea, .form-group select {
+            width: 100%;
+            border: 1px solid var(--border-color);
+            border-radius:12px;
+            padding:12px 14px;
+            font-size:16px;
+            background:var(--card-bg);
+            color:var(--text-color);
+        }
+        .form-group textarea {
+            min-height:80px;
+            resize:vertical;
+        }
+        .form-btn-wrap {
+            display:flex;
+            gap:12px;
+            margin-top:20px;
+        }
+        .form-btn {
+            flex:1;
+            padding:14px;
+            border-radius:12px;
+            border:none;
+            font-size:17px;
+        }
+        .form-btn.primary {
+            background:var(--primary-color);
+            color:#fff;
+        }
+        .form-btn.gray {
+            background:var(--tag-bg);
+            color:var(--text-color);
+        }
+        .tab-bar {
+            position:fixed;
+            bottom:0;
+            left:0;
+            width:100%;
+            background:var(--card-bg);
+            display:flex;
+            align-items:center;
+            justify-content:space-around;
+            padding:10px 0;
+            box-shadow:0 -1px 10px rgba(0,0,0,0.05);
+        }
+        .tab-item {
+            text-align:center;
+            color:var(--text-secondary);
+            font-size:15px;
+        }
+        .tab-item.active {
+            color:var(--primary-color);
+        }
+        .add-fab {
+            width:76px;
+            height:76px;
+            border-radius:50%;
+            background:var(--primary-color);
+            color:#fff;
+            font-size:36px;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            border:none;
+            position:fixed;
+            bottom:50px;
+            left:50%;
+            transform:translateX(-50%);
+            box-shadow:0 4px 16px rgba(0,0,0,0.35);
+        }
+        .setting-item {
+            background:var(--card-bg);
+            border-radius:14px;
+            padding:16px;
+            margin-bottom:10px;
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+        }
+        .cat-list-item {
+            display:flex;
+            align-items:center;
+            justify-content:space-between;
+            background:var(--card-bg);
+            padding:14px;
+            border-radius:14px;
+            margin-bottom:8px;
+        }
+        .cat-input-row {
+            display:flex;
+            gap:8px;
+            margin-top:16px;
+        }
+        .cat-input-row input {
+            flex:1;
+            padding:12px;
+            border:1px solid var(--border-color);
+            border-radius:12px;
+            font-size:16px;
+            background:var(--card-bg);
+            color:var(--text-color);
+        }
+        .cat-add-btn {
+            padding:0 16px;
+            background:var(--primary-color);
+            color:#fff;
+            border:none;
+            border-radius:12px;
+        }
+        .toast {
+            position:fixed;
+            top:40%;
+            left:50%;
+            transform:translate(-50%,-50%);
+            background:rgba(0,0,0,0.75);
+            color:#fff;
+            padding:12px 22px;
+            border-radius:10px;
+            display:none;
+            z-index:9999;
+        }
+        .theme-collapse-content{
+            display:none;
+            padding:0 8px 12px 8px;
+            gap:8px;
+            flex-wrap:wrap;
+        }
+        .theme-collapse-content.open{
+            display:flex;
+        }
+        .theme-option-btn{
+            padding:8px 12px;
+            border-radius:10px;
+            border:1px solid var(--border-color);
+            background:var(--card-bg);
+            color:var(--text-color);
+            font-size:12px;
+        }
+        .theme-option-btn.active{
+            border-color:var(--primary-color);
+            background:var(--tag-bg);
+            color:var(--primary-color);
+        }
+        .arrow{
+            transition: transform 0.25s;
+        }
+        .arrow.rotate{
+            transform: rotate(180deg);
+        }
+    </style>
+</head>
+<body>
+    <div class="toast" id="toast"></div>
+
+    <!--首页-->
+    <div class="page active" id="page-home">
+        <h1 class="header-title">我的 API 站点记录</h1>
+        <p class="header-desc">整理并记录我正在使用或收藏的 API 站点，方便随时查看与调用。</p>
+        <div class="stat-card">
+            <div class="stat-num" id="stat-total">0</div>
+            <div class="stat-text">站点总数</div>
+        </div>
+        <div class="search-wrap">
+            <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+            <input type="text" id="search-input" placeholder="搜索站点名称、主机、备注、标签...">
+        </div>
+        <div class="filter-tabs" id="filter-tabs"></div>
+        <div id="site-list"></div>
+    </div>
+
+    <!--新增/编辑表单页-->
+    <div class="page" id="page-form">
+        <h2 style="margin-bottom:20px;" id="form-title">新增站点</h2>
+        <input type="hidden" id="edit-id">
+        <div class="form-group">
+            <label>站点名称</label>
+            <input type="text" id="f-name">
+        </div>
+        <div class="form-group">
+            <label>分类</label>
+            <select id="f-cat"></select>
+        </div>
+        <div class="form-group">
+            <label>标签（逗号分隔）</label>
+            <input type="text" id="f-tags">
+        </div>
+        <div class="form-group">
+            <label>备注</label>
+            <textarea id="f-note"></textarea>
+        </div>
+        <div class="form-group">
+            <label>API主机</label>
+            <input type="text" id="f-host">
+        </div>
+        <div class="form-group">
+            <label>密钥 Key</label>
+            <input type="text" id="f-key">
+        </div>
+        <div class="form-group">
+            <label>网页链接</label>
+            <input type="text" id="f-link">
+        </div>
+        <div class="form-group">
+            <label>群聊链接</label>
+            <input type="text" id="f-group-link">
+        </div>
+        <div class="form-group">
+            <label>充值链接</label>
+            <input type="text" id="f-recharge-link">
+        </div>
+        <div class="form-btn-wrap">
+            <button class="form-btn gray" onclick="closeForm()">取消</button>
+            <button class="form-btn primary" onclick="saveSite()">保存</button>
+        </div>
+    </div>
+
+    <!--设置页-->
+    <div class="page" id="page-setting">
+        <h2 style="margin-bottom:20px;">设置</h2>
+        <div class="setting-item" onclick="window.location.href = 'https://jyx010320-gif.github.io/RabbitOvOTsuki/'">返回主页 <span>></span></div>
+        <div class="setting-item" onclick="openCatManage()">分类修改 <span>></span></div>
+        <div class="setting-item" id="theme-toggle-wrap">
+            主题外观
+            <span class="arrow">▼</span>
+        </div>
+        <div class="theme-collapse-content" id="theme-panel">
+            <button class="theme-option-btn" data-theme="theme-cloud">云朵奶白</button>
+            <button class="theme-option-btn" data-theme="theme-night">夜幕星河</button>
+            <button class="theme-option-btn" data-theme="theme-island">椰林小岛</button>
+            <button class="theme-option-btn" data-theme="theme-sakura">粉樱团子</button>
+            <button class="theme-option-btn" data-theme="theme-sea">海盐汽水</button>
+            <button class="theme-option-btn" data-theme="theme-mint">薄荷奶冻</button>
+            <button class="theme-option-btn" data-theme="theme-purple">紫薯芋泥</button>
+            <button class="theme-option-btn" data-theme="theme-orange">蜜桔暖阳</button>
+            <button class="theme-option-btn" data-theme="theme-cocoa">可可木色</button>
+            <button class="theme-option-btn" data-theme="theme-goldnight">鎏金夜色</button>
+            <button class="theme-option-btn" data-theme="theme-purplecloud">芋泥紫霞</button>
+            <button class="theme-option-btn" data-theme="theme-cherry">樱桃气泡</button>
+        </div>
+        <div class="setting-item" onclick="exportData()">导出备份 <span>></span></div>
+        <div class="setting-item" onclick="importData()">导入数据 <span>></span></div>
+        <div class="setting-item" onclick="clearAll()">清空全部数据 <span>></span></div>
+    </div>
+
+    <!--分类管理页-->
+    <div class="page" id="page-cat-manage">
+        <h2 style="margin-bottom:20px;">分类管理</h2>
+        <div id="cat-list-wrap"></div>
+        <div class="cat-input-row">
+            <input type="text" id="new-cat-name" placeholder="输入新分类名称">
+            <button class="cat-add-btn" onclick="addCategory()">添加</button>
+        </div>
+        <div style="margin-top:20px;">
+            <button class="form-btn gray" onclick="closeCatManage()">返回</button>
+        </div>
+    </div>
+
+    <button class="add-fab" onclick="openForm()">+</button>
+
+    <div class="tab-bar">
+        <div class="tab-item active" data-page="home">首页</div>
+        <div class="tab-item"></div>
+        <div class="tab-item" data-page="setting">设置</div>
+    </div>
+
+    <script>
+        let sites = JSON.parse(localStorage.getItem("apiSites")) || [];
+        let categories = JSON.parse(localStorage.getItem("apiCats")) || ["全部","天气","翻译","图床"];
+        let currentFilter = "全部";
+        let sortableCat = null;
+        let currentTheme = localStorage.getItem("siteTheme") || "theme-cloud";
+
+        function applyTheme(){
+            document.body.className = currentTheme;
+            document.querySelectorAll(".theme-option-btn").forEach(btn=>{
+                btn.classList.remove("active");
+                if(btn.dataset.theme === currentTheme) btn.classList.add("active");
+            })
+        }
+        applyTheme();
+        document.getElementById("theme-toggle-wrap").onclick = function(){
+            const panel = document.getElementById("theme-panel");
+            const arrow = this.querySelector(".arrow");
+            panel.classList.toggle("open");
+            arrow.classList.toggle("rotate");
+        }
+        document.querySelectorAll(".theme-option-btn").forEach(btn=>{
+            btn.onclick = function(e){
+                e.stopPropagation();
+                currentTheme = this.dataset.theme;
+                localStorage.setItem("siteTheme",currentTheme);
+                applyTheme();
+            }
+        })
+
+        function saveStorage(){
+            localStorage.setItem("apiSites",JSON.stringify(sites));
+            localStorage.setItem("apiCats",JSON.stringify(categories));
+        }
+        function showToast(txt){
+            const t = document.getElementById("toast");
+            t.innerText = txt;
+            t.style.display="block";
+            setTimeout(()=>t.style.display="none",1200);
+        }
+        function switchPage(pageId){
+            document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+            document.getElementById(pageId).classList.add("active");
+            if(pageId === "page-home") renderHome();
+            if(pageId === "page-setting") {}
+        }
+        document.querySelectorAll(".tab-item[data-page]").forEach(tab=>{
+            tab.onclick = ()=>{
+                document.querySelectorAll(".tab-item").forEach(i=>i.classList.remove("active"));
+                tab.classList.add("active");
+                switchPage("page-"+tab.dataset.page);
+            }
+        })
+
+        function renderHome(){
+            document.getElementById("stat-total").innerText = sites.length;
+            renderFilterTabs();
+            renderSiteCards();
+        }
+        function renderFilterTabs(){
+            const wrap = document.getElementById("filter-tabs");
+            wrap.innerHTML = "";
+            categories.forEach(cat=>{
+                const el = document.createElement("div");
+                el.className = "filter-tab" + (cat===currentFilter?" active":"");
+                el.innerText = cat;
+                el.onclick = ()=>{
+                    currentFilter = cat;
+                    renderHome();
+                }
+                wrap.appendChild(el);
+            })
+        }
+        function renderSiteCards(){
+            const wrap = document.getElementById("site-list");
+            wrap.innerHTML = "";
+            const kw = document.getElementById("search-input").value.trim().toLowerCase();
+            let list = [...sites];
+            if(currentFilter !== "全部") list = list.filter(s=>s.category === currentFilter);
+            if(kw){
+                list = list.filter(s=>{
+                    const txt = (s.name + " " + s.host + " " + s.note + " " + s.tags.join(",")).toLowerCase();
+                    return txt.includes(kw);
+                })
+            }
+            list.forEach(site=>{
+                const div = document.createElement("div");
+                div.className = "site-card";
+                const tagsHtml = site.tags.map(t=>`<span class="tag-item">${t}</span>`).join("");
+                div.innerHTML = `
+                    <div class="card-head">
+                        <div class="card-name-row">
+                            <div class="site-name">${site.name}</div>
+                            <span class="edit-btn-inline" onclick="openForm('${site.id}')">编辑</span>
+                        </div>
+                        <div class="cat-tag">${site.category}</div>
+                    </div>
+                    <div class="tag-group">${tagsHtml}</div>
+                    <div class="card-note">备注：${site.note || "无"}</div>
+                    <div class="collapse-btn" onclick="toggleCollapse('${site.id}')">▼</div>
+                    <div class="collapse-content" id="collapse-${site.id}">
+                        <div class="info-row">
+                            <span class="info-label">API主机</span>
+                            <span class="info-value">${site.host||"-"} <span class="copy-btn" onclick="copyText('${site.host}')">复制</span></span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">密钥</span>
+                            <span class="info-value">${site.key||"-"} <span class="copy-btn" onclick="copyText('${site.key}')">复制</span></span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">网页链接</span>
+                            <span class="info-value">${site.link?`<a class="link-text" href="${site.link}" target="_blank">打开</a>`:"-"}</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">群聊链接</span>
+                            <span class="info-value">${site.groupLink?`<a class="link-text" href="${site.groupLink}" target="_blank">加入交流群</a>`:"-"}</span>
+                        </div>
+                        <div class="btn-row">
+                            ${site.rechargeLink?`<button class="mini-btn" onclick="window.open('${site.rechargeLink}')">前往充值</button>`:""}
+                            <button class="mini-btn" onclick="showDetail('${site.id}')">详情</button>
+                        </div>
+                    </div>
+                `;
+                wrap.appendChild(div);
+            })
+        }
+        function toggleCollapse(id){
+            const el = document.getElementById("collapse-"+id);
+            el.classList.toggle("open");
+        }
+        function copyText(txt){
+            if(!txt) return showToast("内容为空");
+            navigator.clipboard.writeText(txt).then(()=>showToast("已复制"));
+        }
+        function showDetail(id){
+            const site = sites.find(x=>x.id === id);
+            if(!site) return;
+            let msg = "充值详情：\n";
+            msg += `套餐价格：${site.price || "无"}\n`;
+            msg += `充值额度：${site.quota || "无"}\n`;
+            msg += `折扣说明：${site.discount || "无"}`;
+            showToast(msg);
+        }
+        function openForm(editId=null){
+            switchPage("page-form");
+            if(!editId){
+                document.getElementById("form-title").innerText="新增站点";
+                document.getElementById("edit-id").value="";
+                document.getElementById("f-name").value="";
+                document.getElementById("f-note").value="";
+                document.getElementById("f-host").value="";
+                document.getElementById("f-key").value="";
+                document.getElementById("f-link").value="";
+                document.getElementById("f-group-link").value="";
+                document.getElementById("f-tags").value="";
+                document.getElementById("f-recharge-link").value="";
+            }else{
+                document.getElementById("form-title").innerText="编辑站点";
+                const s = sites.find(x=>x.id === editId);
+                if(!s) return;
+                document.getElementById("edit-id").value = editId;
+                document.getElementById("f-name").value = s.name;
+                document.getElementById("f-note").value = s.note;
+                document.getElementById("f-host").value = s.host;
+                document.getElementById("f-key").value = s.key;
+                document.getElementById("f-link").value = s.link;
+                document.getElementById("f-group-link").value = s.groupLink;
+                document.getElementById("f-tags").value = s.tags.join(",");
+                document.getElementById("f-recharge-link").value = s.rechargeLink;
+            }
+            renderCatSelect();
+        }
+        function closeForm(){
+            switchPage("page-home");
+        }
+        function renderCatSelect(){
+            const sel = document.getElementById("f-cat");
+            sel.innerHTML = "";
+            categories.forEach(c=>{
+                const opt = document.createElement("option");
+                opt.innerText = c;
+                opt.value = c;
+                sel.appendChild(opt);
+            })
+        }
+        function saveSite(){
+            const editId = document.getElementById("edit-id").value;
+            const name = document.getElementById("f-name").value.trim();
+            if(!name) return showToast("站点名称不能为空");
+            const tags = document.getElementById("f-tags").value.split(",").map(x=>x.trim()).filter(x=>x);
+            const data = {
+                id: editId || Date.now().toString(),
+                name,
+                category: document.getElementById("f-cat").value,
+                note: document.getElementById("f-note").value.trim(),
+                host: document.getElementById("f-host").value.trim(),
+                key: document.getElementById("f-key").value.trim(),
+                link: document.getElementById("f-link").value.trim(),
+                groupLink: document.getElementById("f-group-link").value.trim(),
+                tags,
+                price: "",
+                quota: "",
+                discount: "",
+                rechargeLink: document.getElementById("f-recharge-link").value.trim()
+            };
+            if(editId){
+                const idx = sites.findIndex(x=>x.id === editId);
+                sites[idx] = data;
+            }else{
+                sites.push(data);
+            }
+            saveStorage();
+            showToast("保存成功");
+            closeForm();
+        }
+
+        function openCatManage(){
+            switchPage("page-cat-manage");
+            renderCatManageList();
+        }
+        function closeCatManage(){
+            switchPage("page-setting");
+        }
+        function renderCatManageList(){
+            const wrap = document.getElementById("cat-list-wrap");
+            wrap.innerHTML = "";
+            categories.forEach((cat,idx)=>{
+                const div = document.createElement("div");
+                div.className = "cat-list-item";
+                div.innerText = cat;
+                const delBtn = document.createElement("button");
+                delBtn.innerText="删除";
+                delBtn.style.color="#f44336";
+                delBtn.style.border="none";
+                delBtn.style.background="transparent";
+                delBtn.onclick = ()=>{
+                    if(confirm(`确定删除【${cat}】？使用该分类的站点会归入【其他】`)){
+                        sites.forEach(s=>{
+                            if(s.category === cat) s.category = "其他";
+                        })
+                        categories.splice(idx,1);
+                        saveStorage();
+                        renderCatManageList();
+                    }
+                }
+                div.appendChild(delBtn);
+                wrap.appendChild(div);
+            })
+            if(sortableCat) sortableCat.destroy();
+            sortableCat = new Sortable(wrap,{
+                animation:150,
+                onEnd:()=>{
+                    const newOrder = [];
+                    wrap.querySelectorAll(".cat-list-item").forEach(el=>newOrder.push(el.firstChild.textContent.trim()));
+                    categories = newOrder;
+                    saveStorage();
+                }
+            })
+        }
+        function addCategory(){
+            const name = document.getElementById("new-cat-name").value.trim();
+            if(!name) return showToast("请输入分类名称");
+            if(categories.includes(name)) return showToast("分类已存在");
+            categories.push(name);
+            saveStorage();
+            document.getElementById("new-cat-name").value="";
+            renderCatManageList();
+        }
+        function exportData(){
+            const blob = new Blob([JSON.stringify({sites,categories},null,2)],{type:"application/json"});
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement("a");
+            a.href = url;
+            a.download = "api-sites-backup.json";
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+        function importData(){
+            const input = document.createElement("input");
+            input.type="file";
+            input.accept=".json";
+            input.onchange = e=>{
+                const f = e.target.files[0];
+                const r = new FileReader();
+                r.onload = ev=>{
+                    try{
+                        const d = JSON.parse(ev.target.result);
+                        sites = d.sites || [];
+                        categories = d.categories || [];
+                        saveStorage();
+                        showToast("导入成功");
+                        renderHome();
+                    }catch(err){
+                        showToast("文件解析失败");
+                    }
+                }
+                r.readAsText(f);
+            }
+            input.click();
+        }
+        function clearAll(){
+            if(confirm("确定清空所有站点和分类数据？不可恢复！")){
+                sites = [];
+                categories = ["全部"];
+                saveStorage();
+                renderHome();
+                showToast("已清空");
+            }
+        }
+        document.getElementById("search-input").oninput = renderHome;
+        renderHome();
+    </script>
+</body>
+</html>
