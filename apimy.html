@@ -1375,7 +1375,7 @@
 
         <div class="form-item">
           <label>模型价格列表（分类 | 模型名 | 价格 | 计费方式）</label>
-          <textarea id="fModels" rows="3" placeholder="一行一个，分类可自定义填写；计费方式填按次或按量&#10;例如：通用 | gpt-3.5 | 0.0005 元/千token | 按量&#10;识图 | gpt-4o | 0.002 元/千token | 按量"></textarea>
+          <textarea id="fModels" rows="3" placeholder="一行一个，分类可自定义填写；计费方式填按次或按量&#10;例如：通用 | gpt-3.5 | 0.0005 元/千token | 按次&#10;识图 | gpt-4o | 0.002 元/千token | 按次"></textarea>
           <div class="model-cat-picks">
             <button type="button" class="model-cat-pick model-cat-add" id="btnAddModelCatPick">设置</button>
             <div class="model-cat-scroll" id="modelCatScroll"></div>
@@ -2427,7 +2427,7 @@
   // ===== 模型分类管理：新增 / 改名 / 删除，同步到所有模型 =====
   function appendModelLine(cat) {
     const ta = document.getElementById('fModels');
-    const line = `${cat} | 模型名 | 价格 | 按量`;
+    const line = `${cat} | 模型名 | 价格 | 按次`;
     ta.value = ta.value.trim() ? ta.value.replace(/\s*$/, '') + '\n' + line : line;
     ta.focus();
   }
