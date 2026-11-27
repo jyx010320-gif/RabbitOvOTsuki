@@ -8,7 +8,7 @@
     <style>
         /* ===== 十套配色：默认樱花粉，切换主题只换这里的变量 ===== */
         :root {
-            --bg: #fff0f5;
+            --bg: #fbeef3;
             --pattern: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 38.5c-1-1-9.5-8-9.5-14 0-3.5 2.5-5.5 5.5-5.5 2 0 3.5 1 4 2 0.5-1 2-2 4-2 3 0 5.5 2 5.5 5.5 0 6-8.5 13-9.5 14z' fill='%23ffb6c1' fill-opacity='0.3'/%3E%3C/svg%3E");
             --line: #f3c5d2;
             --line-strong: #e3a8b8;
@@ -161,14 +161,16 @@
             display: flex;
             flex-direction: column;
             gap: 20px;
+            position: relative;
+            z-index: 1;
         }
         /* 统一的卡片样式（虚线边框，半透明白底能看到背景图案） */
         .card {
-            background: rgba(255, 255, 255, 0.86);
+            background: rgba(255, 255, 255, 0.92);
             border: 2px dashed var(--line);
             border-radius: 12px;
-            padding: 20px;
-            box-shadow: 0 4px 15px var(--glow);
+            padding: 24px;
+            box-shadow: 0 4px 15px var(--glow), 0 2px 6px rgba(120, 124, 170, 0.14);
             position: relative;
             backdrop-filter: blur(4px);
             transition: border-color 0.35s ease, box-shadow 0.35s ease;
@@ -178,7 +180,7 @@
             display: flex;
             align-items: center;
             gap: 15px;
-            padding-right: 62px;
+            padding-right: 44px;
             min-height: 152px;
             box-sizing: border-box;
             z-index: 10;
@@ -262,8 +264,8 @@
             justify-content: space-between;
             align-items: center;
             gap: 6px;
-            padding: 10px 10px 9px;
-            min-height: 56px;
+            padding: 13px 14px 12px;
+            min-height: 60px;
             box-sizing: border-box;
             background: #fff;
             border: 1px solid var(--line);
@@ -271,18 +273,24 @@
             text-decoration: none;
             color: var(--ink);
             transition: all 0.3s ease;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+            box-shadow: 0 2px 6px rgba(120, 124, 170, 0.12);
             min-width: 0;
         }
         .project-item:hover {
             background: var(--soft-bg);
             border-color: var(--line-strong);
             transform: translateY(-3px);
-            box-shadow: 0 4px 8px var(--glow);
+            box-shadow: 0 4px 10px var(--glow), 0 3px 8px rgba(120, 124, 170, 0.16);
         }
         /* 想临时让某一项通栏时，加这个类 */
         .project-item.wide {
             grid-column: 1 / -1;
+        }
+        /* 落单的最后一项：跨满一行后水平居中，避免右侧大片留白 */
+        .project-item.odd-last {
+            grid-column: 1 / -1;
+            justify-self: center;
+            width: calc(50% - 6px);
         }
         /* 文字区：主标题 + 类型小字 */
         .project-text {
@@ -295,16 +303,27 @@
             display: flex;
             align-items: center;
             gap: 6px;
-            font-weight: 500;
+            font-weight: 600;
             font-size: 14px;
             line-height: 1.3;
+            color: var(--ink-strong);
             min-width: 0;
+        }
+        /* 图标独立成行盒，line-height 压到 1，和文字精确在同一水平线 */
+        .project-name .emoji,
+        .section-title .emoji {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            line-height: 1;
+            flex-shrink: 0;
+            filter: drop-shadow(0 1px 1px rgba(60, 40, 45, 0.15));
         }
         /* 类型小字：浅一号的灰，字号小、字距略松 */
         .project-type {
             font-size: 11px;
             line-height: 1.2;
-            color: var(--muted-light);
+            color: var(--muted);
             letter-spacing: 1px;
             white-space: nowrap;
             overflow: hidden;
@@ -314,17 +333,97 @@
             color: var(--accent);
             font-weight: bold;
             flex-shrink: 0;
+            transition: transform 0.25s ease;
         }
-        /* 占位提示卡片：通栏顶两个格子，单独占满一行放在最底下 */
+        /* 悬停时箭头轻轻向右挪一点 */
+        .project-item:hover .arrow {
+            transform: translateX(3px);
+        }
+        /* 占位提示：底部小巧徽章，带轻微呼吸动画 */
         .placeholder-card {
             grid-column: 1 / -1;
+            justify-self: center;
             text-align: center;
-            padding: 15px;
-            font-size: 14px;
-            color: var(--muted-light);
-            border: 1px dashed var(--line);
-            border-radius: 8px;
+            padding: 8px 18px;
+            font-size: 12px;
+            letter-spacing: 1px;
+            color: var(--muted);
+            border: 1px dashed var(--line-strong);
+            border-radius: 999px;
             background: var(--placeholder-bg);
+            animation: badge-breathe 2.6s ease-in-out infinite;
+        }
+        @keyframes badge-breathe {
+            0%, 100% { opacity: 0.75; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.04); }
+        }
+
+        /* ===== 分类过滤标签 ===== */
+        .filter-bar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+        .filter-tag {
+            padding: 6px 14px;
+            border-radius: 999px;
+            border: none;
+            background: rgba(0, 0, 0, 0.04);
+            color: var(--muted);
+            font-size: 12.5px;
+            font-family: inherit;
+            cursor: pointer;
+            transition: background 0.25s ease, color 0.25s ease, transform 0.2s ease;
+        }
+        .filter-tag:hover {
+            background: rgba(0, 0, 0, 0.07);
+            color: var(--accent-deep);
+            transform: translateY(-1px);
+        }
+        .filter-tag.active {
+            background: var(--accent-deep);
+            color: #fff;
+            box-shadow: 0 2px 8px var(--glow);
+        }
+        .hidden { display: none !important; }
+
+        /* ===== 背景缓缓飘雪 ===== */
+        #snowfall {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+        .snow {
+            position: absolute;
+            top: -20px;
+            line-height: 1;
+            color: #c9d8ea;
+            text-shadow: 0 0 4px rgba(255, 255, 255, 0.6);
+            animation-name: snow-fall;
+            animation-timing-function: linear;
+            animation-iteration-count: infinite;
+        }
+        @keyframes snow-fall {
+            0% { transform: translateY(-20px) translateX(0); opacity: 0; }
+            10% { opacity: 0.8; }
+            100% { transform: translateY(105vh) translateX(30px); opacity: 0.15; }
+        }
+
+        /* ===== 点击处飘出兔爪 / 胡萝卜 ===== */
+        .click-burst {
+            position: fixed;
+            pointer-events: none;
+            z-index: 999;
+            font-size: 18px;
+            line-height: 1;
+            animation: burst-up 0.8s ease-out forwards;
+        }
+        @keyframes burst-up {
+            0% { opacity: 1; transform: translate(-50%, -50%) scale(0.6); }
+            100% { opacity: 0; transform: translate(-50%, -120%) scale(1.2) translateY(-24px); }
         }
 
         /* 备份弹层里的按钮 */
@@ -495,7 +594,7 @@
             padding: 2px 4px;
         }
 
-        /* 右上角四个文字按钮，竖排一列：刷新、配色、导出、导入 */
+        /* 右上角四个极简圆形图标按钮，竖排一列：刷新、配色、导出、导入（悬停显示文字提示） */
         .refresh-fab,
         .palette-fab,
         .export-fab,
@@ -503,23 +602,21 @@
             position: absolute;
             right: 10px;
             z-index: 2;
-            width: 44px;
-            height: 26px;
+            width: 30px;
+            height: 30px;
             padding: 0;
             display: flex;
             align-items: center;
             justify-content: center;
-            border-radius: 7px;
+            border-radius: 50%;
             border: 1px solid var(--line);
-            background: rgba(255, 255, 255, 0.9);
-            color: var(--accent);
-            font-size: 12px;
-            font-weight: 500;
-            letter-spacing: 0.5px;
+            background: rgba(255, 255, 255, 0.7);
+            color: var(--muted);
+            font-size: 14px;
             line-height: 1;
             cursor: pointer;
             font-family: inherit;
-            box-shadow: 0 2px 6px var(--glow);
+            box-shadow: 0 1px 4px rgba(120, 124, 170, 0.1);
             -webkit-backdrop-filter: blur(6px);
             backdrop-filter: blur(6px);
             transition: background 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease, border-color 0.3s ease, color 0.25s ease;
@@ -529,15 +626,15 @@
             right: 10px;
         }
         .palette-fab {
-            top: 46px;
+            top: 48px;
             right: 10px;
         }
         .export-fab {
-            top: 80px;
+            top: 84px;
             right: 10px;
         }
         .import-fab {
-            top: 114px;
+            top: 120px;
             right: 10px;
         }
         .refresh-fab:hover,
@@ -548,7 +645,7 @@
             color: var(--accent-deep);
             border-color: var(--line-strong);
             transform: translateY(-1px);
-            box-shadow: 0 4px 9px var(--glow);
+            box-shadow: 0 3px 8px var(--glow);
         }
         .refresh-fab:active,
         .palette-fab:active,
@@ -695,18 +792,17 @@
             .project-list {
                 grid-template-columns: 1fr;
             }
+            .project-item.odd-last {
+                width: 100%;
+            }
         }
 
-        /* 装饰性小图标 */
-        .deco-icon {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            font-size: 20px;
-        }
     </style>
 </head>
 <body class="theme-sakura">
+
+<!-- 背景飘雪层 -->
+<div id="snowfall"></div>
 
 <!-- 顶部悬浮框 -->
 <div class="refresh-toast" id="refresh-toast">
@@ -731,13 +827,13 @@
             <div class="subtitle">✨ o北极兔o</div>
         </div>
         <!-- 刷新 -->
-        <button class="refresh-fab" id="refresh-fab" title="刷新页面" aria-label="刷新页面">刷新</button>
+        <button class="refresh-fab" id="refresh-fab" title="刷新页面" aria-label="刷新页面">🔄</button>
         <!-- 配色 -->
-        <button class="palette-fab" id="palette-fab" title="修改配色" aria-label="修改配色">配色</button>
+        <button class="palette-fab" id="palette-fab" title="修改配色" aria-label="修改配色">🎨</button>
         <!-- 导出 -->
-        <button class="export-fab" id="export-btn" title="导出存档" aria-label="导出存档">导出</button>
+        <button class="export-fab" id="export-btn" title="导出存档" aria-label="导出存档">📤</button>
         <!-- 导入 -->
-        <button class="import-fab" id="import-btn" title="导入存档" aria-label="导入存档">导入</button>
+        <button class="import-fab" id="import-btn" title="导入存档" aria-label="导入存档">📥</button>
         <!-- 配色面板 -->
         <div class="palette-panel" id="palette-panel">
             <div class="palette-title">🖌 选一套配色</div>
@@ -778,51 +874,56 @@
 
     <!-- 2. 项目列表区 -->
     <div class="card">
-        <div class="deco-icon">🎀</div>
         <div class="card-header">
             <span>⚙️</span> ✨ 兔兔的奇妙口袋 ✨
+        </div>
+
+        <div class="filter-bar" id="filter-bar">
+            <button class="filter-tag active" data-filter="all">全部</button>
+            <button class="filter-tag" data-filter="tool">🧰 工具</button>
+            <button class="filter-tag" data-filter="game">🎮 游戏</button>
         </div>
 
         <div class="project-list">
 
             <!-- ===== 分类：工具 ===== -->
-            <div class="section-title">🧰 工具</div>
+            <div class="section-title" data-cat="tool"><span class="emoji">🧰</span>工具</div>
 
             <!-- 工具 1：日记本（雪原日记） -->
-            <a href="diary.html" class="project-item">
+            <a href="diary.html" class="project-item" data-cat="tool">
                 <div class="project-text">
                     <div class="project-name">
-                        📖 雪原日记
+                        <span class="emoji">📖</span>雪原日记
                     </div>
                     <div class="project-type">日记记录</div>
                 </div>
                 <div class="arrow">➔</div>
             </a>
             <!-- 工具 2：API 测试（兔耳当天线） -->
-            <a href="myapi.html" class="project-item">
+            <a href="myapi.html" class="project-item" data-cat="tool">
                 <div class="project-text">
                     <div class="project-name">
-                        🔌 兔耳天线
+                        <span class="emoji">🔌</span>兔耳天线
                     </div>
                     <div class="project-type">接口测试</div>
                 </div>
                 <div class="arrow">➔</div>
             </a>
             <!-- 工具 3：单词档案（拾词 → 兔耳拾词 / WordArchive） -->
-            <a href="WordArchive.html" class="project-item">
+            <a href="WordArchive.html" class="project-item" data-cat="tool">
                 <div class="project-text">
                     <div class="project-name">
-                        🔤 兔耳拾词
+                        <span class="emoji">🔤</span>兔耳拾词
                     </div>
                     <div class="project-type">单词背诵</div>
                 </div>
                 <div class="arrow">➔</div>
             </a>
             <!-- 工具 4：新api -->
-            <a href="apimy.html" class="project-item">
+            <a href="apimy.html" class="project-item" data-cat="tool">
                 <div class="project-text">
                     <div class="project-name">
-                        🔌 新api
+                        <span class="emoji">🔌</span>新api
                     </div>
                     <div class="project-type">接口测试</div>
                 </div>
@@ -830,73 +931,73 @@
             </a>
 
             <!-- ===== 分类：游戏 ===== -->
-            <div class="section-title gap">🎮 游戏</div>
+            <div class="section-title gap" data-cat="game"><span class="emoji">🎮</span>游戏</div>
 
             <!-- 游戏 1：节奏音游（长耳跟着鼓点抖） -->
-            <a href="BeatRabbit.html" class="project-item">
+            <a href="BeatRabbit.html" class="project-item" data-cat="game">
                 <div class="project-text">
                     <div class="project-name">
-                        🎵 长耳节拍
+                        <span class="emoji">🎵</span>长耳节拍
                     </div>
                     <div class="project-type">节奏音游</div>
                 </div>
                 <div class="arrow">➔</div>
             </a>
             <!-- 游戏 2：俄罗斯方块（雪砖垒窝） -->
-            <a href="ClassicBlocks.html" class="project-item">
+            <a href="ClassicBlocks.html" class="project-item" data-cat="game">
                 <div class="project-text">
                     <div class="project-name">
-                        🧱 兔窝方块
+                        <span class="emoji">🧱</span>兔窝方块
                     </div>
                     <div class="project-type">方块消除</div>
                 </div>
                 <div class="arrow">➔</div>
             </a>
             <!-- 游戏 3：花卉合成（兔爪合花） -->
-            <a href="FlowerMerge.html" class="project-item">
+            <a href="FlowerMerge.html" class="project-item" data-cat="game">
                 <div class="project-text">
                     <div class="project-name">
-                        🌸 兔爪合花
+                        <span class="emoji">🌸</span>兔爪合花
                     </div>
                     <div class="project-type">花卉合成</div>
                 </div>
                 <div class="arrow">➔</div>
             </a>
             <!-- 游戏 4：果园连连看（长耳牵藤连果） -->
-            <a href="FruitLink.html" class="project-item">
+            <a href="FruitLink.html" class="project-item" data-cat="game">
                 <div class="project-text">
                     <div class="project-name">
-                        🍉 长耳连连果
+                        <span class="emoji">🍉</span>长耳连连果
                     </div>
                     <div class="project-type">果园连连看</div>
                 </div>
                 <div class="arrow">➔</div>
             </a>
             <!-- 游戏 5：农场种田（种胡萝卜） -->
-            <a href="farm.html" class="project-item">
+            <a href="farm.html" class="project-item" data-cat="game">
                 <div class="project-text">
                     <div class="project-name">
-                        🌾 胡萝卜农场
+                        <span class="emoji">🌾</span>胡萝卜农场
                     </div>
                     <div class="project-type">农场经营</div>
                 </div>
                 <div class="arrow">➔</div>
             </a>
             <!-- 游戏 6：扫雷（兔爪在冻土里探雷） -->
-            <a href="MineSweeper.html" class="project-item">
+            <a href="MineSweeper.html" class="project-item" data-cat="game">
                 <div class="project-text">
                     <div class="project-name">
-                        🐾 兔爪扫雷
+                        <span class="emoji">🐾</span>兔爪扫雷
                     </div>
                     <div class="project-type">逻辑扫雷</div>
                 </div>
                 <div class="arrow">➔</div>
             </a>
             <!-- 游戏 7：三消（BerryYard，兔爪把三颗一样的浆果按到一起） -->
-            <a href="BerryYard.html" class="project-item">
+            <a href="BerryYard.html" class="project-item odd-last" data-cat="game">
                 <div class="project-text">
                     <div class="project-name">
-                        🍬 兔爪三消
+                        <span class="emoji">🍬</span>兔爪三消
                     </div>
                     <div class="project-type">浆果三消</div>
                 </div>
@@ -905,7 +1006,7 @@
 
             <!-- 以后的预留位置：横跨两列，永远落在所有项目最下面 -->
             <div class="placeholder-card">
-                ♡ 更多项目开发中，尽情期待 ♡
+                🐰 ♡ 更多项目开发中，尽情期待 ♡
             </div>
         </div>
     </div>
@@ -1055,6 +1156,54 @@
                 location.replace(url.toString());
             });
         }
+
+        /* ===== 分类标签过滤 ===== */
+        var filterTags = document.querySelectorAll('.filter-tag');
+        var projectItems = document.querySelectorAll('.project-item');
+        var sectionTitles = document.querySelectorAll('.section-title');
+        filterTags.forEach(function (tag) {
+            tag.addEventListener('click', function () {
+                filterTags.forEach(function (t) { t.classList.remove('active'); });
+                tag.classList.add('active');
+                var f = tag.getAttribute('data-filter');
+                projectItems.forEach(function (it) {
+                    var show = f === 'all' || it.getAttribute('data-cat') === f;
+                    it.classList.toggle('hidden', !show);
+                });
+                sectionTitles.forEach(function (st) {
+                    st.classList.toggle('hidden', f !== 'all' && st.getAttribute('data-cat') !== f);
+                });
+            });
+        });
+
+        /* ===== 背景缓缓飘雪 ===== */
+        var snowfall = document.getElementById('snowfall');
+        if (snowfall) {
+            var SNOW_COUNT = 18;
+            for (var i = 0; i < SNOW_COUNT; i++) {
+                var s = document.createElement('span');
+                s.className = 'snow';
+                s.textContent = Math.random() > 0.5 ? '❄' : '•';
+                s.style.left = Math.random() * 100 + 'vw';
+                s.style.fontSize = (8 + Math.random() * 10) + 'px';
+                s.style.animationDuration = (7 + Math.random() * 8) + 's';
+                s.style.animationDelay = (-Math.random() * 10) + 's';
+                s.style.opacity = 0.3 + Math.random() * 0.4;
+                snowfall.appendChild(s);
+            }
+        }
+
+        /* ===== 点击处飘出兔爪 / 胡萝卜 / 小兔 ===== */
+        var BURST_ICONS = ['🐾', '🥕', '🐰'];
+        document.addEventListener('click', function (e) {
+            var el = document.createElement('span');
+            el.className = 'click-burst';
+            el.textContent = BURST_ICONS[Math.floor(Math.random() * BURST_ICONS.length)];
+            el.style.left = e.clientX + 'px';
+            el.style.top = e.clientY + 'px';
+            document.body.appendChild(el);
+            setTimeout(function () { el.remove(); }, 800);
+        });
 
         /* 刚点过刷新（15 秒内）的话，进页面就把时间弹出来 */
         (function () {
