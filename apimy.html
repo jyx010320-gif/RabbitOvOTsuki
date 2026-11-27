@@ -456,16 +456,6 @@
     min-width: 0;
   }
 
-  .site-name a {
-    color: var(--text);
-    text-decoration: none;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    min-width: 0;
-  }
-
-  .site-name a:hover { color: var(--primary); }
 
   /* 分类徽章 */
   .cat-badge {
@@ -708,6 +698,29 @@
   }
 
   .btn-edit { border: none; font-family: inherit; cursor: pointer; }
+
+  /* 全屏编辑弹窗：底部取消 / 保存 */
+  .recharge-full, .model-full { padding: 0; align-items: stretch; }
+  .recharge-full .detail-box, .model-full .detail-box {
+    width: 100%;
+    height: 100%;
+    max-width: 100%;
+    max-height: 100%;
+    border-radius: 0;
+    background: var(--bg);
+  }
+  .recharge-full .detail-body, .model-full .detail-body {
+    flex: 1;
+    width: 100%;
+    max-width: 640px;
+    margin: 0 auto;
+  }
+  .recharge-full .detail-footer, .model-full .detail-footer {
+    width: 100%;
+    max-width: 640px;
+    margin: 0 auto;
+  }
+  .recharge-full .detail-footer button, .model-full .detail-footer button { flex: 1; }
 
   .detail-row {
     display: flex;
@@ -1369,11 +1382,6 @@
         </div>
 
         <div class="form-item">
-          <label>折扣说明</label>
-          <textarea id="fDiscount" placeholder="例如：新用户首充 8 折、包月套餐立减 5 元等，没有可留空"></textarea>
-        </div>
-
-        <div class="form-item">
           <label>模型价格列表（分类 | 模型名 | 价格 | 计费方式）</label>
           <textarea id="fModels" rows="3" placeholder="一行一个，分类可自定义填写；计费方式填按次或按量&#10;例如：通用 | gpt-3.5 | 0.0005 元/千token | 按次&#10;识图 | gpt-4o | 0.002 元/千token | 按次"></textarea>
           <div class="model-cat-picks">
@@ -1401,6 +1409,50 @@
     <div class="detail-body" id="dmBody"></div>
     <div class="detail-footer">
       <button type="button" class="link-btn btn-edit" id="dmEdit">编辑</button>
+    </div>
+  </div>
+</div>
+
+<!-- 充值信息编辑弹窗：只改充值链接与充值档位，全屏展示 -->
+<div class="detail-modal recharge-full" id="rechargeModal">
+  <div class="detail-box">
+    <div class="detail-header">
+      <h3>编辑充值信息</h3>
+      <button class="detail-close" id="rcClose" aria-label="关闭">×</button>
+    </div>
+    <div class="detail-body">
+      <div class="form-item">
+        <label>充值链接</label>
+        <input type="text" id="rRecharge" placeholder="余额充值 / 套餐购买页面链接，没有可留空">
+      </div>
+      <div class="form-item">
+        <label>充值档位（额度 | 价格）</label>
+        <textarea id="rPlans" rows="3" placeholder="一行一个，格式：额度 | 价格&#10;例如：100 额度 | ¥100&#10;50 额度 | ¥50"></textarea>
+      </div>
+    </div>
+    <div class="detail-footer panel-footer">
+      <button type="button" class="btn-cancel" id="rcCancel">取消</button>
+      <button type="button" class="btn-save" id="rcSave">保存</button>
+    </div>
+  </div>
+</div>
+
+<!-- 模型价格编辑弹窗：全屏展示 -->
+<div class="detail-modal model-full" id="modelModal">
+  <div class="detail-box">
+    <div class="detail-header">
+      <h3>编辑模型价格</h3>
+      <button class="detail-close" id="mcClose" aria-label="关闭">×</button>
+    </div>
+    <div class="detail-body">
+      <div class="form-item">
+        <label>模型价格列表（分类 | 模型名 | 价格 | 计费方式）</label>
+        <textarea id="mModels" rows="8" placeholder="一行一个，分类可自定义填写；计费方式填按次或按量&#10;例如：通用 | gpt-3.5 | 0.0005 元/千token | 按次&#10;识图 | gpt-4o | 0.002 元/千token | 按次"></textarea>
+      </div>
+    </div>
+    <div class="detail-footer panel-footer">
+      <button type="button" class="btn-cancel" id="mcCancel">取消</button>
+      <button type="button" class="btn-save" id="mcSave">保存</button>
     </div>
   </div>
 </div>
@@ -1594,7 +1646,6 @@
       invite:   d.invite || '',
       price:    d.price || '',
       quota:    d.quota || '',
-      discount: d.discount || '',
       recharge: d.recharge || '',
       models:   parseModels(d.models),
       plans:    parsePlans(d.plans)
@@ -1689,7 +1740,7 @@
   }
 
   function resetForm() {
-    ['fName', 'fKey', 'fHost', 'fTags', 'fNote', 'fWeb', 'fGroup', 'fCheckin', 'fInvite', 'fNewCat', 'fDiscount', 'fRecharge', 'fModels', 'fPlans']
+    ['fName', 'fKey', 'fHost', 'fTags', 'fNote', 'fWeb', 'fGroup', 'fCheckin', 'fInvite', 'fNewCat', 'fRecharge', 'fModels', 'fPlans']
       .forEach(id => document.getElementById(id).value = '');
   }
 
@@ -1750,7 +1801,6 @@
       group:    document.getElementById('fGroup').value.trim(),
       checkin:  document.getElementById('fCheckin').value.trim(),
       invite:   document.getElementById('fInvite').value.trim(),
-      discount: document.getElementById('fDiscount').value.trim(),
       recharge: document.getElementById('fRecharge').value.trim(),
       models:   parseModels(document.getElementById('fModels').value),
       plans:    parsePlans(document.getElementById('fPlans').value)
@@ -1847,7 +1897,7 @@
       rows[key] = val;
     });
     return {
-      name:     card.querySelector('.site-name a')?.textContent.trim() || '',
+      name:     card.querySelector('.site-name-btn')?.textContent.trim() || '',
       key:      rows['密钥'] || '',
       host:     rows['API 主机'] || '',
       cat:      card.querySelector('.cat-badge')?.textContent.trim() || '',
@@ -1859,7 +1909,6 @@
       invite:   rows['邀请链接'] || '',
       price:    rows['套餐价格'] || '',
       quota:    rows['充值额度'] || '',
-      discount: rows['折扣说明'] || '',
       recharge: rows['充值链接'] || ''
     };
   }
@@ -1875,7 +1924,6 @@
     document.getElementById('fGroup').value    = d.group || d.groupId || '';
     document.getElementById('fCheckin').value  = d.checkin || '';
     document.getElementById('fInvite').value   = d.invite || '';
-    document.getElementById('fDiscount').value  = d.discount;
     document.getElementById('fRecharge').value = d.recharge;
     document.getElementById('fModels').value  = modelsToText(d.models);
     document.getElementById('fPlans').value   = plansToText(d.plans);
@@ -2100,7 +2148,19 @@
   const dmBody   = document.getElementById('dmBody');
   const dmClose  = document.getElementById('dmClose');
   const dmEdit   = document.getElementById('dmEdit');
+  const rcModal  = document.getElementById('rechargeModal');
+  const rcClose  = document.getElementById('rcClose');
+  const rcCancel = document.getElementById('rcCancel');
+  const rcSave   = document.getElementById('rcSave');
+  const rRecharge = document.getElementById('rRecharge');
+  const rPlans   = document.getElementById('rPlans');
+  const mcModal  = document.getElementById('modelModal');
+  const mcClose  = document.getElementById('mcClose');
+  const mcCancel = document.getElementById('mcCancel');
+  const mcSave   = document.getElementById('mcSave');
+  const mModels  = document.getElementById('mModels');
   let currentCard = null;
+  let currentPanel = 'recharge';
 
   function escapeHtml(s) {
     return String(s).replace(/[&<>"']/g, c => ({
@@ -2157,31 +2217,18 @@
 
   function openDetail(card) {
     currentCard = card;
+    currentPanel = 'recharge';
     const d = sites.find(s => s.id === card.dataset.id);
-    const name = card.querySelector('.site-name-btn')?.textContent.trim() || '未命名站点';
-    const allowed = ['折扣说明', '充值链接'];
-
     let html = '';
 
-    // 充值详情：只列出折扣说明、充值链接
-    card.querySelectorAll('.card-detail .row').forEach(r => {
-      const key = r.querySelector('.meta-key')?.textContent.trim() || '';
-      if (!allowed.includes(key)) return;
-      const valEl = r.querySelector('.meta-val');
-      let valHtml = '未填写';
-      if (valEl) {
-        const a = valEl.querySelector('a');
-        const btn = valEl.querySelector('button');
-        if (a) {
-          valHtml = `<a class="meta-val" href="${a.href}" target="_blank" rel="noopener">${escapeHtml(a.textContent.trim())}</a>`;
-        } else if (!btn) {
-          valHtml = escapeHtml(valEl.textContent.trim());
-        }
-      }
-      html += detailRow(key, valHtml);
-    });
+    // 充值链接：仅取站点数据，不复制卡片上的其它信息
+    const recharge = (d && d.recharge) || '';
+    const rechargeHtml = recharge
+      ? `<a class="meta-val" href="${escapeHtml(recharge)}" target="_blank" rel="noopener">前往充值</a>`
+      : '<span class="meta-val">未填写</span>';
+    html += detailRow('充值链接', rechargeHtml);
 
-    // 充值档位：额度 + 价格，两列卡片
+    // 充值档位：额度 + 价格，竖向排列
     if (d && d.plans && d.plans.length) {
       const cards = d.plans.map(p => {
         return `<div class="plan-card"><div class="plan-name">${escapeHtml(p.name)}</div><div class="plan-bottom">${p.price ? `<span class="plan-price">${escapeHtml(p.price)}</span>` : ''}</div></div>`;
@@ -2189,9 +2236,7 @@
       html += detailRow('充值档位', `<div class="plan-grid">${cards}</div>`);
     }
 
-    if (!html) html = '<div class="meta-val">暂无充值信息</div>';
-
-    dmTitle.textContent = `${name} · 充值详情`;
+    dmTitle.textContent = '充值详情';
     dmBody.innerHTML = html;
     dmEdit.style.display = '';
     dm.classList.add('open');
@@ -2199,11 +2244,12 @@
 
   function openModels(card) {
     currentCard = card;
+    currentPanel = 'models';
     const d = sites.find(s => s.id === card.dataset.id);
     const name = card.querySelector('.site-name-btn')?.textContent.trim() || '未命名站点';
     dmTitle.textContent = `${name} · 模型价格`;
     dmBody.innerHTML = detailRow('模型价格', modelRowsHtml(d));
-    dmEdit.style.display = 'none';
+    dmEdit.style.display = '';
     dm.classList.add('open');
   }
 
@@ -2212,8 +2258,56 @@
 
   dmEdit.addEventListener('click', () => {
     if (!currentCard) return;
+    if (currentPanel === 'models') openModelEdit(currentCard);
+    else openRechargeEdit(currentCard);
+  });
+
+  function openRechargeEdit(card) {
+    currentCard = card;
+    const d = sites.find(s => s.id === card.dataset.id);
+    rRecharge.value = (d && d.recharge) || '';
+    rPlans.value = (d && d.plans) ? plansToText(d.plans) : '';
     dm.classList.remove('open');
-    startEdit(currentCard);
+    rcModal.classList.add('open');
+  }
+
+  rcClose.addEventListener('click', () => rcModal.classList.remove('open'));
+  rcCancel.addEventListener('click', () => rcModal.classList.remove('open'));
+  rcModal.addEventListener('click', e => { if (e.target === rcModal) rcModal.classList.remove('open'); });
+
+  rcSave.addEventListener('click', () => {
+    if (!currentCard) return;
+    const idx = sites.findIndex(s => s.id === currentCard.dataset.id);
+    if (idx > -1) {
+      sites[idx].recharge = rRecharge.value.trim();
+      sites[idx].plans = parsePlans(rPlans.value);
+      saveStorage();
+      renderAll();
+    }
+    rcModal.classList.remove('open');
+  });
+
+  function openModelEdit(card) {
+    currentCard = card;
+    const d = sites.find(s => s.id === card.dataset.id);
+    mModels.value = (d && d.models) ? modelsToText(d.models) : '';
+    dm.classList.remove('open');
+    mcModal.classList.add('open');
+  }
+
+  mcClose.addEventListener('click', () => mcModal.classList.remove('open'));
+  mcCancel.addEventListener('click', () => mcModal.classList.remove('open'));
+  mcModal.addEventListener('click', e => { if (e.target === mcModal) mcModal.classList.remove('open'); });
+
+  mcSave.addEventListener('click', () => {
+    if (!currentCard) return;
+    const idx = sites.findIndex(s => s.id === currentCard.dataset.id);
+    if (idx > -1) {
+      sites[idx].models = parseModels(mModels.value);
+      saveStorage();
+      renderAll();
+    }
+    mcModal.classList.remove('open');
   });
 
   // 卡片折叠 / 展开：点击头部切换；详情按钮打开弹窗；头部内链接点击不触发折叠
