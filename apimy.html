@@ -1267,13 +1267,7 @@
 
         <div class="form-item">
           <label>分类</label>
-          <select id="fCat">
-            <option value="天气">天气</option>
-            <option value="翻译">翻译</option>
-            <option value="图床">图床</option>
-            <option value="数据查询">数据查询</option>
-            <option value="其他">其他</option>
-          </select>
+          <select id="fCat"></select>
         </div>
 
         <div class="form-item">
@@ -1583,6 +1577,30 @@
     try { localStorage.setItem(CAT_ORDER_KEY, JSON.stringify(order)); } catch (e) {}
   }
 
+  // 站点分类清单：与「设置 → 分类修改」同源（排序清单 + 已使用分类）
+  function getSiteCats() {
+    const order = loadCatOrder();
+    const used = [...new Set(sites.map(s => s.cat).filter(Boolean))];
+    return [...new Set([...order, ...used])];
+  }
+
+  // 填充新建/编辑表单的分类下拉，保留当前已选分类
+  function fillCatSelect(current) {
+    const sel = document.getElementById('fCat');
+    const cats = getSiteCats();
+    const list = cats.length ? cats.slice() : ['其他'];
+    const cur = current || '';
+    if (cur && !list.includes(cur)) list.push(cur);
+    sel.innerHTML = '';
+    list.forEach(c => {
+      const opt = document.createElement('option');
+      opt.value = c;
+      opt.textContent = c;
+      sel.appendChild(opt);
+    });
+    sel.value = list.includes(cur) ? cur : list[0];
+  }
+
   const MODEL_CAT_KEY = 'api_model_cats';
   const DEFAULT_MODEL_CATS = ['通用', '识图', '长文本', '推理', '多模态'];
 
@@ -1605,7 +1623,7 @@
     document.getElementById('panelTitle').textContent = isEdit ? '编辑 API 站点' : '新增 API 站点';
   }
 
-  openBtn.addEventListener('click', () => { setMode('add'); panel.classList.add('open'); });
+  openBtn.addEventListener('click', () => { fillCatSelect(''); setMode('add'); panel.classList.add('open'); });
   btnCancel.addEventListener('click', closePanel);
 
   function closePanel() {
@@ -1618,7 +1636,6 @@
   function resetForm() {
     ['fName', 'fKey', 'fHost', 'fTags', 'fNote', 'fWeb', 'fGroup', 'fGroupId', 'fPrice', 'fQuota', 'fDiscount', 'fRecharge', 'fModels', 'fPlans']
       .forEach(id => document.getElementById(id).value = '');
-    document.getElementById('fCat').value = '天气';
   }
 
   // 拆分标签，兼容中英文逗号
@@ -1801,7 +1818,7 @@
     document.getElementById('fName').value     = d.name;
     document.getElementById('fKey').value      = d.key;
     document.getElementById('fHost').value      = d.host;
-    document.getElementById('fCat').value       = d.cat || '天气';
+    document.getElementById('fCat').value       = d.cat || '';
     document.getElementById('fTags').value      = d.tags.join(', ');
     document.getElementById('fNote').value      = d.note;
     document.getElementById('fWeb').value       = d.web;
@@ -1818,6 +1835,7 @@
   function startEdit(card) {
     editingId = card.dataset.id;
     const d = sites.find(s => s.id === editingId) || parseCard(card);
+    fillCatSelect(d.cat);
     fillForm(d);
     setMode('edit');
     panel.classList.add('open');
