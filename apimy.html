@@ -364,7 +364,7 @@
   /* ===== 站点卡片网格 ===== */
   .grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 12px;
     width: 100%;
     align-items: start;
@@ -372,6 +372,7 @@
 
   .site-card {
     width: 100%;
+    min-width: 0;
     background: var(--card);
     border: 1px solid var(--line);
     border-radius: var(--radius);
@@ -417,6 +418,7 @@
     justify-content: space-between;
     align-items: flex-start;
     gap: 10px;
+    min-width: 0;
   }
 
   .site-name {
@@ -428,7 +430,7 @@
     min-width: 0;
   }
 
-  .btn-edit-card {
+  .btn-model-card {
     flex-shrink: 0;
     border: none;
     background: none;
@@ -438,6 +440,20 @@
     cursor: pointer;
     font-family: inherit;
     padding: 2px 4px;
+  }
+
+  .site-name-btn {
+    border: none;
+    background: none;
+    padding: 0;
+    font: inherit;
+    color: var(--text);
+    cursor: pointer;
+    text-align: left;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    min-width: 0;
   }
 
   .site-name a {
@@ -494,7 +510,10 @@
   .card-note {
     font-size: 13px;
     color: var(--text-sub);
-    word-break: break-all;
+    white-space: normal;
+    overflow-wrap: break-word;
+    word-break: break-word;
+    min-width: 0;
   }
 
   .fold-arrow {
@@ -1203,7 +1222,7 @@
 
   /* ===== 响应式 ===== */
   @media (max-width: 900px) {
-    .grid { grid-template-columns: repeat(2, 1fr); }
+    .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   }
 
   @media (max-width: 600px) {
@@ -1329,6 +1348,11 @@
         <div class="form-item">
           <label>签到链接</label>
           <input type="text" id="fCheckin" placeholder="签到 / 每日领取链接，没有可填无">
+        </div>
+
+        <div class="form-item">
+          <label>邀请链接</label>
+          <input type="text" id="fInvite" placeholder="邀请 / 推广注册链接，没有可填无">
         </div>
       </div>
 
@@ -1567,6 +1591,7 @@
       web:      d.web || '',
       group:    d.group || d.groupId || '',
       checkin:  d.checkin || '',
+      invite:   d.invite || '',
       price:    d.price || '',
       quota:    d.quota || '',
       discount: d.discount || '',
@@ -1664,7 +1689,7 @@
   }
 
   function resetForm() {
-    ['fName', 'fKey', 'fHost', 'fTags', 'fNote', 'fWeb', 'fGroup', 'fCheckin', 'fNewCat', 'fDiscount', 'fRecharge', 'fModels', 'fPlans']
+    ['fName', 'fKey', 'fHost', 'fTags', 'fNote', 'fWeb', 'fGroup', 'fCheckin', 'fInvite', 'fNewCat', 'fDiscount', 'fRecharge', 'fModels', 'fPlans']
       .forEach(id => document.getElementById(id).value = '');
   }
 
@@ -1724,6 +1749,7 @@
       web:      document.getElementById('fWeb').value.trim(),
       group:    document.getElementById('fGroup').value.trim(),
       checkin:  document.getElementById('fCheckin').value.trim(),
+      invite:   document.getElementById('fInvite').value.trim(),
       discount: document.getElementById('fDiscount').value.trim(),
       recharge: document.getElementById('fRecharge').value.trim(),
       models:   parseModels(document.getElementById('fModels').value),
@@ -1743,7 +1769,7 @@
     card.innerHTML = `
       <div class="card-head">
         <div class="card-top">
-          <div class="site-name"><a href="${d.web || '#'}" target="_blank" rel="noopener">${d.name}</a><button type="button" class="btn-edit-card">编辑</button></div>
+          <div class="site-name"><button type="button" class="site-name-btn">${escapeHtml(d.name)}</button><button type="button" class="btn-model-card">模型</button></div>
           <span class="cat-badge">${d.cat}</span>
         </div>
         ${tagHtml ? `<div class="tag-list">${tagHtml}</div>` : ''}
@@ -1791,6 +1817,12 @@
             : `<span class="meta-val">无</span>`}
         </div>
         <div class="row">
+          <span class="meta-key">邀请链接</span>
+          ${d.invite && d.invite !== '无'
+            ? `<a class="meta-val" href="${d.invite}" target="_blank" rel="noopener">${d.invite}</a>`
+            : `<span class="meta-val">无</span>`}
+        </div>
+        <div class="row">
           <span class="meta-key">充值链接</span>
           <span class="meta-val btn-group">
             ${d.recharge
@@ -1824,6 +1856,7 @@
       web:      rows['网页链接'] || '',
       group:    rows['群聊 / 群号'] || rows['群聊链接'] || rows['QQ 群号'] || '',
       checkin:  rows['签到链接'] || '',
+      invite:   rows['邀请链接'] || '',
       price:    rows['套餐价格'] || '',
       quota:    rows['充值额度'] || '',
       discount: rows['折扣说明'] || '',
@@ -1841,6 +1874,7 @@
     document.getElementById('fWeb').value       = d.web;
     document.getElementById('fGroup').value    = d.group || d.groupId || '';
     document.getElementById('fCheckin').value  = d.checkin || '';
+    document.getElementById('fInvite').value   = d.invite || '';
     document.getElementById('fDiscount').value  = d.discount;
     document.getElementById('fRecharge').value = d.recharge;
     document.getElementById('fModels').value  = modelsToText(d.models);
@@ -2103,18 +2137,31 @@
     return `<div class="detail-row"><span class="meta-key">${escapeHtml(key)}</span><span class="meta-val">${valHtml}</span></div>`;
   }
 
+  function modelRowsHtml(d) {
+    if (!d || !d.models || !d.models.length) return '<div class="meta-val">暂无模型价格</div>';
+    const sorted = [...d.models].sort((a, b) => {
+      const ta = a.tag || '', tb = b.tag || '';
+      if (ta === tb) return 0;
+      if (!ta) return 1;
+      if (!tb) return -1;
+      return ta.localeCompare(tb, 'zh');
+    });
+    const rows = sorted.map(m => {
+      const chip = m.tag ? `<span class="model-chip">${escapeHtml(m.tag)}</span>` : '';
+      const mode = m.mode ? `<span class="model-mode">${escapeHtml(m.mode)}</span>` : '';
+      const price = m.price ? escapeHtml(m.price) : '—';
+      return `<div class="model-item">${chip}<span class="model-name">${escapeHtml(m.name)}</span>${mode}<span class="model-price">${price}</span></div>`;
+    }).join('');
+    return `<div class="model-list">${rows}</div>`;
+  }
+
   function openDetail(card) {
     currentCard = card;
     const d = sites.find(s => s.id === card.dataset.id);
-    const name = card.querySelector('.site-name a')?.textContent.trim() || '未命名站点';
-    const note = (card.querySelector('.card-note')?.textContent || '').replace(/^备注：/, '').trim() || '无';
+    const name = card.querySelector('.site-name-btn')?.textContent.trim() || '未命名站点';
     const allowed = ['折扣说明', '充值链接'];
 
     let html = '';
-
-    if (d && d.cat) {
-      html += detailRow('分类', escapeHtml(d.cat));
-    }
 
     // 充值详情：只列出折扣说明、充值链接
     card.querySelectorAll('.card-detail .row').forEach(r => {
@@ -2142,28 +2189,21 @@
       html += detailRow('充值档位', `<div class="plan-grid">${cards}</div>`);
     }
 
-    // 模型价格列表：分类小标签在前，相同分类排在一起，模型名 + 价格
-    if (d && d.models && d.models.length) {
-      const sorted = [...d.models].sort((a, b) => {
-        const ta = a.tag || '', tb = b.tag || '';
-        if (ta === tb) return 0;
-        if (!ta) return 1;
-        if (!tb) return -1;
-        return ta.localeCompare(tb, 'zh');
-      });
-      const rows = sorted.map(m => {
-        const chip = m.tag ? `<span class="model-chip">${escapeHtml(m.tag)}</span>` : '';
-        const mode = m.mode ? `<span class="model-mode">${escapeHtml(m.mode)}</span>` : '';
-        const price = m.price ? escapeHtml(m.price) : '—';
-        return `<div class="model-item">${chip}<span class="model-name">${escapeHtml(m.name)}</span>${mode}<span class="model-price">${price}</span></div>`;
-      }).join('');
-      html += detailRow('模型价格', `<div class="model-list">${rows}</div>`);
-    }
-
-    html += detailRow('备注', escapeHtml(note));
+    if (!html) html = '<div class="meta-val">暂无充值信息</div>';
 
     dmTitle.textContent = `${name} · 充值详情`;
     dmBody.innerHTML = html;
+    dmEdit.style.display = '';
+    dm.classList.add('open');
+  }
+
+  function openModels(card) {
+    currentCard = card;
+    const d = sites.find(s => s.id === card.dataset.id);
+    const name = card.querySelector('.site-name-btn')?.textContent.trim() || '未命名站点';
+    dmTitle.textContent = `${name} · 模型价格`;
+    dmBody.innerHTML = detailRow('模型价格', modelRowsHtml(d));
+    dmEdit.style.display = 'none';
     dm.classList.add('open');
   }
 
@@ -2199,10 +2239,16 @@
       openDetail(detailBtn.closest('.site-card'));
       return;
     }
-    const editBtn = e.target.closest('.btn-edit-card');
-    if (editBtn) {
+    const modelBtn = e.target.closest('.btn-model-card');
+    if (modelBtn) {
       e.stopPropagation();
-      startEdit(editBtn.closest('.site-card'));
+      openModels(modelBtn.closest('.site-card'));
+      return;
+    }
+    const nameBtn = e.target.closest('.site-name-btn');
+    if (nameBtn) {
+      e.stopPropagation();
+      startEdit(nameBtn.closest('.site-card'));
       return;
     }
     if (e.target.closest('a')) return;
